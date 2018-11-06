@@ -13,3 +13,7 @@ body {
     padding-top: 56px;
   }
 }
+
+.red-bar {
+  background-color: #d9534f;
+}
