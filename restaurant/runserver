@@ -1,0 +1,2 @@
+export FLASK_APP=delivery.py
+flask run -p 8080
