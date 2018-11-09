@@ -19,12 +19,12 @@
             <li class="nav-item">
               <a class="nav-link" href="/about?id={{id}}">About</a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="/orders?id={{id}}">Orders</a>
-              <span class="sr-only">(current)</span>
-            </li>
             <li class="nav-item">
+              <a class="nav-link" href="/orders?id={{id}}">Orders</a>
+            </li>
+            <li class="nav-item active">
               <a class="nav-link" href="/food/add?id={{id}}">Add Catering Item</a>
+              <span class="sr-only">(current)</span>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="/account?id={{id}}">My Account</a>
@@ -37,15 +37,11 @@
     <div class="container">
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
-        <h2>Pending orders</h2>
-        <p class="lead">Please view your pending orders below. We thank you for partnering with TigerMeals Delivery.</p>
+        <h2>Add a new catering package</h2>
+        <p class="lead">Please complete the form below to make this catering package available to users. We thank you for partnering with TigerMeals Delivery.</p>
       </div>
-      {% for o in orders %}
-        {% with order=o %}
-          {% include 'display_order.tpl'%}
-        {% endwith %}
-      {% endfor %}
     </div>
-  {% include "footer.tpl" %}
+    {% include "form.tpl" %}
+    {% include "footer.tpl" %}
   </body>
 </html>
