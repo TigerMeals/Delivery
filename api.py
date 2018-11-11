@@ -260,7 +260,7 @@ class Order(db.Model):
     delivery_time = db.Column(db.Unicode, unique = False)
     location = db.Column(db.Unicode, unique = False)
 
-    def __init__(self, user_id, food_ids, restaurant_id, ordered = True, paid = False, delivery_in_process = False, delivered = False, date, order_time, delivery_time = None, location):
+    def __init__(self, user_id, food_ids, restaurant_id, date, order_time, location, delivery_time = None, ordered = True, paid = False, delivery_in_process = False, delivered = False):
         self.user_id = user_id
         self.food_ids = food_ids
         self.restaurant_id = restaurant_id
@@ -293,7 +293,7 @@ def order_approval(order_id):
 
 # Endpoint that they delivered the order
 @app.route('/order/delivered/<order_id>', methods = ["POST"])
-def order_approval(order_id):
+def order_delivered(order_id):
     order = Order.query.get(order_id)
 
     order.delivered = True
@@ -310,13 +310,11 @@ def order_add():
     user_id = request.json['user_id']
     food_ids = request.json['food_ids']
     restaurant_id = request.json['restaurant_id']
-    ordered = request.json['ordered']
-    paid = request.json['paid']
     date = request.json['date']
     order_time = request.json['order_time']
     location = request.json['location']
 
-    new_order = Order(user_id, food_ids, restaurant_id, ordered, paid, date, order_time, location)
+    new_order = Order(user_id, food_ids, restaurant_id, date, order_time, location)
     db.session.add(new_order)
     db.session.commit()
     return order_schema.jsonify(new_order)
