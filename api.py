@@ -253,26 +253,56 @@ class Order(db.Model):
     restaurant_id = db.Column(db.Integer, unique = False)
     ordered = db.Column(db.Boolean, unique = False)
     paid = db.Column(db.Boolean, unique = False)
+    delivery_in_process = db.Column(db.Boolean, unique = False)
+    delivered = db.Column(db.Boolean, unique = False)
     date = db.Column(db.Unicode, unique = False)
-    time = db.Column(db.Unicode, unique = False)
+    order_time = db.Column(db.Unicode, unique = False)
+    delivery_time = db.Column(db.Unicode, unique = False)
     location = db.Column(db.Unicode, unique = False)
 
-    def __init__(self, user_id, food_ids, restaurant_id, ordered, paid, date, time, location):
+    def __init__(self, user_id, food_ids, restaurant_id, ordered = True, paid = False, delivery_in_process = False, delivered = False, date, order_time, delivery_time = None, location):
         self.user_id = user_id
         self.food_ids = food_ids
         self.restaurant_id = restaurant_id
         self.ordered = ordered
         self.paid = paid
+        self.delivery_in_process = delivery_in_process
+        self.delivered = delivered
         self.date = date
-        self.time = time
+        self.order_time = order_time
         self.location = location
+        self.delivery_time = delivery_time
 
 class OrderSchema(ma.Schema):
     class Meta:
-        fields = ('order_id', 'user_id', 'food_ids', 'restaurant_id', 'ordered', 'paid', 'date', 'time', 'location')
+        fields = ('order_id', 'user_id', 'food_ids', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location')
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many = True)
+
+# Endpoint of restaurant approval
+@app.route('/order/approval/<order_id>', methods = ["POST"])
+def order_approval(order_id):
+    order = Order.query.get(order_id)
+
+    order.paid = True
+    order.delivery_in_process = True
+
+    db.session.commit()
+    return order_schema.jsonify(order)
+
+# Endpoint that they delivered the order
+@app.route('/order/delivered/<order_id>', methods = ["POST"])
+def order_approval(order_id):
+    order = Order.query.get(order_id)
+
+    order.delivered = True
+    order.delivery_in_process = False
+    order.delivery_time = request.json['delivery_time']
+    db.session.commit()
+
+    return order_schema.jsonify(order)
+
 
 # Endpoint to create new order
 @app.route("/order", methods = ["POST"])
@@ -283,10 +313,10 @@ def order_add():
     ordered = request.json['ordered']
     paid = request.json['paid']
     date = request.json['date']
-    time = request.json['time']
+    order_time = request.json['order_time']
     location = request.json['location']
 
-    new_order = Order(user_id, food_ids, restaurant_id, ordered, paid, date, time, location)
+    new_order = Order(user_id, food_ids, restaurant_id, ordered, paid, date, order_time, location)
     db.session.add(new_order)
     db.session.commit()
     return order_schema.jsonify(new_order)
@@ -297,6 +327,7 @@ def order_detail(order_id):
     order = Order.query.get(order_id)
     return order_schema.jsonify(order)
 
+# Endpoint to return orders from a restuarant
 @app.route("/order/restaurant/<restaurant_id>", methods = ["GET"])
 def order_by_rest(restaurant_id):
     order = Order.query.filter_by(restaurant_id = restaurant_id).all()
@@ -312,7 +343,8 @@ def order_update(order_id):
     order.ordered = request.json['ordered']
     order.paid = request.json['paid']
     order.date = request.json['date']
-    order.time = request.json['time']
+    order.order_time = request.json['order_time']
+    order.delivery_time = request.json['delivery_time']
     order.location = request.json['location']
 
     db.session.commit()
