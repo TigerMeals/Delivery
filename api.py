@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Which database to fetch from:
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/delivery'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'crud.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -21,18 +21,22 @@ class User(db.Model):
     phone = db.Column(db.Integer, unique = False)
     address = db.Column(db.Unicode, unique = False)
     allergies = db.Column(db.Unicode, unique = False)
+    userHistory = db.Column(db.Integer, unique = False)
 
-    def __init__(self, name, email, birthday, phone, address, allergies):
+
+    def __init__(self, name, email, birthday, phone, address, allergies, userHistory):
         self.name = name
         self.email = email
         self.birthday = birthday
         self.phone = phone
         self.address = address
         self.allergies = allergies
+        self.userHistory = userHistory
+
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('user_id', 'name', 'email', 'birthday', 'phone', 'address', 'allergies')
+        fields = ('user_id', 'name', 'email', 'birthday', 'phone', 'address', 'allergies', 'userHistory')
 
 user_schema = UserSchema()
 users_schema = UserSchema(many = True)
@@ -46,8 +50,9 @@ def user_add():
     phone = request.json['phone']
     address = request.json['address']
     allergies = request.json['allergies']
+    userHistory = request.json['userHistory']
 
-    new_user = User(name, email, birthday, phone, address, allergies)
+    new_user = User(name, email, birthday, phone, address, allergies, userHistory)
     db.session.add(new_user)
     db.session.commit()
     return user_schema.jsonify(new_user)
@@ -68,6 +73,7 @@ def user_update(user_id):
     user.phone = request.json['phone']
     user.address = request.json['address']
     user.allergies = request.json['allergies']
+    user.userHistory = request.json['userHistory']
 
     db.session.commit()
     return user_schema.jsonify(user)
@@ -91,18 +97,22 @@ class Restaurant(db.Model):
     address = db.Column(db.Unicode, unique = False)
     phone = db.Column(db.Integer, unique = False)
     cuisine = db.Column(db.Unicode, unique = False)
+    numOrders = db.Column(db.Integer, unique = False)
+    servingSize = db.Column(db.Integer, unique = False)
 
-    def __init__(self, name, image, description, address, phone, cuisine):
+    def __init__(self, name, image, description, address, phone, cuisine, numOrders, servingSize):
         self.name = name
         self.image = image
         self.description = description
         self.address = address
         self.phone = phone
         self.cuisine = cuisine
+        self.numOrders = numOrders
+        self.servingSize = servingSize
 
 class RestaurantSchema(ma.Schema):
     class Meta:
-        fields = ('restaurant_id', 'name', 'image', 'description', 'address', 'phone', 'cuisine')
+        fields = ('restaurant_id', 'name', 'image', 'description', 'address', 'phone', 'cuisine', 'numOrders', 'servingSize')
 restaurant_schema = RestaurantSchema()
 restaurants_schema = RestaurantSchema(many = True)
 
@@ -115,8 +125,10 @@ def restaurant_add():
     address = request.json['address']
     phone = request.json['phone']
     cuisine = request.json['cuisine']
+    numOrders = request.json['numOrders']
+    servingSize = request.json['servingSize']
 
-    new_restaurant = Restaurant(name, image, description, address, phone, cuisine)
+    new_restaurant = Restaurant(name, image, description, address, phone, cuisine, numOrders)
     db.session.add(new_restaurant)
     db.session.commit()
     return restaurant_schema.jsonify(new_restaurant)
@@ -126,6 +138,9 @@ def restaurant_add():
 def restaurant_detail(restaurant_id):
     restaurant = Restaurant.query.get(restaurant_id)
     return restaurant_schema.jsonify(restaurant)
+
+def sortFromColumn(data, col, ascending):
+    return data.query.order_by(sqlalchemy.func.field(data.col))
 
 # Endpoint to update restaurant
 @app.route("/restaurant/<restaurant_id>", methods = ["PUT"])
