@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Which database to fetch from:
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/delivery'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'crud.sqlite')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -21,18 +21,22 @@ class User(db.Model):
     phone = db.Column(db.Integer, unique = False)
     address = db.Column(db.Unicode, unique = False)
     allergies = db.Column(db.Unicode, unique = False)
+    userHistory = db.Column(db.Integer, unique = False)
 
-    def __init__(self, name, email, birthday, phone, address, allergies):
+
+    def __init__(self, name, email, birthday, phone, address, allergies, userHistory):
         self.name = name
         self.email = email
         self.birthday = birthday
         self.phone = phone
         self.address = address
         self.allergies = allergies
+        self.userHistory = userHistory
+
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('user_id', 'name', 'email', 'birthday', 'phone', 'address', 'allergies')
+        fields = ('user_id', 'name', 'email', 'birthday', 'phone', 'address', 'allergies', 'userHistory')
 
 user_schema = UserSchema()
 users_schema = UserSchema(many = True)
@@ -46,8 +50,9 @@ def user_add():
     phone = request.json['phone']
     address = request.json['address']
     allergies = request.json['allergies']
+    userHistory = request.json['userHistory']
 
-    new_user = User(name, email, birthday, phone, address, allergies)
+    new_user = User(name, email, birthday, phone, address, allergies, userHistory)
     db.session.add(new_user)
     db.session.commit()
     return user_schema.jsonify(new_user)
@@ -68,6 +73,7 @@ def user_update(user_id):
     user.phone = request.json['phone']
     user.address = request.json['address']
     user.allergies = request.json['allergies']
+    user.userHistory = request.json['userHistory']
 
     db.session.commit()
     return user_schema.jsonify(user)
@@ -91,18 +97,22 @@ class Restaurant(db.Model):
     address = db.Column(db.Unicode, unique = False)
     phone = db.Column(db.Integer, unique = False)
     cuisine = db.Column(db.Unicode, unique = False)
+    numOrders = db.Column(db.Integer, unique = False)
+    servingSize = db.Column(db.Integer, unique = False)
 
-    def __init__(self, name, image, description, address, phone, cuisine):
+    def __init__(self, name, image, description, address, phone, cuisine, numOrders, servingSize):
         self.name = name
         self.image = image
         self.description = description
         self.address = address
         self.phone = phone
         self.cuisine = cuisine
+        self.numOrders = numOrders
+        self.servingSize = servingSize
 
 class RestaurantSchema(ma.Schema):
     class Meta:
-        fields = ('restaurant_id', 'name', 'image', 'description', 'address', 'phone', 'cuisine')
+        fields = ('restaurant_id', 'name', 'image', 'description', 'address', 'phone', 'cuisine', 'numOrders', 'servingSize')
 restaurant_schema = RestaurantSchema()
 restaurants_schema = RestaurantSchema(many = True)
 
@@ -115,8 +125,10 @@ def restaurant_add():
     address = request.json['address']
     phone = request.json['phone']
     cuisine = request.json['cuisine']
+    numOrders = request.json['numOrders']
+    servingSize = request.json['servingSize']
 
-    new_restaurant = Restaurant(name, image, description, address, phone, cuisine)
+    new_restaurant = Restaurant(name, image, description, address, phone, cuisine, numOrders)
     db.session.add(new_restaurant)
     db.session.commit()
     return restaurant_schema.jsonify(new_restaurant)
@@ -126,6 +138,9 @@ def restaurant_add():
 def restaurant_detail(restaurant_id):
     restaurant = Restaurant.query.get(restaurant_id)
     return restaurant_schema.jsonify(restaurant)
+
+def sortFromColumn(data, col, ascending):
+    return data.query.order_by(sqlalchemy.func.field(data.col))
 
 # Endpoint to update restaurant
 @app.route("/restaurant/<restaurant_id>", methods = ["PUT"])
@@ -238,26 +253,56 @@ class Order(db.Model):
     restaurant_id = db.Column(db.Integer, unique = False)
     ordered = db.Column(db.Boolean, unique = False)
     paid = db.Column(db.Boolean, unique = False)
+    delivery_in_process = db.Column(db.Boolean, unique = False)
+    delivered = db.Column(db.Boolean, unique = False)
     date = db.Column(db.Unicode, unique = False)
-    time = db.Column(db.Unicode, unique = False)
+    order_time = db.Column(db.Unicode, unique = False)
+    delivery_time = db.Column(db.Unicode, unique = False)
     location = db.Column(db.Unicode, unique = False)
 
-    def __init__(self, user_id, food_ids, restaurant_id, ordered, paid, date, time, location):
+    def __init__(self, user_id, food_ids, restaurant_id, ordered = True, paid = False, delivery_in_process = False, delivered = False, date, order_time, delivery_time = None, location):
         self.user_id = user_id
         self.food_ids = food_ids
         self.restaurant_id = restaurant_id
         self.ordered = ordered
         self.paid = paid
+        self.delivery_in_process = delivery_in_process
+        self.delivered = delivered
         self.date = date
-        self.time = time
+        self.order_time = order_time
         self.location = location
+        self.delivery_time = delivery_time
 
 class OrderSchema(ma.Schema):
     class Meta:
-        fields = ('order_id', 'user_id', 'food_ids', 'restaurant_id', 'ordered', 'paid', 'date', 'time', 'location')
+        fields = ('order_id', 'user_id', 'food_ids', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location')
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many = True)
+
+# Endpoint of restaurant approval
+@app.route('/order/approval/<order_id>', methods = ["POST"])
+def order_approval(order_id):
+    order = Order.query.get(order_id)
+
+    order.paid = True
+    order.delivery_in_process = True
+
+    db.session.commit()
+    return order_schema.jsonify(order)
+
+# Endpoint that they delivered the order
+@app.route('/order/delivered/<order_id>', methods = ["POST"])
+def order_approval(order_id):
+    order = Order.query.get(order_id)
+
+    order.delivered = True
+    order.delivery_in_process = False
+    order.delivery_time = request.json['delivery_time']
+    db.session.commit()
+
+    return order_schema.jsonify(order)
+
 
 # Endpoint to create new order
 @app.route("/order", methods = ["POST"])
@@ -268,10 +313,10 @@ def order_add():
     ordered = request.json['ordered']
     paid = request.json['paid']
     date = request.json['date']
-    time = request.json['time']
+    order_time = request.json['order_time']
     location = request.json['location']
 
-    new_order = Order(user_id, food_ids, restaurant_id, ordered, paid, date, time, location)
+    new_order = Order(user_id, food_ids, restaurant_id, ordered, paid, date, order_time, location)
     db.session.add(new_order)
     db.session.commit()
     return order_schema.jsonify(new_order)
@@ -282,6 +327,7 @@ def order_detail(order_id):
     order = Order.query.get(order_id)
     return order_schema.jsonify(order)
 
+# Endpoint to return orders from a restuarant
 @app.route("/order/restaurant/<restaurant_id>", methods = ["GET"])
 def order_by_rest(restaurant_id):
     order = Order.query.filter_by(restaurant_id = restaurant_id).all()
@@ -297,7 +343,8 @@ def order_update(order_id):
     order.ordered = request.json['ordered']
     order.paid = request.json['paid']
     order.date = request.json['date']
-    order.time = request.json['time']
+    order.order_time = request.json['order_time']
+    order.delivery_time = request.json['delivery_time']
     order.location = request.json['location']
 
     db.session.commit()
