@@ -40,20 +40,21 @@
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#">Home</a>
+              <a class="nav-link" href="http://localhost:8080/home">Home</a>
             </li>
             <li class="nav-item active">
-              <a class="nav-link" href="/about?id={{id}}">About</a>
+              <a class="nav-link" href="#">About</a>
               <span class="sr-only">(current)</span>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/orders?id={{id}}">Orders</a>
+              <a class="nav-link" href="http://localhost:8080/meals">Meals</a>
+                
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/food/add?id={{id}}">Add Catering Item</a>
+              <a class="nav-link" href="http://localhost:8080/account">My Account</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/account?id={{id}}">My Account</a>
+              <a class="nav-link" href="http://localhost:8080/checkout">Checkout</a>
             </li>
           </ul>
         </div>
@@ -117,14 +118,14 @@
           </h3>
           <p>Serving as our immediate point of contact, Mohamed met with the team on a weekly basis to provide suggesstions, deliverables, and insight to the project. He is essential to the success of this project.</p>
         </div>
-
+       
       </div>
 
     </div>
     <!-- /.container -->
 
     <!-- Footer -->
-
+    
     <footer class="py-4 red-bar">
       <div class="container">
         <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>
@@ -133,14 +134,14 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="static/vendor/jquery/jquery.min.js"></script>
-    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
     // // Instantiate a slider
     // var mySlider = new Slider("input.slider", {
     //  // initial options object
     // });
-    var slider = new Slider('#ex2', {});
+    //var slider = new Slider('#ex2', {});
     // var slider = new Slider('#numservings', {});
     // // Call a method on the slider
     // var value = mySlider.getValue();

@@ -24,7 +24,7 @@ class User(db.Model):
     userHistory = db.Column(db.Integer, unique = False)
 
 
-    def __init__(self, name, email, birthday, phone, address, allergies, userHistory):
+    def __init__(self, name, email, birthday, phone, address, allergies, userHistory = None):
         self.name = name
         self.email = email
         self.birthday = birthday
@@ -50,9 +50,8 @@ def user_add():
     phone = request.json['phone']
     address = request.json['address']
     allergies = request.json['allergies']
-    userHistory = request.json['userHistory']
 
-    new_user = User(name, email, birthday, phone, address, allergies, userHistory)
+    new_user = User(name, email, birthday, phone, address, allergies)
     db.session.add(new_user)
     db.session.commit()
     return user_schema.jsonify(new_user)
