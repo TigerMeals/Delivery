@@ -15,6 +15,7 @@ ma = Marshmallow(app)
 ################################################################################
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key = True)
+    netid = db.Column(db.Integer, unique = True)
     name = db.Column(db.Unicode, unique = False)
     email = db.Column(db.Unicode, unique = False)
     birthday = db.Column(db.Unicode, unique = False)
@@ -24,7 +25,7 @@ class User(db.Model):
     userHistory = db.Column(db.Integer, unique = False)
 
 
-    def __init__(self, name, email, birthday, phone, address, allergies, userHistory = None):
+    def __init__(self, netid, name, email, birthday, phone, address, allergies, userHistory = None):
         self.name = name
         self.email = email
         self.birthday = birthday
@@ -32,11 +33,12 @@ class User(db.Model):
         self.address = address
         self.allergies = allergies
         self.userHistory = userHistory
+        self.netid = netid
 
 
 class UserSchema(ma.Schema):
     class Meta:
-        fields = ('user_id', 'name', 'email', 'birthday', 'phone', 'address', 'allergies', 'userHistory')
+        fields = ('user_id', 'netid', 'name', 'email', 'birthday', 'phone', 'address', 'allergies', 'userHistory')
 
 user_schema = UserSchema()
 users_schema = UserSchema(many = True)
@@ -45,13 +47,14 @@ users_schema = UserSchema(many = True)
 @app.route("/user", methods = ["POST"])
 def user_add():
     name = request.json['name']
+    netid = request.json['netid']
     email = request.json['email']
     birthday = request.json['birthday']
     phone = request.json['phone']
     address = request.json['address']
     allergies = request.json['allergies']
 
-    new_user = User(name, email, birthday, phone, address, allergies)
+    new_user = User(netid, name, email, birthday, phone, address, allergies)
     db.session.add(new_user)
     db.session.commit()
     return user_schema.jsonify(new_user)
@@ -67,6 +70,7 @@ def user_detail(user_id):
 def user_update(user_id):
     user = User.query.get(user_id)
     user.name = request.json['name']
+    user.netid = request.json['netid']
     user.email = request.json['email']
     user.birthday = request.json['birthday']
     user.phone = request.json['phone']

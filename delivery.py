@@ -7,6 +7,18 @@ app = Flask(__name__)
 DATABASE_URL = "http://localhost:5000"
 
 
+## PRIVATE METHODS. GET METHOD
+def _getJSON(url):
+    r = requests.get(url=url)
+    data = r.json()
+
+    print data
+    return data
+## POST METHOD
+def _postJSON(url, data):
+    pass
+
+
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------
 @app.route("/")
 @app.route("/home")
@@ -49,14 +61,17 @@ def account():
         # Redirect to login screen if the cookie is None
         pass
 
-    url = DATABASE_URL + '/user/' + str(user_id)
-    r = requests.get(url = url)
-    data = r.json()
+    data = _getJSON(DATABASE_URL + '/user/' + str(user_id))
 
-    print data
+    email = str(data['email'])
+    name = str(data['name'])
+    phone = str(data['phone'])
+    address = str(data['address'])
+    netid = str(data['netid'])
+    allergies = str(data['allergies'])
 
-
-    return render_template('account.tpl', data=data)
+    return render_template('account.tpl', name=name, email=email,\
+        phone=phone, address=address, allergies=allergies, netid=netid)
 
 
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------

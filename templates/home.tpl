@@ -86,7 +86,7 @@
         <div class="container">
           <div class="row">
             <div class="col-lg-12 text-center">
-              <h2 class="section-heading">At Your Service</h2>
+              <h2 class="section-heading text-warning">At Your Service</h2>
               <hr class="my-4">
             </div>
           </div>
@@ -96,28 +96,28 @@
             <div class="col-lg-3 col-md-6 text-center">
               <div class="service-box mt-5 mx-auto">
                 <i class="fas fa-4x fa-gem text-primary mb-3 sr-icon-1"></i>
-                <h3 class="mb-3">Reliable Catering</h3>
+                <h3 class="mb-3 text-warning">Reliable Catering</h3>
                 <p class="text-muted mb-0">Our partners are well-rated by the members of the Princeton community.</p>
               </div>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
               <div class="service-box mt-5 mx-auto">
                 <i class="fas fa-4x fa-paper-plane text-primary mb-3 sr-icon-2"></i>
-                <h3 class="mb-3">Delivery</h3>
+                <h3 class="mb-3 text-warning">Delivery</h3>
                 <p class="text-muted mb-0">Of course, the food is delivered.</p>
               </div>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
               <div class="service-box mt-5 mx-auto">
                 <i class="fas fa-4x fa-code text-primary mb-3 sr-icon-3"></i>
-                <h3 class="mb-3">Up to Date</h3>
+                <h3 class="mb-3 text-warning">Up to Date</h3>
                 <p class="text-muted mb-0">We update menus to keep things fresh.</p>
               </div>
             </div>
             <div class="col-lg-3 col-md-6 text-center">
               <div class="service-box mt-5 mx-auto">
                 <i class="fas fa-4x fa-heart text-primary mb-3 sr-icon-4"></i>
-                <h3 class="mb-3">Made with Love</h3>
+                <h3 class="mb-3 text-warning">Made with Love</h3>
                 <p class="text-muted mb-0">You have to make your food with love these days!</p>
               </div>
             </div>

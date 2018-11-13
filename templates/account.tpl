@@ -21,7 +21,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
-<body onload="username({{data.user_id}})">
+<body>
 
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
@@ -55,24 +55,6 @@
       </div>
     </nav>
 
-    <script>
-        function username(user_id) {
-            console.log("Logged")
-            console.log("User Id: " + user_id)
-            let url = "http://localhost:5000/user/" + user_id
-            fetch(url)
-            .then(
-                function(response) {
-                response.json().then(function(data) {
-                console.log(data);
-            });
-            })
-            .catch(function(error) {
-                console.log(error)
-            })
-            //document.getElementById("username").innerHTML = data.name
-        }
-    </script>
 
         <div class="container emp-profile">
             <form method="post">
@@ -80,45 +62,29 @@
                     <div class="col-md-4">
                         <div class="profile-img">
                             <img id = "profile_pic" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRgnTI_dxbxYhNiG78v3xUdesv39ENVZpZZWathPB9Zi9dC5xFg" alt=""/>
-                            <div class="file btn">
-                                Change Photo
-                                <input type="file" name="file" oninput=""/>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-8">
                         <div class="profile-head">
-                                    <h5 id="username"></h5>
-                                    <h6>
-                                        Princeton University Sophomore
+                                    <h6 class="text-dark">
+                                        <strong>Princeton University TigerMeals Account Page</strong>
                                     </h6>
-                            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">About</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Timeline</a>
-                                </li>
-                            </ul>
+                                    <hr>
                         </div>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-work">
-                            <p>WORK LINK</p>
-                            <a href="">Website Link</a><br/>
-                            <a href="">Bootsnipp Profile</a><br/>
-                            <a href="">Bootply Profile</a>
-                            <p>SKILLS</p>
-                            <a href="">Web Designer</a><br/>
-                            <a href="">Web Developer</a><br/>
-                            <a href="">WordPress</a><br/>
-                            <a href="">WooCommerce</a><br/>
-                            <a href="">PHP, .Net</a><br/>
+                            <p>Princeton University Dining Options</p>
+                            <a class="text-info" href="https://dining.princeton.edu/where-eat">Princeton Retail & Dining Halls</a><br/>
+                            <a class="text-info" href="https://dining.princeton.edu/where-eat/hours-operation">Hours of Operation</a><br/>
+                            <hr>
+                                <p>Toggle Preferences</p>
+                                <a class="text-info" href="">Email</a><br/>
+                                <a class="text-info" href="">Phone</a><br/>
+                                <a class="text-info" href="">Preferred Delivery Address</a><br/>
+                                <a class="text-info" href="">Listed Allergies</a><br/>
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -126,18 +92,18 @@
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>User Id</label>
+                                                <label>Name</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>Kshiti123</p>
+                                                <p>{{name}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Name</label>
+                                                <label>NetID</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>Kshiti Ghelani</p>
+                                                <p>{{netid}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -145,7 +111,7 @@
                                                 <label>Email</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>kshitighelani@gmail.com</p>
+                                                <p>{{email}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -153,65 +119,25 @@
                                                 <label>Phone</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>123 456 7890</p>
+                                                <p>{{phone}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Profession</label>
+                                                <label>Preferred Delivery Address</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>Web Developer and Designer</p>
-                                            </div>
-                                        </div>
-                            </div>
-                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Experience</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
+                                                <p>{{address}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label>Hourly Rate</label>
+                                                <label>Listed Allergies</label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>10$/hr</p>
+                                                <label>{{allergies}}</label>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Total Projects</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>230</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>English Level</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>Expert</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <label>Availability</label>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <p>6 months</p>
-                                            </div>
-                                        </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label>Your Bio</label><br/>
-                                        <p>Your detail description</p>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
