@@ -25,7 +25,7 @@ class User(db.Model):
     userHistory = db.Column(db.Integer, unique = False)
 
 
-    def __init__(self, netid, name, email, birthday, phone, address, allergies, userHistory = None):
+    def __init__(self, netid, name, email, birthday, phone, address, allergies, userHistory = ''):
         self.name = name
         self.email = email
         self.birthday = birthday
@@ -131,7 +131,7 @@ def restaurant_add():
     numOrders = request.json['numOrders']
     servingSize = request.json['servingSize']
 
-    new_restaurant = Restaurant(name, image, description, address, phone, cuisine, numOrders)
+    new_restaurant = Restaurant(name, image, description, address, phone, cuisine, numOrders, servingSize)
     db.session.add(new_restaurant)
     db.session.commit()
     return restaurant_schema.jsonify(new_restaurant)
@@ -142,8 +142,11 @@ def restaurant_detail(restaurant_id):
     restaurant = Restaurant.query.get(restaurant_id)
     return restaurant_schema.jsonify(restaurant)
 
-def sortFromColumn(data, col, ascending):
-    return data.query.order_by(sqlalchemy.func.field(data.col))
+# Endpoint to get all restaurants
+@app.route("/restaurant", methods = ["GET"])
+def restaurants_detail():
+    restaurant = Restaurant.query.all()
+    return restaurants_schema.jsonify(restaurant)
 
 # Endpoint to update restaurant
 @app.route("/restaurant/<restaurant_id>", methods = ["PUT"])
@@ -177,11 +180,15 @@ class Food(db.Model):
     image = db.Column(db.Unicode, unique = False)
     quantity_fed = db.Column(db.Integer, unique = False)
     price = db.Column(db.Float, unique = False)
+    cuisine = db.Column(db.Unicode, unique = False)
     allergies = db.Column(db.Unicode, unique = False)
     restaurant_id = db.Column(db.Integer, unique = False)
+    timesOrdered = db.Column(db.Integer, unique = False)
 
-    def __init__(self, title, description, image, quantity_fed, price, allergies, restaurant_id):
+    def __init__(self, cuisine, timesOrdered, title, description, image, quantity_fed, price, allergies, restaurant_id):
         self.title = title
+        self.cuisine = cuisine
+        self.timesOrdered = timesOrdered
         self.description = description
         self.image = image
         self.quantity_fed = quantity_fed
@@ -191,7 +198,7 @@ class Food(db.Model):
 
 class FoodSchema(ma.Schema):
     class Meta:
-        fields = ('food_id', 'title','description', 'image', 'quantity_fed', 'price', 'allergies', 'restaurant_id')
+        fields = ('food_id', 'title','description', 'image', 'quantity_fed', 'price', 'cuisine', 'allergies', 'restaurant_id', 'timesOrdered')
 
 food_schema = FoodSchema()
 foods_schema = FoodSchema(many = True)
@@ -206,8 +213,10 @@ def food_add():
     price = request.json['price']
     allergies = request.json['allergies']
     restaurant_id = request.json['restaurant_id']
+    cuisine = request.json['cuisine']
+    timesOrdered = request.json['timesOrdered']
 
-    new_food = Food(title, description, image, quantity_fed, price, allergies, restaurant_id)
+    new_food = Food(cuisine, timesOrdered, title, description, image, quantity_fed, price, allergies, restaurant_id)
     db.session.add(new_food)
     db.session.commit()
     return food_schema.jsonify(new_food)
@@ -235,13 +244,54 @@ def food_update(restaurant_id):
     food.price = request.json['price']
     food.allergies = request.json['allergies']
     food.restaurant_id = request.json['restaurant_id']
+    food.timesOrdered = request.json['timesOrdered']
+    food.cuisine = request.json['cuisine']
 
     db.session.commit()
     return food_schema.jsonify(food)
 
+# Endpoint that sorts by price
+@app.route('/food/sort/price/low-to-high', methods = ['GET'])
+def food_sort_price_low_to_high():
+    food = Food.query.order_by(Food.price).all()
+    return foods_schema.jsonify(food)
+
+# Endpoint that sorts by price
+@app.route('/food/sort/price/high-to-low', methods = ['GET'])
+def food_sort_price_high_to_low():
+    food = Food.query.order_by(Food.price).all()
+    food.reverse()
+    return foods_schema.jsonify(food)
+
+# Sort food by most recent
+@app.route('/food/sort/most-recent', methods = ['GET'])
+def food_recent():
+    food = Food.query.order_by(Food.food_id).all()
+    return foods_schema.jsonify(food)
+
+# Sort food by number of servings
+@app.route('/food/sort/servings', methods = ['GET'])
+def food_servings():
+    food = Food.query.order_by(Food.quantity_fed).all()
+    return foods_schema.jsonify(food)
+
+# Filter food by cuisine
+@app.route('/food/filter_cuisine/<cuisine>', methods = ['POST'])
+def food_filter_cuisine():
+    food = Food.query.filter_by(cuisine)
+
+@app.route('/food/filter/allergies', methods = ['POST'])
+def food_filter_allergies():
+    allergies = request.json['allergies'].strip()
+    print allergies
+    food = Food.query.filter_by(allergies = allergies)
+    #### NEED TO FIX THIS FUNCTION
+    return foods_schema.jsonify(food)
+
+
 # Endpoint to delete food
 @app.route("/food/<food_id>", methods = ["DELETE"])
-def food_delete(restaurant_id):
+def food_delete(food_id):
     food = Food.query.get(food_id)
 
     db.session.delete(food)

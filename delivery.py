@@ -23,6 +23,7 @@ def _postJSON(url, data):
 @app.route("/")
 @app.route("/home")
 def home():
+    print "home template requested -----------------------------"
     resp = make_response(render_template('home.tpl'))
     resp.set_cookie('user_id', '1')
     user_id = request.cookies.get('user_id')
@@ -31,6 +32,16 @@ def home():
         # Redirect to login screen if the cookie is None
         pass
     return resp
+
+@app.route("/cart")
+def cart():
+    print "cart template requested -----------------------------"
+    user_id = request.cookies.get('user_id')
+    print "User Id: " + str(user_id)
+    if user_id is None:
+        # Redirect to login screen if the cookie is None
+        pass
+    return render_template('cart.tpl', user_id=user_id)
 
 @app.route("/about")
 def about():
@@ -44,11 +55,13 @@ def about():
 
 @app.route("/meals")
 def meals():
+    print "meals template requested -----------------------------"
     id = request.args.get('id')
     return render_template('index.tpl', id=id)
 
 @app.route("/checkout")
 def checkout():
+    print "checkout template requested -----------------------------"
     id = request.args.get('id')
     return render_template('checkout.tpl', id=id)
 

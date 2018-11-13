@@ -9,7 +9,7 @@
     <meta name="author" content="">
 
     <title>TigerMeals Delivery - Shop Meals</title>
-    <link rel='icon' href='img/takeout.ico'></link>
+    <link rel='icon' href='static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap-lux.css" rel="stylesheet">
@@ -107,8 +107,8 @@
               <li class="divider"></li>
               <li>
                 <span class="checkout-text item-right">Subtotal: $49.00</span><br>
-                <a class="checkout-text item-left" href="cart.html">View Cart</a>
-                <a class="checkout-text item-right" href="checkout.html">Checkout</a>
+                <a class="checkout-text item-left" href="http://localhost:8080/cart">View Cart</a>
+                <a class="checkout-text item-right" href="http://localhost:8080/checkout">Checkout</a>
                 <br>
               </li>
 
@@ -298,13 +298,13 @@
             </ol>
             <div class="carousel-inner" role="listbox">
               <div class="carousel-item active">
-                <img class="d-block img-fluid w-900 meals-carousel" src="img/mexican.jpg" alt="First slide">
+                <img class="d-block img-fluid w-900 meals-carousel" src="static/img/mexican.jpg" alt="First slide">
               </div>
               <div class="carousel-item">
-                <img class="d-block img-fluid w-900 meals-carousel" src="img/banhmi.jpg" alt="Second slide">
+                <img class="d-block img-fluid w-900 meals-carousel" src="static/img/banhmi.jpg" alt="Second slide">
               </div>
               <div class="carousel-item">
-                <img class="d-block img-fluid w-900 meals-carousel" src="img/dessert.jpg" alt="Third slide">
+                <img class="d-block img-fluid w-900 meals-carousel" src="static/img/dessert.jpg" alt="Third slide">
               </div>
             </div>
             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -351,7 +351,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#" data-toggle="modal" data-target="#kungfutea"><img class="card-img-top" src="img/kft.jpg" alt=""></a>
+                <a href="#" data-toggle="modal" data-target="#kungfutea"><img class="card-img-top" src="static/img/kft.jpg" alt=""></a>
                 <div class="card-body">
                   <h5 class="card-title">
                     <a href="#" data-toggle="modal" data-target="#kungfutea">100ct Bubble Tea</a>
@@ -375,7 +375,7 @@
                       <div class="row">
                         <div class="col-lg-5">
 
-                          <img class="d-block w-100" src="./img/kft.jpg"
+                          <img class="d-block w-100" src="static/img/kft.jpg"
                             alt="First slide">
 
                         </div>
@@ -505,7 +505,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#" data-toggle="modal" data-target="#exampleModalCenter"><img class="card-img-top" src="./img/tacoria.jpg" alt=""></a>
+                <a href="#" data-toggle="modal" data-target="#exampleModalCenter"><img class="card-img-top" src="static/img/tacoria.jpg" alt=""></a>
                 <div class="card-body">
                   <!-- <h4 class="card-title">
                     <a href="#">Soft Taco Party Platter</a>
@@ -620,7 +620,7 @@
                       </div>
 
                       <div class="col-lg-6 col-md-6">
-                        <img class="d-block w-100" src="./img/tacoria.jpg"
+                        <img class="d-block w-100" src="static/img/tacoria.jpg"
                           alt="First slide">
                       </div>
                     </div>
@@ -656,7 +656,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#"><img class="card-img-top" src="img/panera.jpg" alt=""></a>
+                <a href="#"><img class="card-img-top" src="static/img/panera.jpg" alt=""></a>
                 <div class="card-body">
                   <!-- <h4 class="card-title">
                     <a href="#">Panera Lunch Package</a>
@@ -674,7 +674,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#"><img class="card-img-top" src="img/kft.jpg" alt=""></a>
+                <a href="#"><img class="card-img-top" src="static/img/kft.jpg" alt=""></a>
                 <div class="card-body">
                   <h5 class="card-title">
                     <a href="#">100ct Bubble Tea</a>
@@ -687,7 +687,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#"><img class="card-img-top" src="img/kft.jpg" alt=""></a>
+                <a href="#"><img class="card-img-top" src="static/img/kft.jpg" alt=""></a>
                 <div class="card-body">
                   <h5 class="card-title">
                     <a href="#">100ct Bubble Tea</a>
@@ -700,7 +700,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#"><img class="card-img-top" src="img/kft.jpg" alt=""></a>
+                <a href="#"><img class="card-img-top" src="static/img/kft.jpg" alt=""></a>
                 <div class="card-body">
                   <h5 class="card-title">
                     <a href="#">100ct Bubble Tea</a>
@@ -713,7 +713,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#"><img class="card-img-top" src="img/kft.jpg" alt=""></a>
+                <a href="#"><img class="card-img-top" src="static/img/kft.jpg" alt=""></a>
                 <div class="card-body">
                   <h5 class="card-title">
                     <a href="#">100ct Bubble Tea</a>
@@ -726,7 +726,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#"><img class="card-img-top" src="img/kft.jpg" alt=""></a>
+                <a href="#"><img class="card-img-top" src="static/img/kft.jpg" alt=""></a>
                 <div class="card-body">
                   <h5 class="card-title">
                     <a href="#">100ct Bubble Tea</a>
@@ -739,7 +739,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#"><img class="card-img-top" src="img/kft.jpg" alt=""></a>
+                <a href="#"><img class="card-img-top" src="static/img/kft.jpg" alt=""></a>
                 <div class="card-body">
                   <h5 class="card-title">
                     <a href="#">100ct Bubble Tea</a>
@@ -752,7 +752,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#"><img class="card-img-top" src="img/kft.jpg" alt=""></a>
+                <a href="#"><img class="card-img-top" src="static/img/kft.jpg" alt=""></a>
                 <div class="card-body">
                   <h5 class="card-title">
                     <a href="#">100ct Bubble Tea</a>
@@ -765,7 +765,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#"><img class="card-img-top" src="img/kft.jpg" alt=""></a>
+                <a href="#"><img class="card-img-top" src="static/img/kft.jpg" alt=""></a>
                 <div class="card-body">
                   <h5 class="card-title">
                     <a href="#">100ct Bubble Tea</a>
@@ -778,7 +778,7 @@
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
-                <a href="#"><img class="card-img-top" src="img/kft.jpg" alt=""></a>
+                <a href="#"><img class="card-img-top" src="static/img/kft.jpg" alt=""></a>
                 <div class="card-body">
                   <h5 class="card-title">
                     <a href="#">100ct Bubble Tea</a>
@@ -810,8 +810,8 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   </body>
 
