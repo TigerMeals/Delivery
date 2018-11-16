@@ -301,8 +301,7 @@ def food_delete(food_id):
 
 ################################################################################
 # NOTE: food_items is a dictionary of key value pairs describing the food items
-# in the order. Its fields should be food_title, food_id, food_quantity_fed,
-# food_price, quantity, customization, subtotal.
+# in the order. Its fields should be food_id, quantity, customization, subtotal.
 #
 # To specify food_items in JSON format as a dictionary use the following syntax
 # food_items: { "key1": "value1", "key2": "value2 "}, ...
@@ -386,8 +385,13 @@ def order_delivered(order_id):
 def order_add():
     # TODO: if food_items differs from the expected format then alert the user
     # and do not commit to the database.
-    user_id = request.json['user_id']
+
     food_items = request.json['food_items']
+
+    #  food_id,
+    #  quantity, customization, subtotal.
+
+    user_id = request.json['user_id']
     restaurant_id = request.json['restaurant_id']
     date = request.json['date']
     order_time = request.json['order_time']
