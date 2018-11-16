@@ -295,7 +295,7 @@
 
             
             <hr class="mb-4">
-            <p><button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button></p>
+            <p><button href="http://localhost:8080/order/ordered" class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button></p>
           </form>
         </div>
       </div>

@@ -16,17 +16,17 @@ ma = Marshmallow(app)
 ################################################################################
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key = True)
-    netid = db.Column(db.Integer, unique = True)
+    netid = db.Column(db.Unicode, unique = True)
     name = db.Column(db.Unicode, unique = False)
     email = db.Column(db.Unicode, unique = False)
     birthday = db.Column(db.Unicode, unique = False)
-    phone = db.Column(db.Integer, unique = False)
+    phone = db.Column(db.Unicode, unique = False)
     address = db.Column(db.Unicode, unique = False)
     allergies = db.Column(db.Unicode, unique = False)
-    userHistory = db.Column(db.Integer, unique = False)
+    userHistory = db.Column(db.JSON, unique = False)
 
 
-    def __init__(self, netid, name, email, birthday, phone, address, allergies, userHistory = 0):
+    def __init__(self, netid, name, email, birthday, phone, address, allergies, userHistory = None):
         self.name = name
         self.email = email
         self.birthday = birthday
@@ -99,7 +99,7 @@ class Restaurant(db.Model):
     image = db.Column(db.Unicode, unique = False)
     description = db.Column(db.Unicode, unique = False)
     address = db.Column(db.Unicode, unique = False)
-    phone = db.Column(db.Integer, unique = False)
+    phone = db.Column(db.Unicode, unique = False)
     cuisine = db.Column(db.Unicode, unique = False)
     numOrders = db.Column(db.Integer, unique = False)
     servingSize = db.Column(db.Integer, unique = False)
@@ -445,7 +445,7 @@ def order_by_rest(restaurant_id):
 # Endpoint to update order
 @app.route("/order/<order_id>", methods = ["PUT"])
 def order_update(order_id):
-    order = Order.query.get(food_id)
+    order = Order.query.get(order_id)
     order.user_id = request.json['user_id']
     order.food_items = request.json['food_items']
     order.restaurant_id = request.json['restaurant_id']

@@ -189,6 +189,9 @@ def account():
         food_descriptions=food_descriptions, food_titles=food_titles,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total)
+    
+@app.route('/order/ordered')
+def order_official
 
 
 @app.route("/addtoCart/<food_id>/<quantity>")
