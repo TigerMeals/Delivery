@@ -363,89 +363,11 @@
             </div>
 
             <!-- Modal -->
-            <div class="modal fade" id="kungfutea" tabindex="-1" role="dialog" aria-labelledby="kfttitle" aria-hidden="true">
+            <div class="modal fade" id="kungfutea" tabindex="-1" role="dialog" aria-labelledby="kungfuteatitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-body">
-                      <div class="row" style="max-height: 10px;">
-                        <div class="col-lg-12 col-md-12 item-right">
-                          <button type="button" class="btn-sm btn-secondary fa fa-times fa-lg item-right" data-dismiss="modal"></button>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-lg-5">
-
-                          <img class="d-block w-100" src="./img/kft.jpg"
-                            alt="First slide">
-
-                        </div>
-
-                        <div class="col-lg-7">
-                          <div class="row">
-                            <div class="col-lg-10 float-left">
-                              <h2 class="h2-responsive product-name">
-                                <strong>100ct Bubble Tea</strong>
-                              </h2>
-                            </div>
-                          </div>
-                          <h4 class="h4-responsive">
-                            <span class="green-text">
-                              <strong>$399.90</strong>
-                            </span>
-                            <span class="grey-text">
-                              <small>
-                                100 servings
-                              </small>
-                            </span>
-                          </h4>
-
-                          Some description, add allergens here. Link to restaurant.
-                          <br><br>
-                          Dietary restrictions: <br>
-                          <button type="button" class="btn-sm btn-info" disabled>Contains sugar</button> <button type="button" class="btn-sm btn-info" disabled>Contains dairy</button>
-
-
-                          <div class="card-body">
-                          </div>
-
-                          <div class="row">
-                            <br>
-                            <div class="col-lg-4 col-md-4">
-
-                              <select class="form-control" name="cc_exp_mo" size="0">
-                                  <option value="01">1</option>
-                                  <option value="02">2</option>
-                                  <option value="03">3</option>
-                                  <option value="04">4</option>
-                                  <option value="05">5</option>
-                                  <option value="06">6</option>
-                                  <option value="07">7</option>
-                                  <option value="08">8</option>
-                                  <option value="09">9</option>
-                                  <option value="10">10</option>
-                              </select>
-                              <label>Select quantity</label>
-
-                            </div>
-
-                            <div class="col-lg-8 col-md-8">
-                              <div class="text-center item-right">
-                                <button class="btn btn-primary">Add to cart
-                                  <i class="fa fa-cart-plus ml-2" aria-hidden="true"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              <!-- <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h3 class="modal-title" id="kfttitle">100ct Bubble Tea</h3>
+                    <h3 class="modal-title" id="kungfuteatitle">100ct Bubble Tea</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -468,7 +390,12 @@
                         <br><br>
                         Dietary restrictions:
                         <br>
-                        <button type="button" class="btn-sm btn-info" disabled>Contains sugar</button> <button type="button" class="btn-sm btn-info" disabled>Contains dairy</button>
+                        <button type="button" class="btn-sm btn-info" disabled>Contains dairy</button> <button type="button" class="btn-sm btn-info" disabled>Contains sugar</button>
+                        <br><br>
+                        <div class="form-group">
+                          <label for="customization">Comments:</label>
+                          <textarea class="form-control" id="customization" rows="1"></textarea>
+                        </div>
                       </div>
 
                       <div class="col-lg-6 col-md-6">
@@ -478,7 +405,7 @@
                     </div>
                   </div>
                   <div class="modal-footer">
-
+                    <!-- <div class="row"> -->
                       <div class="col-lg-3 col-md-3">
                         <select class="form-control item-left" name="cc_exp_mo" size="0">
                             <option value="01">1</option>
@@ -503,18 +430,13 @@
                       </div>
                   </div>
                 </div>
-              </div> -->
+              </div>
             </div>
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">
                 <a href="#" data-toggle="modal" data-target="#exampleModalCenter"><img class="card-img-top" src="./img/tacoria.jpg" alt=""></a>
                 <div class="card-body">
-                  <!-- <h4 class="card-title">
-                    <a href="#">Soft Taco Party Platter</a>
-                  </h4>
-                  <h5>Tacoria | <p class="text-success">$64.99</p></h5>
-                  <h6>40 servings</h6> -->
                   <h5 class="card-title">
                     <a href="#" data-toggle="modal" data-target="#exampleModalCenter">Soft Taco Party Platter</a>
                   </h5>
@@ -526,84 +448,6 @@
 
             <!-- Modal -->
             <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-              <!-- <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                  <div class="modal-content">
-                    <div class="modal-body">
-                      <div class="row" style="max-height: 10px;">
-                        <div class="col-lg-12 col-md-12 item-right">
-                          <button type="button" class="btn-sm btn-secondary fa fa-times fa-lg item-right" data-dismiss="modal"></button>
-                        </div>
-                      </div>
-                      <div class="row">
-                        <div class="col-lg-5">
-
-                          <img class="d-block w-100" src="./img/tacoria.jpg"
-                            alt="First slide">
-
-                        </div>
-
-                        <div class="col-lg-7">
-                          <div class="row">
-                            <div class="col-lg-10 float-left">
-                              <h2 class="h2-responsive product-name">
-                                <strong>Soft Taco Party Platter</strong>
-                              </h2>
-                            </div>
-                          </div>
-                          <h4 class="h4-responsive">
-                            <span class="green-text">
-                              <strong>$84.99</strong>
-                            </span>
-                            <span class="grey-text">
-                              <small>
-                                40 servings
-                              </small>
-                            </span>
-                          </h4>
-
-                          Some description, add allergens here. Link to restaurant.
-                          <br><br>
-                          Dietary restrictions: <br>
-                          <button type="button" class="btn-sm btn-info" disabled>Contains meat</button> <button type="button" class="btn-sm btn-info" disabled>Contains dairy</button>
-
-
-                          <div class="card-body">
-                          </div>
-
-                          <div class="row">
-                            <br>
-                            <div class="col-lg-4 col-md-4">
-
-                              <select class="form-control" name="cc_exp_mo" size="0">
-                                  <option value="01">1</option>
-                                  <option value="02">2</option>
-                                  <option value="03">3</option>
-                                  <option value="04">4</option>
-                                  <option value="05">5</option>
-                                  <option value="06">6</option>
-                                  <option value="07">7</option>
-                                  <option value="08">8</option>
-                                  <option value="09">9</option>
-                                  <option value="10">10</option>
-                              </select>
-                              <label>Select quantity</label>
-
-                            </div>
-
-                            <div class="col-lg-8 col-md-8">
-                              <div class="text-center item-right">
-                                <button class="btn btn-primary">Add to cart
-                                  <i class="fa fa-cart-plus ml-2" aria-hidden="true"></i>
-                                </button>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
               <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -631,6 +475,11 @@
                         Dietary restrictions:
                         <br>
                         <button type="button" class="btn-sm btn-info" disabled>Contains meat</button> <button type="button" class="btn-sm btn-info" disabled>Contains dairy</button>
+                        <br><br>
+                        <div class="form-group">
+                          <label for="customization">Comments:</label>
+                          <textarea class="form-control" id="customization" rows="1"></textarea>
+                        </div>
                       </div>
 
                       <div class="col-lg-6 col-md-6">
