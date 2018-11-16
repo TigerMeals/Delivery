@@ -2,13 +2,14 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
+import json
 
 app = Flask(__name__)
 
 # Which database to fetch from:
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'crud.sqlite')
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/delivery'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -25,7 +26,7 @@ class User(db.Model):
     userHistory = db.Column(db.Integer, unique = False)
 
 
-    def __init__(self, netid, name, email, birthday, phone, address, allergies, userHistory = ''):
+    def __init__(self, netid, name, email, birthday, phone, address, allergies, userHistory = 0):
         self.name = name
         self.email = email
         self.birthday = birthday
@@ -283,7 +284,7 @@ def food_filter_cuisine():
 @app.route('/food/filter/allergies', methods = ['POST'])
 def food_filter_allergies():
     allergies = request.json['allergies'].strip()
-    print allergies
+    print (allergies)
     food = Food.query.filter_by(allergies = allergies)
     #### NEED TO FIX THIS FUNCTION
     return foods_schema.jsonify(food)
@@ -299,10 +300,27 @@ def food_delete(food_id):
     return food_schema.jsonify(food)
 
 ################################################################################
+# NOTE: food_items is a dictionary of key value pairs describing the food items
+# in the order. Its fields should be food_id, quantity, customization, subtotal.
+#
+# To specify food_items in JSON format as a dictionary use the following syntax
+# food_items: { "key1": "value1", "key2": "value2 "}, ...
+#
+# IMPORTANT: No extra steps are needed! No need to serialize before passing to
+# this function as long as request type is JSON.
+#
+# To retrieve food_items in JSON format as a dictionary, get the dictionary by
+# its key. Now you can refer to any key in the food_items field by its key.
+# get_items = result["food_items"]
+# title = get_items["food_title"]
+#
+# IMPORTANT: No extra steps are needed! No need to unserialize after loading
+# the JSON result. The JSON result itself must be serialized, but not food_items
+# in particular.
 class Order(db.Model):
     order_id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, unique = False)
-    food_ids = db.Column(db.Unicode, unique = False)
+    food_items = db.Column(db.JSON, unique = False)
     restaurant_id = db.Column(db.Integer, unique = False)
     ordered = db.Column(db.Boolean, unique = False)
     paid = db.Column(db.Boolean, unique = False)
@@ -313,9 +331,9 @@ class Order(db.Model):
     delivery_time = db.Column(db.Unicode, unique = False)
     location = db.Column(db.Unicode, unique = False)
 
-    def __init__(self, user_id, food_ids, restaurant_id, date, order_time, location, delivery_time = None, ordered = True, paid = False, delivery_in_process = False, delivered = False):
+    def __init__(self, user_id, food_items, restaurant_id, date, order_time, location, delivery_time = None, ordered = False, paid = False, delivery_in_process = False, delivered = False):
         self.user_id = user_id
-        self.food_ids = food_ids
+        self.food_items = food_items
         self.restaurant_id = restaurant_id
         self.ordered = ordered
         self.paid = paid
@@ -328,7 +346,7 @@ class Order(db.Model):
 
 class OrderSchema(ma.Schema):
     class Meta:
-        fields = ('order_id', 'user_id', 'food_ids', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location')
+        fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location')
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many = True)
@@ -356,29 +374,69 @@ def order_delivered(order_id):
 
     return order_schema.jsonify(order)
 
+# Endpoint to place an order
+@app.route('/order/ordered/<order_id>', methods = ["POST"])
+def order_ordered(order_id):
+    order = Order.query.get(order_id)
+
+    order.ordered = True
+
+    db.session.commit()
+
+    return order_schema.jsonify(order)
 
 # Endpoint to create new order
+# To specify food_items in JSON format as a dictionary use the following syntax
+# food_items: { "key1": "value1", "key2": "value2 "}, ...
+#
+# IMPORTANT: No extra steps are needed! No need to serialize before passing to
+# this function as long as request type is JSON.
+#
 @app.route("/order", methods = ["POST"])
 def order_add():
+    # TODO: if food_items differs from the expected format then alert the user
+    # and do not commit to the database.
+
+    food_items = request.json['food_items']
+
+    #  food_id,
+    #  quantity, customization, subtotal.
+
     user_id = request.json['user_id']
-    food_ids = request.json['food_ids']
     restaurant_id = request.json['restaurant_id']
     date = request.json['date']
     order_time = request.json['order_time']
     location = request.json['location']
-
-    new_order = Order(user_id, food_ids, restaurant_id, date, order_time, location)
+    new_order = Order(user_id, food_items, restaurant_id, date, order_time, location)
     db.session.add(new_order)
     db.session.commit()
     return order_schema.jsonify(new_order)
 
 # Endpoint to get order detail by id
+#
+# To retrieve food_items in JSON format as a dictionary, get the dictionary by
+# its key. Now you can refer to any key in the food_items field by its key.
+# get_items = result["food_items"]
+# title = get_items["food_title"]
+#
+# IMPORTANT: No extra steps are needed! No need to unserialize after loading
+# the JSON result. The JSON result itself must be unserialized, but not
+# food_items in particular.
 @app.route("/order/<order_id>", methods = ["GET"])
 def order_detail(order_id):
     order = Order.query.get(order_id)
     return order_schema.jsonify(order)
 
 # Endpoint to return orders from a restuarant
+#
+# To retrieve food_items in JSON format as a dictionary, get the dictionary by
+# its key. Now you can refer to any key in the food_items field by its key.
+# get_items = result["food_items"]
+# title = get_items["food_title"]
+#
+# IMPORTANT: No extra steps are needed! No need to unserialize after loading
+# the JSON result. The JSON result itself must be unserialized, but not
+# food_items in particular.
 @app.route("/order/restaurant/<restaurant_id>", methods = ["GET"])
 def order_by_rest(restaurant_id):
     order = Order.query.filter_by(restaurant_id = restaurant_id).all()
@@ -389,7 +447,7 @@ def order_by_rest(restaurant_id):
 def order_update(order_id):
     order = Order.query.get(food_id)
     order.user_id = request.json['user_id']
-    order.food_ids = request.json['food_ids']
+    order.food_items = request.json['food_items']
     order.restaurant_id = request.json['restaurant_id']
     order.ordered = request.json['ordered']
     order.paid = request.json['paid']
@@ -399,6 +457,15 @@ def order_update(order_id):
     order.location = request.json['location']
 
     db.session.commit()
+    return order_schema.jsonify(order)
+
+# Endpoint to return current user pending order_id (Before he finishes
+# Checkout)
+@app.route("/order/current/<user_id>", methods = ["GET"])
+def order_current(user_id):
+
+    order = Order.query.filter_by(user_id = user_id, ordered = False).first()
+
     return order_schema.jsonify(order)
 
 # Endpoint to delete order

@@ -37,25 +37,51 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+            <li class="nav-item-bar">
               <a class="nav-link" href="http://localhost:8080/home">Home</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item-bar">
               <a class="nav-link" href="http://localhost:8080/about">About</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item-bar">
               <a class="nav-link" href="http://localhost:8080/meals">Meals</a>
-                
             </li>
-            <li class="nav-item">
+            <li class="nav-item-bar">
               <a class="nav-link" href="http://localhost:8080/account">My Account</a>
             </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Checkout</a>
-              <span class="sr-only">(current)</span>
-            </li>
+            <li class="nav-item-bar justify-content-end dropdown active">
+          <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
+            <span class="sr-only">(current)</span>
+          <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
+            {% for i in range(0, length_cart) %}
+              <li>
+                  <span class="item">
+                    <span class="item-left">
+                        <img src="{{food_images[i]}}" alt="" />
+                        <span class="item-info">
+                            <span>{{food_titles[i]}}</span>
+                            <span>price: {{food_prices[i]}}</span>
+                        </span>
+                    </span>
+                    <span class="item-right">
+                        <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
+                    </span>
+                </span>
+              </li>
+            
+              <li class="divider"></li>
+              <li>
+                <span class="checkout-text item-right">Subtotal: {{food_subtotals[i]}}</span><br>
+            {% endfor %}
+                <a class="checkout-text item-left" href="http://localhost:8080/cart">View Cart</a>
+                <a class="checkout-text item-right" href="http://localhost:8080/checkout">Checkout</a>
+                <br>
+              </li>
+
+          </ul>
+        </li>
           </ul>
         </div>
       </div>
@@ -72,40 +98,45 @@
         <div class="col-md-4 order-md-2 mb-4">
           <h4 class="d-flex justify-content-between align-items-center mb-3">
             <span class="text-muted">Your cart</span>
-            <span class="badge badge-secondary badge-pill">3</span>
+            <span class="badge badge-secondary badge-pill">{{length_cart}}</span>
           </h4>
           <ul class="list-group mb-3">
+            {% for i in range(0, length_cart) %}
             <li class="list-group-item d-flex justify-content-between lh-condensed">
+            <table>
+            <tr>
               <div>
-                <h6 class="my-0">Product name</h6>
-                <small class="text-muted">Brief description</small>
+                <td>
+                <h6 class="mx-0">{{food_titles[i]}}</h6>
+              </td>
+              <td>
+                <span class="text-muted">${{food_prices[i]}}</span>
+                
+              </td>
               </div>
-              <span class="text-muted">$12</span>
+            </tr>
+            <tr>
+              <td>
+              <small class="text-muted">{{food_descriptions[i]}}</small>
+            </td>
+            <td>
+              <span class="text-muted">x{{food_multiplier[i]}}</span>
+            </td>
+            </tr>
+            </table>
             </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Second product</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$8</span>
-            </li>
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0">Third item</h6>
-                <small class="text-muted">Brief description</small>
-              </div>
-              <span class="text-muted">$5</span>
-            </li>
+            {% endfor %}
+            
             <li class="list-group-item d-flex justify-content-between bg-light">
               <div class="text-success">
                 <h6 class="my-0">Promo code</h6>
                 <small>EXAMPLECODE</small>
               </div>
-              <span class="text-success">-$5</span>
+              <span class="text-success">-$0</span>
             </li>
             <li class="list-group-item d-flex justify-content-between">
               <span>Total (USD)</span>
-              <strong>$20</strong>
+              <strong>${{total}}</strong>
             </li>
           </ul>
 
@@ -123,15 +154,15 @@
           <form class="needs-validation" novalidate>
             <div class="row">
               <div class="col-md-6 mb-3">
-                <label for="firstName">First name</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="" required>
+                <label for="firstName">First Name</label>
+                <input type="text" class="form-control" id="firstName" placeholder="" value="{{name[0]}}" required>
                 <div class="invalid-feedback">
                   Valid first name is required.
                 </div>
               </div>
               <div class="col-md-6 mb-3">
-                <label for="lastName">Last name</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="" required>
+                <label for="lastName">Last Name</label>
+                <input type="text" class="form-control" id="lastName" placeholder="" value="{{name[1]}}" required>
                 <div class="invalid-feedback">
                   Valid last name is required.
                 </div>
@@ -139,12 +170,12 @@
             </div>
 
             <div class="mb-3">
-              <label for="username">Username</label>
+              <label for="username">Net ID</label>
               <div class="input-group">
                 <div class="input-group-prepend">
                   <span class="input-group-text">@</span>
                 </div>
-                <input type="text" class="form-control" id="username" placeholder="Username" required>
+                <input type="text" class="form-control" id="username" placeholder="" value = "{{netid}}" required>
                 <div class="invalid-feedback" style="width: 100%;">
                   Your username is required.
                 </div>
@@ -152,8 +183,8 @@
             </div>
 
             <div class="mb-3">
-              <label for="email">Email <span class="text-muted">(Optional)</span></label>
-              <input type="email" class="form-control" id="email" placeholder="you@example.com">
+              <label for="email">Email<span class="text-muted">(Optional)</span></label>
+              <input type="email" class="form-control" id="email" placeholder="" value = "{{email}}">
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
               </div>
@@ -161,46 +192,13 @@
 
             <div class="mb-3">
               <label for="address">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="1234 Main St" required>
+              <input type="text" class="form-control" id="address" placeholder="" value="{{address}}" required>
               <div class="invalid-feedback">
                 Please enter your shipping address.
               </div>
             </div>
 
-            <div class="mb-3">
-              <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-              <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-            </div>
-
-            <div class="row">
-              <div class="col-md-5 mb-3">
-                <label for="country">Country</label>
-                <select class="custom-select d-block w-100" id="country" required>
-                  <option value="">Choose...</option>
-                  <option>United States</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please select a valid country.
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="state">State</label>
-                <select class="custom-select d-block w-100" id="state" required>
-                  <option value="">Choose...</option>
-                  <option>California</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please provide a valid state.
-                </div>
-              </div>
-              <div class="col-md-3 mb-3">
-                <label for="zip">Zip</label>
-                <input type="text" class="form-control" id="zip" placeholder="" required>
-                <div class="invalid-feedback">
-                  Zip code required.
-                </div>
-              </div>
-            </div>
+            
             <hr class="mb-4">
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="same-address">
@@ -263,8 +261,39 @@
                   Security code required
                 </div>
               </div>
-
             </div>
+
+            <div class="row">
+              <div class="col-md-4 mb-3">
+                <label for="country">Country</label>
+                <select class="custom-select d-block w-100" id="country" required>
+                  <option value="">Choose...</option>
+                  <option>United States</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please select a valid country.
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="state">State</label>
+                <select class="custom-select d-block w-100" id="state" required>
+                  <option value="">Choose...</option>
+                  <option>California</option>
+                </select>
+                <div class="invalid-feedback">
+                  Please provide a valid state.
+                </div>
+              </div>
+              <div class="col-md-4 mb-3">
+                <label for="zip">Zip</label>
+                <input type="text" class="form-control" id="zip" placeholder="" required>
+                <div class="invalid-feedback">
+                  Zip code required.
+                </div>
+              </div>
+            </div>
+
+            
             <hr class="mb-4">
             <p><button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button></p>
           </form>

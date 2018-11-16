@@ -23,33 +23,58 @@
 
 <body>
 
+    <!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="#">TigerMeals Delivery</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
+        <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
+            <li class="nav-item-bar">
               <a class="nav-link" href="http://localhost:8080/home">Home</a>
-              
             </li>
-            <li class="nav-item">
+            <li class="nav-item-bar">
               <a class="nav-link" href="http://localhost:8080/about">About</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item-bar">
               <a class="nav-link" href="http://localhost:8080/meals">Meals</a>
-                
             </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">My Account</a>
-              <span class="sr-only">(current)</span>
+            <li class="nav-item-bar active">
+              <a class="nav-link" href="http://localhost:8080/account">My Account</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="http://localhost:8080/checkout">Checkout</a>
-              
-            </li>
+            <li class="nav-item-bar justify-content-end dropdown">
+          <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
+            <span class="sr-only">(current)</span>
+          <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
+            {% for i in range(0, length_cart) %}
+              <li>
+                  <span class="item">
+                    <span class="item-left">
+                        <img src="{{food_images[i]}}" alt="" />
+                        <span class="item-info">
+                            <span>{{food_titles[i]}}</span>
+                            <span>price: {{food_prices[i]}}</span>
+                        </span>
+                    </span>
+                    <span class="item-right">
+                        <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
+                    </span>
+                </span>
+              </li>
+            
+              <li class="divider"></li>
+              <li>
+                <span class="checkout-text item-right">Subtotal: {{food_subtotals[i]}}</span><br>
+            {% endfor %}
+                <a class="checkout-text item-left" href="http://localhost:8080/cart">View Cart</a>
+                <a class="checkout-text item-right" href="http://localhost:8080/checkout">Checkout</a>
+                <br>
+              </li>
+
+          </ul>
+        </li>
           </ul>
         </div>
       </div>

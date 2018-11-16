@@ -35,26 +35,28 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item-bar">
               <a class="nav-link" href="http://localhost:8080/home">Home</a>
+            </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="http://localhost:8080/about">About</a>
             </li>
             <li class="nav-item-bar active">
               <a class="nav-link" href="http://localhost:8080/meals">Meals</a>
-                <span class="sr-only">(current)</span>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="http://localhost:8080/account">My Account</a>
             </li>
             <li class="nav-item-bar justify-content-end dropdown">
-          <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart (4) <i class="fa fa-caret-down"></i></a>
+          <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
+            <span class="sr-only">(current)</span>
           <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
+            {% for i in range(0, length_cart) %}
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_1.jpg" alt="" />
+                        <img src="{{food_images[i]}}" alt="" />
                         <span class="item-info">
-                            <span>Item name</span>
-                            <span>price: $27.00</span>
+                            <span>{{food_titles[i]}}</span>
+                            <span>price: {{food_prices[i]}}</span>
                         </span>
                     </span>
                     <span class="item-right">
@@ -62,51 +64,11 @@
                     </span>
                 </span>
               </li>
-              <li>
-                  <span class="item">
-                    <span class="item-left">
-                        <img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_2.jpg" alt="" />
-                        <span class="item-info">
-                            <span>Item name</span>
-                            <span>price: $3.00</span>
-                        </span>
-                    </span>
-                    <span class="item-right">
-                        <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-                    </span>
-                </span>
-              </li>
-              <li>
-                  <span class="item">
-                    <span class="item-left">
-                        <img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_3.jpeg" alt="" />
-                        <span class="item-info">
-                            <span>Item name</span>
-                            <span>price: $12.00</span>
-                        </span>
-                    </span>
-                    <span class="item-right">
-                        <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-                    </span>
-                </span>
-              </li>
-              <li>
-                  <span class="item">
-                    <span class="item-left">
-                        <img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_4.jpg" alt="" />
-                        <span class="item-info">
-                            <span>Item name</span>
-                            <span>price: $7.00</span>
-                        </span>
-                    </span>
-                    <span class="item-right">
-                        <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-                    </span>
-                </span>
-              </li>
+            
               <li class="divider"></li>
               <li>
-                <span class="checkout-text item-right">Subtotal: $49.00</span><br>
+                <span class="checkout-text item-right">Subtotal: {{food_subtotals[i]}}</span><br>
+            {% endfor %}
                 <a class="checkout-text item-left" href="http://localhost:8080/cart">View Cart</a>
                 <a class="checkout-text item-right" href="http://localhost:8080/checkout">Checkout</a>
                 <br>
@@ -412,7 +374,7 @@
                             <br>
                             <div class="col-lg-4 col-md-4">
 
-                              <select class="form-control" name="cc_exp_mo" size="0">
+                              <select id = "quantity_of_tea" class="form-control" name="cc_exp_mo" size="0">
                                   <option value="01">1</option>
                                   <option value="02">2</option>
                                   <option value="03">3</option>
@@ -430,9 +392,11 @@
 
                             <div class="col-lg-8 col-md-8">
                               <div class="text-center item-right">
-                                <button class="btn btn-primary">Add to cart
+                                
+                                <button id="Add_kung_fu" class="btn btn-primary">Add to cart
                                   <i class="fa fa-cart-plus ml-2" aria-hidden="true"></i>
                                 </button>
+                              
                               </div>
                             </div>
                           </div>
@@ -593,7 +557,11 @@
               <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h3 class="modal-title" id="exampleModalCenterTitle">Soft Taco Party Platter</h3>
+                    <hidden id="food_id_tacoria">2
+                    </hidden>
+                    <hidden id="food_id_kungfu">1
+                    </hidden>
+                    <h3 class="modal-title" id="">Soft Taco Party Platter</h3>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -628,7 +596,7 @@
                   <div class="modal-footer">
                     <!-- <div class="row"> -->
                       <div class="col-lg-3 col-md-3">
-                        <select class="form-control item-left" name="cc_exp_mo" size="0">
+                        <select id = "quantity_of_tacos" class="form-control item-left" name="cc_exp_mo" size="0">
                             <option value="01">1</option>
                             <option value="02">2</option>
                             <option value="03">3</option>
@@ -653,6 +621,25 @@
                 </div>
               </div>
             </div>
+
+            <script>
+              //document.getElementById("Add_kung_fu").addEventListener("click", addtoCart);
+
+              async function addtoCart() {
+                console.log("Adding to cart")
+                console.log(document.getElementById("food_id_kungfu").textContent)
+                console.log(document.getElementById("quantity_of_tea").value)
+                let url = "http://localhost:8080/addtoCart/" + document.getElementById("food_id_kungfu").textContent.trim() + "/" + document.getElementById("quantity_of_tea").value
+                console.log(url)
+
+                let response = await fetch(url)
+                let responseJson = response.json()
+
+                console.log(responseJson)
+                // let url = "http://localhost:8080/addtoCart/" + document.getElementById("food_id_kungfu").textContent + "/" + document.getElementById('quantity_of_tea').value;
+                // let response = await fetch(url);
+              }
+            </script>
 
             <div class="col-lg-4 col-md-6 mb-4">
               <div class="card border-light h-100">

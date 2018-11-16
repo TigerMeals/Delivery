@@ -46,16 +46,17 @@
 							<a class="nav-link" href="http://localhost:8080/account">My Account</a>
 						</li>
 						<li class="nav-item-bar justify-content-end dropdown active">
-					<a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart (4) <i class="fa fa-caret-down"></i></a>
+					<a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
 						<span class="sr-only">(current)</span>
 					<ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
+						{% for i in range(0, length_cart) %}
 							<li>
 									<span class="item">
 										<span class="item-left">
-												<img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_1.jpg" alt="" />
+												<img src="{{food_images[i]}}" alt="" />
 												<span class="item-info">
-														<span>Item name</span>
-														<span>price: $27.00</span>
+														<span>{{food_titles[i]}}</span>
+														<span>price: {{food_prices[i]}}</span>
 												</span>
 										</span>
 										<span class="item-right">
@@ -63,51 +64,11 @@
 										</span>
 								</span>
 							</li>
-							<li>
-									<span class="item">
-										<span class="item-left">
-												<img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_2.jpg" alt="" />
-												<span class="item-info">
-														<span>Item name</span>
-														<span>price: $3.00</span>
-												</span>
-										</span>
-										<span class="item-right">
-												<button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-										</span>
-								</span>
-							</li>
-							<li>
-									<span class="item">
-										<span class="item-left">
-												<img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_3.jpeg" alt="" />
-												<span class="item-info">
-														<span>Item name</span>
-														<span>price: $12.00</span>
-												</span>
-										</span>
-										<span class="item-right">
-												<button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-										</span>
-								</span>
-							</li>
-							<li>
-									<span class="item">
-										<span class="item-left">
-												<img src="http://www.prepbootstrap.com/Content/images/template/menucartdropdown/item_4.jpg" alt="" />
-												<span class="item-info">
-														<span>Item name</span>
-														<span>price: $7.00</span>
-												</span>
-										</span>
-										<span class="item-right">
-												<button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-										</span>
-								</span>
-							</li>
+						
 							<li class="divider"></li>
 							<li>
-								<span class="checkout-text item-right">Subtotal: $49.00</span><br>
+								<span class="checkout-text item-right">Subtotal: {{food_subtotals[i]}}</span><br>
+						{% endfor %}
                 <a class="checkout-text item-left" href="http://localhost:8080/cart">View Cart</a>
                 <a class="checkout-text item-right" href="http://localhost:8080/checkout">Checkout</a>
                 <br>
@@ -130,26 +91,30 @@
 									<th style="padding-top:1rem; padding-bottom:0rem; border-top:0rem;border-bottom:0rem;"> <h2> View Cart </h2> </th>
 								</tr>
 								<tr>
-									<th style="width:62%; color:black;">Product</th>
+									<th style="width:50%; color:black;">Product</th>
 									<th style="width:10%; color:black;">Price</th>
 									<th style="width:8%; color:black;">Quantity</th>
-									<th style="width:14%; color:black;" class="text-center">Subtotal</th>
+									
+									<th style="width:10%; color:black;" class="text-center">Subtotal</th>
+									<th style="width:16%; color:black;">Serving Size</th>
 									<th style="width:6%"></th>
 								</tr>
 							</thead>
 							<tbody>
+								{% for i in range(0, length_cart) %}
 								<tr>
 									<td data-th="Product">
 										<div class="row">
-											<div class="col-sm-5 hidden-xs"><img src="static/img/panera.jpg" alt="..." class="img-cart"/></div>
+											<div class="col-sm-5 hidden-xs"><img src="{{food_images[i]}}" alt="..." class="img-cart"/></div>
 											<div class="col-sm-7">
-												<h4 class="nomargin">Panera Breakfast Bagels</h4>
-												<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+												<h4 class="nomargin">{{food_titles[i]}}</h4>
+												<p>{{food_descriptions[i]}}</p>
 											</div>
 										</div>
 									</td>
-									<td data-th="Price">$1.99</td>
+									<td data-th="Price">{{food_prices[i]}}</td>
 									<td data-th="Quantity">
+								
                     <select class="form-control" name="cc_exp_mo" size="0">
                         <option value="01">1</option>
                         <option value="02">2</option>
@@ -163,79 +128,22 @@
                         <option value="10">10</option>
                     </select>
 									</td>
-									<td data-th="Subtotal" class="text-center">1.99</td>
+									<td data-th="Subtotal" class="text-center">{{food_subtotals[i]}}</td>
+									<td data-th="Serving Size" class= "text-center">
+									{{food_quantity_feds[i]}}</td>
 									<td class="actions" data-th="">
 										<button class="btn btn-info btn-sm"><i class="fa fa-sync-alt"></i></button>
 										<button class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
 									</td>
 								</tr>
-								<tr>
-									<td data-th="Product">
-										<div class="row">
-											<div class="col-sm-5 hidden-xs"><img src="static/img/kft.jpg" alt="..." class="img-cart"/></div>
-											<div class="col-sm-7">
-												<h4 class="nomargin">Bubble Tea for 15</h4>
-												<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
-											</div>
-										</div>
-									</td>
-									<td data-th="Price">$1.99</td>
-									<td data-th="Quantity">
-                    <select class="form-control" name="cc_exp_mo" size="0">
-                        <option value="01">1</option>
-                        <option value="02">2</option>
-                        <option value="03">3</option>
-                        <option value="04">4</option>
-                        <option value="05">5</option>
-                        <option value="06">6</option>
-                        <option value="07">7</option>
-                        <option value="08">8</option>
-                        <option value="09">9</option>
-                        <option value="10">10</option>
-                    </select>
-									</td>
-									<td data-th="Subtotal" class="text-center">1.99</td>
-									<td class="actions" data-th="">
-										<button class="btn btn-info btn-sm"><i class="fa fa-sync-alt"></i></button>
-										<button class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
-									</td>
-								</tr>
-								<tr>
-									<td data-th="Product">
-										<div class="row">
-											<div class="col-sm-5 hidden-xs"><img src="static/img/tacoria.jpg" alt="..." class="img-cart"/></div>
-											<div class="col-sm-7">
-												<h4 class="nomargin">Taco Party Platter for 20</h4>
-												<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
-											</div>
-										</div>
-									</td>
-									<td data-th="Price">$1.99</td>
-									<td data-th="Quantity">
-                    <select class="form-control" name="cc_exp_mo" size="0">
-                        <option value="01">1</option>
-                        <option value="02">2</option>
-                        <option value="03">3</option>
-                        <option value="04">4</option>
-                        <option value="05">5</option>
-                        <option value="06">6</option>
-                        <option value="07">7</option>
-                        <option value="08">8</option>
-                        <option value="09">9</option>
-                        <option value="10">10</option>
-                    </select>
-									</td>
-									<td data-th="Subtotal" class="text-center">1.99</td>
-									<td class="actions" data-th="">
-										<button class="btn btn-info btn-sm"><i class="fa fa-sync-alt"></i></button>
-										<button class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
-									</td>
-								</tr>
+								{% endfor %}
 							</tbody>
+
+
 							<tfoot>
 								<tr class="visible-xs">
 									<td colspan="3" class="hidden-xs"></td>
-									<td class="hidden-xs text-center"><strong>Total $1.99</strong></td>
+									<td class="hidden-xs text-center"><strong>Total: {{total}}</strong></td>
 								</tr>
 								<tr>
 									<td><a href="http://localhost:8080/meals" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
