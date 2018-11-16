@@ -38,13 +38,13 @@
             <li class="nav-item-bar">
               <a class="nav-link" href="about.html">About</a>
             </li>
-            <li class="nav-item-bar active">
+            <li class="nav-item-bar">
               <a class="nav-link" href="#">My Meals</a>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="#">My Account</a>
             </li>
-            <li class="nav-item-bar">
+            <li class="nav-item-bar active">
               <a class="nav-link" href="orders.html">View Orders (4 Active)</a>
               <span class="sr-only">(current)</span>
             </li>
@@ -170,11 +170,11 @@
       <table id="restaurantlistings" class="table table-hover table-condensed">
   				<thead>
   					<tr style="color:black;">
-                <h2 class="float-left">Pending Orders</h2>
+                <h2>Pending Orders</h2>
   					</tr>
   				</thead>
 					<tbody>
-						<tr>
+						<!-- <tr>
 							<td class="col-9" data-th="Product">
                 <div class="row">
                   <h4 class="nomargin float-left">Order #9408294072</h4>
@@ -201,7 +201,7 @@
 						</tr>
 
 
-            <!-- Modal -->
+
             <div class="modal fade" id="panera" tabindex="-1" role="dialog" aria-labelledby="paneratitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
@@ -235,7 +235,7 @@
                            <label for="quantity">Quantity served</label>
                            <input type="number" class="form-control" id="quantity" placeholder="30">
                          </div>
-                         <div class="form-group col-12">  <!-- Checkbox Group !-->
+                         <div class="form-group col-12">
                            <label class="control-label">Dietary Restrictions</label>
                            <div class="row">
                              <div class="col-4">
@@ -332,7 +332,7 @@
 						</tr>
 
 
-            <!-- Modal -->
+
             <div class="modal fade" id="kft" tabindex="-1" role="dialog" aria-labelledby="kfttitle" aria-hidden="true">
               <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                 <div class="modal-content">
@@ -366,7 +366,7 @@
                            <label for="quantity">Quantity served</label>
                            <input type="number" class="form-control" id="quantity" placeholder="30">
                          </div>
-                         <div class="form-group col-12">  <!-- Checkbox Group !-->
+                         <div class="form-group col-12">
                            <label class="control-label">Dietary Restrictions</label>
                            <div class="row">
                              <div class="col-4">
@@ -433,47 +433,164 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
 
 
             <tr>
-              <div class="row">
-                <div class="row">
-                  <h3 class="nomargin float-left">Order #9408294050</h3>
-                  <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#panera">
-                    View order
-                  </button>
-                </div>
-                <div class="row">
-                  <div class="col-5">
-                    <div class="row">
-                      <h5>Catering Package(s): </h5>
-                      <p class="text-muted ml-2" href="#">Taco Assortment for Twenty People</p>
+              <table>
+                <thead>
+        					<tr style="color:black;">
+                    <div class="row mb-1">
+                      <div class="col-10">
+                        <h3 class="nomargin float-left">Order #9408294050</h3>
+                      </div>
+                      <div class="col-2">
+                        <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#panera">
+                          View order
+                        </button>
+                      </div>
                     </div>
-                    <div class="row">
-                      <h5>User: </h5>
-                      <p class="text-muted ml-2">Janet Lee</p>
+        					</tr>
+        				</thead>
+                <tbody>
+                  <tr>
+                    <div class="row col-12">
+                      <div class="col-5">
+                        <div class="row">
+                          <h5>Catering Package(s): </h5>
+                          <p class="text-muted ml-2" href="#">Taco Assortment for Twenty People</p>
+                        </div>
+                        <div class="row">
+                          <h5>User: </h5>
+                          <p class="text-muted ml-2">Janet Lee</p>
+                        </div>
+                        <div class="row">
+                          <h5>Special requests: </h5>
+                          <p class="text-muted ml-2">Extra cheese</p>
+                        </div>
+                      </div>
+                      <div class="col-5">
+                        <div class="row">
+                          <h5>Delivery Time: </h5>
+                          <p class="text-muted ml-2">November 17, 2018 8:30PM</p>
+                        </div>
+                        <div class="row">
+                          <h5>Location: </h5>
+                          <p class="text-muted ml-2">Murray Dodge Cafe</p>
+                        </div>
+                      </div>
+                      <div class="col-2">
+                        $71.99
+                      </div>
                     </div>
-                    <div class="row">
-                      <h5>Special requests: </h5>
-                      <p class="text-muted ml-2">Extra cheese</p>
-                    </div>
-                  </div>
-                  <div class="col-5">
-                    <div class="row">
-                      <h5>Delivery Time: </h5>
-                      <p class="text-muted ml-2">November 17, 2018 8:30PM</p>
-                    </div>
-                    <div class="row">
-                      <h5>Location: </h5>
-                      <p class="text-muted ml-2">Murray Dodge Cafe</p>
-                    </div>
-                  </div>
-                  <div class="col-2">
-                    $71.99
-                  </div>
-                </div>
+                </tr>
+                </tbody>
+              </table>
            </tr>
+
+           <tr>
+             <table>
+               <thead>
+                 <tr style="color:black;">
+                   <div class="row mb-1">
+                     <div class="col-10">
+                       <h3 class="nomargin float-left">Order #9408294050</h3>
+                     </div>
+                     <div class="col-2">
+                       <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#panera">
+                         View order
+                       </button>
+                     </div>
+                   </div>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr>
+                   <div class="row col-12">
+                     <div class="col-5">
+                       <div class="row">
+                         <h5>Catering Package(s): </h5>
+                         <p class="text-muted ml-2" href="#">Taco Assortment for Twenty People</p>
+                       </div>
+                       <div class="row">
+                         <h5>User: </h5>
+                         <p class="text-muted ml-2">Janet Lee</p>
+                       </div>
+                       <div class="row">
+                         <h5>Special requests: </h5>
+                         <p class="text-muted ml-2">Extra cheese</p>
+                       </div>
+                     </div>
+                     <div class="col-5">
+                       <div class="row">
+                         <h5>Delivery Time: </h5>
+                         <p class="text-muted ml-2">November 17, 2018 8:30PM</p>
+                       </div>
+                       <div class="row">
+                         <h5>Location: </h5>
+                         <p class="text-muted ml-2">Murray Dodge Cafe</p>
+                       </div>
+                     </div>
+                     <div class="col-2">
+                       $71.99
+                     </div>
+                   </div>
+               </tr>
+               </tbody>
+             </table>
+          </tr>
+
+          <tr>
+            <table>
+              <thead>
+                <tr style="color:black;">
+                  <div class="row mb-1">
+                    <div class="col-10">
+                      <h3 class="nomargin float-left">Order #9408294050</h3>
+                    </div>
+                    <div class="col-2">
+                      <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#panera">
+                        View order
+                      </button>
+                    </div>
+                  </div>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <div class="row col-12">
+                    <div class="col-5">
+                      <div class="row">
+                        <h5>Catering Package(s): </h5>
+                        <p class="text-muted ml-2" href="#">Taco Assortment for Twenty People</p>
+                      </div>
+                      <div class="row">
+                        <h5>User: </h5>
+                        <p class="text-muted ml-2">Janet Lee</p>
+                      </div>
+                      <div class="row">
+                        <h5>Special requests: </h5>
+                        <p class="text-muted ml-2">Extra cheese</p>
+                      </div>
+                    </div>
+                    <div class="col-5">
+                      <div class="row">
+                        <h5>Delivery Time: </h5>
+                        <p class="text-muted ml-2">November 17, 2018 8:30PM</p>
+                      </div>
+                      <div class="row">
+                        <h5>Location: </h5>
+                        <p class="text-muted ml-2">Murray Dodge Cafe</p>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      $71.99
+                    </div>
+                  </div>
+              </tr>
+              </tbody>
+            </table>
+         </tr>
 
 					</tbody>
 					<tfoot>
