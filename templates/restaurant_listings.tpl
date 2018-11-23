@@ -38,15 +38,15 @@
             <li class="nav-item-bar">
               <a class="nav-link" href="/about?id={{id}}">About</a>
             </li>
-            <li class="nav-item-bar">
+            <li class="nav-item-bar active">
               <a class="nav-link" href="/listings?id={{id}}">My Meals</a>
+                <span class="sr-only">(current)</span>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/account?id={{id}}">My Account</a>
             </li>
-            <li class="nav-item-bar active">
+            <li class="nav-item-bar">
               <a class="nav-link" href="/orders?id={{id}}">View Orders (4 Active)</a>
-              <span class="sr-only">(current)</span>
             </li>
           </ul>
         </div>
@@ -60,8 +60,8 @@
 
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
-        <h2>My orders</h2>
-        <p class="lead">Please view your orders below. We thank you for partnering with TigerMeals Delivery.</p>
+        <h2>My Catering Packages</h2>
+        <p class="lead">Please view your listings below. We thank you for partnering with TigerMeals Delivery.</p>
       </div>
 
       <!-- Modal -->
@@ -77,7 +77,7 @@
             <div class="modal-body">
               <div class="row">
                 <div class="col-lg-4 col-md-4">
-                  <img class="d-block w-100" src="./img/panera.jpg"
+                  <img class="d-block w-100" src="/static/img/panera.jpg"
                     alt="First slide">
                 </div>
                 <div class="col-lg-8 col-md-8">
@@ -170,19 +170,20 @@
       <table id="restaurantlistings" class="table table-hover table-condensed">
   				<thead>
   					<tr style="color:black;">
-                <h2>Pending Orders</h2>
+                <h2 class="float-left">My Active Listings</h2>
+                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#newListing" aria-label="Close">Create a new listing</button>
   					</tr>
   				</thead>
 					<tbody>
-            {% for o in orders %}
-              {% with order=o %}
-                {% include 'display_order.tpl' %}
+            {% for l in listings %}
+              {% with listing=l %}
+                {% include 'display_listings.tpl' %}
               {% endwith %}
             {% endfor %}
-  					</tbody>
-  					<tfoot>
-  					</tfoot>
-  				</table>
+					</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
 
 		  </div>
 

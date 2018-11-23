@@ -29,7 +29,28 @@ def orders():
                 print (key + " : " + str(order[key]))
             order['price'] = price
             order['packages'] = packages
-        return render_template('order.tpl', orders=orders, id=id)
+        print ()
+
+    return render_template('order.tpl', orders=orders, id=id)
+
+# Endpoint to view restaurant's listings
+@app.route("/listings")
+def listings():
+    id = request.args.get('id')
+    listings_url = DATABASE_URL + "/food/restaurant/" + id
+    res = requests.get(listings_url)
+
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        listings = json.loads(res.content)
+        print ("Request Successful: ")
+        for listing in listings:
+            for key in listing:
+                print (key + " : " + str(listing[key]))
+        print ()
+
+        return render_template('restaurant_listings.tpl', listings=listings, id=id)
 
 if __name__ == '__main__':
     app.run()
