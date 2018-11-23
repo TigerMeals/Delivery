@@ -184,3 +184,70 @@ ul.dropdown-cart li .item-right button{
 	table#cart tfoot td .btn{display:block;}
 
 }
+
+.card-header-restaurant {
+  padding: 0.5rem 0.75rem;
+  padding-bottom: 0rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+@media screen and (max-width: 600px) {
+    table#restaurantlistings tbody td .form-control{
+		/* width:20%; */
+		display: inline !important;
+	}
+	.actions .btn{
+		width:36%;
+		margin:1.5em 0;
+	}
+
+	.actions .btn-info{
+		float:left;
+	}
+	.actions .btn-danger{
+		float:right;
+	}
+
+	table#restaurantlistings thead { display: none; }
+  table#restaurantlistings thead td {padding: 0.4rem;}
+	table#restaurantlistings tbody td { display: block; padding: .6rem; min-width:420px;}
+	table#restaurantlistings tbody tr td:first-child { background: #333; color: #fff; }
+	table#restaurantlistings tbody td:before {
+		content: attr(data-th); font-weight: bold;
+		display: inline-block; width: 8rem;
+	}
+
+
+
+	table#restaurantlistings tfoot td{display:block; }
+	table#restaurantlistings tfoot td .btn{display:block;}
+
+}
+
+.edit_icon {
+  color: #1F9BCF;
+  margin-top: 4px;
+}
+
+.restuarant_list_button {
+  margin-right: 6px;
+  padding: 4px;
+}
+
+.white_button {
+  background-color: white;
+  border-width: 0;
+  border-color: white;
+}
+
+.img-listing {
+  max-width: 215px;
+  height: auto;
+}
+
+.new_listing {
+  float: right;
+  margin-right: 0;
+}
