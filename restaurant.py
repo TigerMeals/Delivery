@@ -48,9 +48,71 @@ def listings():
         for listing in listings:
             for key in listing:
                 print (key + " : " + str(listing[key]))
+            listing['allergies'] = listing['allergies'].split(",")
         print ()
 
         return render_template('restaurant_listings.tpl', listings=listings, id=id)
+
+# Endpoint to add a new restaurant listing.
+@app.route("/listings/add", methods=["POST"])
+def add_listing():
+    id = request.args.get('id')
+    add_food_url = DATABASE_URL + "/food"
+    allergens = ""
+    for checkbox in range(1, 5):
+        value = request.form.get('allergens' + str(checkbox))
+        if value:
+            allergens += value + ","
+
+    if (len(allergens) > 0):
+        # allergens ends with a comma if there is at least one value appended, remove it
+        allergens = allergens[:-1]
+
+    entry = {
+        "title": request.form.get('title'),
+        "description": request.form.get('description'),
+        "image": "/static/img/burrito.jpg",
+        "quantity_fed": request.form.get('quantity'),
+        "price": request.form.get('price'),
+        "allergies": allergens,
+        "restaurant_id": id,
+        "cuisine": "IMPLEMENT_LATER",
+        "timesOrdered": 0,
+    }
+
+    res = requests.post(add_food_url, json = entry)
+    if not res.ok:
+        res.raise_for_status()
+    return redirect('/listings?id=' + id)
+
+# Endpoint to update a new restaurant listing.
+@app.route("/listings/update", methods=["POST"])
+def update_listing():
+    id = request.args.get('id')
+
+    add_food_url = DATABASE_URL + "/food/" + str(request.form.get("food_id"))
+    allergens = ""
+    for checkbox in range(1, 5):
+        value = request.form.get('allergens' + str(checkbox))
+        if value:
+            allergens += value + ","
+
+    if (len(allergens) > 0):
+        # allergens ends with a comma if there is at least one value appended, remove it
+        allergens = allergens[:-1]
+
+    updatedEntry = {
+        "title": request.form.get('title'),
+        "description": request.form.get('description'),
+        "quantity_fed": request.form.get('quantity'),
+        "price": request.form.get('price'),
+        "allergies": allergens,
+    }
+
+    res = requests.put(add_food_url, json = updatedEntry)
+    if not res.ok:
+        res.raise_for_status()
+    return redirect('/listings?id=' + id)
 
 if __name__ == '__main__':
     app.run()

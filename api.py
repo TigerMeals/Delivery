@@ -236,17 +236,13 @@ def food_by_rest(restaurant_id):
 
 # Endpoint to update food
 @app.route("/food/<food_id>", methods = ["PUT"])
-def food_update(restaurant_id):
+def food_update(food_id):
     food = Food.query.get(food_id)
     food.title = request.json['title']
     food.description = request.json['description']
-    food.image = request.json['image']
     food.quantity_fed = request.json['quantity_fed']
     food.price = request.json['price']
     food.allergies = request.json['allergies']
-    food.restaurant_id = request.json['restaurant_id']
-    food.timesOrdered = request.json['timesOrdered']
-    food.cuisine = request.json['cuisine']
 
     db.session.commit()
     return food_schema.jsonify(food)
