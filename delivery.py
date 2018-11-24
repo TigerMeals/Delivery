@@ -49,12 +49,6 @@ def _getCart(user_id):
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids
 
 
-## POST METHOD
-def _postJSON(url, data):
-    r = requests.post(url=url, data=data)
-
-    response = r.json()
-    return response
 
 # Get the current user information
 def _getUser(user_id):
