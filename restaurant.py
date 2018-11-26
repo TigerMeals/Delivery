@@ -6,6 +6,20 @@ import os
 app = Flask(__name__)
 DATABASE_URL = "http://localhost:5000"
 
+
+# Endpoint to view homepage
+@app.route("/")
+@app.route("/home")
+def home():
+    id = request.args.get('id')
+    return render_template('home_restaurant.tpl', id=id)
+
+
+@app.route("/about")
+def about():
+    id = request.args.get('id')
+    return render_template('about_restaurant.tpl', id=id)
+
 # Endpoint to view restaurant's orders
 @app.route("/orders")
 def orders():
@@ -31,7 +45,7 @@ def orders():
             order['packages'] = packages
         print ()
 
-    return render_template('order.tpl', orders=orders, id=id)
+    return render_template('orders_restaurant.tpl', orders=orders, id=id)
 
 # Endpoint to view restaurant's listings
 @app.route("/listings")
@@ -51,7 +65,7 @@ def listings():
             listing['allergies'] = listing['allergies'].split(",")
         print ()
 
-        return render_template('restaurant_listings.tpl', listings=listings, id=id)
+        return render_template('listings_restaurant.tpl', listings=listings, id=id)
 
 # Endpoint to add a new restaurant listing.
 @app.route("/listings/add", methods=["POST"])

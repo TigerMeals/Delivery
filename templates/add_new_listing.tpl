@@ -15,24 +15,35 @@
               alt="First slide">
           </div>
           <div class="col-lg-8 col-md-8">
-
-            <form id="add_listing" action="/listings/add?id={{id}}" method="POST">
+            <form id="add_listing" action="/listings/add?id={{id}}" method="POST" class="needs-validation" novalidate>
               <div class="form-group">
-                <label for="exampleInputEmail1">Title</label>
-                <input type="text" class="form-control" name="title" placeholder="Panera Breakfast Bagels">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" name="title" placeholder="Panera Breakfast Bagels" required>
+                <div class="invalid-feedback">
+                  This field is required.
+                </div>
               </div>
               <div class="form-group">
-                 <label for="exampleInputPassword1">Description</label>
-                 <textarea class="form-control" name="description" rows="2" placeholder="Yummy yum yum bagels."></textarea>
+                 <label for="description">Description</label>
+                 <textarea class="form-control" name="description" rows="2" placeholder="Yummy yum yum bagels." required></textarea>
+                 <div class="invalid-feedback">
+                   This field is required.
+                 </div>
               </div>
               <div class="row">
                <div class="form-group col-6">
                  <label for="price">Price ($)</label>
-                 <input type="number" class="form-control" name="price" placeholder="15.00">
+                 <input type="number" class="form-control" name="price" placeholder="15.00" required>
+                 <div class="invalid-feedback">
+                   This field is required.
+                 </div>
                </div>
                <div class="form-group col-6">
                  <label for="quantity">Quantity served</label>
-                 <input type="number" class="form-control" name="quantity" placeholder="30">
+                 <input type="number" class="form-control" name="quantity" placeholder="30" required>
+                 <div class="invalid-feedback">
+                   This field is required.
+                 </div>
                </div>
                <div class="form-group col-12">  <!-- Checkbox Group !-->
                  <label class="control-label">Dietary Restrictions</label>

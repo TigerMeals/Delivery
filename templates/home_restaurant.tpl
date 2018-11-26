@@ -9,29 +9,20 @@
     <meta name="author" content="">
 
     <title>TigerMeals Delivery - Home</title>
+    <link rel='icon' href='/static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
-    <link href="static/css/bootstrap-lux.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-lux.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="static/css/shop-homepage.css" rel="stylesheet">
-    <link href="static/css/bootstrap-slider.css" rel="stylesheet">
+    <link href="/static/css/shop-homepage.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <!-- Custom fonts for this template -->
-    <link href="static/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
-    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
-
-    <!-- Plugin CSS -->
-    <link href="static/vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="static/css/creative.min.css" rel="stylesheet">
+    <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
 
   </head>
 
-  <body id="page-top">
+  <body>
 
     <!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
@@ -43,68 +34,37 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item-bar active">
-              <a class="nav-link" href="http://localhost:8080/home?id={{id}}">Home</a>
+              <a class="nav-link" href="/?id={{id}}">Home</a>
+              <span class="sr-only">(current)</span>
+            <li class="nav-item-bar">
+              <a class="nav-link" href="/about?id={{id}}">About</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="http://localhost:8080/about?id={{id}}">About</a>
+              <a class="nav-link" href="/listings?id={{id}}">My Meals</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="http://localhost:8080/meals?id={{id}}">Meals</a>
+              <a class="nav-link" href="/account?id={{id}}">My Account</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="http://localhost:8080/account?id={{id}}">My Account</a>
+              <a class="nav-link" href="/orders?id={{id}}">View Orders (4 Active)</a>
             </li>
-            <li class="nav-item-bar justify-content-end dropdown">
-          <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
-            <span class="sr-only">(current)</span>
-          <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
-            {% for i in range(0, length_cart) %}
-              <li>
-                  <span class="item">
-                    <span class="item-left">
-                        <img src="{{food_images[i]}}" alt="" />
-                        <span class="item-info">
-                            <span>{{food_titles[i]}}</span>
-                            <span>price: {{food_prices[i]}}</span>
-                        </span>
-                    </span>
-                    <span class="item-right">
-                        <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-                    </span>
-                </span>
-              </li>
-
-              <li class="divider"></li>
-              <li>
-                <span class="checkout-text item-right">Subtotal: {{food_subtotals[i]}}</span><br>
-            {% endfor %}
-                <a class="checkout-text item-left" href="http://localhost:8080/cart?id={{id}}">View Cart</a>
-                <a class="checkout-text item-right" href="http://localhost:8080/checkout?id={{id}}">Checkout</a>
-                <br>
-              </li>
-
-          </ul>
-        </li>
           </ul>
         </div>
       </div>
     </nav>
 
-
-    
+    <!-- Page Content -->
     <div class="container">
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
         <h2>Welcome to TigerMeals!</h2>
       </div>
 
-
       <section class="bg-orange text-white">
         <div class="py-3">
         <img style="width:50%" class ="d-block mx-auto mb-4" src='https://i.etsystatic.com/6245917/r/il/58adec/992813431/il_570xN.992813431_dvm1.jpg'>
         </div>
-    </section>
-
+      </section>
 
       <section id="services">
         <div class="container">
@@ -148,7 +108,7 @@
           </div>
         </div>
       </section>
-  </div>
+    </div>
 
     <footer class="py-4 red-bar">
       <div class="container">
