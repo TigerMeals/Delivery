@@ -1,6 +1,6 @@
 <div class="col-lg-4 col-md-6 mb-4">
   <div class="card border-light h-100">
-    <a href="#" data-toggle="modal" data-target="#{{meal.food_id}}"><img class="card-img-top" src="static/img/tacoria.jpg" alt=""></a>
+    <a href="#" data-toggle="modal" data-target="#{{meal.food_id}}"><img class="card-img-top" src="{{meal.image}}" alt=""></a>
     <div class="card-body">
       <!-- <h4 class="card-title">
         <a href="#">Soft Taco Party Platter</a>
@@ -52,7 +52,7 @@
           </div>
 
           <div class="col-lg-6 col-md-6">
-            <img class="d-block w-100" src="/static/img/tacoria.jpg"
+            <img class="d-block w-100" src="{{meal.image}}"
               alt="First slide">
           </div>
         </div>
