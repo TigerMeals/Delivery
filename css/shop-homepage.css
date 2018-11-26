@@ -251,3 +251,10 @@ ul.dropdown-cart li .item-right button{
   float: right;
   margin-right: 0;
 }
+
+.thinborder {
+  border-width: 2px;
+  border-color: black;
+  border-top: 1px;
+  border-bottom: 1px;
+}
