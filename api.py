@@ -16,17 +16,17 @@ ma = Marshmallow(app)
 ################################################################################
 class User(db.Model):
     user_id = db.Column(db.Integer, primary_key = True)
-    netid = db.Column(db.Integer, unique = True)
+    netid = db.Column(db.Unicode, unique = True)
     name = db.Column(db.Unicode, unique = False)
     email = db.Column(db.Unicode, unique = False)
     birthday = db.Column(db.Unicode, unique = False)
-    phone = db.Column(db.Integer, unique = False)
+    phone = db.Column(db.Unicode, unique = False)
     address = db.Column(db.Unicode, unique = False)
     allergies = db.Column(db.Unicode, unique = False)
-    userHistory = db.Column(db.Integer, unique = False)
+    userHistory = db.Column(db.JSON, unique = False)
 
 
-    def __init__(self, netid, name, email, birthday, phone, address, allergies, userHistory = ''):
+    def __init__(self, netid, name, email, birthday, phone, address, allergies, userHistory = 0):
         self.name = name
         self.email = email
         self.birthday = birthday
@@ -236,17 +236,13 @@ def food_by_rest(restaurant_id):
 
 # Endpoint to update food
 @app.route("/food/<food_id>", methods = ["PUT"])
-def food_update(restaurant_id):
+def food_update(food_id):
     food = Food.query.get(food_id)
     food.title = request.json['title']
     food.description = request.json['description']
-    food.image = request.json['image']
     food.quantity_fed = request.json['quantity_fed']
     food.price = request.json['price']
     food.allergies = request.json['allergies']
-    food.restaurant_id = request.json['restaurant_id']
-    food.timesOrdered = request.json['timesOrdered']
-    food.cuisine = request.json['cuisine']
 
     db.session.commit()
     return food_schema.jsonify(food)
@@ -331,7 +327,7 @@ class Order(db.Model):
     delivery_time = db.Column(db.Unicode, unique = False)
     location = db.Column(db.Unicode, unique = False)
 
-    def __init__(self, user_id, food_items, restaurant_id, date, order_time, location, delivery_time = None, ordered = True, paid = False, delivery_in_process = False, delivered = False):
+    def __init__(self, user_id, food_items, restaurant_id, date, order_time, location, delivery_time = None, ordered = False, paid = False, delivery_in_process = False, delivered = False):
         self.user_id = user_id
         self.food_items = food_items
         self.restaurant_id = restaurant_id
@@ -370,6 +366,17 @@ def order_delivered(order_id):
     order.delivered = True
     order.delivery_in_process = False
     order.delivery_time = request.json['delivery_time']
+    db.session.commit()
+
+    return order_schema.jsonify(order)
+
+# Endpoint to place an order
+@app.route('/order/ordered/<order_id>', methods = ["POST"])
+def order_ordered(order_id):
+    order = Order.query.get(order_id)
+
+    order.ordered = True
+
     db.session.commit()
 
     return order_schema.jsonify(order)
@@ -434,7 +441,7 @@ def order_by_rest(restaurant_id):
 # Endpoint to update order
 @app.route("/order/<order_id>", methods = ["PUT"])
 def order_update(order_id):
-    order = Order.query.get(food_id)
+    order = Order.query.get(order_id)
     order.user_id = request.json['user_id']
     order.food_items = request.json['food_items']
     order.restaurant_id = request.json['restaurant_id']
@@ -446,6 +453,17 @@ def order_update(order_id):
     order.location = request.json['location']
 
     db.session.commit()
+    return order_schema.jsonify(order)
+
+# Endpoint to return current user pending order_id (Before he finishes
+# Checkout)
+@app.route("/order/current/<user_id>", methods = ["GET"])
+def order_current(user_id):
+    order = Order.query.filter_by(user_id = user_id, ordered = False).first()
+    if order is None:
+        order = Order(user_id, [], -1, None, None, None)
+        db.session.add(order)
+        db.session.commit()
     return order_schema.jsonify(order)
 
 # Endpoint to delete order
