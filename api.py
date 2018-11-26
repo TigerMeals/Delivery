@@ -435,7 +435,7 @@ def order_detail(order_id):
 # food_items in particular.
 @app.route("/order/restaurant/<restaurant_id>", methods = ["GET"])
 def order_by_rest(restaurant_id):
-    order = Order.query.filter_by(restaurant_id = restaurant_id).all()
+    order = Order.query.filter_by(restaurant_id = restaurant_id).filter_by(ordered=True).all()
     return orders_schema.jsonify(order)
 
 # Endpoint to update order

@@ -62,7 +62,10 @@ def listings():
         for listing in listings:
             for key in listing:
                 print (key + " : " + str(listing[key]))
-            listing['allergies'] = listing['allergies'].split(",")
+            if listing['allergies'] is "":
+                listing['allergies'] = []
+            else:
+                listing['allergies'] = listing['allergies'].split(",")
         print ()
 
         return render_template('listings_restaurant.tpl', listings=listings, id=id)

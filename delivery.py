@@ -234,9 +234,10 @@ def meals():
             restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
             res = requests.get(restaurant_url)
             # Splice allergies into a list
-            allergies = meal['allergies']
-            allergiesList = allergies.split(",")
-            meal['allergies'] = allergiesList
+            if meal['allergies'] is "":
+                meal['allergies'] = []
+            else:
+                meal['allergies'] = meal['allergies'].split(",")
             if not res.ok:
                 res.raise_for_status()
             else:
@@ -297,6 +298,18 @@ def upload_cart():
     return redirect('/meals?id=' + id)
 
 
+@app.route("/ordered", methods=["POST"])
+def ordered():
+    id = request.args.get('id')
+    current_order_url = DATABASE_URL + "/order/current/" + str(id)
+    res = requests.get(current_order_url)
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        order_id = json.loads(res.content)['order_id']
+        order_ordered_url = DATABASE_URL + "/order/ordered/" + str(order_id)
+        res = requests.post(order_ordered_url)
+    return redirect('/meals?id=' + id)
 
 # @app.route("/test")
 # def test():

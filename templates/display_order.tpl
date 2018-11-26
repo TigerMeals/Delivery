@@ -13,6 +13,7 @@
     </div>
     <div class="row">
       <h5>Catering Package(s): </h5>
+    </div>
       {% for p in order.packages %}
         {% with package=p %}
           {% include 'display_package.tpl' %}
