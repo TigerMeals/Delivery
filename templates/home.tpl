@@ -62,7 +62,7 @@
               <li>
                   <span class="item">
                     <span class="item-left">
-                        <img src="{{food_images[i]}}" alt="" />
+                        <img src="{{food_images[i]}}" style="width:35px;height:35px;" alt="" />
                         <span class="item-info">
                             <span>{{food_titles[i]}}</span>
                             <span>price: {{food_prices[i]}}</span>
@@ -78,6 +78,8 @@
               <li>
                 <span class="checkout-text item-right">Subtotal: {{food_subtotals[i]}}</span><br>
             {% endfor %}
+            <span class="checkout-text item-right">
+                Total: {{total}}</span><br>
                 <a class="checkout-text item-left" href="http://localhost:8080/cart?id={{id}}">View Cart</a>
                 <a class="checkout-text item-right" href="http://localhost:8080/checkout?id={{id}}">Checkout</a>
                 <br>

@@ -53,7 +53,10 @@
 							<li>
 									<span class="item">
 										<span class="item-left">
-												<img src="{{food_images[i]}}" alt="" />
+												<img 
+												src="{{food_images[i]}}"
+												style="width:35px;height:35px;"
+												 alt="" />
 												<span class="item-info">
 														<span>{{food_titles[i]}}</span>
 														<span>price: {{food_prices[i]}}</span>
@@ -68,7 +71,10 @@
 							<li class="divider"></li>
 							<li>
 								<span class="checkout-text item-right">Subtotal: {{food_subtotals[i]}}</span><br>
+
 						{% endfor %}
+						<span class="checkout-text item-right">
+								Total: {{total}}</span><br>
                 <a class="checkout-text item-left" href="http://localhost:8080/cart?id={{id}}">View Cart</a>
                 <a class="checkout-text item-right" href="http://localhost:8080/checkout?id={{id}}">Checkout</a>
                 <br>
@@ -107,8 +113,8 @@
 										<div class="row">
 											<div class="col-sm-5 hidden-xs"><img src="{{food_images[i]}}" alt="..." class="img-cart"/></div>
 											<div class="col-sm-7">
-												<h4 class="nomargin">{{food_titles[i]}}</h4>
-												<p>{{food_descriptions[i]}}</p>
+												<h4 class="px-4">{{food_titles[i]}}</h4>
+												<p class="px-4">{{food_descriptions[i]}}</p>
 											</div>
 										</div>
 									</td>
