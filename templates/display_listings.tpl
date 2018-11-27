@@ -46,19 +46,18 @@
                       <img class="d-block w-100" src="{{listing.image}}"
                         alt="First slide">
                     </div>
-                    <form id="update_entry{{listing.food_id}}" action="/listings/update?id={{id}}" method="POST" class="needs-validation" novalidate>
+                    <form id="update_entry{{listing.food_id}}" action="/listings/update?id={{id}}" method="POST" class="needs-validation">
                       <div class="col-lg-8 col-md-8">
                         <div class="form-group">
                           <label for="title">Title</label>
-                          <input type="text" class="form-control" name="title" value="{{listing.title}}" required>
+                          <input class="form-control" type="text" name="title" value="{{listing.title}}" required>
                           <div class="invalid-feedback">
                             This field is required.
                           </div>
                         </div>
                         <div class="form-group">
                            <label for="description">Description</label>
-                           <textarea class="form-control" name="description" rows="2" required>{{listing.description}}</textarea>
-
+                           <textarea class="form-control" name="description" rows="2">{{listing.description}}</textarea>
                         </div>
                         <div class="row">
                          <div class="form-group col-6">
