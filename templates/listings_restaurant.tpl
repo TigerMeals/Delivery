@@ -12,11 +12,11 @@
     <link rel='icon' href='/static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
-    <link href="/static/css/bootstrap-lux.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-lux.css" rel="stylesheet"></link>
 
     <!-- Custom styles for this template -->
-    <link href="/static/css/shop-homepage.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link href="/static/css/shop-homepage.css" rel="stylesheet"></link>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"></link>
 
     <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
 
@@ -35,6 +35,7 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item-bar">
               <a class="nav-link" href="/?id={{id}}">Home</a>
+            </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/about?id={{id}}">About</a>
             </li>
@@ -66,26 +67,23 @@
 
       {% include 'add_new_listing.tpl' %}
       <table id="restaurantlistings" class="table table-hover table-condensed">
-  				<thead>
-  					<tr style="color:black;">
-                <h2 class="float-left">My Active Listings</h2>
-                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#newListing" aria-label="Close">Create a new listing</button>
-  					</tr>
-  				</thead>
-					<tbody>
-            {% for l in listings %}
-              {% with listing=l %}
-                {% include 'display_listings.tpl' %}
-              {% endwith %}
-            {% endfor %}
-					</tbody>
-					<tfoot>
-					</tfoot>
-				</table>
-
-		  </div>
-
-    </div>
+        <thead>
+          <tr style="color:black;">
+            <h2 class="float-left">My Active Listings</h2>
+            <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#newListing" aria-label="Close">Create a new listing</button>
+          </tr>
+        </thead>
+        <tbody>
+          {% for l in listings %}
+            {% with listing=l %}
+              {% include 'display_listings.tpl' %}
+            {% endwith %}
+          {% endfor %}
+				</tbody>
+				<tfoot>
+				</tfoot>
+			</table>
+	  </div>
     <!-- /.container -->
 
     <!-- Footer -->
@@ -102,7 +100,6 @@
 
 
     <script>
-
     // Disables form submissions if there are invalid fields
     // Adapted from https://getbootstrap.com/docs/4.0/components/forms/#validation
     (function() {
@@ -122,6 +119,7 @@
         });
       }, false);
     })();
+
     </script>
 
   </body>

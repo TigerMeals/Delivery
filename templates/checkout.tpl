@@ -15,7 +15,6 @@
 
     <!-- Custom styles for this template -->
     <link href="static/css/shop-homepage.css" rel="stylesheet">
-    <link href="static/css/boostrap-slider.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <!-- use the nordstrom style - have dropdown filters per restaurant/allergies/cuisine type/number of Servings
@@ -144,14 +143,14 @@
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Promo code">
               <div class="input-group-append">
-                <button type="submit" class="btn btn-secondary">Redeem</button>
+                <button class="btn btn-secondary">Redeem</button>
               </div>
             </div>
           </form>
         </div>
         <div class="col-md-8 order-md-1">
           <h4 class="mb-3">Billing address</h4>
-          <form class="needs-validation" novalidate>
+          <form id="checkout_form" action="/ordered?id={{user_id}}" method="POST" class="needs-validation" novalidate>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First Name</label>
@@ -291,12 +290,11 @@
                   Zip code required.
                 </div>
               </div>
-            </div>
+            </form>
 
 
             <hr class="mb-4">
-            <p><button href="http://localhost:5000/order/ordered/{{order_id}}" class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button></p>
-          </form>
+            <p><button class="btn btn-primary btn-lg btn-block" type="submit" form="checkout_form">Continue to checkout</button></p>
         </div>
       </div>
     </div>
@@ -314,19 +312,26 @@
     <script src="static/vendor/jquery/jquery.min.js"></script>
     <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
-    // // Instantiate a slider
-    // var mySlider = new Slider("input.slider", {
-    // 	// initial options object
-    // });
-    var slider = new Slider('#ex2', {});
-    // var slider = new Slider('#numservings', {});
-    // // Call a method on the slider
-    // var value = mySlider.getValue();
-    //
-    // // For non-getter methods, you can chain together commands
-    // mySlider
-    // 	.setValue(5)
-    // 	.setValue(7);
+    // Disables form submissions if there are invalid fields
+    // Adapted from https://getbootstrap.com/docs/4.0/components/forms/#validation
+    (function() {
+      'use strict';
+      window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+          form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+              event.preventDefault();
+              event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+          }, false);
+        });
+      }, false);
+    })();
+
     </script>
   </body>
 
