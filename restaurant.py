@@ -47,6 +47,33 @@ def orders():
 
     return render_template('orders_restaurant.tpl', orders=orders, id=id)
 
+# Endpoint to view the restaurant account page
+@app.route("/account")
+def account():
+    id = request.args.get('id')
+
+    restaurant_info_url = DATABASE_URL + "/restaurant/" + id
+    res = requests.get(restaurant_info_url)
+
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        restaurant_info = json.loads(res.content)
+        print ("Request Successful: ")
+        for piece in restaurant_info:
+            print(restaurant_info[piece])
+            print(piece)
+
+        name = restaurant_info['name']
+        description = restaurant_info['description']
+        phone = restaurant_info['phone']
+        address = restaurant_info['address']
+        image = restaurant_info['image']
+
+    return render_template('account_restaurant.tpl',\
+        name=name, description=description,phone=phone,\
+        address=address, image=image)
+
 # Endpoint to view restaurant's listings
 @app.route("/listings")
 def listings():
