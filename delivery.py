@@ -86,8 +86,7 @@ def _postJSON(url, data):
 @app.route("/home")
 def home():
     print("home template requested -----------------------------")
-    user_id = request.args.get('id')
-    print("User Id: " + str(user_id))
+    user_id = 1
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -110,8 +109,7 @@ def home():
 @app.route("/cart")
 def cart():
     print("cart template requested -----------------------------")
-    user_id = request.args.get('id')
-    print("User Id: " + str(user_id))
+    user_id = 1
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -125,11 +123,7 @@ def cart():
 @app.route("/about")
 def about():
     print("about template requested -----------------------------")
-    user_id = request.args.get('id')
-    print("User Id: " + str(user_id))
-    if user_id is None:
-        # Redirect to login screen if the cookie is None
-        pass
+    user_id = 1
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -142,8 +136,7 @@ def about():
 @app.route("/checkout")
 def checkout():
     print("checkout template requested -----------------------------")
-    user_id = request.args.get('id')
-    print("User Id: " + str(user_id))
+    user_id = 1
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -168,11 +161,7 @@ def checkout():
 @app.route("/account")
 def account():
     print("account template requested -----------------------------")
-    user_id = request.args.get('id')
-    print("User Id: " + str(user_id))
-    if user_id is None:
-        # Redirect to login screen if the cookie is None
-        pass
+    user_id = 1
 
     email, name, phone, address, netid, allergies = _getUser(user_id)
 
@@ -218,7 +207,7 @@ def account():
 @app.route("/meals")
 def meals():
     orders_url = DATABASE_URL + "/food/sort/price/low-to-high"
-    user_id = request.args.get('id')
+    user_id = 1
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
@@ -247,7 +236,10 @@ def meals():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=meals, id=request.args.get('id'), food_prices = food_prices, food_subtotals = food_subtotals, food_titles = food_titles, length_cart = length_cart, food_images= food_images)
+    return render_template('meals.tpl', meals=meals, \
+        id=request.args.get('id'), food_prices = food_prices, \
+        food_subtotals = food_subtotals, food_titles = food_titles, \
+        length_cart = length_cart, total=total, food_images= food_images)
 
 @app.route("/cart/upload", methods=["POST"])
 def upload_cart():
