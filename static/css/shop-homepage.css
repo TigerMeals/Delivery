@@ -258,3 +258,7 @@ ul.dropdown-cart li .item-right button{
   border-top: 1px;
   border-bottom: 1px;
 }
+
+.text-black {
+  color: black;
+}
