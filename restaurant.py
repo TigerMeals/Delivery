@@ -72,7 +72,7 @@ def account():
 
     return render_template('account_restaurant.tpl',\
         name=name, description=description,phone=phone,\
-        address=address, image=image)
+        address=address, image=image, id=id)
 
 # Endpoint to view restaurant's listings
 @app.route("/listings")
