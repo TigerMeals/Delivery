@@ -15,11 +15,13 @@
 
     <!-- Custom styles for this template -->
     <link href="static/css/shop-homepage.css" rel="stylesheet">
-    <link href="static/css/boostrap-slider.css" rel="stylesheet">
+    <link href="static/css/clockpicker.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/dist/bootstrap-clockpicker.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
     <script>
       $(document).ready(function() {
@@ -44,7 +46,29 @@
     </script>
 
     <script type="text/javascript">
-      $('.clockpicker').clockpicker();
+      var input = $('#input-a');
+      input.commandlockpicker({
+        autoclose: true
+      });
+
+      // Manual operations
+      $('#button-a').click(function(e){
+        // Have to stop propagation here
+        e.stopPropagation();
+        input.clockpicker('show')
+                .clockpicker('toggleView', 'minutes');
+      });
+      $('#button-b').click(function(e){
+        // Have to stop propagation here
+        e.stopPropagation();
+        input.clockpicker('show')
+                .clockpicker('toggleView', 'hours');
+      });
+    </script>
+
+
+    <script type="text/javascript">
+    $('.clockpicker').clockpicker();
     </script>
 
 </head>
@@ -178,13 +202,22 @@
                         </div>
 
                         <div class="row">
-                          <div class="form-group col-6">
+                          <div class="col-6">
+
+                            <!-- <div class="container">
+                                <input id="input-a" value="" data-default="20:48">
+                                <button type="button" id="button-a">Check the  minutes</button>
+                                <button type="button" id="button-b">Check the  hours</button>
+                            </div> -->
+
                             <div class="input-group clockpicker">
                                 <input type="text" class="form-control" value="09:30">
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-time"></span>
                                 </span>
                             </div>
+
+
                           </div>
                         </div>
 
@@ -428,5 +461,12 @@
           </div>
           <!-- /.container -->
         </footer>
+
+
+      <script src="static/js/clockpicker.js"></script>
+      <script type="text/javascript" src="static/dist/bootstrap-clockpicker.min.js"></script>
+      <!-- Bootstrap core JavaScript -->
+      <script src="static/vendor/jquery/jquery.min.js"></script>
+      <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
