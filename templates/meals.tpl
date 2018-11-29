@@ -46,44 +46,61 @@
               <a class="nav-link" href="http://localhost:8080/account?id={{id}}">My Account</a>
             </li>
             <li class="nav-item-bar justify-content-end dropdown">
-          <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
-            <span class="sr-only">(current)</span>
-          <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
-            {% for i in range(0, length_cart) %}
-              <li>
-                  <span class="item">
-                    <span class="item-left">
-                        <img src="{{food_images[i]}}" 
-                        style="width:35px;height:35px;" alt="" />
-                        <span class="item-info">
-                            <span>{{food_titles[i]}}</span>
-                            <span>price: {{food_prices[i]}}</span>
-                        </span>
-                    </span>
-                    <span class="item-right">
-                        <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-                    </span>
-                </span>
-              </li>
+              <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
+    						<span class="sr-only">(current)</span>
+    					<ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
+    						{% for i in range(0, length_cart) %}
+    							<li>
+    									<span class="item">
+    										<span class="item-left">
+    												<img
+    												src="{{food_images[i]}}"
+    												style="width:35px;height:35px;"
+    												 alt="" />
+    												<span class="item-info">
+    														<span>{{food_titles[i]}}</span>
+    														<span id = "cart_price{{i}}"></span>
+                                <!-- Below needed so that price displays with 2 decimal points. -->
+                                <script>
+                                  var val = parseFloat({{food_prices[i]}}).toFixed(2);
+                                  document.getElementById('cart_price{{i}}').innerHTML = "price: $" + val;
+                                </script>
+    												</span>
+    										</span>
+    										<span class="item-right">
+    												<button class="btn-sm btn-danger btn-cart fa fa-times"></button>
+    										</span>
+    								</span>
+    							</li>
 
-              <li class="divider"></li>
-              <li>
-                <span class="checkout-text item-right">Subtotal: {{food_subtotals[i]}}</span><br>
-            {% endfor %}
-            <span class="checkout-text item-right">
-                Total: {{total}}</span><br>
-                <a class="checkout-text item-left" href="http://localhost:8080/cart?id={{id}}">View Cart</a>
-                <a class="checkout-text item-right" href="http://localhost:8080/checkout?id={{id}}">Checkout</a>
-                <br>
-              </li>
+    							<li class="divider"></li>
+    							<li>
+                    <span id = "cart_subtotal{{i}}"></span>
+                    <!-- Below needed so that price displays with 2 decimal points. -->
+                    <script>
+                      var val = parseFloat({{food_subtotals[i]}}).toFixed(2);
+                      document.getElementById('cart_subtotal{{i}}').innerHTML = "Subtotal: $" + val;
+                    </script>
 
-          </ul>
-        </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    						{% endfor %}
+    						<span class="checkout-text item-right">
+                    <span id = "total"></span>
+                    <!-- Below needed so that price displays with 2 decimal points. -->
+                    <script>
+                      var val = parseFloat({{total}}).toFixed(2);
+                      document.getElementById('total').innerHTML = "Total: $" + val;
+                    </script>
+                    <a class="checkout-text item-left" href="http://localhost:8080/cart?id={{id}}">View Cart</a>
+                    <a class="checkout-text item-right" href="http://localhost:8080/checkout?id={{id}}">Checkout</a>
+                    <br>
+    							</li>
 
+    					</ul>
+    				</li>
+    					</ul>
+    				</div>
+    			</div>
+    		</nav>
 
     <br>
     <!-- Page Content -->

@@ -21,7 +21,12 @@
       {% endfor %}
     </div>
   </td>
-  <td class="col-2" data-th="Price">{{order.price}}</td>
+  <td class="col-2" data-th="Price">$<span id="price{{order.order_id}}"</span></td>
+  <!-- Below needed so that price displays with 2 decimal points. -->
+  <script>
+    var val = parseFloat({{order.price}}).toFixed(2);
+    document.getElementById('price{{order.order_id}}').innerHTML = val;
+  </script>
   <td class="col-1" class="actions" data-th="">
     <button type="button" class="btn btn-info restuarant_list_button" data-toggle="modal" data-target="#panera">
       View order

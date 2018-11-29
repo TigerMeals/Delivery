@@ -32,14 +32,19 @@
                         <div class="row">
                          <div class="form-group col-6">
                            <label for="price">Price ($)</label>
-                           <input type="number" class="form-control" name="price" value="{{listing.price}}" required>
+                           <!-- Below needed so that price displays with 2 decimal points. -->
+                           <span id="price-input{{listing.food_id}}"></span>
+                           <script>
+                             var val = parseFloat({{listing.price}}).toFixed(2);
+                             document.getElementById('price-input{{listing.food_id}}').innerHTML = "<input type='number' class='form-control' name='price' value='" + val + "' min='0' step='0.01' required>";
+                           </script>
                            <div class="invalid-feedback">
                              This field is required.
                            </div>
                          </div>
                          <div class="form-group col-6">
                            <label for="quantity">Quantity served</label>
-                           <input type="number" class="form-control" name="quantity" value="{{listing.quantity_fed}}" required>
+                           <input type="number" class="form-control" name="quantity" value="{{listing.quantity_fed}}" min ="0" step="1" required>
                            <div class="invalid-feedback">
                              This field is required.
                            </div>
@@ -85,13 +90,6 @@
                   </div>
                 </div>
                 <div class="modal-footer">
-                  <div class="row">
-                    <div class="col-10">
-                      <div class="text-center item-right">
-                        <button class="btn btn-danger">Cancel</button>
-                      </div>
-                    </div>
-                    </div>
                     <div class="col-2">
                       <div class="text-center item-right">
                         <button class="btn btn-success" type="submit" form="update_entry{{listing.food_id}}">Save</button>

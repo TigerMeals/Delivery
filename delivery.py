@@ -86,7 +86,7 @@ def _postJSON(url, data):
 @app.route("/home")
 def home():
     print("home template requested -----------------------------")
-    user_id = 1
+    user_id = request.args.get('id')
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -109,7 +109,7 @@ def home():
 @app.route("/cart")
 def cart():
     print("cart template requested -----------------------------")
-    user_id = 1
+    user_id = request.args.get('id')
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -123,7 +123,7 @@ def cart():
 @app.route("/about")
 def about():
     print("about template requested -----------------------------")
-    user_id = 1
+    user_id = request.args.get('id')
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -136,7 +136,7 @@ def about():
 @app.route("/checkout")
 def checkout():
     print("checkout template requested -----------------------------")
-    user_id = 1
+    user_id = request.args.get('id')
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -161,7 +161,7 @@ def checkout():
 @app.route("/account")
 def account():
     print("account template requested -----------------------------")
-    user_id = 1
+    user_id = request.args.get('id')
 
     email, name, phone, address, netid, allergies = _getUser(user_id)
 
@@ -207,7 +207,7 @@ def account():
 @app.route("/meals")
 def meals():
     orders_url = DATABASE_URL + "/food/sort/price/low-to-high"
-    user_id = 1
+    user_id = request.args.get('id')
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 

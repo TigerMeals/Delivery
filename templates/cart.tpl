@@ -53,13 +53,18 @@
 							<li>
 									<span class="item">
 										<span class="item-left">
-												<img 
+												<img
 												src="{{food_images[i]}}"
 												style="width:35px;height:35px;"
 												 alt="" />
 												<span class="item-info">
 														<span>{{food_titles[i]}}</span>
-														<span>price: {{food_prices[i]}}</span>
+														<span id = "cart_price{{i}}"></span>
+                            <!-- Below needed so that price displays with 2 decimal points. -->
+                            <script>
+                              var val = parseFloat({{food_prices[i]}}).toFixed(2);
+                              document.getElementById('cart_price{{i}}').innerHTML = "price: $" + val;
+                            </script>
 												</span>
 										</span>
 										<span class="item-right">
@@ -70,11 +75,21 @@
 
 							<li class="divider"></li>
 							<li>
-								<span class="checkout-text item-right">Subtotal: {{food_subtotals[i]}}</span><br>
+                <span id = "cart_subtotal{{i}}"></span>
+                <!-- Below needed so that price displays with 2 decimal points. -->
+                <script>
+                  var val = parseFloat({{food_subtotals[i]}}).toFixed(2);
+                  document.getElementById('cart_subtotal{{i}}').innerHTML = "Subtotal: $" + val;
+                </script>
 
 						{% endfor %}
 						<span class="checkout-text item-right">
-								Total: {{total}}</span><br>
+                <span id = "total"></span>
+                <!-- Below needed so that price displays with 2 decimal points. -->
+                <script>
+                  var val = parseFloat({{total}}).toFixed(2);
+                  document.getElementById('total').innerHTML = "Total: $" + val;
+                </script>
                 <a class="checkout-text item-left" href="http://localhost:8080/cart?id={{id}}">View Cart</a>
                 <a class="checkout-text item-right" href="http://localhost:8080/checkout?id={{id}}">Checkout</a>
                 <br>
@@ -118,7 +133,12 @@
 											</div>
 										</div>
 									</td>
-									<td data-th="Price">{{food_prices[i]}}</td>
+									<td data-th="Price">$<span id = "cart_table_price{{i}}"></span></td>
+                  <!-- Below needed so that price displays with 2 decimal points. -->
+                  <script>
+                    var val = parseFloat({{food_prices[i]}}).toFixed(2);
+                    document.getElementById('cart_table_price{{i}}').innerHTML = val;
+                  </script>
 									<td data-th="Quantity">
 
                     <select class="form-control" name="cc_exp_mo" size="0">
@@ -134,7 +154,13 @@
                         <option value="10">10</option>
                     </select>
 									</td>
-									<td data-th="Subtotal" class="text-center">{{food_subtotals[i]}}</td>
+									<td data-th="Subtotal" class="text-center">$<span id = "cart_table_subtotal{{i}}"></span></td>
+
+                  <!-- Below needed so that price displays with 2 decimal points. -->
+                  <script>
+                    var val = parseFloat({{food_subtotals[i]}}).toFixed(2);
+                    document.getElementById('cart_table_subtotal{{i}}').innerHTML = val;
+                  </script>
 									<td data-th="Serving Size" class= "text-center">
 									{{food_quantity_feds[i]}}</td>
 									<td class="actions" data-th="">
@@ -149,7 +175,13 @@
 							<tfoot>
 								<tr class="visible-xs">
 									<td colspan="3" class="hidden-xs"></td>
-									<td class="hidden-xs text-center"><strong>Total: {{total}}</strong></td>
+									<td class="hidden-xs text-center"><strong>$<span id = "total_table"></span></strong></td>
+
+                  <!-- Below needed so that price displays with 2 decimal points. -->
+                  <script>
+                    var val = parseFloat({{total}}).toFixed(2);
+                    document.getElementById('total_table').innerHTML = val;
+                  </script>
 								</tr>
 								<tr>
 									<td><a href="http://localhost:8080/meals?id={{id}}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
