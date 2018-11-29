@@ -83,6 +83,11 @@
 				<tfoot>
 				</tfoot>
 			</table>
+      {% for l in listings %}
+        {% with listing=l %}
+          {% include 'listings_modals.tpl' %}
+        {% endwith %}
+      {% endfor %}
 	  </div>
     <!-- /.container -->
 
