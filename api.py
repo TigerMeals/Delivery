@@ -322,12 +322,16 @@ class Order(db.Model):
     paid = db.Column(db.Boolean, unique = False)
     delivery_in_process = db.Column(db.Boolean, unique = False)
     delivered = db.Column(db.Boolean, unique = False)
-    date = db.Column(db.Unicode, unique = False)
     order_time = db.Column(db.Unicode, unique = False)
     delivery_time = db.Column(db.Unicode, unique = False)
+    name = db.Column(db.Unicode, unique = False)
+    email = db.Column(db.Unicode, unique = False)
+    address = db.Column(db.Unicode, unique = False)
+    date = db.Column(db.Unicode, unique = False)
+    time = db.Column(db.Unicode, unique = False)
     location = db.Column(db.Unicode, unique = False)
 
-    def __init__(self, user_id, food_items, restaurant_id, date, order_time, location, delivery_time = None, ordered = False, paid = False, delivery_in_process = False, delivered = False):
+    def __init__(self, user_id, food_items, restaurant_id, date, order_time, location , delivery_time = None, ordered = False, paid = False, delivery_in_process = False, delivered = False, name = None, email = None, address = None):
         self.user_id = user_id
         self.food_items = food_items
         self.restaurant_id = restaurant_id
@@ -336,13 +340,16 @@ class Order(db.Model):
         self.delivery_in_process = delivery_in_process
         self.delivered = delivered
         self.date = date
+        self.name = name
+        self.email = email
+        self.address = address
         self.order_time = order_time
         self.location = location
         self.delivery_time = delivery_time
 
 class OrderSchema(ma.Schema):
     class Meta:
-        fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location')
+        fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address')
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many = True)
@@ -370,12 +377,18 @@ def order_delivered(order_id):
 
     return order_schema.jsonify(order)
 
+
 # Endpoint to place an order
 @app.route('/order/ordered/<order_id>', methods = ["POST"])
 def order_ordered(order_id):
     order = Order.query.get(order_id)
 
     order.ordered = True
+    order.name = request.json['name']
+    order.email = request.json['email']
+    order.location = request.json['location']
+    order.date = request.json['date']
+    order.delivery_time = request.json['time']
 
     db.session.commit()
 

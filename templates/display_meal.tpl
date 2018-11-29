@@ -36,7 +36,11 @@
           <div class="col-lg-6 col-md-6">
             <h4 class="h4-responsive">
               <span class="green-text">
-                <strong>${{meal.price}}</strong>
+                <strong>$<span id="modal_price{{meal.food_id}}"></span></strong>
+                <script>
+                  var val = parseFloat({{meal.price}}).toFixed(2);
+                  document.getElementById('modal_price{{meal.food_id}}').innerHTML = val;
+                </script>
               </span>
               <span class="grey-text">
                 <small>

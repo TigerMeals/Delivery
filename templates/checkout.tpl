@@ -175,14 +175,14 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First Name</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="{{name[0]}}" required>
+                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="" value="{{name[0]}}" required>
                 <div class="invalid-feedback">
                   Valid first name is required.
                 </div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">Last Name</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="{{name[1]}}" required>
+                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="{{name[1]}}" required>
                 <div class="invalid-feedback">
                   Valid last name is required.
                 </div>
@@ -195,7 +195,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">@</span>
                 </div>
-                <input type="text" class="form-control" id="username" placeholder="" value = "{{netid}}" required>
+                <input type="text" class="form-control" id="username" name="username" placeholder="" value = "{{netid}}" required>
                 <div class="invalid-feedback" style="width: 100%;">
                   Your username is required.
                 </div>
@@ -204,7 +204,7 @@
 
             <div class="mb-3">
               <label for="email">Email<span class="text-muted">(Optional)</span></label>
-              <input type="email" class="form-control" id="email" placeholder="" value = "{{email}}">
+              <input type="email" class="form-control" id="email" name="email" placeholder="" value = "{{email}}">
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
               </div>
@@ -212,9 +212,27 @@
 
             <div class="mb-3">
               <label for="address">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="" value="{{address}}" required>
+              <input type="text" class="form-control" id="address" name="address" placeholder="" value="{{address}}" required>
               <div class="invalid-feedback">
                 Please enter your shipping address.
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="date">Delivery Date</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+                <div class="invalid-feedback">
+                  Please enter a valid date.
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="time">Delivery Time</label>
+                <input type="time" class="form-control" id="time" name="time" value="12:00" required>
+                <div class="invalid-feedback">
+                  Please enter a valid time.
+                </div>
               </div>
             </div>
 
@@ -311,11 +329,13 @@
                   Zip code required.
                 </div>
               </div>
-            </form>
+            </div>
 
 
-            <hr class="mb-4">
-            <p><button class="btn btn-primary btn-lg btn-block" type="submit" form="checkout_form">Continue to checkout</button></p>
+
+          <hr class="mb-4">
+          </form>
+          <p><button class="btn btn-primary btn-lg btn-block" type="submit" form="checkout_form">Continue to checkout</button></p>
         </div>
       </div>
     </div>

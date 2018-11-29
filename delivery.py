@@ -293,6 +293,12 @@ def upload_cart():
 @app.route("/ordered", methods=["POST"])
 def ordered():
     id = request.args.get('id')
+    name = request.form.get('firstName') + " " + request.form.get('lastName')
+    email = request.form.get('email')
+    address = request.form.get('address')
+    date = request.form.get('date')
+    time = request.form.get('time')
+
     current_order_url = DATABASE_URL + "/order/current/" + str(id)
     res = requests.get(current_order_url)
     if not res.ok:
@@ -300,7 +306,18 @@ def ordered():
     else:
         order_id = json.loads(res.content)['order_id']
         order_ordered_url = DATABASE_URL + "/order/ordered/" + str(order_id)
-        res = requests.post(order_ordered_url)
+
+        formData = {
+        "name": name,
+        "email": email,
+        "location": address,
+        "date": date,
+        "time": time
+        }
+        print (formData)
+        res = requests.post(order_ordered_url, json=formData)
+
+
     return redirect('/meals?id=' + id)
 
 # @app.route("/test")
