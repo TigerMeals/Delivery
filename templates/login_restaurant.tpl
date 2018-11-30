@@ -8,7 +8,7 @@
   </head>
 <body id="LoginForm">
 <div class="container">
-<h1 class="form-heading">login Form</h1>
+<h1 class="form-heading">Login Form</h1>
 <div class="login-form">
 <div class="main-div">
     <div class="panel">
