@@ -47,34 +47,34 @@
             </li>
             <li class="nav-item-bar justify-content-end dropdown">
               <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
-    						<span class="sr-only">(current)</span>
-    					<ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
-    						{% for i in range(0, length_cart) %}
-    							<li>
-    									<span class="item">
-    										<span class="item-left">
-    												<img
-    												src="{{food_images[i]}}"
-    												style="width:35px;height:35px;"
-    												 alt="" />
-    												<span class="item-info">
-    														<span>{{food_titles[i]}}</span>
-    														<span id = "cart_price{{i}}"></span>
+                <span class="sr-only">(current)</span>
+              <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
+                {% for i in range(0, length_cart) %}
+                  <li>
+                      <span class="item">
+                        <span class="item-left">
+                            <img
+                            src="{{food_images[i]}}"
+                            style="width:35px;height:35px;"
+                             alt="" />
+                            <span class="item-info">
+                                <span>{{food_titles[i]}}</span>
+                                <span id = "cart_price{{i}}"></span>
                                 <!-- Below needed so that price displays with 2 decimal points. -->
                                 <script>
                                   var val = parseFloat({{food_prices[i]}}).toFixed(2);
                                   document.getElementById('cart_price{{i}}').innerHTML = "price: $" + val;
                                 </script>
-    												</span>
-    										</span>
-    										<span class="item-right">
-    												<button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-    										</span>
-    								</span>
-    							</li>
+                            </span>
+                        </span>
+                        <span class="item-right">
+                            <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
+                        </span>
+                    </span>
+                  </li>
 
-    							<li class="divider"></li>
-    							<li>
+                  <li class="divider"></li>
+                  <li>
                     <span id = "cart_subtotal{{i}}"></span>
                     <!-- Below needed so that price displays with 2 decimal points. -->
                     <script>
@@ -82,8 +82,8 @@
                       document.getElementById('cart_subtotal{{i}}').innerHTML = "Subtotal: $" + val;
                     </script>
 
-    						{% endfor %}
-    						<span class="checkout-text item-right">
+                {% endfor %}
+                <span class="checkout-text item-right">
                     <span id = "total"></span>
                     <!-- Below needed so that price displays with 2 decimal points. -->
                     <script>
@@ -93,14 +93,14 @@
                     <a class="checkout-text item-left" href="http://localhost:8080/cart?id={{id}}">View Cart</a>
                     <a class="checkout-text item-right" href="http://localhost:8080/checkout?id={{id}}">Checkout</a>
                     <br>
-    							</li>
+                  </li>
 
-    					</ul>
-    				</li>
-    					</ul>
-    				</div>
-    			</div>
-    		</nav>
+              </ul>
+            </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
 
     <br>
     <!-- Page Content -->
@@ -136,15 +136,15 @@
                 <div class="card-body">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="KungFuTea">
-                    <label class="form-check-label" for="KungFuTea">
+                    <a href = "http://localhost:8080/meals/filterRestaurantKFTea?id={{id}}">
                       Kung Fu Tea
                     </label> <br>
                     <input class="form-check-input" type="checkbox" value="" id="Panera">
-                    <label class="form-check-label" for="Panera">
+                    <a href = "http://localhost:8080/meals/filterRestaurantPanera?id={{id}}">
                       Panera
                     </label> <br>
                     <input class="form-check-input" type="checkbox" value="" id="Tacoria">
-                    <label class="form-check-label" for="Tacoria">
+                    <a href = "http://localhost:8080/meals/filterRestaurantTacoria?id={{id}}">
                       Tacoria
                     </label> <br>
                   </div>
@@ -166,19 +166,19 @@
                 <div class="card-body">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="Asian">
-                    <label class="form-check-label" for="Asian">
+                    <a href = "http://localhost:8080/meals/filterAsianCuisine?id={{id}}">
                       Asian
                     </label> <br>
                     <input class="form-check-input" type="checkbox" value="" id="American">
-                    <label class="form-check-label" for="American">
+                    <a href = "http://localhost:8080/meals/filterAmericanCuisine?id={{id}}">
                       American
                     </label> <br>
                     <input class="form-check-input" type="checkbox" value="" id="Drinks">
-                    <label class="form-check-label" for="Drinks">
+                    <a href = "http://localhost:8080/meals/filterDrinksCuisine?id={{id}}">
                       Drinks
                     </label> <br>
                     <input class="form-check-input" type="checkbox" value="" id="Healthy">
-                    <label class="form-check-label" for="Healthy">
+                    <a href = "http://localhost:8080/meals/filterHealthyCuisine?id={{id}}">
                       Healthy
                     </label> <br>
                   </div>
@@ -200,19 +200,19 @@
                 <div class="card-body">
                   <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" id="gf">
-                    <label class="form-check-label" for="gf">
+                    <a href = "http://localhost:8080/meals/allergyGF?id={{id}}">
                       Gluten Free
                     </label> <br>
                     <input class="form-check-input" type="checkbox" value="" id="kosher">
-                    <label class="form-check-label" for="kosher">
+                    <a href = "http://localhost:8080/meals/allergyKosher?id={{id}}">
                       Kosher
                     </label> <br>
                     <input class="form-check-input" type="checkbox" value="" id="vegan">
-                    <label class="form-check-label" for="vegan">
+                    <a href = "http://localhost:8080/meals/allergyVegan?id={{id}}">
                       Vegan
                     </label> <br>
                     <input class="form-check-input" type="checkbox" value="" id="vegetarian">
-                    <label class="form-check-label" for="vegetarian">
+                    <a href = "http://localhost:8080/meals/allergyVeg?id={{id}}">
                       Vegetarian
                     </label> <br>
                   </div>
@@ -233,24 +233,24 @@
               <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                 <div class="card-body">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="0-25">
-                    <label class="form-check-label" for="0-25">
+                    <input class="form-check-input" type="checkbox" value="" id="0-25" onClick = "filterServingSize()">
+                    <a href = "http://localhost:8080/meals/serving025?id={{id}}">
                       0-25
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="25-50">
-                    <label class="form-check-label" for="25-50">
+                    <input class="form-check-input" type="checkbox" value="" id="25-50" onClick = "filterServingSize()">
+                    <a href = "http://localhost:8080/meals/serving2550?id={{id}}">
                       25-50
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="50-75">
-                    <label class="form-check-label" for="50-75">
+                    <input class="form-check-input" type="checkbox" value="" id="50-75" onClick = "filterServingSize()">
+                    <a href = "http://localhost:8080/meals/serving5075?id={{id}}">
                       50-75
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="75-100">
-                    <label class="form-check-label" for="75-100">
+                    <input class="form-check-input" type="checkbox" value="" id="75-100" onClick = "filterServingSize()">
+                    <a href = "http://localhost:8080/meals/serving75100?id={{id}}">
                       75-100
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="100+">
-                    <label class="form-check-label" for="100+">
+                    <input class="form-check-input" type="checkbox" value="" id="100+" onClick = "filterServingSize()">
+                    <a href = "http://localhost:8080/meals/serving100?id={{id}}">
                       100+
                     </label> <br>
                   </div>
@@ -304,7 +304,7 @@
             <div class="col-lg-8 col-md-12 mb-8">
               <div class="sticky-top">
                 <h2>Catering Packages</h2>
-                <span class="ml-2">({{length_meals}} results)</span>
+                <span class="ml-2">(12 results)</span>
               </div>
             </div>
 
@@ -317,11 +317,11 @@
 
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item active" href="#">Featured</a>
-                    <a class="dropdown-item" href="#">Most popular</a>
-                    <a class="dropdown-item" href="#">Number of servings</a>
-                    <a class="dropdown-item" href="#">Price low to high</a>
-                    <a class="dropdown-item" href="#">Price high to low</a>
-                    <a class="dropdown-item" href="#">Recently added</a>
+                    <a class="dropdown-item" href="http://localhost:8080/meals/popularitySort?id={{id}}">Most popular</a>
+                    <a class="dropdown-item" href="http://localhost:8080/meals/servingSort?id={{id}}">Number of servings</a>
+                    <a class="dropdown-item" href="http://localhost:8080/meals?id={{id}}">Price low to high</a>
+                    <a class="dropdown-item" href="http://localhost:8080/meals/priceHighLowSort?id={{id}}">Price high to low</a>
+                    <a class="dropdown-item" href="http://localhost:8080/meals/recentlyAddedSort?id={{id}}">Recently added</a>
                   </div>
                 </div>
               </div>
@@ -360,6 +360,148 @@
     <!-- Bootstrap core JavaScript -->
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!--
+    <script>
+
+    var date = new Date();
+    var seed = date.getSeconds();
+    var request = null;
+
+    function filterServingSize(){
+      var servingFilter1 = "";
+      var servingFilter2 = "";
+      var servingFilter3 = "";
+      var servingFilter4 = "";
+      var servingFilter5 = "";
+
+      if (document.getElementById('0-25').checked == true){
+        servingFilter1 = "0-25";
+      }
+      if (document.getElementById('25-50').checked == true){
+        servingFilter2 = "25-50";
+      }
+      if (document.getElementById('50-75').checked == true){
+        servingFilter3 = "50-75";
+      }
+      if (document.getElementById('75-100').checked == true){
+        servingFilter4 = "75-100";
+      }
+      if (document.getElementById('100+').checked == true){
+        servingFilter5 = "100+";
+      }
+
+      servingFilter1 = encodeURIComponent(servingFilter1);
+      servingFilter2 = encodeURIComponent(servingFilter2);
+      servingFilter3 = encodeURIComponent(servingFilter3);
+      servingFilter4 = encodeURIComponent(servingFilter4);
+      servingFilter5 = encodeURIComponent(servingFilter5);
+
+      var url = "/allergyFiltering?allergen1=" + allergen1+ "&allergen2=" + allergen2 + "&allergen3=" + allergen3 + "&allergen4=" + allergen4 + "&messageId=" + messageId;
+
+      if (request != null) request.abort();
+
+      request = createAjaxRequest();
+      if (request == null) return;
+      request.onreadystatechange = processReadyStateChange;
+      request.open("GET", url);
+      request.send(null);
+
+    }
+
+    function filterAllergens(){
+      var allergen1 = "";
+      var allergen2 = "";
+      var allergen3 = "";
+      var allergen4 = "";
+
+      if (document.getElementById('gf').checked == true){
+        allergen1 = "Gluten Free";
+      }
+      if (document.getElementById('kosher').checked == true){
+        allergen2 = "Kosher";
+      }
+      if (document.getElementById('vegan').checked == true){
+        allergen3 = "Vegan";
+      }
+      if (document.getElementById('vegetarian').checked == true){
+        allergen4 = "Vegetarian";
+      }
+
+      allergen1 = encodeURIComponent(allergen1);
+      allergen2 = encodeURIComponent(allergen2);
+      allergen3 = encodeURIComponent(allergen3);
+      allergen4 = encodeURIComponent(allergen4);
+    
+
+      var url = "/allergyFiltering?allergen1=" + allergen1+ "&allergen2=" + allergen2 + "&allergen3=" + allergen3 + "&allergen4=" + allergen4 + "&messageId=" + messageId;
+
+      if (request != null) request.abort();
+
+      request = createAjaxRequest();
+      if (request == null) return;
+      request.onreadystatechange = processReadyStateChange;
+      request.open("GET", url);
+      request.send(null);
+
+    }
+    function processReadyStateChange()
+         {
+            var STATE_UNINITIALIZED = 0;
+            var STATE_LOADING       = 1;
+            var STATE_LOADED        = 2;
+            var STATE_INTERACTIVE   = 3;
+            var STATE_COMPLETED     = 4;
+            
+            if (this.readyState != STATE_COMPLETED)
+               return;
+            
+            if (this.status != 200)  // Request succeeded?
+            {  
+               //alert(
+               //   "AJAX error: Request failed: " + this.statusText);
+               return;
+            }
+            
+            if (this.responseText == null)  // Data received?
+            {  
+               alert("AJAX error: No data received");
+               return;
+            }
+
+            var classesText = 
+                 document.getElementById("classesResults");
+            classesText.innerHTML = this.responseText;
+         }
+
+         function createAjaxRequest() {
+            var req;
+                       
+            try  // Some browser other than Internet Explorer
+            {
+               req = new XMLHttpRequest();
+            }
+            catch (e1) 
+            {    
+               try  // Internet Explorer 6+
+               {
+                  req = new ActiveXObject("Msxml2.XMLHTTP");
+               }
+               catch (e2) 
+               {  
+                  try  // Internet Explorer 5
+                  { 
+                     req = new ActiveXObject("Microsoft.XMLHTTP"); 
+                  }
+                  catch (e3)
+                  {  
+                     req = false;
+                  }
+               }
+            }
+            return req;
+         }
+         </script> -->
 
   </body>
 
