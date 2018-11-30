@@ -216,6 +216,7 @@ def meals():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
+        length_meals = len(meals)
         # For logging purposes
         for meal in meals:
             # Make additional request to get restaurant name
@@ -239,7 +240,7 @@ def meals():
     return render_template('meals.tpl', meals=meals, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
+        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals)
 
 @app.route("/cart/upload", methods=["POST"])
 def upload_cart():

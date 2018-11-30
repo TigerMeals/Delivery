@@ -171,6 +171,23 @@ def restaurant_update(restaurant_id):
 	db.session.commit()
 	return restaurant_schema.jsonify(user)
 
+# Endpoint for restaurant's to login using email and phone number
+# verification. We will add passwords later, much later
+@app.route("/restaurant/login", methods = ["POST"])
+def restaurant_login():
+	email = request.json['email']
+	phone = request.json['phone']
+
+	restaurant = Restaurant.query.filter_by(email = email, \
+		phone = phone).first()
+
+	if restaurant is None:
+		return jsonify({
+				"error": "Invalid Login Error"
+			})
+
+	return restaurant_schema.jsonify(restaurant)
+
 # Endpoint to delete restaurant
 @app.route("/restaurant/<restaurant_id>", methods = ["DELETE"])
 def restaurant_delete(restaurant_id):
