@@ -141,7 +141,7 @@
                   </script>
 									<td data-th="Quantity">
 
-                    <select class="form-control" name="cc_exp_mo" size="0">
+                    <select id="quantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0">
                         <option value="01">1</option>
                         <option value="02">2</option>
                         <option value="03">3</option>
@@ -153,6 +153,17 @@
                         <option value="09">9</option>
                         <option value="10">10</option>
                     </select>
+                    <script>
+                      var food_quantity = {{food_multiplier[i]}};
+                      var mySelect = document.getElementById('quantity{{food_ids[i]}}');
+
+                      for(var i, j = 0; i = mySelect.options[j]; j++) {
+                          if(i.value == food_quantity) {
+                              mySelect.selectedIndex = j;
+                              break;
+                          }
+                      }
+                    </script>
 									</td>
 									<td data-th="Subtotal" class="text-center">$<span id = "cart_table_subtotal{{i}}"></span></td>
 

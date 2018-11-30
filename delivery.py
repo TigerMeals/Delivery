@@ -118,7 +118,7 @@ def cart():
     return render_template('cart.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
-        length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier = food_multiplier, id=user_id)
+        length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier = food_multiplier, food_ids = food_ids, id=user_id)
 
 @app.route("/about")
 def about():
