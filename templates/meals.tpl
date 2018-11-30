@@ -304,7 +304,7 @@
             <div class="col-lg-8 col-md-12 mb-8">
               <div class="sticky-top">
                 <h2>Catering Packages</h2>
-                <span class="ml-2">(12 results)</span>
+                <span class="ml-2">({{length_meals}} results)</span>
               </div>
             </div>
 
