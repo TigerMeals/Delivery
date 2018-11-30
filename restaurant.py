@@ -6,24 +6,56 @@ import os
 app = Flask(__name__)
 DATABASE_URL = "http://localhost:5000"
 
+# Endpoint to login a restaurant
+@app.route("/login")
+def login():
+    login_query = {
+        "email": request.args.get("email"),
+        "phone": request.args.get("phone")
+    }
+
+    print(request.args.get("email"))
+
+    login_url = DATABASE_URL + '/restaurant/login'
+
+    res = requests.post(login_url, json = login_query)
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        login_feedback = json.loads(res.content)
+        print(login_feedback)
+        if 'error' not in login_feedback:
+            return render_template('home_restaurant.tpl', id=login_feedback['restaurant_id'])
+        else:
+            return render_template('login_restaurant.tpl', error="Invalid Login")
 
 # Endpoint to view homepage
 @app.route("/")
 @app.route("/home")
 def home():
     id = request.args.get('id')
-    return render_template('home_restaurant.tpl', id=id)
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
+    else:
+        return render_template('home_restaurant.tpl', id=id)
 
 
 @app.route("/about")
 def about():
     id = request.args.get('id')
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
     return render_template('about_restaurant.tpl', id=id)
 
 # Endpoint to view restaurant's orders
 @app.route("/orders")
 def orders():
     id = request.args.get('id')
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
     orders_url = DATABASE_URL + "/order/restaurant/" + id
     res = requests.get(orders_url)
     if not res.ok:
@@ -51,7 +83,9 @@ def orders():
 @app.route("/account")
 def account():
     id = request.args.get('id')
-
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
     restaurant_info_url = DATABASE_URL + "/restaurant/" + id
     res = requests.get(restaurant_info_url)
 
@@ -78,6 +112,9 @@ def account():
 @app.route("/listings")
 def listings():
     id = request.args.get('id')
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
     listings_url = DATABASE_URL + "/food/restaurant/" + id
     res = requests.get(listings_url)
 
@@ -101,6 +138,9 @@ def listings():
 @app.route("/listings/add", methods=["POST"])
 def add_listing():
     id = request.args.get('id')
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
     add_food_url = DATABASE_URL + "/food"
     allergens = ""
     for checkbox in range(1, 5):
@@ -133,7 +173,9 @@ def add_listing():
 @app.route("/listings/update", methods=["POST"])
 def update_listing():
     id = request.args.get('id')
-
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
     add_food_url = DATABASE_URL + "/food/" + str(request.form.get("food_id"))
     allergens = ""
     for checkbox in range(1, 5):
