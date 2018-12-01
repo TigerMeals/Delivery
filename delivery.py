@@ -731,7 +731,7 @@ def meals():
         length_cart = length_cart, total=total, food_images= food_images)
 
 @app.route("/filterAsianCuisine")
-def meals():
+def mealsAsianCuisine():
     orders_url = DATABASE_URL + "/food/filter_cuisine/Asian"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
@@ -769,7 +769,7 @@ def meals():
         length_cart = length_cart, total=total, food_images= food_images)
 
 @app.route("/filterAmericanCuisine")
-def meals():
+def mealsAmericanCuisine():
     orders_url = DATABASE_URL + "/food/filter_cuisine/American"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
@@ -807,7 +807,7 @@ def meals():
         length_cart = length_cart, total=total, food_images= food_images)
 
 @app.route("/filterDrinksCuisine")
-def meals():
+def mealsDrinksCuisine():
     orders_url = DATABASE_URL + "/food/filter_cuisine/Drinks"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
@@ -845,7 +845,7 @@ def meals():
         length_cart = length_cart, total=total, food_images= food_images)
 
 @app.route("/filterHealthyCuisine")
-def meals():
+def mealsHealthyCuisine():
     orders_url = DATABASE_URL + "/food/filter_cuisine/Healthy"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
@@ -883,7 +883,7 @@ def meals():
         length_cart = length_cart, total=total, food_images= food_images)
 
 @app.route("/filterRestaurantKFTea")
-def meals():
+def mealsRestaurantKFTea():
     orders_url = DATABASE_URL + "/food/filter_restaurant/KFTea"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
@@ -921,7 +921,7 @@ def meals():
         length_cart = length_cart, total=total, food_images= food_images)
 
 @app.route("/filterRestaurantPanera")
-def meals():
+def mealsRestaurantPanera():
     orders_url = DATABASE_URL + "/food/filter_restaurant/Panera"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
@@ -959,7 +959,7 @@ def meals():
         length_cart = length_cart, total=total, food_images= food_images)
 
 @app.route("/filterRestaurantTacoria")
-def meals():
+def mealsRestaurantTacoria():
     orders_url = DATABASE_URL + "/food/filter_restaurant/Tacoria"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1

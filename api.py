@@ -286,21 +286,21 @@ def food_popularity():
     return foods_schema.jsonify(food)
 # Filter food by cuisine
 @app.route('/food/filter_cuisine/Asian', methods = ['POST'])
-def food_filter_cuisine():
+def food_filter_cuisineAsian():
     food = Food.query.filter(Food.cuisine.in_(['Asian']))
     return foods_schema.jsonify(food)
 
 @app.route('/food/filter_cuisine/American', methods = ['POST'])
-def food_filter_cuisine():
+def food_filter_cuisineAmerican():
     food = Food.query.filter(Food.cuisine.in_(['American']))
     return foods_schema.jsonify(food)
 
 @app.route('/food/filter_cuisine/Drinks', methods = ['POST'])
-def food_filter_cuisine():
+def food_filter_cuisineDrinks():
     food = Food.query.filter(Food.cuisine.in_(['Drinks']))
     return foods_schema.jsonify(food)
 @app.route('/food/filter_cuisine/Healthy', methods = ['POST'])
-def food_filter_cuisine():
+def food_filter_cuisineHealthy():
     food = Food.query.filter(Food.cuisine.in_(['Healthy']))
     return foods_schema.jsonify(food)
 
@@ -318,7 +318,7 @@ def food_filter_restaurantTacoria():
     return foods_schema.jsonify(food)
 
 @app.route('/food/filter/allergiesVeg', methods = ['POST'])
-def food_filter_allergies():
+def food_filter_allergiesVeg():
     #allergies = request.json['allergies']
     #print (allergies)
     #return "hello"
