@@ -252,16 +252,31 @@
 
             <div class="d-block my-3">
               <div class="custom-control custom-radio">
-                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" checked required>
                 <label class="custom-control-label" for="credit">Credit card</label>
               </div>
               <div class="custom-control custom-radio">
-                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
                 <label class="custom-control-label" for="debit">Debit card</label>
               </div>
               <div class="custom-control custom-radio">
-                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
                 <label class="custom-control-label" for="paypal">Paypal</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
+                <label class="custom-control-label" for="cash">Cash</label>
+                <div class="text-success" id="ifYes" style="visibility:hidden">
+                  Great! Press Checkout to complete your order
+                </div>
+                <script>
+                  function yesCash() {
+                    if (document.getElementById('cash').checked) {
+                      document.getElementById('ifYes').style.visibility ='visible';
+                    }
+                    else document.getElementById('ifYes').style.visibility ='hidden';
+                  }
+                </script>
               </div>
             </div>
             <div class="row">

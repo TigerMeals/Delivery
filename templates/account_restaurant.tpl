@@ -71,7 +71,7 @@
                 <span class="sr-only">(current)</span>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="/orders?id={{id}}">View Orders (4 Active)</a>
+              <a class="nav-link" href="/orders?id={{id}}">View Orders ({{length_orders}} Active)</a>
             </li>
           </ul>
         </div>
@@ -95,8 +95,8 @@
             <div class="panel panel-default">
               <h5>Quick Stats </h5>
             <ul class="list-group">
-              <li class="list-group-item text-left"><span class="pull-left"><strong>Listings</strong></span> 125</li>
-              <li class="list-group-item text-left"><span class="pull-left"><strong>Active Orders</strong></span> 13</li>
+              <li class="list-group-item text-left"><span class="pull-left"><strong>Listings</strong></span> {{length_listings}}</li>
+              <li class="list-group-item text-left"><span class="pull-left"><strong>Active Orders</strong></span> {{length_orders}}</li>
               <li class="list-group-item text-left"><span class="pull-left"><strong>Total Orders</strong></span> 37</li>
               <li class="list-group-item text-left"><span class="pull-left"><strong>Overall Rating</strong></span> 4.5</li>
             </ul>
@@ -155,7 +155,7 @@
                           <div class="form-group col-6">
                               <div class="col-12">
                                  <label for="website"><h5>Website</h5></label>
-                                  <input type="text" class="form-control" name="website" id="website" placeholder="enter website" title="enter your website if any.">
+                                  <input type="text" class="form-control" name="website" id="website" value="{{website}}" title="enter your website if any.">
                               </div>
                           </div>
                         </div>
@@ -165,7 +165,7 @@
 
                               <div class="col-12">
                                   <label for="email"><h5>Email</h5></label>
-                                  <input type="email" class="form-control" name="email" id="email" placeholder="enter email" title="enter your email.">
+                                  <input type="email" class="form-control" name="email" id="email" value="{{email}}" title="enter your email.">
                               </div>
                           </div>
                           <div class="form-group col-6">
@@ -180,7 +180,6 @@
                         <div class="row">
                           <div class="form-group col-6">
                             <div class="input-group clockpicker">
-                                <input type="text" class="form-control" value="09:30">
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-time"></span>
                                 </span>

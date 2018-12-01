@@ -309,11 +309,11 @@ def ordered():
         order_ordered_url = DATABASE_URL + "/order/ordered/" + str(order_id)
 
         formData = {
-        "name": name,
-        "email": email,
-        "location": address,
-        "date": date,
-        "time": time
+            "name": name,
+            "email": email,
+            "location": address,
+            "date": date,
+            "time": time
         }
         print (formData)
         res = requests.post(order_ordered_url, json=formData)
