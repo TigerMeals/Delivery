@@ -99,6 +99,8 @@ def home():
     netid = cas.username
     print(netid)
     print(type(netid))
+
+    print(cas.attributes)
     
     LOGIN_URL = DATABASE_URL + '/user/login'
 
