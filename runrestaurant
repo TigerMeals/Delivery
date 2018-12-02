@@ -1,2 +1,2 @@
-export FLASK_APP=restaurant.py
-flask run -p 8081
+#!/usr/bin/env bash
+python3 restaurant.py "$@"

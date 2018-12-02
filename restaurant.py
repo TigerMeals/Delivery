@@ -4,6 +4,7 @@ import json
 import os
 
 app = Flask(__name__)
+app.config["DEBUG"] = True
 DATABASE_URL = "http://localhost:5000"
 
 # Endpoint to login a restaurant
@@ -252,4 +253,4 @@ def update_listing():
     return redirect('/listings?id=' + id)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port = 8081, host = '0.0.0.0')
