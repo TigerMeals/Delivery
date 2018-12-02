@@ -34,16 +34,16 @@
 				<div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item-bar">
-							<a class="nav-link" href="http://localhost:8080/home?id={{id}}">Home</a>
+							<a class="nav-link" href="http://localhost:8080/home">Home</a>
 						</li>
 						<li class="nav-item-bar">
-							<a class="nav-link" href="http://localhost:8080/about?id={{id}}">About</a>
+							<a class="nav-link" href="http://localhost:8080/about">About</a>
 						</li>
 						<li class="nav-item-bar">
-							<a class="nav-link" href="http://localhost:8080/meals?id={{id}}">Meals</a>
+							<a class="nav-link" href="http://localhost:8080/meals">Meals</a>
 						</li>
 						<li class="nav-item-bar">
-							<a class="nav-link" href="http://localhost:8080/account?id={{id}}">My Account</a>
+							<a class="nav-link" href="http://localhost:8080/account">My Account</a>
 						</li>
 						<li class="nav-item-bar justify-content-end dropdown active">
 					<a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
@@ -90,8 +90,8 @@
                   var val = parseFloat({{total}}).toFixed(2);
                   document.getElementById('total').innerHTML = "Total: $" + val;
                 </script>
-                <a class="checkout-text item-left" href="http://localhost:8080/cart?id={{id}}">View Cart</a>
-                <a class="checkout-text item-right" href="http://localhost:8080/checkout?id={{id}}">Checkout</a>
+                <a class="checkout-text item-left" href="http://localhost:8080/cart">View Cart</a>
+                <a class="checkout-text item-right" href="http://localhost:8080/checkout">Checkout</a>
                 <br>
 							</li>
 

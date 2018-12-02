@@ -301,7 +301,7 @@ def meals():
 
     user_id = fetch_req.json()['user_id']
     print(user_id)
-    
+
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
@@ -337,8 +337,23 @@ def meals():
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals)
 
 @app.route("/cart/upload", methods=["POST"])
+@login_required
 def upload_cart():
-    id = request.args.get('id')
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+    
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
     current_order_url = DATABASE_URL + "/order/current/" + str(id)
     res = requests.get(current_order_url)
     if not res.ok:
@@ -386,8 +401,23 @@ def upload_cart():
 
 
 @app.route("/ordered", methods=["POST"])
+@login_required
 def ordered():
-    id = request.args.get('id')
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+    
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+    
     name = request.form.get('firstName') + " " + request.form.get('lastName')
     email = request.form.get('email')
     address = request.form.get('address')
