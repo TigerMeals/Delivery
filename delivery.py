@@ -2,9 +2,17 @@ from flask import Flask, request, jsonify, render_template, redirect
 import requests
 import json
 import os
+from flask_cas import CAS, login_required, login, logout
 
 app = Flask(__name__)
+cas = CAS(app, '/cas')
+cas.init_app(app)
 DATABASE_URL = "http://localhost:5000"
+app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
+app.config['CAS_LOGIN_ROUTE'] = '/cas/login'
+app.config['CAS_AFTER_LOGIN'] = 'home'
+app.config['CAS_VALIDATE_ROUTE'] = '/cas/serviceValidate'
+app.config['DEBUG'] = True
 
 
 def _getCart(user_id):
@@ -84,9 +92,24 @@ def _postJSON(url, data):
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------
 @app.route("/")
 @app.route("/home")
+@login_required
 def home():
     print("home template requested -----------------------------")
-    user_id = request.args.get('id')
+
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+    
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -107,9 +130,23 @@ def home():
     return resp
 
 @app.route("/cart")
+@login_required
 def cart():
     print("cart template requested -----------------------------")
-    user_id = request.args.get('id')
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+    
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -121,9 +158,23 @@ def cart():
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier = food_multiplier, food_ids = food_ids, id=user_id)
 
 @app.route("/about")
+@login_required
 def about():
     print("about template requested -----------------------------")
-    user_id = request.args.get('id')
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+    
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -134,9 +185,23 @@ def about():
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 
 @app.route("/checkout")
+@login_required
 def checkout():
     print("checkout template requested -----------------------------")
-    user_id = request.args.get('id')
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+    
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -159,9 +224,23 @@ def checkout():
         email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, order_id=order_id)
 
 @app.route("/account")
+@login_required
 def account():
     print("account template requested -----------------------------")
-    user_id = request.args.get('id')
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+    
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
 
     email, name, phone, address, netid, allergies = _getUser(user_id)
 
@@ -205,9 +284,24 @@ def account():
 
 # Endpoint to create new user
 @app.route("/meals")
+@login_required
 def meals():
     orders_url = DATABASE_URL + "/food/sort/price/low-to-high"
-    user_id = request.args.get('id')
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+    
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+    
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
@@ -338,4 +432,6 @@ def ordered():
 #             print()
 
 if __name__ == '__main__':
-    app.run()
+    app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
+    app.run(host="0.0.0.0", port = 8080)
+

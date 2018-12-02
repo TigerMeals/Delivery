@@ -82,6 +82,25 @@ def user_update(user_id):
 	db.session.commit()
 	return user_schema.jsonify(user)
 
+# Endpoint to login a user, and to register them in our system
+# if it is a new user.
+@app.route("/user/login", methods = ["POST"])
+def user_login():
+	netid = request.json['netid']
+
+	user = User.query.filter_by(netid=netid).first()
+
+	if user is None:
+		email = netid + "@princeton.edu"
+		user = User(name="",netid=netid,email=email,\
+			birthday=birthday,phone='',address='',\
+			allergies='')
+		db.session.add(user)
+		db.session.commit()
+		return user_schema.jsonify(user)
+
+	return user_schema.jsonify(user)
+
 # Endpoint to delete user
 @app.route("/user/<user_id>", methods = ["DELETE"])
 def user_delete(user_id):
