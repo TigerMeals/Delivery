@@ -17,7 +17,7 @@ ma = Marshmallow(app)
 
 #conn = sqlite3.connect('sqlite://localhost/delivery')
 ################################################################################
-"""class User(db.Model):
+class User(db.Model):
     user_id = db.Column(db.Integer, primary_key = True)
     netid = db.Column(db.Unicode, unique = True)
     name = db.Column(db.Unicode, unique = False)
@@ -93,7 +93,7 @@ def user_delete(user_id):
     db.session.delete(user)
     db.session.commit()
     return user_schema.jsonify(user)
-"""
+
 
 ################################################################################
 class Restaurant(db.Model):
@@ -146,9 +146,20 @@ def restaurant_detail(restaurant_id):
     restaurant = Restaurant.query.get(restaurant_id)
     return restaurant_schema.jsonify(restaurant)
 
+# Endpoint to get restaurant detail by name
+@app.route("/restaurant/name/<restaurant_name>", methods = ["GET"])
+def restaurant_detailName(restaurant_name):
+    listRestaurant = []
+    listRestaurant.append(str(restaurant_name))
+    #print(str(restaurant_name))
+    #restaurant = Restaurant.query.filter(Restaurant.name.in_(listRestaurant))
+    restaurant = Restaurant.query.filter_by(name = str(restaurant_name)).all()
+    return restaurant_schema.jsonify(restaurant)
+
+
 # Endpoint to get all restaurants
 @app.route("/restaurant", methods = ["GET"])
-def restaurants_detail():
+def restaurants_detailAll():
     restaurant = Restaurant.query.all()
     return restaurants_schema.jsonify(restaurant)
 
@@ -258,6 +269,7 @@ def food_update(restaurant_id):
 @app.route('/food/sort/price/low-to-high', methods = ['GET'])
 def food_sort_price_low_to_high():
     food = Food.query.order_by(Food.price).all()
+
     return foods_schema.jsonify(food)
 
 # Endpoint that sorts by price
@@ -269,14 +281,26 @@ def food_sort_price_high_to_low():
 
 # Sort food by most recent
 @app.route('/food/sort/most-recent', methods = ['GET'])
-def food_recent():
+def food_mostRecent():
+    food = Food.query.order_by(Food.food_id).all()
+    food.reverse()
+    return foods_schema.jsonify(food)
+
+@app.route('/food/sort/least-recent', methods = ['GET'])
+def food_leastRecent():
     food = Food.query.order_by(Food.food_id).all()
     return foods_schema.jsonify(food)
 
 # Sort food by number of servings
-@app.route('/food/sort/servings', methods = ['GET'])
-def food_servings():
+@app.route('/food/sort/servings/low-high', methods = ['GET'])
+def food_servingsLowHigh():
     food = Food.query.order_by(Food.quantity_fed).all()
+    return foods_schema.jsonify(food)
+
+@app.route('/food/sort/servings/high-low', methods = ['GET'])
+def food_servingsHighLow():
+    food = Food.query.order_by(Food.quantity_fed).all()
+    food.reverse()
     return foods_schema.jsonify(food)
 
 # Order by popularity
@@ -285,107 +309,41 @@ def food_popularity():
     food = Food.query.order_by(Food.timesOrdered).all()
     return foods_schema.jsonify(food)
 # Filter food by cuisine
-@app.route('/food/filter_cuisine/Asian', methods = ['POST'])
+@app.route('/food/filter_cuisine/', methods = ['GET'])
 def food_filter_cuisineAsian():
     food = Food.query.filter(Food.cuisine.in_(['Asian']))
     return foods_schema.jsonify(food)
 
-@app.route('/food/filter_cuisine/American', methods = ['POST'])
+"""@app.route('/food/filter_cuisine/American', methods = ['GET'])
 def food_filter_cuisineAmerican():
     food = Food.query.filter(Food.cuisine.in_(['American']))
     return foods_schema.jsonify(food)
 
-@app.route('/food/filter_cuisine/Drinks', methods = ['POST'])
+@app.route('/food/filter_cuisine/Drinks', methods = ['GET'])
 def food_filter_cuisineDrinks():
     food = Food.query.filter(Food.cuisine.in_(['Drinks']))
     return foods_schema.jsonify(food)
-@app.route('/food/filter_cuisine/Healthy', methods = ['POST'])
+@app.route('/food/filter_cuisine/Healthy', methods = ['GET'])
 def food_filter_cuisineHealthy():
     food = Food.query.filter(Food.cuisine.in_(['Healthy']))
-    return foods_schema.jsonify(food)
+    return foods_schema.jsonify(food)"""
 
-@app.route('/food/filter_restaurant/KFTea', methods = ['POST'])
+@app.route('/food/filter_restaurants', methods = ['GET'])
 def food_filter_restaurantKFTea():
-    food = Food.query.filter(Food.restaurant.in_(['Kung Fu Tea']))
+    restaurantIDs = []
+    for x in restaurants:
+        print(x)
+    food = Food.query.filter(Food.restaurant_id.in_([1]))
     return foods_schema.jsonify(food)
-@app.route('/food/filter_restaurant/Panera', methods = ['POST'])
+
+"""@app.route('/food/filter_restaurant/Panera', methods = ['GET'])
 def food_filter_restaurantPanera():
-    food = Food.query.filter(Food.restaurant.in_(['Panera']))
+    food = Food.query.filter(Food.restaurant_id.in_(['Panera']))
     return foods_schema.jsonify(food)
-@app.route('/food/filter_restaurant/Tacoria', methods = ['POST'])
+@app.route('/food/filter_restaurant/Tacoria', methods = ['GET'])
 def food_filter_restaurantTacoria():
-    food = Food.query.filter(Food.restaurant.in_(['Tacoria']))
-    return foods_schema.jsonify(food)
-
-@app.route('/food/filter/allergiesVeg', methods = ['POST'])
-def food_filter_allergiesVeg():
-    #allergies = request.json['allergies']
-    #print (allergies)
-    #return "hello"
-    #allergy1 = request.query.get('allergy1')
-    #allergy2 = request.query.get('allergy2')
-    #allergy3 = request.query.get('allergy3')
-    #allergy4 = request.query.get('allergy4')
-    """allergies = []
-    if allergy1 != '':
-        allergies.append(allergy1)
-    if allergy2 != '':
-        allergies.append(allergy2)
-    if allergy3 != '':
-        allergies.append(allergy3)
-    if allergy4 != '':
-        allergies.append(allergy4)"""
-    food = Food.query.filter(Food.allergies.in_(["Vegetarian"]))
-    #### NEED TO FIX THIS FUNCTION
-    return foods_schema.jsonify(food)
-
-@app.route('/food/filter/serving0-25', methods = ['POST'])
-def food_filter_serving025():
-    food = Food.query.filter(Food.quantity_fed > 0, Food.quantity_fed <= 25)
-    #### NEED TO FIX THIS FUNCTION
-    return foods_schema.jsonify(food)
-
-@app.route('/food/filter/serving25-50', methods = ['POST'])
-def food_filter_serving2550():
-    food = Food.query.filter(Food.quantity_fed > 25, Food.quantity_fed <= 50)
-    #### NEED TO FIX THIS FUNCTION
-    return foods_schema.jsonify(food)
-
-@app.route('/food/filter/serving50-75', methods = ['POST'])
-def food_filter_servings5075():
-    food = Food.query.filter(Food.quantity_fed > 50, Food.quantity_fed <= 75)
-    #### NEED TO FIX THIS FUNCTION
-    return foods_schema.jsonify(food)
-
-@app.route('/food/filter/serving75-100', methods = ['POST'])
-def food_filter_serving75100():
-    food = Food.query.filter(Food.quantity_fed > 75, Food.quantity_fed <= 100)
-    #### NEED TO FIX THIS FUNCTION
-    return foods_schema.jsonify(food)
-
-@app.route('/food/filter/serving100+', methods = ['POST'])
-def food_filter_serving100():
-    food = Food.query.filter(Food.quantity_fed > 100)
-    #### NEED TO FIX THIS FUNCTION
-    return foods_schema.jsonify(food)
-
-@app.route('/food/filter/allergiesKosher', methods = ['POST'])
-def food_filter_allergiesKosher():
-    food = Food.query.filter(Food.allergies.in_(["Kosher"]))
-    #### NEED TO FIX THIS FUNCTION
-    return foods_schema.jsonify(food)
-
-@app.route('/food/filter/allergiesVegan', methods = ['POST'])
-def food_filter_allergiesVegan():
-    food = Food.query.filter(Food.allergies.in_(["Vegan"]))
-    #### NEED TO FIX THIS FUNCTION
-    return foods_schema.jsonify(food)
-
-@app.route('/food/filter/allergiesGF', methods = ['POST'])
-def food_filter_allergiesGF():
-    food = Food.query.filter(Food.allergies.in_(["Gluten Free"]))
-    #### NEED TO FIX THIS FUNCTION
-    return foods_schema.jsonify(food)
+    food = Food.query.filter(Food.restaurant_id.in_(['Tacoria']))
+    return foods_schema.jsonify(food)"""
 
 
 
@@ -417,11 +375,11 @@ def food_delete(food_id):
 # the JSON result. The JSON result itself must be serialized, but not food_items
 # in particular.
 
-"""
+
 class Order(db.Model):
     order_id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, unique = False)
-    food_items = db.Column(db.JSON, unique = False)
+    food_items = db.Column(db.Unicode, unique = False)
     restaurant_id = db.Column(db.Integer, unique = False)
     ordered = db.Column(db.Boolean, unique = False)
     paid = db.Column(db.Boolean, unique = False)
@@ -577,7 +535,7 @@ def order_delete(order_id):
     db.session.delete(order)
     db.session.commit()
     return order_schema.jsonify(order)
-"""
+
 db.create_all()
 db.session.commit()
 

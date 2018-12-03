@@ -104,6 +104,7 @@
 
     <br>
     <!-- Page Content -->
+    <form action = "filterCaterings" method = "get">
     <div class="container">
 
       <div class="row">
@@ -132,19 +133,19 @@
                 </h5>
               </div>
 
-              <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+               <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="KungFuTea">
-                    <a href = "http://localhost:8080/meals/filterRestaurantKFTea?id={{id}}">
+                    <input class="form-check-input" type="checkbox" name = "KungFuTea" value="" id="KungFuTea">
+                    <label class="form-check-label" for="KungFuTea">
                       Kung Fu Tea
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Panera">
-                    <a href = "http://localhost:8080/meals/filterRestaurantPanera?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "Panera" id="Panera">
+                    <label class="form-check-label" for="Panera">
                       Panera
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Tacoria">
-                    <a href = "http://localhost:8080/meals/filterRestaurantTacoria?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "Tacoria" id="Tacoria">
+                    <label class="form-check-label" for="Tacoria">
                       Tacoria
                     </label> <br>
                   </div>
@@ -165,20 +166,20 @@
               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="Asian">
-                    <a href = "http://localhost:8080/meals/filterAsianCuisine?id={{id}}">
+                    <input class="form-check-input" type="checkbox" name = "Asian" value="" id="Asian">
+                    <label class="form-check-label" for="Asian">
                       Asian
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="American">
-                    <a href = "http://localhost:8080/meals/filterAmericanCuisine?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "American" id="American">
+                    <label class="form-check-label" for="American">
                       American
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Drinks">
-                    <a href = "http://localhost:8080/meals/filterDrinksCuisine?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "Drinks" id="Drinks">
+                    <label class="form-check-label" for="Drinks">
                       Drinks
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Healthy">
-                    <a href = "http://localhost:8080/meals/filterHealthyCuisine?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "Healthy" id="Healthy">
+                    <label class="form-check-label" for="Healthy">
                       Healthy
                     </label> <br>
                   </div>
@@ -199,20 +200,20 @@
               <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                 <div class="card-body">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="gf">
-                    <a href = "http://localhost:8080/meals/allergyGF?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "GLFree" id="gf">
+                    <label class="form-check-label" for="GLFree">
                       Gluten Free
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="kosher">
-                    <a href = "http://localhost:8080/meals/allergyKosher?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "Kosher" id="kosher">
+                    <label class="form-check-label" for="Kosher">
                       Kosher
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="vegan">
-                    <a href = "http://localhost:8080/meals/allergyVegan?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "Vegan" id="vegan">
+                    <label class="form-check-label" for="Vegan">
                       Vegan
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="vegetarian">
-                    <a href = "http://localhost:8080/meals/allergyVeg?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "Vegetarian" id="vegetarian">
+                    <label class="form-check-label" for="Vegetarian">
                       Vegetarian
                     </label> <br>
                   </div>
@@ -233,24 +234,24 @@
               <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                 <div class="card-body">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="0-25" onClick = "filterServingSize()">
-                    <a href = "http://localhost:8080/meals/serving025?id={{id}}">
+                    <input class="form-check-input" type="checkbox" name = "serving025" value="" id="serving025">
+                    <label class="form-check-label" for="serving025">
                       0-25
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="25-50" onClick = "filterServingSize()">
-                    <a href = "http://localhost:8080/meals/serving2550?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "serving2550" id="serving2550">
+                    <label class="form-check-label" for="serving2550">
                       25-50
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="50-75" onClick = "filterServingSize()">
-                    <a href = "http://localhost:8080/meals/serving5075?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "serving5075" id="serving5075">
+                    <label class="form-check-label" for="serving5075">
                       50-75
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="75-100" onClick = "filterServingSize()">
-                    <a href = "http://localhost:8080/meals/serving75100?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "serving75100" id="serving75100">
+                    <label class="form-check-label" for="serving75100">
                       75-100
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="100+" onClick = "filterServingSize()">
-                    <a href = "http://localhost:8080/meals/serving100?id={{id}}">
+                    <input class="form-check-input" type="checkbox" value="" name = "serving100" id="serving100">
+                    <label class="form-check-label" for="serving100">
                       100+
                     </label> <br>
                   </div>
@@ -269,6 +270,7 @@
           </div>
         </div>
         </div>
+        </form>
 
         <div class="col-lg-9">
 
@@ -318,10 +320,12 @@
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
                     <a class="dropdown-item active" href="#">Featured</a>
                     <a class="dropdown-item" href="http://localhost:8080/meals/popularitySort?id={{id}}">Most popular</a>
-                    <a class="dropdown-item" href="http://localhost:8080/meals/servingSort?id={{id}}">Number of servings</a>
+                    <a class="dropdown-item" href="http://localhost:8080/meals/servingLowHighSort?id={{id}}">Number of servings (Low to High)</a>
+                    <a class="dropdown-item" href="http://localhost:8080/meals/servingHighLowSort?id={{id}}">Number of servings (High to Low)</a>
                     <a class="dropdown-item" href="http://localhost:8080/meals?id={{id}}">Price low to high</a>
                     <a class="dropdown-item" href="http://localhost:8080/meals/priceHighLowSort?id={{id}}">Price high to low</a>
-                    <a class="dropdown-item" href="http://localhost:8080/meals/recentlyAddedSort?id={{id}}">Recently added</a>
+                    <a class="dropdown-item" href="http://localhost:8080/meals/mostRecentlyAddedSort?id={{id}}"> Most Recently added</a>
+                    <a class="dropdown-item" href="http://localhost:8080/meals/leastRecentlyAddedSort?id={{id}}"> Least Recently added</a>
                   </div>
                 </div>
               </div>
@@ -361,7 +365,7 @@
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!--
+    
     <script>
 
     var date = new Date();
@@ -501,7 +505,7 @@
             }
             return req;
          }
-         </script> -->
+         </script>
 
   </body>
 

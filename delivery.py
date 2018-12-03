@@ -6,6 +6,11 @@ import os
 app = Flask(__name__)
 DATABASE_URL = "http://localhost:5000"
 
+currentSort = ""
+currRestaurantFilters = []
+currCuisineFilters = []
+currAllergenFilters = []
+currSizeFilters = []
 
 def _getCart(user_id):
     order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
@@ -18,7 +23,7 @@ def _getCart(user_id):
     food_multiplier = []
     food_ids = []
 
-    for food_item in order['food_items']:
+    """for food_item in order['food_items']:
         print (food_item['food_id'])
         food = _getJSON(DATABASE_URL + '/food/' + str(food_item['food_id']))
 
@@ -29,17 +34,17 @@ def _getCart(user_id):
         food_images.append(food['image'])
         food_subtotals.append(food_item['subtotal'])
         food_multiplier.append(food_item['quantity'])
-        food_ids.append(food_item['food_id'])
+        food_ids.append(food_item['food_id'])"""
 
     if user_id is None:
         # Redirect to login screen if the cookie is None
         pass
 
-    print (food_prices)
-    print (food_descriptions)
-    print (food_titles)
-    print (food_quantity_feds)
-    print (food_images)
+    #print (food_prices)
+    #print (food_descriptions)
+    #print (food_titles)
+    #print (food_quantity_feds)
+    #print (food_images)
 
     length_cart = len(food_prices)
 
@@ -69,7 +74,7 @@ def _getJSON(url):
     r = requests.get(url=url)
     data = r.json()
 
-    print (data)
+    #print (data)
     return (data)
 
 ## POST METHOD
@@ -201,10 +206,172 @@ def account():
 
 
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------
+def checkFilters():
+    #res = requests.get(orders_url)
+    kfTea = request.args.get('KungFuTea')
+    panera = request.args.get('Panera')
+    tacoria = request.args.get('Tacoria')
 
-@app.route("/servingSort")
-def mealsServingSort():
-    orders_url = DATABASE_URL + "/food/sort/servings"
+    asian = request.args.get('Asian')
+    american = request.args.get('American')
+    drinks = request.args.get('Drinks')
+    healthy = request.args.get('Healthy')
+
+    glFree = request.args.get('GLFree')
+    kosher = request.args.get('Kosher')
+    vegan = request.args.get('Vegan')
+    vegetarian = request.args.get('Vegetarian')
+
+    size025 = request.args.get('serving025')
+    size2550 = request.args.get('serving2550')
+    size5075 = request.args.get('serving5075')
+    size75100 = request.args.get('serving75100')
+    size100 = request.args.get('serving100')
+
+    #print("gluten free" + str(request.form.getlist('glFree')))
+    global currRestaurantFilters
+    global currCuisineFilters
+    global currAllergenFilters
+    global currSizeFilters
+
+    currRestaurantFilters = []
+    currCuisineFilters = []
+    currAllergenFilters = []
+    currSizeFilters = []
+
+    if kfTea is not None:
+        currRestaurantFilters.append('Kung Fu Tea')
+    if panera is not None:
+        currRestaurantFilters.append('Panera')
+    if tacoria is not None:
+        currRestaurantFilters.append('Tacoria')
+    if asian is not None:
+        currCuisineFilters.append('Asian')
+    if american is not None:
+        currCuisineFilters.append('American')
+    if drinks is not None:
+        currCuisineFilters.append('Drinks')
+    if healthy is not None:
+        currCuisineFilters.append('Healthy')
+    if glFree is not None:
+        currAllergenFilters.append('Gluten Free')
+    if kosher is not None:
+        currAllergenFilters.append('Kosher')
+    if vegetarian is not None:
+        currAllergenFilters.append('Vegetarian')
+    if vegan is not None:
+        currAllergenFilters.append('Vegan')
+    if size025 is not None:
+        currSizeFilters.append(25)
+    if size2550 is not None:
+        currSizeFilters.append(50)
+    if size5075 is not None:
+        currSizeFilters.append(75)
+    if size75100 is not None:
+        currSizeFilters.append(100)
+    if size100 is not None:
+        currSizeFilters.append(1000000)
+
+
+def filterItems(meals):
+    mealsEdited = []
+    for meal in meals:
+            restaurantID = meal['restaurant_id']
+            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
+        
+            res = requests.get(restaurant_url)
+            if not res.ok:
+                res.raise_for_status()
+            else:
+                meal['restaurant_name'] = json.loads(res.content)['name']
+            addAllergen = True
+            addSize = True
+            if len(currRestaurantFilters) != 0:
+                if str(meal['restaurant_name']) not in currRestaurantFilters:
+                    continue
+            if len(currCuisineFilters) != 0:
+                if str(meal['cuisine']) not in currCuisineFilters:
+                    continue
+            if len(currAllergenFilters) != 0:
+                
+                allergenList = meal['allergies'].split()
+                addAllergen = False
+                for x in allergenList:
+                    if x in currAllergenFilters:
+                        addAllergen = True
+            if len(currSizeFilters) != 0:
+                quantity = int(meal['quantity_fed'])
+                addSize = False
+                if quantity < 25 and 25 in currSizeFilters:
+                    addSize = True
+                if quantity < 50 and quantity >= 25 and 50 in currSizeFilters:
+                    addSize = True
+                if quantity < 75 and quantity >= 50 and 75 in currSizeFilters:
+                    addSize = True
+                if quantity < 100 and quantity >= 75 and 100 in currSizeFilters:
+                    addSize = True
+                if quantity < 1000000 and quantity >= 100 and 1000000 in currSizeFilters:
+                    addSize = True
+            
+            if addAllergen == True and addSize == True:
+                mealsEdited.append(meal)
+
+    return mealsEdited
+
+@app.route("/meals/servingLowHighSort")
+def mealsServingSortLowHigh():
+    global currentSort
+    currentSort = "/food/sort/servings/low-high"
+
+    orders_url = DATABASE_URL + "/food/sort/servings/low-high"
+    # have to change this URL based on what was clicked in meals.tpl
+    user_id = 1
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+    
+
+    
+    res = requests.get(orders_url)
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        meals = json.loads(res.content)
+        mealsEdited = filterItems(meals)
+            
+        # For logging purposes
+        for meal in mealsEdited:
+            # Make additional request to get restaurant name
+            restaurantID = meal['restaurant_id']
+            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
+
+            res = requests.get(restaurant_url)
+            # Splice allergies into a list
+            if meal['allergies'] is "":
+                meal['allergies'] = []
+            else:
+                meal['allergies'] = meal['allergies'].split(",")
+            if not res.ok:
+                res.raise_for_status()
+            else:
+                meal['restaurant'] = json.loads(res.content)['name']
+            # For logging purposes
+            #for key in meal:
+                #print (key + " : " + str(meal[key]))
+            #print()
+
+
+
+    return render_template('meals.tpl', meals=mealsEdited, \
+        id=request.args.get('id'), food_prices = food_prices, \
+        food_subtotals = food_subtotals, food_titles = food_titles, \
+        length_cart = length_cart, total=total, food_images= food_images)
+
+@app.route("/meals/servingHighLowSort")
+def mealsServingSortHighLow():
+    global currentSort
+    currentSort = "/food/sort/servings/high-low"
+
+    orders_url = DATABASE_URL + "/food/sort/servings/high-low"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
@@ -215,8 +382,9 @@ def mealsServingSort():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
+        mealsEdited = filterItems(meals)
         # For logging purposes
-        for meal in meals:
+        for meal in mealsEdited:
             # Make additional request to get restaurant name
             restaurantID = meal['restaurant_id']
             restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
@@ -235,12 +403,16 @@ def mealsServingSort():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=meals, \
+    return render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images)
-@app.route("/popularitySort")
+
+@app.route("/meals/popularitySort")
 def mealsPopualritySort():
+    global currentSort
+    currentSort = "/food/sort/popularity"
+
     orders_url = DATABASE_URL + "/food/sort/popularity"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
@@ -252,8 +424,9 @@ def mealsPopualritySort():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
+        mealsEdited = filterItems(meals)
         # For logging purposes
-        for meal in meals:
+        for meal in mealsEdited:
             # Make additional request to get restaurant name
             restaurantID = meal['restaurant_id']
             restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
@@ -272,13 +445,16 @@ def mealsPopualritySort():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=meals, \
+    return render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images)
 
-@app.route("/priceHighLowSort")
+@app.route("/meals/priceHighLowSort")
 def mealsPriceHighLow():
+    global currentSort
+    currentSort = "/food/sort/price/high-to-low"
+
     orders_url = DATABASE_URL + "/food/sort/price/high-to-low"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
@@ -290,8 +466,9 @@ def mealsPriceHighLow():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
+        mealsEdited = filterItems(meals)
         # For logging purposes
-        for meal in meals:
+        for meal in mealsEdited:
             # Make additional request to get restaurant name
             restaurantID = meal['restaurant_id']
             restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
@@ -310,13 +487,16 @@ def mealsPriceHighLow():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=meals, \
+    return render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images)
 
-@app.route("/recentlyAddedSort")
-def mealsRecentlyAddedSort():
+@app.route("/meals/mostRecentlyAddedSort")
+def mealsMostRecentlyAddedSort():
+    global currentSort
+    currentSort = "/food/sort/most-recent"
+
     orders_url = DATABASE_URL + "/food/sort/most-recent"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
@@ -328,8 +508,9 @@ def mealsRecentlyAddedSort():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
+        mealsEdited = ""
         # For logging purposes
-        for meal in meals:
+        for meal in mealsEdited:
             # Make additional request to get restaurant name
             restaurantID = meal['restaurant_id']
             restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
@@ -348,13 +529,17 @@ def mealsRecentlyAddedSort():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=meals, \
+    return render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images)
-@app.route("/allergyVeg")
-def mealsFilterAllergiesVeg():
-    orders_url = DATABASE_URL + "/food/filter/allergiesVeg"
+
+@app.route("/meals/filterCaterings")
+def mealsFilterCaterings2():
+    checkFilters()
+
+
+    orders_url = DATABASE_URL + currentSort
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
@@ -366,7 +551,8 @@ def mealsFilterAllergiesVeg():
     else:
         meals = json.loads(res.content)
         # For logging purposes
-        for meal in meals:
+        mealsEdited = filterItems(meals)
+        for meal in mealsEdited:
             # Make additional request to get restaurant name
             restaurantID = meal['restaurant_id']
             restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
@@ -385,14 +571,17 @@ def mealsFilterAllergiesVeg():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=meals, \
+    return render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images)
 
-@app.route("/allergyKosher")
-def mealsFilterAllergiesKosher():
-    orders_url = DATABASE_URL + "/food/filter/allergiesKosher"
+@app.route("/filterCaterings")
+def mealsFilterCaterings():
+    
+    checkFilters()
+
+    orders_url = DATABASE_URL + currentSort
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
@@ -404,7 +593,8 @@ def mealsFilterAllergiesKosher():
     else:
         meals = json.loads(res.content)
         # For logging purposes
-        for meal in meals:
+        mealsEdited = filterItems(meals)
+        for meal in mealsEdited:
             # Make additional request to get restaurant name
             restaurantID = meal['restaurant_id']
             restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
@@ -423,14 +613,15 @@ def mealsFilterAllergiesKosher():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=meals, \
+    return render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images)
-
-@app.route("/allergyVegan")
-def mealsFilterAllergiesVegan():
-    orders_url = DATABASE_URL + "/food/filter/allergiesVegan"
+@app.route("/meals/leastRecentlyAddedSort")
+def mealsLeastRecentlyAddedSort():
+    global currentSort
+    currentSort = "/food/sort/least-recent"
+    orders_url = DATABASE_URL + "/food/sort/least-recent"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
@@ -441,8 +632,9 @@ def mealsFilterAllergiesVegan():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
+        mealsEdited = filterItems(meals)
         # For logging purposes
-        for meal in meals:
+        for meal in mealsEdited:
             # Make additional request to get restaurant name
             restaurantID = meal['restaurant_id']
             restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
@@ -461,240 +653,16 @@ def mealsFilterAllergiesVegan():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=meals, \
+    return render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images)
 
-@app.route("/allergyGluten")
-def mealsFilterAllergiesGluten():
-    orders_url = DATABASE_URL + "/food/filter/allergiesGF"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
-
-@app.route("/serving025")
-def mealsFilterServing025():
-    orders_url = DATABASE_URL + "/food/filter/serving0-25"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
-
-@app.route("/serving2550")
-def mealsFilterServing2550():
-    orders_url = DATABASE_URL + "/food/filter/serving25-50"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
-@app.route("/serving5075")
-def mealsFilterServing5075():
-    orders_url = DATABASE_URL + "/food/filter/serving50-75"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
-
-@app.route("/serving75100")
-def mealsFilterServing75100():
-    orders_url = DATABASE_URL + "/food/filter/serving75-100"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
-
-@app.route("/serving100")
-def mealsFilterServing100():
-    orders_url = DATABASE_URL + "/food/filter/serving100"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
 @app.route("/meals")
 def meals():
+    global currentSort
     orders_url = DATABASE_URL + "/food/sort/price/low-to-high"
+    currentSort = "/food/sort/price/low-to-high"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
@@ -705,8 +673,9 @@ def meals():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
+        mealsEdited = filterItems(meals)
         # For logging purposes
-        for meal in meals:
+        for meal in mealsEdited:
             # Make additional request to get restaurant name
             restaurantID = meal['restaurant_id']
             restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
@@ -725,276 +694,11 @@ def meals():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=meals, \
+    return render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images)
 
-@app.route("/filterAsianCuisine")
-def mealsAsianCuisine():
-    orders_url = DATABASE_URL + "/food/filter_cuisine/Asian"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
-
-@app.route("/filterAmericanCuisine")
-def mealsAmericanCuisine():
-    orders_url = DATABASE_URL + "/food/filter_cuisine/American"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
-
-@app.route("/filterDrinksCuisine")
-def mealsDrinksCuisine():
-    orders_url = DATABASE_URL + "/food/filter_cuisine/Drinks"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
-
-@app.route("/filterHealthyCuisine")
-def mealsHealthyCuisine():
-    orders_url = DATABASE_URL + "/food/filter_cuisine/Healthy"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
-
-@app.route("/filterRestaurantKFTea")
-def mealsRestaurantKFTea():
-    orders_url = DATABASE_URL + "/food/filter_restaurant/KFTea"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
-
-@app.route("/filterRestaurantPanera")
-def mealsRestaurantPanera():
-    orders_url = DATABASE_URL + "/food/filter_restaurant/Panera"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
-
-@app.route("/filterRestaurantTacoria")
-def mealsRestaurantTacoria():
-    orders_url = DATABASE_URL + "/food/filter_restaurant/Tacoria"
-    # have to change this URL based on what was clicked in meals.tpl
-    user_id = 1
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-
-    res = requests.get(orders_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        meals = json.loads(res.content)
-        # For logging purposes
-        for meal in meals:
-            # Make additional request to get restaurant name
-            restaurantID = meal['restaurant_id']
-            restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
-            res = requests.get(restaurant_url)
-            # Splice allergies into a list
-            if meal['allergies'] is "":
-                meal['allergies'] = []
-            else:
-                meal['allergies'] = meal['allergies'].split(",")
-            if not res.ok:
-                res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
-    return render_template('meals.tpl', meals=meals, \
-        id=request.args.get('id'), food_prices = food_prices, \
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
 @app.route("/cart/upload", methods=["POST"])
 def upload_cart():
     id = request.args.get('id')
@@ -1074,4 +778,4 @@ def ordered():
 #             print()
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port = 8080)
