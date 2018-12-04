@@ -1,29 +1,80 @@
 from flask import Flask, request, jsonify, render_template, redirect
 import requests
 import json
-import os
+import os 
 
 app = Flask(__name__)
+app.config["DEBUG"] = True
 DATABASE_URL = "http://localhost:5000"
 
+# Endpoint to login a restaurant
+@app.route("/login")
+def login():
+    login_query = {
+        "email": request.args.get("email"),
+        "password": request.args.get("password")
+    }
+
+    print(request.args.get("email"))
+
+    login_url = DATABASE_URL + '/restaurant/login'
+
+    res = requests.post(login_url, json = login_query)
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        login_feedback = json.loads(res.content)
+        print(login_feedback)
+        if 'error' not in login_feedback:
+            return render_template('home_restaurant.tpl', id=login_feedback['restaurant_id'])
+        else:
+            return render_template('login_restaurant.tpl', error="Invalid Login")
 
 # Endpoint to view homepage
 @app.route("/")
 @app.route("/home")
 def home():
     id = request.args.get('id')
-    return render_template('home_restaurant.tpl', id=id)
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
+    else:
+        orders_url = DATABASE_URL + "/order/restaurant/" + id
+        res = requests.get(orders_url)
+        if not res.ok:
+            res.raise_for_status()
+        else:
+            orders = json.loads(res.content)
+            length_orders = len(orders)
+            return render_template('home_restaurant.tpl', \
+                id=id, length_orders=length_orders)
 
 
 @app.route("/about")
 def about():
     id = request.args.get('id')
-    return render_template('about_restaurant.tpl', id=id)
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
+
+    orders_url = DATABASE_URL + "/order/restaurant/" + id
+    res = requests.get(orders_url)
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        orders = json.loads(res.content)
+        length_orders = len(orders)
+
+    return render_template('about_restaurant.tpl', id=id,\
+         length_orders=length_orders)
 
 # Endpoint to view restaurant's orders
 @app.route("/orders")
 def orders():
     id = request.args.get('id')
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
     orders_url = DATABASE_URL + "/order/restaurant/" + id
     res = requests.get(orders_url)
     if not res.ok:
@@ -43,15 +94,21 @@ def orders():
                 print (key + " : " + str(order[key]))
             order['price'] = price
             order['packages'] = packages
-        print ()
 
-    return render_template('orders_restaurant.tpl', orders=orders, id=id)
+        print ()
+        length_orders = len(orders)
+
+
+    return render_template('orders_restaurant.tpl', orders=orders, \
+        id=id, length_orders = length_orders)
 
 # Endpoint to view the restaurant account page
 @app.route("/account")
 def account():
     id = request.args.get('id')
-
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
     restaurant_info_url = DATABASE_URL + "/restaurant/" + id
     res = requests.get(restaurant_info_url)
 
@@ -69,15 +126,38 @@ def account():
         phone = restaurant_info['phone']
         address = restaurant_info['address']
         image = restaurant_info['image']
+        email = restaurant_info['email']
+        website = restaurant_info['website']
+
+    orders_url = DATABASE_URL + "/order/restaurant/" + id
+    res = requests.get(orders_url)
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        orders = json.loads(res.content)
+        length_orders = len(orders)
+
+    listings_url = DATABASE_URL + "/food/restaurant/" + id
+    res = requests.get(listings_url)
+
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        listings = json.loads(res.content)
+        length_listings = len(listings)
 
     return render_template('account_restaurant.tpl',\
         name=name, description=description,phone=phone,\
-        address=address, image=image, id=id)
+        address=address, image=image, id=id, length_orders=length_orders,\
+        length_listings=length_listings, email=email, website=website)
 
 # Endpoint to view restaurant's listings
 @app.route("/listings")
 def listings():
     id = request.args.get('id')
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
     listings_url = DATABASE_URL + "/food/restaurant/" + id
     res = requests.get(listings_url)
 
@@ -95,12 +175,24 @@ def listings():
                 listing['allergies'] = listing['allergies'].split(",")
         print ()
 
-        return render_template('listings_restaurant.tpl', listings=listings, id=id)
+    orders_url = DATABASE_URL + "/order/restaurant/" + id
+    res = requests.get(orders_url)
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        orders = json.loads(res.content)
+        length_orders = len(orders)
+
+    return render_template('listings_restaurant.tpl', listings=listings, \
+        id=id, length_orders=length_orders)
 
 # Endpoint to add a new restaurant listing.
 @app.route("/listings/add", methods=["POST"])
 def add_listing():
     id = request.args.get('id')
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
     add_food_url = DATABASE_URL + "/food"
     allergens = ""
     for checkbox in range(1, 5):
@@ -133,7 +225,9 @@ def add_listing():
 @app.route("/listings/update", methods=["POST"])
 def update_listing():
     id = request.args.get('id')
-
+    if id is None:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
     add_food_url = DATABASE_URL + "/food/" + str(request.form.get("food_id"))
     allergens = ""
     for checkbox in range(1, 5):
@@ -159,4 +253,4 @@ def update_listing():
     return redirect('/listings?id=' + id)
 
 if __name__ == '__main__':
-    app.run()
+    app.run(port = 8081, host = '0.0.0.0')

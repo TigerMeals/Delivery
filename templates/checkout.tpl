@@ -39,54 +39,73 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item-bar">
-              <a class="nav-link" href="http://localhost:8080/home?id={{id}}">Home</a>
+              <a class="nav-link" href="http://localhost:8080/home">Home</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="http://localhost:8080/about?id={{id}}">About</a>
+              <a class="nav-link" href="http://localhost:8080/about">About</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="http://localhost:8080/meals?id={{id}}">Meals</a>
+              <a class="nav-link" href="http://localhost:8080/meals">Meals</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="http://localhost:8080/account?id={{id}}">My Account</a>
+              <a class="nav-link" href="http://localhost:8080/account">My Account</a>
             </li>
             <li class="nav-item-bar justify-content-end dropdown active">
-          <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
-            <span class="sr-only">(current)</span>
-          <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
-            {% for i in range(0, length_cart) %}
-              <li>
-                  <span class="item">
-                    <span class="item-left">
-                        <img src="{{food_images[i]}}" style="width:35px;height:35px;" alt="" />
-                        <span class="item-info">
-                            <span>{{food_titles[i]}}</span>
-                            <span>price: {{food_prices[i]}}</span>
-                        </span>
-                    </span>
-                    <span class="item-right">
-                        <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-                    </span>
-                </span>
-              </li>
+              <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
+    						<span class="sr-only">(current)</span>
+    					<ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
+    						{% for i in range(0, length_cart) %}
+    							<li>
+    									<span class="item">
+    										<span class="item-left">
+    												<img
+    												src="{{food_images[i]}}"
+    												style="width:35px;height:35px;"
+    												 alt="" />
+    												<span class="item-info">
+    														<span>{{food_titles[i]}}</span>
+    														<span id = "cart_price{{i}}"></span>
+                                <!-- Below needed so that price displays with 2 decimal points. -->
+                                <script>
+                                  var val = parseFloat({{food_prices[i]}}).toFixed(2);
+                                  document.getElementById('cart_price{{i}}').innerHTML = "price: $" + val;
+                                </script>
+    												</span>
+    										</span>
+    										<span class="item-right">
+    												<button class="btn-sm btn-danger btn-cart fa fa-times"></button>
+    										</span>
+    								</span>
+    							</li>
 
-              <li class="divider"></li>
-              <li>
-                <span class="checkout-text item-right">Subtotal: {{food_subtotals[i]}}</span><br>
-            {% endfor %}
-            <span class="checkout-text item-right">
-                Total: {{total}}</span><br>
-                <a class="checkout-text item-left" href="http://localhost:8080/cart?id={{id}}">View Cart</a>
-                <a class="checkout-text item-right" href="http://localhost:8080/checkout?id={{id}}">Checkout</a>
-                <br>
-              </li>
+    							<li class="divider"></li>
+    							<li>
+                    <span id = "cart_subtotal{{i}}"></span>
+                    <!-- Below needed so that price displays with 2 decimal points. -->
+                    <script>
+                      var val = parseFloat({{food_subtotals[i]}}).toFixed(2);
+                      document.getElementById('cart_subtotal{{i}}').innerHTML = "Subtotal: $" + val;
+                    </script>
 
-          </ul>
-        </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+    						{% endfor %}
+    						<span class="checkout-text item-right">
+                    <span id = "total"></span>
+                    <!-- Below needed so that price displays with 2 decimal points. -->
+                    <script>
+                      var val = parseFloat({{total}}).toFixed(2);
+                      document.getElementById('total').innerHTML = "Total: $" + val;
+                    </script>
+                    <a class="checkout-text item-left" href="http://localhost:8080/cart">View Cart</a>
+                    <a class="checkout-text item-right" href="http://localhost:8080/checkout">Checkout</a>
+                    <br>
+    							</li>
+
+    					</ul>
+    				</li>
+    					</ul>
+    				</div>
+    			</div>
+    		</nav>
 
     <div class="container">
       <div class="py-5 text-center">
@@ -156,14 +175,14 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First Name</label>
-                <input type="text" class="form-control" id="firstName" placeholder="" value="{{name[0]}}" required>
+                <input type="text" class="form-control" id="firstName" name="firstName" placeholder="" value="{{name[0]}}" required>
                 <div class="invalid-feedback">
                   Valid first name is required.
                 </div>
               </div>
               <div class="col-md-6 mb-3">
                 <label for="lastName">Last Name</label>
-                <input type="text" class="form-control" id="lastName" placeholder="" value="{{name[1]}}" required>
+                <input type="text" class="form-control" name="lastName" id="lastName" placeholder="" value="{{name[1]}}" required>
                 <div class="invalid-feedback">
                   Valid last name is required.
                 </div>
@@ -176,7 +195,7 @@
                 <div class="input-group-prepend">
                   <span class="input-group-text">@</span>
                 </div>
-                <input type="text" class="form-control" id="username" placeholder="" value = "{{netid}}" required>
+                <input type="text" class="form-control" id="username" name="username" placeholder="" value = "{{netid}}" required>
                 <div class="invalid-feedback" style="width: 100%;">
                   Your username is required.
                 </div>
@@ -185,7 +204,7 @@
 
             <div class="mb-3">
               <label for="email">Email<span class="text-muted">(Optional)</span></label>
-              <input type="email" class="form-control" id="email" placeholder="" value = "{{email}}">
+              <input type="email" class="form-control" id="email" name="email" placeholder="" value = "{{email}}">
               <div class="invalid-feedback">
                 Please enter a valid email address for shipping updates.
               </div>
@@ -193,9 +212,27 @@
 
             <div class="mb-3">
               <label for="address">Address</label>
-              <input type="text" class="form-control" id="address" placeholder="" value="{{address}}" required>
+              <input type="text" class="form-control" id="address" name="address" placeholder="" value="{{address}}" required>
               <div class="invalid-feedback">
                 Please enter your shipping address.
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="date">Delivery Date</label>
+                <input type="date" class="form-control" id="date" name="date" required>
+                <div class="invalid-feedback">
+                  Please enter a valid date.
+                </div>
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="time">Delivery Time</label>
+                <input type="time" class="form-control" id="time" name="time" value="12:00" required>
+                <div class="invalid-feedback">
+                  Please enter a valid time.
+                </div>
               </div>
             </div>
 
@@ -215,16 +252,31 @@
 
             <div class="d-block my-3">
               <div class="custom-control custom-radio">
-                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" checked required>
                 <label class="custom-control-label" for="credit">Credit card</label>
               </div>
               <div class="custom-control custom-radio">
-                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
                 <label class="custom-control-label" for="debit">Debit card</label>
               </div>
               <div class="custom-control custom-radio">
-                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
                 <label class="custom-control-label" for="paypal">Paypal</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
+                <label class="custom-control-label" for="cash">Cash</label>
+                <div class="text-success" id="ifYes" style="visibility:hidden">
+                  Great! Press Checkout to complete your order
+                </div>
+                <script>
+                  function yesCash() {
+                    if (document.getElementById('cash').checked) {
+                      document.getElementById('ifYes').style.visibility ='visible';
+                    }
+                    else document.getElementById('ifYes').style.visibility ='hidden';
+                  }
+                </script>
               </div>
             </div>
             <div class="row">
@@ -292,11 +344,13 @@
                   Zip code required.
                 </div>
               </div>
-            </form>
+            </div>
 
 
-            <hr class="mb-4">
-            <p><button class="btn btn-primary btn-lg btn-block" type="submit" form="checkout_form">Continue to checkout</button></p>
+
+          <hr class="mb-4">
+          </form>
+          <p><button class="btn btn-primary btn-lg btn-block" type="submit" form="checkout_form">Continue to checkout</button></p>
         </div>
       </div>
     </div>

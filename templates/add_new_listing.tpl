@@ -33,7 +33,7 @@
                   <div class="row">
                      <div class="form-group col-6">
                        <label for="price">Price ($)</label>
-                       <input type="number" class="form-control" name="price" placeholder="15.00" required>
+                       <input type="number" class="form-control" name="price" placeholder="15.00" min="0" step="0.01" required>
                        <div class="invalid-feedback">
                          This field is required.
                        </div>

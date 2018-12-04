@@ -10,7 +10,12 @@
       <h5 class="card-title">
         <a href="#" data-toggle="modal" data-target="#{{meal.food_id}}">{{meal.title}}</a>
       </h5>
-      <h6>${{meal.price}} | {{meal.quantity_fed}} servings</h6>
+      <!-- Below is needed so that the price displays with two decimal points. -->
+      <h6>$<span id="price{{meal.food_id}}"></span> | {{meal.quantity_fed}} servings</h6>
+      <script>
+        var val = parseFloat({{meal.price}}).toFixed(2);
+        document.getElementById('price{{meal.food_id}}').innerHTML = val;
+      </script>
       <p>{{meal.restaurant}}</p>
     </div>
   </div>
@@ -31,7 +36,11 @@
           <div class="col-lg-6 col-md-6">
             <h4 class="h4-responsive">
               <span class="green-text">
-                <strong>${{meal.price}}</strong>
+                <strong>$<span id="modal_price{{meal.food_id}}"></span></strong>
+                <script>
+                  var val = parseFloat({{meal.price}}).toFixed(2);
+                  document.getElementById('modal_price{{meal.food_id}}').innerHTML = val;
+                </script>
               </span>
               <span class="grey-text">
                 <small>

@@ -1,1 +1,1 @@
-      <div class="row"><p class="text-muted ml-2" href="#">{{package}}</p></div>
+      <li><p class="text-muted" href="#">{{package.food_title}} ({{package.quantity}})</p></li>
