@@ -119,7 +119,7 @@ class Restaurant(db.Model):
 	description = db.Column(db.Unicode, unique = False)
 	address = db.Column(db.Unicode, unique = False)
 	phone = db.Column(db.Unicode, unique = False)
-	email = db.Column(db.Unicode, unique = False)
+	email = db.Column(db.Unicode, unique = True)
 	website = db.Column(db.Unicode, unique = False)
 	cuisine = db.Column(db.Unicode, unique = False)
 	numOrders = db.Column(db.Integer, unique = False)
