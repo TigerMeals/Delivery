@@ -93,7 +93,7 @@ def user_login():
 	if user is None:
 		email = netid + "@princeton.edu"
 		user = User(name="",netid=netid,email=email,\
-			birthday=birthday,phone='',address='',\
+			birthday='',phone='',address='',\
 			allergies='')
 		db.session.add(user)
 		db.session.commit()
