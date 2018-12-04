@@ -114,7 +114,7 @@ def user_delete(user_id):
 ################################################################################
 class Restaurant(db.Model):
 	restaurant_id = db.Column(db.Integer, primary_key = True)
-	name = db.Column(db.Unicode, unique = False)
+	name = db.Column(db.Unicode, unique = True)
 	image = db.Column(db.Unicode, unique = False)
 	description = db.Column(db.Unicode, unique = False)
 	address = db.Column(db.Unicode, unique = False)

@@ -1,0 +1,139 @@
+######## RESTAURANTS #############################################
+
+{
+    "address": "26 Nassau St.",
+    "cuisine": "Chinese",
+    "description": "A Chinese restaurant for all of your cravings.",
+    "email": "kungfutea@kf.com",
+    "image": "kungfu.jpg",
+    "name": "Kung Fu Tea",
+    "numOrders": 2,
+    "phone": "9084371254",
+    "restaurant_id": 1,
+    "servingSize": 150,
+    "website": "kungfutea.com"
+}
+
+{
+    "address": "36 Nassau St.",
+    "cuisine": "Mexican",
+    "description": "A Mexican restaurant for all of your cravings.",
+    "email": "tacoria@tf.com",
+    "image": "tacoria.jpg",
+    "name": "Tacoria",
+    "numOrders": 3,
+    "phone": "90843712594",
+    "restaurant_id": 2,
+    "servingSize": 100,
+    "website": "tacoria.com"
+}
+
+####### USERS ####################################################
+
+{
+    "address": "1901 Hall",
+    "allergies": "Dairy, Gluten",
+    "birthday": "June 20, 1897",
+    "email": "vramesh@princeton.edu",
+    "name": "Vinay Ramesh",
+    "netid": "vramesh",
+    "phone": "90843712594",
+    "userHistory": 0,
+    "user_id": 1
+}
+
+{
+    "address": "Philadelphia, Pennsylvania",
+    "allergies": "Dairy",
+    "birthday": "June 20, 1897",
+    "email": "rdondero@princeton.edu",
+    "name": "Robert Dondero",
+    "netid": "rdondero",
+    "phone": "9084712594",
+    "userHistory": 0,
+    "user_id": 2
+}
+
+{
+    "address": "Patton Hall Princeton, NJ",
+    "allergies": "",
+    "birthday": "June 20, 1897",
+    "email": "janetcl@princeton.edu",
+    "name": "Janet Lee",
+    "netid": "janetcl",
+    "phone": "9084712594",
+    "userHistory": 0,
+    "user_id": 3
+}
+
+######## FOODS ###################################################
+
+{
+    "allergies": "Dairy",
+    "cuisine": "Chinese",
+    "description": "100 ct Bubble Tea for all of your cravings.",
+    "food_id": 1,
+    "image": "kungfu.jpg",
+    "price": 359.99,
+    "quantity_fed": 100,
+    "restaurant_id": 1,
+    "timesOrdered": 23,
+    "title": "100 ct Bubble Tea"
+}
+
+{
+    "allergies": "Dairy, Gluten",
+    "cuisine": "Mexican",
+    "description": "50 ct Tacos for all of your cravings.",
+    "food_id": 2,
+    "image": "tacoria.jpg",
+    "price": 209.99,
+    "quantity_fed": 50,
+    "restaurant_id": 2,
+    "timesOrdered": 36,
+    "title": "50 ct Taco Set"
+}
+
+{
+    "allergies": "Contains meat",
+    "cuisine": "IMPLEMENT_LATER",
+    "description": "Tacos for days",
+    "food_id": 3,
+    "image": "/static/img/burrito.jpg",
+    "price": 459.99,
+    "quantity_fed": 200,
+    "restaurant_id": 2,
+    "timesOrdered": 0,
+    "title": "200 ct Burritos"
+}
+
+{
+    "allergies": "Contains dairy,Contains meat",
+    "cuisine": "IMPLEMENT_LATER",
+    "description": "Best quesos",
+    "food_id": 4,
+    "image": "/static/img/burrito.jpg",
+    "price": 200.99,
+    "quantity_fed": 90,
+    "restaurant_id": 2,
+    "timesOrdered": 0,
+    "title": "Quesadilla"
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
