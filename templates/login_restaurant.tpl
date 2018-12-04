@@ -27,7 +27,7 @@
 
         <div class="form-group">
 
-            <input type="password" class="form-control" id="inputPhone" placeholder="Phone" name = "phone">
+            <input type="password" class="form-control" id="inputPhone" placeholder="Password" name = "password">
 
         </div>
         <p>{{error}}</p>

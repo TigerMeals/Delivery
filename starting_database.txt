@@ -11,7 +11,8 @@
     "phone": "9084371254",
     "restaurant_id": 1,
     "servingSize": 150,
-    "website": "kungfutea.com"
+    "website": "kungfutea.com",
+    "password": "extremepanda"
 }
 
 {
@@ -25,7 +26,8 @@
     "phone": "90843712594",
     "restaurant_id": 2,
     "servingSize": 100,
-    "website": "tacoria.com"
+    "website": "tacoria.com",
+    "password": "extremetaco" 
 }
 
 ####### USERS ####################################################
@@ -73,7 +75,7 @@
     "cuisine": "Chinese",
     "description": "100 ct Bubble Tea for all of your cravings.",
     "food_id": 1,
-    "image": "kungfu.jpg",
+    "image": "/static/img/kungfu.jpg",
     "price": 359.99,
     "quantity_fed": 100,
     "restaurant_id": 1,
@@ -86,7 +88,7 @@
     "cuisine": "Mexican",
     "description": "50 ct Tacos for all of your cravings.",
     "food_id": 2,
-    "image": "tacoria.jpg",
+    "image": "/static/img/tacoria.jpg",
     "price": 209.99,
     "quantity_fed": 50,
     "restaurant_id": 2,

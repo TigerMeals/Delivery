@@ -7,7 +7,7 @@
     <meta name="description" content="This is the page in which users will checkout after they have filled up their cart">
     <meta name="author" content="TigerMeals Delivery Team">
 
-    <title>TigerMeals Delivery - Checkout</title>
+    <title>TigerMeals Delivery - Account</title>
 
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap-lux.css" rel="stylesheet">

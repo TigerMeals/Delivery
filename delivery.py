@@ -356,13 +356,15 @@ def upload_cart():
     user_id = fetch_req.json()['user_id']
     print(user_id)
 
-    current_order_url = DATABASE_URL + "/order/current/" + str(id)
+    current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
     res = requests.get(current_order_url)
     if not res.ok:
         res.raise_for_status()
     else:
         order_id = json.loads(res.content)['order_id']
         old_food_items = json.loads(res.content)['food_items']
+        current_order = json.loads(res.content)
+
         if old_food_items is None:
             old_food_items = []
 
@@ -373,6 +375,41 @@ def upload_cart():
             res.raise_for_status()
         else:
             food_details = json.loads(res.content)
+
+            print("Food Details: " + str(food_details))
+
+            # Check to see if the restaurant is different
+            if (food_details['restaurant_id'] != current_order['restaurant_id']) and (current_order['restaurant_id'] != -1):
+                print("RESTAURANT NEEDS TO BE DIFFERENT--------------------------")
+                print(current_order['restaurant_id'])
+                print(food_details['restaurant_id'])              
+                return redirect('/meals')
+
+            # Check to see if the food item already exists within the order
+            for food_item in old_food_items:
+                if food_item['food_id'] == food_details['food_id']:
+                    food_item['quantity'] += int(request.form.get('quantity'))
+                    # if quantity is greater than 10, reject the request
+                    if food_item['quantity'] > 10:
+                        return redirect('/meals')
+                        
+                    food_item['subtotal'] = food_item['quantity'] * food_item['food_price']
+                    updatedOrder = {
+                        "user_id": user_id,
+                        "food_items": old_food_items,
+                        "restaurant_id": current_order['restaurant_id'],
+                        "ordered": False,
+                        "paid": False,
+                        "date": None,
+                        "order_time": None,
+                        "delivery_time": None,
+                        "location": None
+                    }
+                    update_order_url = DATABASE_URL + "/order/" + str(order_id)
+                    res = requests.put(update_order_url, json = updatedOrder)
+                    return redirect('/meals')
+
+
 
             old_food_items.append(
             {"food_title": food_details['title'],
@@ -387,7 +424,7 @@ def upload_cart():
             print (old_food_items)
 
             updatedOrder = {
-                "user_id": id,
+                "user_id": user_id,
                 "food_items": old_food_items,
                 "restaurant_id": food_details['restaurant_id'],
                 "ordered": False,
@@ -399,7 +436,7 @@ def upload_cart():
             }
             update_order_url = DATABASE_URL + "/order/" + str(order_id)
             res = requests.put(update_order_url, json = updatedOrder)
-    return redirect('/meals?id=' + id)
+    return redirect('/meals')
 
 
 @app.route("/ordered", methods=["POST"])
@@ -426,7 +463,7 @@ def ordered():
     date = request.form.get('date')
     time = request.form.get('time')
 
-    current_order_url = DATABASE_URL + "/order/current/" + str(id)
+    current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
     res = requests.get(current_order_url)
     if not res.ok:
         res.raise_for_status()
@@ -445,7 +482,7 @@ def ordered():
         res = requests.post(order_ordered_url, json=formData)
 
 
-    return redirect('/meals?id=' + id)
+    return redirect('/meals')
 
 # @app.route("/test")
 # def test():

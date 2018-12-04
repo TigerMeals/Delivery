@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect
 import requests
 import json
-import os
+import os 
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -12,7 +12,7 @@ DATABASE_URL = "http://localhost:5000"
 def login():
     login_query = {
         "email": request.args.get("email"),
-        "phone": request.args.get("phone")
+        "password": request.args.get("password")
     }
 
     print(request.args.get("email"))
