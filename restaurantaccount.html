@@ -139,14 +139,28 @@
               <div class="row">
                 <h1>User name</h1>
               </div>
-              <ul class="nav nav-tabs">
+
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                      <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Public Profile</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Account Info</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings" aria-selected="false">Settings</a>
+                  </li>
+              </ul>
+              <!-- <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#profile" class="mr-2">Profile</a></li>
                 <li><a data-toggle="tab" href="#account" class="mr-2">Account</a></li>
                 <li><a data-toggle="tab" href="#settings">Settings</a></li>
-              </ul>
+              </ul> -->
+              <div class="tab-content profile-tab" id="myTabContent">
+                    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
-             <div class="tab-content">
-                <div class="tab-pane active" id="profile">
+             <!-- <div class="tab-content">
+                <div class="tab-pane active" id="profile"> -->
                     <hr>
                       <form class="form" action="##" method="post" id="registrationForm">
                         <div class="row">
@@ -225,7 +239,7 @@
                           <div class="form-group col-12">
 
                               <div class="col-12">
-                                <a class="btn btn-info" href="home.html">View my profile as a consumer</a>
+                                <a class="btn btn-info" href="restaurant-info.html">View my profile as a consumer</a>
                               </div>
                           </div>
                         </div>
@@ -242,8 +256,8 @@
                   	</form>
                   </div>
 
-
-                  <div class="tab-pane" id="account">
+                  <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                  <!-- <div class="tab-pane" id="account"> -->
                     <hr>
                         <form class="form" action="##" method="post" id="registrationForm">
                           <div class="row">
@@ -350,8 +364,8 @@
                      </form>
                     </div>
 
-
-                 <div class="tab-pane" id="settings">
+                    <div class="tab-pane fade show" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                 <!-- <div class="tab-pane" id="settings"> -->
                    <hr>
                        <form class="form" action="##" method="post" id="registrationForm">
                          <div class="row">
