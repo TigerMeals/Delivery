@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect
+from flask import Flask, request, jsonify, render_template, redirect, make_response
 import requests
 import json
 import os
@@ -6,11 +6,6 @@ import os
 app = Flask(__name__)
 DATABASE_URL = "http://localhost:5000"
 
-currentSort = ""
-currRestaurantFilters = []
-currCuisineFilters = []
-currAllergenFilters = []
-currSizeFilters = []
 
 def _getCart(user_id):
     order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
@@ -96,10 +91,10 @@ def home():
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
-    resp = (render_template('home.tpl', user_id=user_id, food_prices=food_prices,\
+    resp = make_response((render_template('home.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
-        length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id))
+        length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)))
 
 
     print("User Id: " + str(user_id))
@@ -228,11 +223,25 @@ def checkFilters():
     size75100 = request.args.get('serving75100')
     size100 = request.args.get('serving100')
 
+    KungFuTea = False
+    Panera = False
+    Tacoria = False
+    Asian = False
+    American = False
+    Drinks = False
+    Healthy = False
+    GLFree = False
+    Kosher = False
+    Vegetarian = False
+    Vegan = False
+    serving025 = False
+    serving2550 = False
+    serving5075 = False
+    serving75100 = False
+    serving100 = False
+
     #print("gluten free" + str(request.form.getlist('glFree')))
-    global currRestaurantFilters
-    global currCuisineFilters
-    global currAllergenFilters
-    global currSizeFilters
+    
 
     currRestaurantFilters = []
     currCuisineFilters = []
@@ -241,39 +250,58 @@ def checkFilters():
 
     if kfTea is not None:
         currRestaurantFilters.append('Kung Fu Tea')
+        KungFuTea = True
     if panera is not None:
         currRestaurantFilters.append('Panera')
+        Panera = True
     if tacoria is not None:
         currRestaurantFilters.append('Tacoria')
+        Tacoria = True
     if asian is not None:
         currCuisineFilters.append('Asian')
+        Asian = True
     if american is not None:
         currCuisineFilters.append('American')
+        American = True
     if drinks is not None:
         currCuisineFilters.append('Drinks')
+        Drinks = True
     if healthy is not None:
         currCuisineFilters.append('Healthy')
+        Healthy = True
     if glFree is not None:
         currAllergenFilters.append('Gluten Free')
+        GLFree = True
     if kosher is not None:
         currAllergenFilters.append('Kosher')
+        Kosher = True
     if vegetarian is not None:
         currAllergenFilters.append('Vegetarian')
+        Vegetarian = True
     if vegan is not None:
         currAllergenFilters.append('Vegan')
+        Vegan = True
     if size025 is not None:
         currSizeFilters.append(25)
+        serving025 = True
     if size2550 is not None:
         currSizeFilters.append(50)
+        serving2550 = True
     if size5075 is not None:
         currSizeFilters.append(75)
+        serving5075 = True
     if size75100 is not None:
         currSizeFilters.append(100)
+        serving75100 = True
     if size100 is not None:
         currSizeFilters.append(1000000)
+        serving100 = True
 
+    return (currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters, KungFuTea, Panera,
+    Tacoria, Asian, American, Drinks, Healthy, GLFree, Kosher, Vegetarian, Vegan, serving025, serving2550, serving5075,
+    serving75100, serving100)
 
-def filterItems(meals):
+def filterItems(meals, currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters):
     mealsEdited = []
     for meal in meals:
             restaurantID = meal['restaurant_id']
@@ -320,8 +348,30 @@ def filterItems(meals):
 
 @app.route("/meals/servingLowHighSort")
 def mealsServingSortLowHigh():
-    global currentSort
-    currentSort = "/food/sort/servings/low-high"
+    
+    KungFuTea = False
+    Panera = False
+    Tacoria = False
+    Asian = False
+    American = False
+    Drinks = False
+    Healthy = False
+    GLFree = False
+    Kosher = False
+    Vegetarian = False
+    Vegan = False
+    serving025 = False
+    serving2550 = False
+    serving5075 = False
+    serving75100 = False
+    serving100 = False
+
+    currRestaurantFilters = [] 
+    currCuisineFilters = []
+    currAllergenFilters = [] 
+    currSizeFilters = []
+
+    currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters, KungFuTea, Panera, Tacoria, Asian, American, Drinks, Healthy, GLFree, Kosher, Vegetarian, Vegan, serving025, serving2550, serving5075,serving75100, serving100 = getFiltersFromCookies()
 
     orders_url = DATABASE_URL + "/food/sort/servings/low-high"
     # have to change this URL based on what was clicked in meals.tpl
@@ -336,7 +386,8 @@ def mealsServingSortLowHigh():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
-        mealsEdited = filterItems(meals)
+        mealsEdited = filterItems(meals, currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters)
+
             
         # For logging purposes
         for meal in mealsEdited:
@@ -364,12 +415,49 @@ def mealsServingSortLowHigh():
     return render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
+        length_cart = length_cart, total=total, food_images= food_images, KungFuTea = KungFuTea,
+    Panera = Panera,
+    Tacoria = Tacoria,
+    Asian = Asian,
+    American = American,
+    Drinks = Drinks,
+    Healthy = Healthy,
+    GLFree = GLFree,
+    Kosher = Kosher,
+    Vegetarian = Vegetarian,
+    Vegan = Vegan,
+    serving025 = serving025,
+    serving2550 = serving2550,
+    serving5075 = serving5075,
+    serving75100 = serving75100,
+    serving100 = serving100)
 
 @app.route("/meals/servingHighLowSort")
 def mealsServingSortHighLow():
-    global currentSort
-    currentSort = "/food/sort/servings/high-low"
+    #global currentSort
+    KungFuTea = False
+    Panera = False
+    Tacoria = False
+    Asian = False
+    American = False
+    Drinks = False
+    Healthy = False
+    GLFree = False
+    Kosher = False
+    Vegetarian = False
+    Vegan = False
+    serving025 = False
+    serving2550 = False
+    serving5075 = False
+    serving75100 = False
+    serving100 = False
+
+    currRestaurantFilters = [] 
+    currCuisineFilters = []
+    currAllergenFilters = [] 
+    currSizeFilters = []
+
+    currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters, KungFuTea, Panera, Tacoria, Asian, American, Drinks, Healthy, GLFree, Kosher, Vegetarian, Vegan, serving025, serving2550, serving5075,serving75100, serving100 = getFiltersFromCookies()
 
     orders_url = DATABASE_URL + "/food/sort/servings/high-low"
     # have to change this URL based on what was clicked in meals.tpl
@@ -382,7 +470,8 @@ def mealsServingSortHighLow():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
-        mealsEdited = filterItems(meals)
+        mealsEdited = filterItems(meals, currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters)
+
         # For logging purposes
         for meal in mealsEdited:
             # Make additional request to get restaurant name
@@ -403,15 +492,55 @@ def mealsServingSortHighLow():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=mealsEdited, \
+    resp = make_response(render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
+        length_cart = length_cart, total=total, food_images= food_images, KungFuTea = KungFuTea,
+    Panera = Panera,
+    Tacoria = Tacoria,
+    Asian = Asian,
+    American = American,
+    Drinks = Drinks,
+    Healthy = Healthy,
+    GLFree = GLFree,
+    Kosher = Kosher,
+    Vegetarian = Vegetarian,
+    Vegan = Vegan,
+    serving025 = serving025,
+    serving2550 = serving2550,
+    serving5075 = serving5075,
+    serving75100 = serving75100,
+    serving100 = serving100))
 
+    resp.set_cookie('sort', '/food/sort/servings/high-low')
+    return resp
 @app.route("/meals/popularitySort")
 def mealsPopualritySort():
-    global currentSort
-    currentSort = "/food/sort/popularity"
+    #global currentSort
+    KungFuTea = False
+    Panera = False
+    Tacoria = False
+    Asian = False
+    American = False
+    Drinks = False
+    Healthy = False
+    GLFree = False
+    Kosher = False
+    Vegetarian = False
+    Vegan = False
+    serving025 = False
+    serving2550 = False
+    serving5075 = False
+    serving75100 = False
+    serving100 = False
+
+    currRestaurantFilters = [] 
+    currCuisineFilters = []
+    currAllergenFilters = [] 
+    currSizeFilters = []
+
+    currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters, KungFuTea, Panera, Tacoria, Asian, American, Drinks, Healthy, GLFree, Kosher, Vegetarian, Vegan, serving025, serving2550, serving5075,serving75100, serving100 = getFiltersFromCookies()
+
 
     orders_url = DATABASE_URL + "/food/sort/popularity"
     # have to change this URL based on what was clicked in meals.tpl
@@ -424,7 +553,8 @@ def mealsPopualritySort():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
-        mealsEdited = filterItems(meals)
+        mealsEdited = filterItems(meals, currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters)
+
         # For logging purposes
         for meal in mealsEdited:
             # Make additional request to get restaurant name
@@ -445,17 +575,53 @@ def mealsPopualritySort():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=mealsEdited, \
+    resp = make_response(render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
+        length_cart = length_cart, total=total, food_images= food_images, KungFuTea = KungFuTea,
+    Panera = Panera,
+    Tacoria = Tacoria,
+    Asian = Asian,
+    American = American,
+    Drinks = Drinks,
+    Healthy = Healthy,
+    GLFree = GLFree,
+    Kosher = Kosher,
+    Vegetarian = Vegetarian,
+    Vegan = Vegan,
+    serving025 = serving025,
+    serving2550 = serving2550,
+    serving5075 = serving5075,
+    serving75100 = serving75100,
+    serving100 = serving100))
+
+    resp.set_cookie('sort', '/food/sort/popularity')
+    return resp
 
 @app.route("/meals/priceHighLowSort")
 def mealsPriceHighLow():
-    global currentSort
-    currentSort = "/food/sort/price/high-to-low"
+    #global currentSort
+    KungFuTea = False
+    Panera = False
+    Tacoria = False
+    Asian = False
+    American = False
+    Drinks = False
+    Healthy = False
+    GLFree = False
+    Kosher = False
+    Vegetarian = False
+    Vegan = False
+    serving025 = False
+    serving2550 = False
+    serving5075 = False
+    serving75100 = False
+    serving100 = False
 
-    orders_url = DATABASE_URL + "/food/sort/price/high-to-low"
+
+    currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters, KungFuTea, Panera, Tacoria, Asian, American, Drinks, Healthy, GLFree, Kosher, Vegetarian, Vegan, serving025, serving2550, serving5075,serving75100, serving100 = getFiltersFromCookies()
+
+    orders_url = DATABASE_URL + '/food/sort/price/high-to-low'
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
@@ -466,8 +632,8 @@ def mealsPriceHighLow():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
-        mealsEdited = filterItems(meals)
         # For logging purposes
+        mealsEdited = filterItems(meals, currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters)
         for meal in mealsEdited:
             # Make additional request to get restaurant name
             restaurantID = meal['restaurant_id']
@@ -487,15 +653,127 @@ def mealsPriceHighLow():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=mealsEdited, \
+
+    resp = make_response(render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
+        length_cart = length_cart, total=total, food_images= food_images, KungFuTea = KungFuTea,
+        Panera = Panera, Tacoria = Tacoria, Asian = Asian, American = American, Drinks = Drinks,
+        Healthy = Healthy, GLFree = GLFree, Kosher = Kosher, Vegetarian = Vegetarian, Vegan = Vegan,
+        serving025 = serving025, serving2550 = serving2550, serving5075 = serving5075, serving75100 = serving75100,
+        serving100 = serving100))
+    
+    resp.set_cookie('sort', '/food/sort/price/high-to-low')
+    return resp
+def getFiltersFromCookies():
+    currRestaurantFilters = [] 
+    currCuisineFilters = []
+    currAllergenFilters = [] 
+    currSizeFilters = []
+
+    
+    if request.cookies.get('KungFuTea') == '1':
+        KungFuTea = True
+        currRestaurantFilters.append('Kung Fu Tea')
+    else:
+        KungFuTea = False
+
+    if request.cookies.get('Panera') == '1':
+        Panera = True
+        currRestaurantFilters.append('Panera')
+    else:
+        Panera = False
+    if request.cookies.get('Tacoria') == '1':
+        currRestaurantFilters.append('Tacoria')
+        Tacoria = True
+    else:
+        Tacoria = False
+    if request.cookies.get('Asian') == '1':
+        currCuisineFilters.append('Asian')
+        Asian = True
+    else:
+        Asian = False
+    
+    if request.cookies.get('American') == '1':
+        currCuisineFilters.append('American')
+        American = True
+    else:
+        American = False
+
+    if request.cookies.get('Drinks') == '1':
+        Drinks = True
+        currCuisineFilters.append('Drinks')
+    else:
+        Drinks = False
+
+    if request.cookies.get('Healthy') == '1':
+        Healthy = True
+        currCuisineFilters.append('Healthy')
+    else:
+        Healthy = False
+
+    if request.cookies.get('GLFree') == '1':
+        GlFree = True
+        currAllergenFilters.append('Gluten Free')
+    else:
+        GLFree = False
+
+    if request.cookies.get('Kosher') == '1':
+        currAllergenFilters.append('Kosher')
+        Kosher = True
+    else:
+        Kosher = False
+
+    if request.cookies.get('Vegetarian') == '1':
+        currAllergenFilters.append('Vegetarian')
+        Vegetarian = True
+    else:
+        Vegetarian = False
+
+    if request.cookies.get('Vegan') == '1':
+        currAllergenFilters.append('Vegan')
+        Vegan = True
+    else:
+        Vegan = False
+
+    if request.cookies.get('serving025') == '1':
+        serving025 = True
+        currSizeFilters.append(25)
+    else:
+        serving025 = False
+
+    if request.cookies.get('serving2550') == '1':
+        currSizeFilters.append(50)
+        serving2550 = True
+    else:
+        serving2550 = False
+
+    if request.cookies.get('serving5075') == '1':
+        currSizeFilters.append(75)
+        serving5075 = True
+    else:
+        serving5075 = False
+
+    if request.cookies.get('serving75100') == '1':
+        currSizeFilters.append(100)
+        serving75100 = True
+    else:
+        serving75100 = False
+
+    if request.cookies.get('serving100') == '1':
+        currSizeFilters.append(1000000)
+        serving100 = True
+    else:
+        serving100 = False
+
+    return (currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters, KungFuTea, Panera,
+    Tacoria, Asian, American, Drinks, Healthy, GLFree, Kosher, Vegetarian, Vegan, serving025, serving2550, serving5075,
+    serving75100, serving100)
 
 @app.route("/meals/mostRecentlyAddedSort")
 def mealsMostRecentlyAddedSort():
-    global currentSort
-    currentSort = "/food/sort/most-recent"
+    #global currentSort
+    currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters, KungFuTea, Panera, Tacoria, Asian, American, Drinks, Healthy, GLFree, Kosher, Vegetarian, Vegan, serving025, serving2550, serving5075,serving75100, serving100 = getFiltersFromCookies()
 
     orders_url = DATABASE_URL + "/food/sort/most-recent"
     # have to change this URL based on what was clicked in meals.tpl
@@ -508,7 +786,8 @@ def mealsMostRecentlyAddedSort():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
-        mealsEdited = ""
+        mealsEdited = filterItems(meals, currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters)
+
         # For logging purposes
         for meal in mealsEdited:
             # Make additional request to get restaurant name
@@ -525,21 +804,59 @@ def mealsMostRecentlyAddedSort():
             else:
                 meal['restaurant'] = json.loads(res.content)['name']
             # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
+            #for key in meal:
+                #print (key + " : " + str(meal[key]))
+            #print()
 
-    return render_template('meals.tpl', meals=mealsEdited, \
+    resp = make_response(render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
+        length_cart = length_cart, total=total, food_images= food_images, KungFuTea = KungFuTea, Panera = Panera, Tacoria = Tacoria,
+    Asian = Asian,
+    American = American,
+    Drinks = Drinks,
+    Healthy = Healthy,
+    GLFree = GLFree,
+    Kosher = Kosher,
+    Vegetarian = Vegetarian,
+    Vegan = Vegan,
+    serving025 = serving025,
+    serving2550 = serving2550,
+    serving5075 = serving5075,
+    serving75100 = serving75100,
+    serving100 = serving100))
+
+    resp.set_cookie('sort', "/food/sort/most-recent")
+    return resp
 
 @app.route("/meals/filterCaterings")
 def mealsFilterCaterings2():
-    checkFilters()
 
+    KungFuTea = False
+    Panera = False
+    Tacoria = False
+    Asian = False
+    American = False
+    Drinks = False
+    Healthy = False
+    GLFree = False
+    Kosher = False
+    Vegetarian = False
+    Vegan = False
+    serving025 = False
+    serving2550 = False
+    serving5075 = False
+    serving75100 = False
+    serving100 = False
 
-    orders_url = DATABASE_URL + currentSort
+    currRestaurantFilters = [] 
+    currCuisineFilters = []
+    currAllergenFilters = [] 
+    currSizeFilters = []
+
+    currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters, KungFuTea, Panera, Tacoria, Asian, American, Drinks, Healthy, GLFree, Kosher, Vegetarian, Vegan, serving025, serving2550, serving5075,serving75100, serving100 = checkFilters()
+
+    orders_url = DATABASE_URL + request.cookies.get('sort')
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
@@ -551,7 +868,8 @@ def mealsFilterCaterings2():
     else:
         meals = json.loads(res.content)
         # For logging purposes
-        mealsEdited = filterItems(meals)
+        mealsEdited = filterItems(meals, currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters)
+
         for meal in mealsEdited:
             # Make additional request to get restaurant name
             restaurantID = meal['restaurant_id']
@@ -571,17 +889,127 @@ def mealsFilterCaterings2():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=mealsEdited, \
+
+    resp = make_response(render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
+        length_cart = length_cart, total=total, food_images= food_images, KungFuTea = KungFuTea,
+    Panera = Panera,
+    Tacoria = Tacoria,
+    Asian = Asian,
+    American = American,
+    Drinks = Drinks,
+    Healthy = Healthy,
+    GLFree = GLFree,
+    Kosher = Kosher,
+    Vegetarian = Vegetarian,
+    Vegan = Vegan,
+    serving025 = serving025,
+    serving2550 = serving2550,
+    serving5075 = serving5075,
+    serving75100 = serving75100,
+    serving100 = serving100))
+
+    if KungFuTea == True:
+        resp.set_cookie('KungFuTea', '1')
+    else:
+        resp.set_cookie('KungFuTea', '0')
+
+    if Panera == True:
+        resp.set_cookie('Panera', '1')
+    else:
+        resp.set_cookie('Panera', '0') 
+
+    if Tacoria == True:
+        resp.set_cookie('Tacoria', '1')
+    else:
+        resp.set_cookie('Tacoria', '0') 
+    
+    if Asian == True:
+        resp.set_cookie('Asian', '1')
+    else:
+        resp.set_cookie('Asian', '0')
+    if American == True:
+        resp.set_cookie('American', '1')
+    else:
+        resp.set_cookie('American', '0')
+    if Drinks == True:
+        resp.set_cookie('Drinks', '1')
+    else:
+        resp.set_cookie('Drinks', '0')
+    if Healthy == True:
+        resp.set_cookie('Healthy', '1')
+    else:
+        resp.set_cookie('Healthy', '0')
+    if GLFree == True:
+        resp.set_cookie('GLFree', '1')
+    else:
+        resp.set_cookie('GLFree', '0')
+    if Kosher == True:
+        resp.set_cookie('Kosher', '1')
+    else:
+        resp.set_cookie('Kosher', '0')
+    if Vegan == True:
+        resp.set_cookie('Vegan', '1')
+    else:
+        resp.set_cookie('Vegan', '0')
+    if Vegetarian == True:
+        resp.set_cookie('Vegetarian', '1')
+    else:
+        resp.set_cookie('Vegetarian', '0')
+    if serving025 == True:
+        resp.set_cookie('serving025', '1')
+    else:
+        resp.set_cookie('serving025', '0')
+    if serving2550 == True:
+        resp.set_cookie('serving2550', '1')
+    else:
+        resp.set_cookie('serving2550', '0')
+    if serving5075 == True:
+        resp.set_cookie('serving5075', '1')
+    else:
+        resp.set_cookie('serving5075', '0')
+    if serving75100 == True:
+        resp.set_cookie('serving75100', '1')
+    else:
+        resp.set_cookie('serving75100', '0')
+    if serving100 == True:
+        resp.set_cookie('serving100', '1')
+    else:
+        resp.set_cookie('serving100', '0')
+
+
+
+    return resp
 
 @app.route("/filterCaterings")
 def mealsFilterCaterings():
     
-    checkFilters()
+    KungFuTea = False
+    Panera = False
+    Tacoria = False
+    Asian = False
+    American = False
+    Drinks = False
+    Healthy = False
+    GLFree = False
+    Kosher = False
+    Vegetarian = False
+    Vegan = False
+    serving025 = False
+    serving2550 = False
+    serving5075 = False
+    serving75100 = False
+    serving100 = False
 
-    orders_url = DATABASE_URL + currentSort
+    currRestaurantFilters = [] 
+    currCuisineFilters = []
+    currAllergenFilters = [] 
+    currSizeFilters = []
+
+    currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters, KungFuTea, Panera, Tacoria, Asian, American, Drinks, Healthy, GLFree, Kosher, Vegetarian, Vegan, serving025, serving2550, serving5075,serving75100, serving100 = checkFilters()
+
+    orders_url = DATABASE_URL + request.cookies.get('sort')
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
@@ -593,7 +1021,8 @@ def mealsFilterCaterings():
     else:
         meals = json.loads(res.content)
         # For logging purposes
-        mealsEdited = filterItems(meals)
+        mealsEdited = filterItems(meals, currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters)
+        
         for meal in mealsEdited:
             # Make additional request to get restaurant name
             restaurantID = meal['restaurant_id']
@@ -613,14 +1042,124 @@ def mealsFilterCaterings():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=mealsEdited, \
+
+    resp = make_response(render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
+        length_cart = length_cart, total=total, food_images= food_images, KungFuTea = KungFuTea,
+    Panera = Panera,
+    Tacoria = Tacoria,
+    Asian = Asian,
+    American = American,
+    Drinks = Drinks,
+    Healthy = Healthy,
+    GLFree = GLFree,
+    Kosher = Kosher,
+    Vegetarian = Vegetarian,
+    Vegan = Vegan,
+    serving025 = serving025,
+    serving2550 = serving2550,
+    serving5075 = serving5075,
+    serving75100 = serving75100,
+    serving100 = serving100))
+
+    if KungFuTea == True:
+        resp.set_cookie('KungFuTea', '1')
+    else:
+        resp.set_cookie('KungFuTea', '0')
+
+    if Panera == True:
+        resp.set_cookie('Panera', '1')
+    else:
+        resp.set_cookie('Panera', '0') 
+
+    if Tacoria == True:
+        resp.set_cookie('Tacoria', '1')
+    else:
+        resp.set_cookie('Tacoria', '0') 
+    
+    if Asian == True:
+        resp.set_cookie('Asian', '1')
+    else:
+        resp.set_cookie('Asian', '0')
+    if American == True:
+        resp.set_cookie('American', '1')
+    else:
+        resp.set_cookie('American', '0')
+    if Drinks == True:
+        resp.set_cookie('Drinks', '1')
+    else:
+        resp.set_cookie('Drinks', '0')
+    if Healthy == True:
+        resp.set_cookie('Healthy', '1')
+    else:
+        resp.set_cookie('Healthy', '0')
+    if GLFree == True:
+        resp.set_cookie('GLFree', '1')
+    else:
+        resp.set_cookie('GLFree', '0')
+    if Kosher == True:
+        resp.set_cookie('Kosher', '1')
+    else:
+        resp.set_cookie('Kosher', '0')
+    if Vegan == True:
+        resp.set_cookie('Vegan', '1')
+    else:
+        resp.set_cookie('Vegan', '0')
+    if Vegetarian == True:
+        resp.set_cookie('Vegetarian', '1')
+    else:
+        resp.set_cookie('Vegetarian', '0')
+    if serving025 == True:
+        resp.set_cookie('serving025', '1')
+    else:
+        resp.set_cookie('serving025', '0')
+    if serving2550 == True:
+        resp.set_cookie('serving2550', '1')
+    else:
+        resp.set_cookie('serving2550', '0')
+    if serving5075 == True:
+        resp.set_cookie('serving5075', '1')
+    else:
+        resp.set_cookie('serving5075', '0')
+    if serving75100 == True:
+        resp.set_cookie('serving75100', '1')
+    else:
+        resp.set_cookie('serving75100', '0')
+    if serving100 == True:
+        resp.set_cookie('serving100', '1')
+    else:
+        resp.set_cookie('serving100', '0')
+
+
+
+
+    return resp
 @app.route("/meals/leastRecentlyAddedSort")
 def mealsLeastRecentlyAddedSort():
-    global currentSort
-    currentSort = "/food/sort/least-recent"
+    KungFuTea = False
+    Panera = False
+    Tacoria = False
+    Asian = False
+    American = False
+    Drinks = False
+    Healthy = False
+    GLFree = False
+    Kosher = False
+    Vegetarian = False
+    Vegan = False
+    serving025 = False
+    serving2550 = False
+    serving5075 = False
+    serving75100 = False
+    serving100 = False
+    currRestaurantFilters = []
+    currCuisineFilters = []
+    currAllergenFilters = []
+    currSizeFilters = []
+
+    currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters, KungFuTea, Panera, Tacoria, Asian, American, Drinks, Healthy, GLFree, Kosher, Vegetarian, Vegan, serving025, serving2550, serving5075,serving75100, serving100 = getFiltersFromCookies()
+
     orders_url = DATABASE_URL + "/food/sort/least-recent"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
@@ -632,7 +1171,8 @@ def mealsLeastRecentlyAddedSort():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
-        mealsEdited = filterItems(meals)
+        mealsEdited = filterItems(meals, currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters)
+
         # For logging purposes
         for meal in mealsEdited:
             # Make additional request to get restaurant name
@@ -653,16 +1193,57 @@ def mealsLeastRecentlyAddedSort():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=mealsEdited, \
+    resp = make_response(render_template(render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
+        length_cart = length_cart, total=total, food_images= food_images, KungFuTea = KungFuTea,
+    Panera = Panera,
+    Tacoria = Tacoria,
+    Asian = Asian,
+    American = American,
+    Drinks = Drinks,
+    Healthy = Healthy,
+    GLFree = GLFree,
+    Kosher = Kosher,
+    Vegetarian = Vegetarian,
+    Vegan = Vegan,
+    serving025 = serving025,
+    serving2550 = serving2550,
+    serving5075 = serving5075,
+    serving75100 = serving75100,
+    serving100 = serving100)))
+
+    resp.set_cookie('sort', "/food/sort/least-recent")
+
+    return resp
 
 @app.route("/meals")
 def meals():
-    global currentSort
+    KungFuTea = False
+    Panera = False
+    Tacoria = False
+    Asian = False
+    American = False
+    Drinks = False
+    Healthy = False
+    GLFree = False
+    Kosher = False
+    Vegetarian = False
+    Vegan = False
+    serving025 = False
+    serving2550 = False
+    serving5075 = False
+    serving75100 = False
+    serving100 = False
+    currRestaurantFilters = []
+    currCuisineFilters = []
+    currAllergenFilters = []
+    currSizeFilters = []
+
+    currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters, KungFuTea, Panera, Tacoria, Asian, American, Drinks, Healthy, GLFree, Kosher, Vegetarian, Vegan, serving025, serving2550, serving5075,serving75100, serving100 = getFiltersFromCookies()
+
     orders_url = DATABASE_URL + "/food/sort/price/low-to-high"
-    currentSort = "/food/sort/price/low-to-high"
+    #currentSort = "/food/sort/price/low-to-high"
     # have to change this URL based on what was clicked in meals.tpl
     user_id = 1
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
@@ -673,7 +1254,8 @@ def meals():
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
-        mealsEdited = filterItems(meals)
+        mealsEdited = filterItems(meals, currRestaurantFilters, currCuisineFilters, currAllergenFilters, currSizeFilters)
+
         # For logging purposes
         for meal in mealsEdited:
             # Make additional request to get restaurant name
@@ -694,10 +1276,29 @@ def meals():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=mealsEdited, \
+    resp = make_response(render_template('meals.tpl', meals=mealsEdited, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images)
+        length_cart = length_cart, total=total, food_images= food_images, KungFuTea = KungFuTea,
+    Panera = Panera,
+    Tacoria = Tacoria,
+    Asian = Asian,
+    American = American,
+    Drinks = Drinks,
+    Healthy = Healthy,
+    GLFree = GLFree,
+    Kosher = Kosher,
+    Vegetarian = Vegetarian,
+    Vegan = Vegan,
+    serving025 = serving025,
+    serving2550 = serving2550,
+    serving5075 = serving5075,
+    serving75100 = serving75100,
+    serving100 = serving100))
+
+    resp.set_cookie('sort', "/food/sort/price/low-to-high")
+
+    return resp
 
 @app.route("/cart/upload", methods=["POST"])
 def upload_cart():

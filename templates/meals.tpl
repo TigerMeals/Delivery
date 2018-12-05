@@ -136,15 +136,15 @@
                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                 <div class="card-body">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name = "KungFuTea" value="" id="KungFuTea">
+                    <input class="form-check-input" type="checkbox" name = "KungFuTea" id="KungFuTea" {{'checked="checked"' if KungFuTea else ""}}>
                     <label class="form-check-label" for="KungFuTea">
                       Kung Fu Tea
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "Panera" id="Panera">
+                    <input class="form-check-input" type="checkbox" name = "Panera" id="Panera" {{'checked="checked"' if Panera else ""}}>
                     <label class="form-check-label" for="Panera">
                       Panera
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "Tacoria" id="Tacoria">
+                    <input class="form-check-input" type="checkbox" name = "Tacoria" id="Tacoria" {{'checked="checked"' if Tacoria else ""}}>
                     <label class="form-check-label" for="Tacoria">
                       Tacoria
                     </label> <br>
@@ -166,19 +166,19 @@
               <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name = "Asian" value="" id="Asian">
+                    <input class="form-check-input" type="checkbox" name = "Asian"  id="Asian" {{'checked="checked"' if Asian else ""}}>
                     <label class="form-check-label" for="Asian">
                       Asian
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "American" id="American">
+                    <input class="form-check-input" type="checkbox"  name = "American" id="American" {{'checked="checked"' if American else ""}}>
                     <label class="form-check-label" for="American">
                       American
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "Drinks" id="Drinks">
+                    <input class="form-check-input" type="checkbox"  name = "Drinks" id="Drinks" {{'checked="checked"' if Drinks else ""}}>
                     <label class="form-check-label" for="Drinks">
                       Drinks
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "Healthy" id="Healthy">
+                    <input class="form-check-input" type="checkbox"  name = "Healthy" id="Healthy" {{'checked="checked"' if Healthy else ""}}>
                     <label class="form-check-label" for="Healthy">
                       Healthy
                     </label> <br>
@@ -200,19 +200,19 @@
               <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
                 <div class="card-body">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" name = "GLFree" id="gf">
+                    <input class="form-check-input" type="checkbox" name = "GLFree" id="GLFree" {{'checked="checked"' if GLFree else ""}}>
                     <label class="form-check-label" for="GLFree">
                       Gluten Free
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "Kosher" id="kosher">
+                    <input class="form-check-input" type="checkbox" name = "Kosher" id="Kosher" {{'checked="checked"' if Kosher else ""}}>
                     <label class="form-check-label" for="Kosher">
                       Kosher
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "Vegan" id="vegan">
+                    <input class="form-check-input" type="checkbox" name = "Vegan" id="Vegan" {{'checked="checked"' if Vegan else ""}}>
                     <label class="form-check-label" for="Vegan">
                       Vegan
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "Vegetarian" id="vegetarian">
+                    <input class="form-check-input" type="checkbox" name = "Vegetarian" id="Vegetarian" {{'checked="checked"' if Vegetarian else ""}}>
                     <label class="form-check-label" for="Vegetarian">
                       Vegetarian
                     </label> <br>
@@ -234,23 +234,23 @@
               <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionExample">
                 <div class="card-body">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name = "serving025" value="" id="serving025">
+                    <input class="form-check-input" type="checkbox" name = "serving025" id="serving025" {{'checked="checked"' if serving025 else ""}}>
                     <label class="form-check-label" for="serving025">
                       0-25
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "serving2550" id="serving2550">
+                    <input class="form-check-input" type="checkbox" name = "serving2550" id="serving2550" {{'checked="checked"' if serving2550 else ""}}>
                     <label class="form-check-label" for="serving2550">
                       25-50
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "serving5075" id="serving5075">
+                    <input class="form-check-input" type="checkbox" name = "serving5075" id="serving5075" {{'checked="checked"' if serving5075 else ""}}>
                     <label class="form-check-label" for="serving5075">
                       50-75
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "serving75100" id="serving75100">
+                    <input class="form-check-input" type="checkbox" name = "serving75100" id="serving75100" {{'checked="checked"' if serving75100 else ""}}>
                     <label class="form-check-label" for="serving75100">
                       75-100
                     </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" name = "serving100" id="serving100">
+                    <input class="form-check-input" type="checkbox" name = "serving100" id="serving100" {{'checked="checked"' if serving100 else ""}}>
                     <label class="form-check-label" for="serving100">
                       100+
                     </label> <br>
