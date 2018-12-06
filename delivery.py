@@ -317,13 +317,24 @@ def meals():
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
+    restaurants_url = DATABASE_URL + "/restaurant"
+    res = requests.get(restaurants_url)
+    if not res.ok:
+        res.raise_for_status()
+    rests = json.loads(res.content)
+    restaurants = []
+    # Get updated list of restaurants from database for form options
+    for rest in rests:
+        if {"id": rest['restaurant_id'], "name": rest['name']} not in restaurants:
+            restaurants.append({"id": rest['restaurant_id'], "name": rest['name']})
+
     res = requests.get(meals_url)
+
     if not res.ok:
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
         length_meals = len(meals)
-        restaurants = []
         # For logging purposes
         for meal in meals:
             # Make additional request to get restaurant name
@@ -339,8 +350,7 @@ def meals():
                 res.raise_for_status()
                 return None
             meal['restaurant'] = json.loads(res.content)['name']
-            if {"id": restaurantID, "name": meal['restaurant']} not in restaurants:
-                restaurants.append({"id": restaurantID, "name": meal['restaurant']})
+
             # For logging purposes
             for key in meal:
                 print (key + " : " + str(meal[key]))
