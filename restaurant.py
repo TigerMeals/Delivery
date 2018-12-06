@@ -237,19 +237,23 @@ def add_listing():
     }
     # Replace default image with uploaded image if it exists
     # TODO: Replace with image upload to remote server
-    if 'image' in request.files:
-        img = request.files['image']
-        if img != None:
-            # Create unique url of restaurant id + food title
-            # Since this is a new food item it does not yet have an ID
-            img_url = 'static/img/' + id + request.form.get('title') + '.jpg'
-            img.save(img_url)
-            entry["image"] = img_url
 
 
     res = requests.post(add_food_url, json = entry)
     if not res.ok:
         res.raise_for_status()
+
+    if 'image' in request.files:
+        img = request.files['image']
+        if img != None:
+            # Create unique url of restaurant id + food title
+            # Since this is a new food item it does not yet have an ID
+            img_url = 'static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
+            img.save(img_url)
+            updateImage = {"image": "/" + img_url}
+            update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
+            requests.post(update_image_url, json=updateImage)
+
     return redirect('/listings?id=' + id)
 
 # Endpoint to update a new restaurant listing.
@@ -287,7 +291,7 @@ def update_listing():
             # Img url is unique name based on the food id
             img_url = 'static/img/' + food_id + '.jpg'
             img.save(img_url)
-            updatedEntry["image"] = img_url
+            updatedEntry["image"] = "/" + img_url
 
     res = requests.put(add_food_url, json = updatedEntry)
     if not res.ok:
