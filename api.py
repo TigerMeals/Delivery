@@ -245,7 +245,8 @@ class Food(db.Model):
 
 class FoodSchema(ma.Schema):
 	class Meta:
-		fields = ('food_id', 'title','description', 'image', 'quantity_fed', 'price', 'cuisine', 'allergies', 'restaurant_id', 'timesOrdered', 'active')
+		fields = ('food_id', 'title','description', 'image', 'quantity_fed', \
+			'price', 'cuisine', 'allergies', 'restaurant_id', 'timesOrdered', 'active')
 
 food_schema = FoodSchema()
 foods_schema = FoodSchema(many = True)
