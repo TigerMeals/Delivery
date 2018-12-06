@@ -1,6 +1,6 @@
 from flask import Flask, request, jsonify, render_template, redirect
 from flask_mail import Mail,  Message
-from mail_html import user_order_html
+from mail_html import user_order_html, rest_order_html
 import requests
 import json
 import os
@@ -10,19 +10,17 @@ app = Flask(__name__)
 cas = CAS(app, '/cas')
 cas.init_app(app)
 DATABASE_URL = "http://localhost:5000"
-app.config.update(
-    MAIL_SERVER='smtp.gmail.com',
-    MAIL_PORT=465,
-    MAIL_USE_SSL=True,
-    MAIL_USERNAME = 'tigermealsdelivery@gmail.com',
-    MAIL_PASSWORD = 'PrincetonTigers'
-)
-mail = Mail(app)
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
 app.config['CAS_LOGIN_ROUTE'] = '/cas/login'
 app.config['CAS_AFTER_LOGIN'] = 'home'
 app.config['CAS_VALIDATE_ROUTE'] = '/cas/serviceValidate'
 app.config['DEBUG'] = True
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'tigermealsdelivery@gmail.com'
+app.config['MAIL_PASSWORD'] = 'aksnpqtutouldhna'
+mail = Mail(app)
 
 
 def _getCart(user_id):
@@ -514,7 +512,9 @@ def ordered():
         res.raise_for_status()
         return None
 
-    restEmail = json.loads(res.content)['email']
+    rest = json.loads(res.content)
+    print (rest)
+    restEmail = rest['email']
     msg = mail.send_message(
     'New TigerMeals Delivery order request!',
     sender='tigermealsdelivery@gmail.com',

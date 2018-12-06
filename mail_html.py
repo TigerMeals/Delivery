@@ -321,7 +321,7 @@ def user_order_html():
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://htmlemail.io" target="_blank">Click here to view your order status.</a> </td>
+                                          <td> <a href="http://localhost:8080/" target="_blank">Click here to view your order status.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -363,14 +363,15 @@ def user_order_html():
     </html>
     """
 
-# HTML and CSS for email to restaurants after placing an order.
-def user_order_html():
+
+# HTML and CSS for email to users after placing an order.
+def rest_order_html():
     return """<!doctype html>
     <html>
       <head>
         <meta name="viewport" content="width=device-width" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <title>Your TigerMeals Delivery Order</title>
+        <title>Pending TigerMeals Delivery Order</title>
         <style>
           /* -------------------------------------
               GLOBAL RESETS
@@ -668,7 +669,7 @@ def user_order_html():
               <div class="content">
 
                 <!-- START CENTERED WHITE CONTAINER -->
-                <span class="preheader">Your recent TigerMeals Delivery order has been successfully placed. Please allow up to 24 hours for restaurant approval of your order.</span>
+                <span class="preheader">A recent TigerMeals Delivery order is now pending online.</span>
                 <table role="presentation" class="main">
 
                   <!-- START MAIN CONTENT AREA -->
@@ -678,7 +679,7 @@ def user_order_html():
                         <tr>
                           <td>
                             <p>Hi there,</p>
-                            <p>Some wants to order from your restaurant! Please visit our restaurant to view the pending order at your earliest convenience.</p>
+                            <p>A user has requested an order from your restaurant. At your earliest convenience, please login to the website and approve or deny this order.</p>
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                               <tbody>
                                 <tr>
@@ -686,7 +687,7 @@ def user_order_html():
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://localhost:8081/orders" target="_blank">Click here to view the order details and approve or deny this order.</a> </td>
+                                          <td> <a href="http://localhost:8081/login" target="_blank">Click here to view the order.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -694,7 +695,7 @@ def user_order_html():
                                 </tr>
                               </tbody>
                             </table>
-                            <p>If there any issues with the order, feel free to reach out directly to the user. Contact details are available on the website portal</p>
+                            <p>If there are any questions, please reach out to the user directly.</p>
                             <p>Thank you for using TigerMeals Delivery!</p>
                           </td>
                         </tr>
