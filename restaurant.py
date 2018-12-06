@@ -54,7 +54,11 @@ def home():
             res.raise_for_status()
         else:
             orders = json.loads(res.content)
-            length_orders = len(orders)
+            length_orders = 0
+            for order in orders:
+                if order['paid']:
+                    length_orders += 1
+
             return render_template('home_restaurant.tpl', \
                 id=id, length_orders=length_orders)
 
@@ -72,7 +76,10 @@ def about():
         res.raise_for_status()
     else:
         orders = json.loads(res.content)
-        length_orders = len(orders)
+        length_orders = 0
+        for order in orders:
+            if order['paid']:
+                length_orders += 1
 
     return render_template('about_restaurant.tpl', id=id,\
          length_orders=length_orders)
@@ -149,7 +156,10 @@ def account():
         res.raise_for_status()
     else:
         orders = json.loads(res.content)
-        length_orders = len(orders)
+        length_orders = 0
+        for order in orders:
+            if order['paid']:
+                length_orders += 1
 
     listings_url = DATABASE_URL + "/food/restaurant/" + id
     res = requests.get(listings_url)
@@ -201,7 +211,10 @@ def listings():
         res.raise_for_status()
     else:
         orders = json.loads(res.content)
-        length_orders = len(orders)
+        length_orders = 0
+        for order in orders:
+            if order['paid']:
+                length_orders += 1
 
     return render_template('listings_restaurant.tpl', active_listings=active_listings, \
         id=id, length_orders=length_orders, inactive_listings=inactive_listings)
