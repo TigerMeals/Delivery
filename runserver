@@ -1,2 +1,2 @@
-export FLASK_APP=delivery.py
-flask run -p 8080
+#!/usr/bin/env bash
+python3 delivery.py "$@"

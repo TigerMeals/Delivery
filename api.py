@@ -83,6 +83,25 @@ def user_update(user_id):
 	db.session.commit()
 	return user_schema.jsonify(user)
 
+# Endpoint to login a user, and to register them in our system
+# if it is a new user.
+@app.route("/user/login", methods = ["POST"])
+def user_login():
+	netid = request.json['netid']
+
+	user = User.query.filter_by(netid=netid).first()
+
+	if user is None:
+		email = netid + "@princeton.edu"
+		user = User(name="",netid=netid,email=email,\
+			birthday='',phone='',address='',\
+			allergies='')
+		db.session.add(user)
+		db.session.commit()
+		return user_schema.jsonify(user)
+
+	return user_schema.jsonify(user)
+
 # Endpoint to delete user
 @app.route("/user/<user_id>", methods = ["DELETE"])
 def user_delete(user_id):
@@ -96,33 +115,33 @@ def user_delete(user_id):
 ################################################################################
 class Restaurant(db.Model):
 	restaurant_id = db.Column(db.Integer, primary_key = True)
-	name = db.Column(db.Unicode, unique = False)
+	password = db.Column(db.Unicode, unique = False)
+	name = db.Column(db.Unicode, unique = True)
 	image = db.Column(db.Unicode, unique = False)
 	description = db.Column(db.Unicode, unique = False)
 	address = db.Column(db.Unicode, unique = False)
 	phone = db.Column(db.Unicode, unique = False)
-	email = db.Column(db.Unicode, unique = False)
+	email = db.Column(db.Unicode, unique = True)
 	website = db.Column(db.Unicode, unique = False)
 	cuisine = db.Column(db.Unicode, unique = False)
-	numOrders = db.Column(db.Integer, unique = False)
 	servingSize = db.Column(db.Integer, unique = False)
 
-	def __init__(self, name, image, description, address, phone, cuisine, numOrders, servingSize, website, email):
+	def __init__(self, name, image, description, address, phone, cuisine, servingSize, website, email, password):
 		self.name = name
 		self.image = image
 		self.description = description
 		self.address = address
 		self.phone = phone
 		self.cuisine = cuisine
-		self.numOrders = numOrders
 		self.servingSize = servingSize
 		self.website = website
 		self.email = email
+		self.password = password
 
 class RestaurantSchema(ma.Schema):
 	class Meta:
-		fields = ('restaurant_id', 'name', 'image', 'description', 'address', 'phone', 'cuisine', 'numOrders', 'servingSize',\
-			'website', 'email')
+		fields = ('restaurant_id', 'name', 'image', 'description', 'address', 'phone', 'cuisine', 'servingSize',\
+			'website', 'email', 'password')
 restaurant_schema = RestaurantSchema()
 restaurants_schema = RestaurantSchema(many = True)
 
@@ -130,17 +149,17 @@ restaurants_schema = RestaurantSchema(many = True)
 @app.route("/restaurant", methods = ["POST"])
 def restaurant_add():
 	name = request.json['name']
+	password = request.json['password']
 	image = request.json['image']
 	description = request.json['description']
 	address = request.json['address']
 	phone = request.json['phone']
 	cuisine = request.json['cuisine']
-	numOrders = request.json['numOrders']
 	servingSize = request.json['servingSize']
 	email = request.json['email']
 	website = request.json['website']
 
-	new_restaurant = Restaurant(name, image, description, address, phone, cuisine, numOrders, servingSize, website, email)
+	new_restaurant = Restaurant(name, image, description, address, phone, cuisine, servingSize, website, email, password)
 	db.session.add(new_restaurant)
 	db.session.commit()
 	return restaurant_schema.jsonify(new_restaurant)
@@ -177,10 +196,10 @@ def restaurant_update(restaurant_id):
 @app.route("/restaurant/login", methods = ["POST"])
 def restaurant_login():
 	email = request.json['email']
-	phone = request.json['phone']
+	password = request.json['password']
 
 	restaurant = Restaurant.query.filter_by(email = email, \
-		phone = phone).first()
+		password = password).first()
 
 	if restaurant is None:
 		return jsonify({

@@ -39,16 +39,16 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item-bar">
-              <a class="nav-link" href="http://localhost:8080/home?id={{id}}">Home</a>
+              <a class="nav-link" href="http://localhost:8080/home">Home</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="http://localhost:8080/about?id={{id}}">About</a>
+              <a class="nav-link" href="http://localhost:8080/about">About</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="http://localhost:8080/meals?id={{id}}">Meals</a>
+              <a class="nav-link" href="http://localhost:8080/meals">Meals</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="http://localhost:8080/account?id={{id}}">My Account</a>
+              <a class="nav-link" href="http://localhost:8080/account">My Account</a>
             </li>
             <li class="nav-item-bar justify-content-end dropdown active">
               <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
@@ -95,8 +95,8 @@
                       var val = parseFloat({{total}}).toFixed(2);
                       document.getElementById('total').innerHTML = "Total: $" + val;
                     </script>
-                    <a class="checkout-text item-left" href="http://localhost:8080/cart?id={{id}}">View Cart</a>
-                    <a class="checkout-text item-right" href="http://localhost:8080/checkout?id={{id}}">Checkout</a>
+                    <a class="checkout-text item-left" href="http://localhost:8080/cart">View Cart</a>
+                    <a class="checkout-text item-right" href="http://localhost:8080/checkout">Checkout</a>
                     <br>
     							</li>
 
@@ -252,16 +252,31 @@
 
             <div class="d-block my-3">
               <div class="custom-control custom-radio">
-                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" checked required>
+                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" checked required>
                 <label class="custom-control-label" for="credit">Credit card</label>
               </div>
               <div class="custom-control custom-radio">
-                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" required>
+                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
                 <label class="custom-control-label" for="debit">Debit card</label>
               </div>
               <div class="custom-control custom-radio">
-                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
+                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
                 <label class="custom-control-label" for="paypal">Paypal</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
+                <label class="custom-control-label" for="cash">Cash</label>
+                <div class="text-success" id="ifYes" style="visibility:hidden">
+                  Great! Press Checkout to complete your order
+                </div>
+                <script>
+                  function yesCash() {
+                    if (document.getElementById('cash').checked) {
+                      document.getElementById('ifYes').style.visibility ='visible';
+                    }
+                    else document.getElementById('ifYes').style.visibility ='hidden';
+                  }
+                </script>
               </div>
             </div>
             <div class="row">

@@ -51,7 +51,7 @@
               <a class="nav-link" href="/account?id={{id}}">My Account</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="/orders?id={{id}}">View Orders (4 Active)</a>
+              <a class="nav-link" href="/orders?id={{id}}">View Orders ({{length_orders}} Active)</a>
             </li>
           </ul>
         </div>
