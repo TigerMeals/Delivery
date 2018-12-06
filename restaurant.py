@@ -26,7 +26,16 @@ def login():
         login_feedback = json.loads(res.content)
         print(login_feedback)
         if 'error' not in login_feedback:
-            return render_template('home_restaurant.tpl', id=login_feedback['restaurant_id'])
+            id = login_feedback['restaurant_id']
+            orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
+            res = requests.get(orders_url)
+            if not res.ok:
+                res.raise_for_status()
+            else:
+                orders = json.loads(res.content)
+                length_orders = len(orders)
+                return render_template('home_restaurant.tpl', \
+                    id=id, length_orders=length_orders)
         else:
             return render_template('login_restaurant.tpl', error="Invalid Login")
 
