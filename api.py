@@ -326,7 +326,7 @@ def food_filter():
 		food = food.filter(or_(Food.quantity_fed >= int(r[0]) for r in ranges))
 		food = food.filter(or_(Food.quantity_fed <= int(r[1]) for r in ranges))
 	sort = request.json['sort']
-
+	food = food.filter_by(active = True)
 	if (sort == "popular"):
 		result = food.order_by(Food.timesOrdered).all()
 	if (sort == "servings"):
@@ -344,40 +344,10 @@ def food_filter():
 # Endpoint that sorts by price
 @app.route('/food/sort/price/low-to-high', methods = ['GET'])
 def food_sort_price_low_to_high():
-	food = Food.query.order_by(Food.price).all()
+	food = Food.query.filter_by(active = True)
+	food = food.order_by(Food.price).all()
 	return foods_schema.jsonify(food)
 
-# Endpoint that sorts by price
-@app.route('/food/sort/price/high-to-low', methods = ['GET'])
-def food_sort_price_high_to_low():
-	food = Food.query.order_by(Food.price).all()
-	food.reverse()
-	return foods_schema.jsonify(food)
-
-# Sort food by most recent
-@app.route('/food/sort/most-recent', methods = ['GET'])
-def food_recent():
-	food = Food.query.order_by(Food.food_id).all()
-	return foods_schema.jsonify(food)
-
-# Sort food by number of servings
-@app.route('/food/sort/servings', methods = ['GET'])
-def food_servings():
-	food = Food.query.order_by(Food.quantity_fed).all()
-	return foods_schema.jsonify(food)
-
-# Filter food by cuisine
-@app.route('/food/filter_cuisine/<cuisine>', methods = ['POST'])
-def food_filter_cuisine():
-	food = Food.query.filter_by(cuisine)
-
-@app.route('/food/filter/allergies', methods = ['POST'])
-def food_filter_allergies():
-	allergies = request.json['allergies'].strip()
-	print (allergies)
-	food = Food.query.filter_by(allergies = allergies)
-	#### NEED TO FIX THIS FUNCTION
-	return foods_schema.jsonify(food)
 
 
 # Endpoint to delete food
