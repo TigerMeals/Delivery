@@ -1,4 +1,5 @@
-<!-- Modal -->
+
+
     <div class="modal fade" id="newListing" tabindex="-1" role="dialog" aria-labelledby="newListingTitle" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -8,14 +9,18 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-            <div class="row">
-              <div class="col-lg-4 col-md-4">
-                <img class="d-block w-100" src="/static/img/panera.jpg"
-                  alt="First slide">
-              </div>
-              <div class="col-lg-8 col-md-8">
-                <form id="add_listing" action="/listings/add?id={{id}}" method="POST" class="needs-validation" novalidate>
+          <form id="add_listing" action="/listings/add?id={{id}}" method="POST" class="needs-validation" enctype=multipart/form-data novalidate>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-lg-4 col-md-4">
+                  <div class="text-center">
+                    <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+                    <br><br>
+                    <h6>Upload a different photo...</h6>
+                    <input type="file" class="text-center center-block file-upload" name="image">
+                  </div><hr><br>
+                </div>
+                <div class="col-lg-8 col-md-8">
                   <div class="form-group">
                     <label for="title">Title</label>
                     <input type="text" class="form-control" name="title" placeholder="Panera Breakfast Bagels" required>
@@ -74,23 +79,16 @@
                              <input type="checkbox"  name="allergens4" value="Kosher">
                              Kosher
                              </label>
-                           </div>
                          </div>
                        </div>
                      </div>
                    </div>
-                 </form>
+                 </div>
                </div>
               </div>
-          </div>
+            </div>
+          </form>
           <div class="modal-footer">
-            <div class="row">
-              <div class="col-10">
-                <div class="text-center item-right">
-                  <button class="btn btn-danger">Cancel</button>
-                </div>
-              </div>
-              </div>
               <div class="col-2">
                 <div class="text-center item-right">
                   <button class="btn btn-success" type="submit" form="add_listing">Save</button>

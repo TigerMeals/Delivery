@@ -12,13 +12,17 @@
     <link rel='icon' href='/static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
-    <link href="/static/css/bootstrap-lux.css" rel="stylesheet"></link>
+    <link href="/static/css/bootstrap-lux.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/static/css/shop-homepage.css" rel="stylesheet"></link>
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous"></link>
+    <link href="/static/css/shop-homepage.css" rel="stylesheet">
+    <link href="/static/css/clockpicker.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/static/dist/bootstrap-clockpicker.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
   </head>
 
@@ -100,8 +104,11 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="/static/vendor/jquery/jquery.min.js"></script>
-    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="static/js/clockpicker.js"></script>
+    <script type="text/javascript" src="static/dist/bootstrap-clockpicker.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
     <script>
@@ -125,6 +132,55 @@
       }, false);
     })();
 
+    </script>
+
+    <!-- Modal -->
+    <script>
+      $(document).ready(function() {
+
+          var readURL = function(input) {
+              if (input.files && input.files[0]) {
+                  var reader = new FileReader();
+
+                  reader.onload = function (e) {
+                      $('.avatar').attr('src', e.target.result);
+                  }
+
+                  reader.readAsDataURL(input.files[0]);
+              }
+          }
+
+          $(".file-upload").on('change', function(){
+              readURL(this);
+          });
+      });
+
+    </script>
+
+    <script type="text/javascript">
+      var input = $('#input-a');
+      input.commandlockpicker({
+        autoclose: true
+      });
+
+      // Manual operations
+      $('#button-a').click(function(e){
+        // Have to stop propagation here
+        e.stopPropagation();
+        input.clockpicker('show')
+                .clockpicker('toggleView', 'minutes');
+      });
+      $('#button-b').click(function(e){
+        // Have to stop propagation here
+        e.stopPropagation();
+        input.clockpicker('show')
+                .clockpicker('toggleView', 'hours');
+      });
+    </script>
+
+
+    <script type="text/javascript">
+    $('.clockpicker').clockpicker();
     </script>
 
   </body>

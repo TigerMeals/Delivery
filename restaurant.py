@@ -163,6 +163,16 @@ def add_listing():
         "cuisine": "IMPLEMENT_LATER",
         "timesOrdered": 0,
     }
+    # Replace default image with uploaded image if it exists
+    # TODO: Replace with image upload to remote server
+    img = request.files['image']
+    if img != None:
+        # Create unique url of restaurant id + food title
+        # Since this is a new food item it does not yet have an ID
+        img_url = 'static/img/' + id + request.form.get('title') + '.jpg'
+        img.save(img_url)
+        entry["image"] = img_url
+
 
     res = requests.post(add_food_url, json = entry)
     if not res.ok:
@@ -176,7 +186,8 @@ def update_listing():
     if id is None:
         print("Login screen -----------------------------------")
         return render_template('login_restaurant.tpl')
-    add_food_url = DATABASE_URL + "/food/" + str(request.form.get("food_id"))
+    food_id = str(request.form.get("food_id"))
+    add_food_url = DATABASE_URL + "/food/" + food_id
     allergens = ""
     for checkbox in range(1, 5):
         value = request.form.get('allergens' + str(checkbox))
@@ -193,7 +204,16 @@ def update_listing():
         "quantity_fed": request.form.get('quantity'),
         "price": request.form.get('price'),
         "allergies": allergens,
-    }
+        }
+
+    # Replace default image with uploaded image if it exists
+    # TODO: Replace with image upload to remote server
+    img = request.files['image']
+    if img != None:
+        # Img url is unique name based on the food id
+        img_url = 'static/img/' + food_id + '.jpg'
+        img.save(img_url)
+        updatedEntry["image"] = img_url
 
     res = requests.put(add_food_url, json = updatedEntry)
     if not res.ok:

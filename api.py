@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from sqlalchemy import or_, and_
 import os
 import json
 
@@ -268,8 +269,56 @@ def food_update(food_id):
 	food.price = request.json['price']
 	food.allergies = request.json['allergies']
 
+	# Optional
+	if 'image' in request.json:
+		food.image = request.json['image']
+
 	db.session.commit()
 	return food_schema.jsonify(food)
+
+# Endpoint that sorts by price
+# Expects following in json dict: restaurants: list of restaurant ids, cuisines: list of desired cuisines, allergies: list of dietary restrictions, servings: list of serving ranges, sort: type of sort desired (popular, servings, price_low_to_high, price_high_to_low, or recent).
+@app.route('/food/filter', methods = ['POST'])
+def food_filter():
+	restaurants = request.json['restaurants']
+	cuisines = request.json['cuisines']
+	# Current allergies that are options are 'Contains dairy', 'Contains meat', 'Contains eggs', 'Kosher'
+	allergies = request.json['allergies']
+
+	# split the quantity fed ranges into min and max by splitting at -
+	# if something goes wrong below, the servings fields were provided incorrectly, should be of the form ["1-20", "30-50"]
+	servings = request.json['servings']
+	ranges = []
+
+	for s in servings:
+		vals = s.split("-")
+		ranges.append([vals[0], vals[1]])
+
+	food = Food.query
+	if restaurants is not []:
+		food = food.filter(or_(Food.restaurant_id == v for v in restaurants))
+	if cuisines is not []:
+		food = food.filter(or_(Food.cuisine == c for c in cuisines))
+	if allergies is not []:
+		food = food.filter(or_(Food.allergies.contains(a) for a in allergies))
+	if ranges is not []:
+		food = food.filter(or_(Food.quantity_fed >= int(r[0]) for r in ranges))
+		food = food.filter(or_(Food.quantity_fed <= int(r[1]) for r in ranges))
+	sort = request.json['sort']
+
+	if (sort == "popular"):
+		result = food.order_by(Food.timesOrdered).all()
+	if (sort == "servings"):
+		result = food.order_by(Food.quantity_fed).all()
+	if (sort == "price_low_to_high"):
+		result = food.order_by(Food.price).all()
+	if (sort == "price_high_to_low"):
+		result = food.order_by(Food.price).all()
+		result.reverse()
+	if (sort == "recent"):
+		result = food.order_by(Food_id).all()
+
+	return foods_schema.jsonify(result)
 
 # Endpoint that sorts by price
 @app.route('/food/sort/price/low-to-high', methods = ['GET'])

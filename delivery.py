@@ -1,11 +1,20 @@
 from flask import Flask, request, jsonify, render_template, redirect
+from flask_mail import Mail,  Message
+from mail_html import user_order_html
 import requests
 import json
 import os
 
 app = Flask(__name__)
 DATABASE_URL = "http://localhost:5000"
-
+app.config.update(
+    MAIL_SERVER='smtp.gmail.com',
+    MAIL_PORT=465,
+    MAIL_USE_SSL=True,
+    MAIL_USERNAME = 'tigermealsdelivery@gmail.com',
+    MAIL_PASSWORD = 'PrincetonTigers'
+)
+mail = Mail(app)
 
 def _getCart(user_id):
     order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
@@ -206,17 +215,18 @@ def account():
 # Endpoint to create new user
 @app.route("/meals")
 def meals():
-    orders_url = DATABASE_URL + "/food/sort/price/low-to-high"
+    meals_url = DATABASE_URL + "/food/sort/price/low-to-high"
     user_id = request.args.get('id')
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
-    res = requests.get(orders_url)
+    res = requests.get(meals_url)
     if not res.ok:
         res.raise_for_status()
     else:
         meals = json.loads(res.content)
         length_meals = len(meals)
+        restaurants = []
         # For logging purposes
         for meal in meals:
             # Make additional request to get restaurant name
@@ -230,8 +240,10 @@ def meals():
                 meal['allergies'] = meal['allergies'].split(",")
             if not res.ok:
                 res.raise_for_status()
-            else:
-                meal['restaurant'] = json.loads(res.content)['name']
+                return None
+            meal['restaurant'] = json.loads(res.content)['name']
+            if {"id": restaurantID, "name": meal['restaurant']} not in restaurants:
+                restaurants.append({"id": restaurantID, "name": meal['restaurant']})
             # For logging purposes
             for key in meal:
                 print (key + " : " + str(meal[key]))
@@ -240,7 +252,7 @@ def meals():
     return render_template('meals.tpl', meals=meals, \
         id=request.args.get('id'), food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals)
+        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], checkboxes=[])
 
 @app.route("/cart/upload", methods=["POST"])
 def upload_cart():
@@ -304,22 +316,130 @@ def ordered():
     res = requests.get(current_order_url)
     if not res.ok:
         res.raise_for_status()
-    else:
-        order_id = json.loads(res.content)['order_id']
-        order_ordered_url = DATABASE_URL + "/order/ordered/" + str(order_id)
+        return None
 
-        formData = {
-        "name": name,
-        "email": email,
-        "location": address,
-        "date": date,
-        "time": time
-        }
-        print (formData)
-        res = requests.post(order_ordered_url, json=formData)
+    order_id = json.loads(res.content)['order_id']
+    order_ordered_url = DATABASE_URL + "/order/ordered/" + str(order_id)
 
+    formData = {
+    "name": name,
+    "email": email,
+    "location": address,
+    "date": date,
+    "time": time
+    }
+    print (formData)
+    res = requests.post(order_ordered_url, json=formData)
+    if not res.ok:
+        res.raise_for_status()
+        return None
+
+    msg = mail.send_message(
+    'Your recent TigerMeals Delivery order!',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[email],
+    html=user_order_html())
+
+    restaurant_id = json.loads(res.content)['restaurant_id']
+    restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
+    res = requests.get(restaurant_url)
+
+    if not res.ok:
+        res.raise_for_status()
+        return None
+
+    restEmail = json.loads(res.content)['email']
+    msg = mail.send_message(
+    'New TigerMeals Delivery order request!',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[restEmail],
+    html=rest_order_html())
 
     return redirect('/meals?id=' + id)
+
+
+@app.route("/meals/filter", methods=["POST", "GET"])
+def filter():
+    if request.method=="GET":
+        return redirect('/meals?id=' + request.args.get('id'))
+    current_filters = []
+    checkboxes = []
+    # Get restaurant ids for selected restaurants
+    restaurantsIds = []
+    for checkbox in request.form:
+        checkboxes.append(checkbox)
+        if "restaurant" in checkbox:
+            restaurantsIds.append(checkbox.split("restaurant_")[1].split("_")[1])
+            current_filters.append(checkbox.split("restaurant_")[1].split("_")[0])
+    cuisines = []
+    for cuisine in ["Asian", "American", "Drinks", "Healthy"]:
+        if request.form.get(cuisine) is not None:
+            cuisines.append(cuisine)
+            current_filters.append(cuisine)
+
+    allergies = []
+    for allergy in ["Contains dairy", "Contains meat", "Contains eggs", "Kosher"]:
+        if request.form.get(allergy) is not None:
+            allergies.append(allergy)
+            current_filters.append(allergy)
+
+    servings = []
+    for serving in ["0-25", "25-50", "50-75", "75-100", "100-1000"]:
+        if request.form.get(serving) is not None:
+            servings.append(serving)
+            current_filters.append(servings)
+
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(request.args.get('id'))
+
+    restaurants_url = DATABASE_URL + "/restaurant"
+    res = requests.get(restaurants_url)
+    if not res.ok:
+        res.raise_for_status()
+    rests = json.loads(res.content)
+    restaurants = []
+    # Get updated list of restaurants from database for form options
+    for rest in rests:
+        if {"id": rest['restaurant_id'], "name": rest['name']} not in restaurants:
+            restaurants.append({"id": rest['restaurant_id'], "name": rest['name']})
+
+    filter_url = DATABASE_URL + "/food/filter"
+    filterParams = {
+    "restaurants": restaurantsIds,
+    "cuisines": cuisines,
+    "allergies": allergies,
+    "servings": servings,
+    "sort": request.form.get('sort')
+    }
+    res = requests.post(filter_url, json=filterParams)
+    meals = json.loads(res.content)
+    length_meals = len(meals)
+
+    # For logging purposes
+    for meal in meals:
+        # Make additional request to get restaurant name
+        restaurantID = meal['restaurant_id']
+        restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurantID)
+        res = requests.get(restaurant_url)
+        # Splice allergies into a list
+        if meal['allergies'] is "":
+            meal['allergies'] = []
+        else:
+            meal['allergies'] = meal['allergies'].split(",")
+        if not res.ok:
+            res.raise_for_status()
+            return None
+        meal['restaurant'] = json.loads(res.content)['name']
+        # For logging purposes
+        for key in meal:
+            print (key + " : " + str(meal[key]))
+        print()
+
+    return render_template('meals.tpl', meals=meals, \
+        id=request.args.get('id'), food_prices = food_prices, \
+        food_subtotals = food_subtotals, food_titles = food_titles, \
+        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, checkboxes=checkboxes)
+
 
 # @app.route("/test")
 # def test():

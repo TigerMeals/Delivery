@@ -11,13 +11,17 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <div class="row">
-                    <div class="col-lg-4 col-md-4">
-                      <img class="d-block w-100" src="{{listing.image}}"
-                        alt="First slide">
-                    </div>
-                    <div class="col-lg-8 col-md-8">
-                      <form id="update_entry{{listing.food_id}}" action="/listings/update?id={{id}}" method="POST" class="needs-validation" novalidate>
+                  <form id="update_entry{{listing.food_id}}" action="/listings/update?id={{id}}" method="POST" class="needs-validation" enctype=multipart/form-data novalidate>
+                    <div class="row">
+                      <div class="col-lg-4 col-md-4">
+                        <div class="text-center">
+                          <img src="{{listing.image}}" class="avatar img-circle img-thumbnail" alt="avatar">
+                          <br><br>
+                          <h6>Upload a different photo...</h6>
+                          <input type="file" class="text-center center-block file-upload" name="image">
+                        </div><hr><br>
+                      </div>
+                      <div class="col-lg-8 col-md-8">
                         <div class="form-group">
                           <label for="title">Title</label>
                           <input class="form-control" type="text" name="title" value="{{listing.title}}" required>
@@ -86,8 +90,8 @@
                          </div>
                        </div>
                      </div>
-                   </form>
-                  </div>
+                    </div>
+                  </form>
                 </div>
                 <div class="modal-footer">
                     <div class="col-2">
