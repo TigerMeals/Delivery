@@ -70,7 +70,7 @@
       </div>
 
       {% include 'add_new_listing.tpl' %}
-      <table id="restaurantlistings" class="table table-hover table-condensed">
+      <table id="activerestaurantlistings" class="table table-hover table-condensed">
         <thead>
           <tr style="color:black;">
             <h2 class="float-left">My Active Listings</h2>
@@ -78,7 +78,7 @@
           </tr>
         </thead>
         <tbody>
-          {% for l in listings %}
+          {% for l in active_listings %}
             {% with listing=l %}
               {% include 'display_listings.tpl' %}
             {% endwith %}
@@ -87,12 +87,34 @@
 				<tfoot>
 				</tfoot>
 			</table>
-      {% for l in listings %}
+      {% for l in active_listings %}
         {% with listing=l %}
           {% include 'listings_modals.tpl' %}
         {% endwith %}
       {% endfor %}
-	  </div>
+
+      <table id="inactiverestaurantlistings" class="table table-hover table-condensed">
+        <thead>
+          <tr style="color:black;">
+            <h2 class="float-left">My Inactive Listings</h2>
+          </tr>
+        </thead>
+        <tbody>
+          {% for l in inactive_listings %}
+            {% with listing=l %}
+              {% include 'display_listings.tpl' %}
+            {% endwith %}
+          {% endfor %}
+        </tbody>
+        <tfoot>
+        </tfoot>
+      </table>
+      {% for l in inactive_listings %}
+        {% with listing=l %}
+          {% include 'listings_modals.tpl' %}
+        {% endwith %}
+      {% endfor %}
+    </div>
     <!-- /.container -->
 
     <!-- Footer -->

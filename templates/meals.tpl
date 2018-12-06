@@ -143,7 +143,7 @@
                   </button>
                   </h5>
                 </div>
-                <form id = "filter" action="/meals/filter?id={{id}}" method="POST">
+                <form id = "filter" action="/meals/filter" method="POST">
                   <input type="hidden" name="sort" id="sort">
                   <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
                     <div class="card-body">

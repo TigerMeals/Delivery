@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify, render_template, redirect
 import requests
 import json
-import os 
+import os
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
@@ -165,6 +165,8 @@ def listings():
         res.raise_for_status()
     else:
         listings = json.loads(res.content)
+        active_listings = []
+        inactive_listings = []
         print ("Request Successful: ")
         for listing in listings:
             for key in listing:
@@ -173,6 +175,10 @@ def listings():
                 listing['allergies'] = []
             else:
                 listing['allergies'] = listing['allergies'].split(",")
+            if listing['active'] is True:
+                active_listings.append(listing)
+            else:
+                inactive_listings.append(listing)
         print ()
 
     orders_url = DATABASE_URL + "/order/restaurant/" + id
@@ -183,8 +189,8 @@ def listings():
         orders = json.loads(res.content)
         length_orders = len(orders)
 
-    return render_template('listings_restaurant.tpl', listings=listings, \
-        id=id, length_orders=length_orders)
+    return render_template('listings_restaurant.tpl', active_listings=active_listings, \
+        id=id, length_orders=length_orders, inactive_listings=inactive_listings)
 
 # Endpoint to add a new restaurant listing.
 @app.route("/listings/add", methods=["POST"])
@@ -217,13 +223,14 @@ def add_listing():
     }
     # Replace default image with uploaded image if it exists
     # TODO: Replace with image upload to remote server
-    img = request.files['image']
-    if img != None:
-        # Create unique url of restaurant id + food title
-        # Since this is a new food item it does not yet have an ID
-        img_url = 'static/img/' + id + request.form.get('title') + '.jpg'
-        img.save(img_url)
-        entry["image"] = img_url
+    if 'image' in request.files:
+        img = request.files['image']
+        if img != None:
+            # Create unique url of restaurant id + food title
+            # Since this is a new food item it does not yet have an ID
+            img_url = 'static/img/' + id + request.form.get('title') + '.jpg'
+            img.save(img_url)
+            entry["image"] = img_url
 
 
     res = requests.post(add_food_url, json = entry)
@@ -260,14 +267,27 @@ def update_listing():
 
     # Replace default image with uploaded image if it exists
     # TODO: Replace with image upload to remote server
-    img = request.files['image']
-    if img != None:
-        # Img url is unique name based on the food id
-        img_url = 'static/img/' + food_id + '.jpg'
-        img.save(img_url)
-        updatedEntry["image"] = img_url
+    if 'image' in request.files:
+        img = request.files['image']
+        if img != None:
+            # Img url is unique name based on the food id
+            img_url = 'static/img/' + food_id + '.jpg'
+            img.save(img_url)
+            updatedEntry["image"] = img_url
 
     res = requests.put(add_food_url, json = updatedEntry)
+    if not res.ok:
+        res.raise_for_status()
+    return redirect('/listings?id=' + id)
+
+
+# Endpoint to make a restaurant listing active or inactive.
+@app.route("/toggle/active", methods=["POST"])
+def toggle_active():
+    id = request.args.get('id')
+    food_id = request.form.get('food_id')
+    toggle_food_url = DATABASE_URL + "/food/toggle_active/" + food_id
+    res = requests.post(toggle_food_url)
     if not res.ok:
         res.raise_for_status()
     return redirect('/listings?id=' + id)

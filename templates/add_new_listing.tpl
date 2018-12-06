@@ -17,7 +17,7 @@
                     <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
                     <br><br>
                     <h6>Upload a different photo...</h6>
-                    <input type="file" class="text-center center-block file-upload" name="image">
+                    <input type="file" class="text-center center-block file-upload" name="image" required>
                   </div><hr><br>
                 </div>
                 <div class="col-lg-8 col-md-8">

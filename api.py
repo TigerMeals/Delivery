@@ -229,8 +229,9 @@ class Food(db.Model):
 	allergies = db.Column(db.Unicode, unique = False)
 	restaurant_id = db.Column(db.Integer, unique = False)
 	timesOrdered = db.Column(db.Integer, unique = False)
+	active = db.Column(db.Boolean)
 
-	def __init__(self, cuisine, timesOrdered, title, description, image, quantity_fed, price, allergies, restaurant_id):
+	def __init__(self, cuisine, timesOrdered, title, description, image, quantity_fed, price, allergies, restaurant_id, active=True):
 		self.title = title
 		self.cuisine = cuisine
 		self.timesOrdered = timesOrdered
@@ -240,10 +241,11 @@ class Food(db.Model):
 		self.price = price
 		self.allergies = allergies
 		self.restaurant_id = restaurant_id
+		self.active = active
 
 class FoodSchema(ma.Schema):
 	class Meta:
-		fields = ('food_id', 'title','description', 'image', 'quantity_fed', 'price', 'cuisine', 'allergies', 'restaurant_id', 'timesOrdered')
+		fields = ('food_id', 'title','description', 'image', 'quantity_fed', 'price', 'cuisine', 'allergies', 'restaurant_id', 'timesOrdered', 'active')
 
 food_schema = FoodSchema()
 foods_schema = FoodSchema(many = True)
@@ -384,6 +386,15 @@ def food_delete(food_id):
 	food = Food.query.get(food_id)
 
 	db.session.delete(food)
+	db.session.commit()
+	return food_schema.jsonify(food)
+
+# Endpoint to make food active or inactive
+@app.route("/food/toggle_active/<food_id>", methods = ["POST"])
+def food_toggle_active(food_id):
+	food = Food.query.get(food_id)
+	food.active = not food.active
+
 	db.session.commit()
 	return food_schema.jsonify(food)
 

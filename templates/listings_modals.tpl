@@ -94,11 +94,25 @@
                   </form>
                 </div>
                 <div class="modal-footer">
-                    <div class="col-2">
+                  <form id="toggle_active{{listing.food_id}}" action="/toggle/active?id={{id}}" method="POST">
+                    <input type="hidden" name="food_id" value="{{listing.food_id}}">
+                  </form>
+                  <div class="row">
+                    <div class="col-10">
                       <div class="text-center item-right">
-                        <button class="btn btn-success" type="submit" form="update_entry{{listing.food_id}}">Save</button>
+                        {% if listing.active %}
+                        <button class="btn btn-danger" type="submit" form="toggle_active{{listing.food_id}}">Inactivate</button>
+                        {% else %}
+                        <button class="btn btn-danger" type="submit" form="toggle_active{{listing.food_id}}">Activate</button>
+                        {% endif %}
                       </div>
                     </div>
+                  </div>
+                  <div class="col-2">
+                    <div class="text-center item-right">
+                      <button class="btn btn-success" type="submit" form="update_entry{{listing.food_id}}">Save</button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
