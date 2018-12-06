@@ -64,14 +64,14 @@
         <p class="lead">Please view your orders below. We thank you for partnering with TigerMeals Delivery.</p>
       </div>
 
-      <table id="restaurantlistings" class="table table-hover table-condensed">
+      <table id="pendingorders" class="table table-hover table-condensed">
   				<thead>
   					<tr style="color:black;">
                 <h2>Pending Orders</h2>
   					</tr>
   				</thead>
 					<tbody>
-            {% for o in orders %}
+            {% for o in pending %}
               {% with order=o %}
                 {% include 'display_order.tpl' %}
               {% endwith %}
@@ -80,11 +80,33 @@
   					<tfoot>
   					</tfoot>
   				</table>
-          {% for o in orders %}
+          {% for o in pending %}
             {% with order=o %}
               {% include 'order_modals.tpl' %}
             {% endwith %}
           {% endfor %}
+
+          <table id="activeorders" class="table table-hover table-condensed">
+              <thead>
+                <tr style="color:black;">
+                    <h2>Order To Be Delivered</h2>
+                </tr>
+              </thead>
+              <tbody>
+                {% for o in active %}
+                  {% with order=o %}
+                    {% include 'display_order.tpl' %}
+                  {% endwith %}
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+              {% for o in active %}
+                {% with order=o %}
+                  {% include 'order_modals.tpl' %}
+                {% endwith %}
+              {% endfor %}
 		  </div>
 
     </div>

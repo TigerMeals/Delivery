@@ -63,26 +63,44 @@
             <div class="modal-footer">
               <div class="row">
 
+                {% if order.paid %}
                 <div class="col-4">
                   <div class="text-center item-right">
-                    <button class="btn btn-danger">Reject</button>
+                    <button class="btn btn-info" onclick="contact{{order.order_id}}()">Contact</button>
+                  </div>
+                </div>
+                {% else %}
+                <form id="reject{{order.order_id}}" action="/order/deny?id={{id}}" method="POST">
+                  <input type="hidden" name="order_id" value="{{order.order_id}}">
+                </form>
+                <div class="col-4">
+                  <div class="text-center item-right">
+                    <button class="btn btn-danger" type="submit" form="reject{{order.order_id}}">Reject</button>
                   </div>
                 </div>
 
                 <div class="col-4">
                   <div class="text-center item-right">
-                    <button class="btn btn-info">Contact</button>
+                    <button class="btn btn-info" onclick="contact{{order.order_id}}()">Contact</button>
                   </div>
                 </div>
 
+                <form id="approve{{order.order_id}}" action="/order/approve?id={{id}}" method="POST">
+                  <input type="hidden" name="order_id" value="{{order.order_id}}">
+                </form>
                 <div class="col-4">
                   <div class="text-center item-right">
-                    <button class="btn btn-success">Approve</button>
+                    <button class="btn btn-success type=" type="submit" form="approve{{order.order_id}}">Approve</button>
                   </div>
                 </div>
-
+                {% endif %}
               </div>
             </div>
           </div>
         </div>
       </div>
+
+      <script>function contact{{order.order_id}}() {
+        alert("Please email the user at {{order.email}}.")
+      }
+      </script>

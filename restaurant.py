@@ -90,7 +90,8 @@ def orders():
         res.raise_for_status()
     else:
         orders = json.loads(res.content)
-
+        active = []
+        pending = []
         # For logging purposes
         print ("Request Successful: ")
         for order in orders:
@@ -103,13 +104,17 @@ def orders():
                 print (key + " : " + str(order[key]))
             order['price'] = price
             order['packages'] = packages
+            if order['paid']:
+                active.append(order)
+            else:
+                pending.append(order)
+
 
         print ()
-        length_orders = len(orders)
+        length_active = len(active)
 
-
-    return render_template('orders_restaurant.tpl', orders=orders, \
-        id=id, length_orders = length_orders)
+    return render_template('orders_restaurant.tpl', pending=pending, \
+        active=active, id=id, length_orders = length_active)
 
 # Endpoint to view the restaurant account page
 @app.route("/account")
@@ -184,7 +189,7 @@ def listings():
                 listing['allergies'] = []
             else:
                 listing['allergies'] = listing['allergies'].split(",")
-            if listing['active'] is True:
+            if listing['active']:
                 active_listings.append(listing)
             else:
                 inactive_listings.append(listing)
@@ -300,6 +305,30 @@ def toggle_active():
     if not res.ok:
         res.raise_for_status()
     return redirect('/listings?id=' + id)
+
+
+# Endpoint to deny an order.
+@app.route("/order/deny", methods=["POST"])
+def order_deny():
+    id = request.args.get('id')
+    order_id = request.form.get('order_id')
+    delete_order_url = DATABASE_URL + "/order/" + order_id
+    res = requests.delete(delete_order_url)
+    if not res.ok:
+        res.raise_for_status()
+    return redirect('/orders?id=' + id)
+
+
+# Endpoint to approve an order.
+@app.route("/order/approve", methods=["POST"])
+def order_approve():
+    id = request.args.get('id')
+    order_id = request.form.get('order_id')
+    approve_order_url = DATABASE_URL + "/order/approval/" + order_id
+    res = requests.post(approve_order_url)
+    if not res.ok:
+        res.raise_for_status()
+    return redirect('/orders?id=' + id)
 
 if __name__ == '__main__':
     app.run(port = 8081, host = '0.0.0.0')
