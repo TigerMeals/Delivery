@@ -348,8 +348,6 @@ def food_sort_price_low_to_high():
 	food = food.order_by(Food.price).all()
 	return foods_schema.jsonify(food)
 
-
-
 # Endpoint to delete food
 @app.route("/food/<food_id>", methods = ["DELETE"])
 def food_delete(food_id):
@@ -365,6 +363,13 @@ def food_toggle_active(food_id):
 	food = Food.query.get(food_id)
 	food.active = not food.active
 
+	db.session.commit()
+	return food_schema.jsonify(food)
+
+@app.route("/food/image/<food_id>", methods=["POST"])
+def food_update_image(food_id):
+	food = Food.query.get(food_id)
+	food.image = request.json['image']
 	db.session.commit()
 	return food_schema.jsonify(food)
 
