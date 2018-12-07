@@ -38,8 +38,7 @@ def login():
             else:
                 orders = json.loads(res.content)
                 length_orders = len(orders)
-                return render_template('home_restaurant.tpl', \
-                    id=id, length_orders=length_orders)
+                return redirect('/home?id=' + str(id))
         else:
             return render_template('login_restaurant.tpl', error="Invalid Login")
 

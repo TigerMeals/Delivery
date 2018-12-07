@@ -9,7 +9,7 @@
     <meta name="author" content="">
 
     <title>TigerMeals Delivery - Order Confirmed</title>
-    <link rel='icon' href='static/img/takeout.ico'></link>
+    <link rel='icon' href='/static/img/takeout.ico'></link>
 
 
     <!-- Bootstrap core CSS -->
@@ -65,7 +65,7 @@
             <p class="lead mb-0">Check your email for an order confirmation. We will notify you when the restaurant approves your order. Thank you for choosing TigerMeals Delivery.</p>
           </div>
           <div class="row px-5 justify-content-center">
-              <button class="btn btn-primary" onclick="location.href='/meals';"><strong>Browse more meals</strong></button>
+              <button class="btn btn-primary" onclick="window.location.href='/meals';"><strong>Browse more meals</strong></button>
           </div>
 
           <div class="row px-5 mt-5 justify-content-center">
@@ -85,8 +85,8 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="static/static/vendor/jquery/jquery.min.js"></script>
-    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>
 
 </html>
