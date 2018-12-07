@@ -16,6 +16,10 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
 
+@app.route("/portal")
+def portal():
+    return render_template("portal.tpl")
+
 # Endpoint to login a restaurant
 @app.route("/login", methods=['POST'])
 def login():
@@ -34,6 +38,7 @@ def login():
         print(login_feedback)
         if 'error' not in login_feedback:
             id = login_feedback['restaurant_id']
+            
             orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
             res = requests.get(orders_url)
             if not res.ok:
