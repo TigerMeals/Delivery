@@ -68,7 +68,7 @@
       </div>
       <div class="modal-footer">
         <!-- <div class="row"> -->
-        <form action = "/cart/upload?id={{id}}" id="add_to_cart{{meal.food_id}}" method="POST">
+        <form action = "/cart/upload" id="add_to_cart{{meal.food_id}}" method="POST">
           <input type="hidden" id="food_id" name="food_id" value="{{meal.food_id}}"></input>
         </form>
         <div class="col-lg-3 col-md-3">

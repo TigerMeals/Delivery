@@ -70,7 +70,7 @@
                   </div>
                 </div>
                 {% else %}
-                <form id="reject{{order.order_id}}" action="/order/deny?id={{id}}" method="POST">
+                <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
                   <input type="hidden" name="order_id" value="{{order.order_id}}">
                 </form>
                 <div class="col-4">
@@ -85,7 +85,7 @@
                   </div>
                 </div>
 
-                <form id="approve{{order.order_id}}" action="/order/approve?id={{id}}" method="POST">
+                <form id="approve{{order.order_id}}" action="/order/approve" method="POST">
                   <input type="hidden" name="order_id" value="{{order.order_id}}">
                 </form>
                 <div class="col-4">

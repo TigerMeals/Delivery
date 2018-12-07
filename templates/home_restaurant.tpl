@@ -34,19 +34,19 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item-bar active">
-              <a class="nav-link" href="/?id={{id}}">Home</a>
+              <a class="nav-link" href="/">Home</a>
               <span class="sr-only">(current)</span>
             <li class="nav-item-bar">
-              <a class="nav-link" href="/about?id={{id}}">About</a>
+              <a class="nav-link" href="/about">About</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="/listings?id={{id}}">My Meals</a>
+              <a class="nav-link" href="/listings">My Meals</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="/account?id={{id}}">My Account</a>
+              <a class="nav-link" href="/account">My Account</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="/orders?id={{id}}">View Orders ({{length_orders}} Active)</a>
+              <a class="nav-link" href="/orders">View Orders ({{length_orders}} Active)</a>
             </li>
           </ul>
         </div>

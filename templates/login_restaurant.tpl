@@ -16,7 +16,7 @@
    <h2>Admin Login</h2>
    <p>Please enter your email and password</p>
    </div>
-    <form id="Login" action="http://localhost:8081/login" method="get">
+    <form id="Login" action="http://localhost:8081/login" method="post">
 
         <div class="form-group">
 
