@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect
+from flask import Flask, request, make_response, jsonify, render_template, redirect
 from flask import session, url_for
 import requests
 import json
@@ -6,6 +6,7 @@ import os
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 DATABASE_URL = "http://localhost:5000"
 
 
@@ -38,7 +39,7 @@ def login():
         print(login_feedback)
         if 'error' not in login_feedback:
             id = login_feedback['restaurant_id']
-            
+
             orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
             res = requests.get(orders_url)
             if not res.ok:
@@ -300,8 +301,14 @@ def listings():
             if order['paid']:
                 length_orders += 1
 
-    return render_template('listings_restaurant.tpl', active_listings=active_listings, \
-        id=id, length_orders=length_orders, inactive_listings=inactive_listings)
+    r = make_response(render_template('listings_restaurant.tpl',
+    active_listings=active_listings, \
+    id=id, length_orders=length_orders, inactive_listings=inactive_listings))
+
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
 
 # Endpoint to add a new restaurant listing.
 @app.route("/listings/add", methods=["POST"])
@@ -422,8 +429,10 @@ def update_listing():
             updatedEntry["image"] = "/" + img_url
 
     res = requests.put(add_food_url, json = updatedEntry)
+    print (updatedEntry)
     if not res.ok:
         res.raise_for_status()
+
     return redirect('/listings')
 
 
