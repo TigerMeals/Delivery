@@ -44,13 +44,8 @@ def login():
             if not res.ok:
                 res.raise_for_status()
             else:
-                orders = json.loads(res.content)
-                length_orders = len(orders)
-
                 session['username'] = request.form['email']
-
-                return render_template('home_restaurant.tpl', \
-                    id=id, length_orders=length_orders)
+                return redirect('/home')
         else:
             return render_template('login_restaurant.tpl', error="Invalid Login")
 
@@ -520,7 +515,7 @@ def order_approve():
     res = requests.post(approve_order_url)
     if not res.ok:
         res.raise_for_status()
-    return redirect('/orders?id=' + id)
+    return redirect('/orders')
 
 if __name__ == '__main__':
     app.secret_key = "kdlr3whrlq3ul8wDLI*ALDA(D*S(*Ah"
