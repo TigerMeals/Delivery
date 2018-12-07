@@ -98,6 +98,11 @@ def _postJSON(url, data):
 
 
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------
+# Portal that connects user & restaurant side.
+@app.route("/portal")
+def portal():
+    return render_template("portal.tpl")
+
 @app.route("/")
 @app.route("/home")
 @login_required
