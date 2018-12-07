@@ -7,6 +7,10 @@ app = Flask(__name__)
 app.config["DEBUG"] = True
 DATABASE_URL = "http://localhost:5000"
 
+@app.route("/portal")
+def portal():
+    return render_template("portal.tpl")
+
 # Endpoint to login a restaurant
 @app.route("/login")
 def login():
