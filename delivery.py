@@ -531,8 +531,27 @@ def ordered():
     recipients=[restEmail],
     html=rest_order_html())
 
-    return redirect('/meals')
+    return redirect('/order/confirmed')
 
+@login_required
+@app.route('/order/confirmed')
+def order_confirmed():
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    return render_template('order_confirmed.tpl')
 
 @app.route("/meals/filter", methods=["POST", "GET"])
 @login_required
