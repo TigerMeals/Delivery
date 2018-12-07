@@ -338,7 +338,7 @@ def food_filter():
 		result = food.order_by(Food.price).all()
 		result.reverse()
 	if (sort == "recent"):
-		result = food.order_by(Food_id).all()
+		result = food.order_by(Food.food_id).all()
 
 	return foods_schema.jsonify(result)
 
