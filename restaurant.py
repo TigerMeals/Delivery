@@ -24,6 +24,10 @@ def portal():
 # Endpoint to login a restaurant
 @app.route("/login", methods=['POST'])
 def login():
+
+    if 'username' in session:
+        return redirect('/home')
+
     login_query = {
         "email": request.form['email'],
         "password": request.form['password']
