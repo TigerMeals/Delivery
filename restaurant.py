@@ -15,7 +15,7 @@ DATABASE_URL = "http://localhost:5000"
 def logout():
     # remove the username from the session
     session.pop('username', None)
-    return redirect(url_for('home'))
+    return redirect(url_for('portal'))
 
 @app.route("/")
 @app.route("/portal")
