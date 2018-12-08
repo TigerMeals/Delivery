@@ -34,7 +34,7 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item-bar">
-              <a class="nav-link" href="/">Home</a>
+              <a class="nav-link" href="/home">Home</a>
             <li class="nav-item-bar">
               <a class="nav-link" href="/about">About</a>
             </li>

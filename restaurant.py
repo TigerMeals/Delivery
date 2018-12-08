@@ -17,6 +17,7 @@ def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
 
+@app.route("/")
 @app.route("/portal")
 def portal():
     return render_template("portal.tpl")
@@ -55,7 +56,6 @@ def login():
             return render_template('login_restaurant.tpl', error="Invalid Login")
 
 # Endpoint to view homepage
-@app.route("/")
 @app.route("/home")
 def home():
     if 'username' not in session:
