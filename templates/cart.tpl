@@ -34,16 +34,16 @@
 				<div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
 					<ul class="navbar-nav ml-auto">
 						<li class="nav-item-bar">
-							<a class="nav-link" href="http://localhost:8080/home">Home</a>
+							<a class="nav-link" href="/home">Home</a>
 						</li>
 						<li class="nav-item-bar">
-							<a class="nav-link" href="http://localhost:8080/about">About</a>
+							<a class="nav-link" href="/about">About</a>
 						</li>
 						<li class="nav-item-bar">
-							<a class="nav-link" href="http://localhost:8080/meals">Meals</a>
+							<a class="nav-link" href="/meals">Meals</a>
 						</li>
 						<li class="nav-item-bar">
-							<a class="nav-link" href="http://localhost:8080/account">My Account</a>
+							<a class="nav-link" href="/account">My Account</a>
 						</li>
 						<li class="nav-item-bar justify-content-end dropdown active">
 					<a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
@@ -90,8 +90,8 @@
                   var val = parseFloat({{total}}).toFixed(2);
                   document.getElementById('total').innerHTML = "Total: $" + val;
                 </script>
-                <a class="checkout-text item-left" href="http://localhost:8080/cart">View Cart</a>
-                <a class="checkout-text item-right" href="http://localhost:8080/checkout">Checkout</a>
+                <a class="checkout-text item-left" href="/cart">View Cart</a>
+                <a class="checkout-text item-right" href="/checkout">Checkout</a>
                 <br>
 							</li>
 
@@ -195,10 +195,10 @@
                   </script>
 								</tr>
 								<tr>
-									<td><a href="http://localhost:8080/meals?id={{id}}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+									<td><a href="/meals" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
 									<td colspan="2" class="hidden-xs"></td>
 									<td class="hidden-xs text-center"></td>
-									<td><a href="http://localhost:8080/checkout?id={{id}}" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+									<td><a href="/checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
 								</tr>
 							</tfoot>
 						</table>

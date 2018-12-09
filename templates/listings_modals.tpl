@@ -11,7 +11,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form id="update_entry{{listing.food_id}}" action="/listings/update?id={{id}}" method="POST" class="needs-validation" enctype=multipart/form-data novalidate>
+                  <form id="update_entry{{listing.food_id}}" action="/listings/update" method="POST" class="needs-validation" enctype=multipart/form-data novalidate>
                     <div class="row">
                       <div class="col-lg-4 col-md-4">
                         <div class="text-center">
@@ -94,7 +94,7 @@
                   </form>
                 </div>
                 <div class="modal-footer">
-                  <form id="toggle_active{{listing.food_id}}" action="/toggle/active?id={{id}}" method="POST">
+                  <form id="toggle_active{{listing.food_id}}" action="/toggle/active" method="POST">
                     <input type="hidden" name="food_id" value="{{listing.food_id}}">
                   </form>
                   <div class="row">

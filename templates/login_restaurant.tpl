@@ -27,16 +27,16 @@
 
 
 <body id="LoginForm">
-  <div class="container text-center">
-    <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
-    <h1 class="form-heading">Restaurant Login</h1>
-    <div class="login-form">
-      <div class="main-div">
-        <div class="panel">
-       <!-- <h2>Restaurant Login</h2> -->
-       <p>Please enter your email and password.</p>
-       </div>
-       <form id="Login" class="loginForm" action="http://localhost:8081/login" method="get">
+<div class="container">
+<img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
+<h1 class="form-heading text-center">Login Form</h1>
+<div class="login-form">
+<div class="main-div">
+  <div class="panel text-center">
+   <h2>Admin Login</h2>
+   <p>Please enter your email and password</p>
+   </div>
+    <form id="Login" class="loginForm" action="http://localhost:8081/login" method="post">
 
             <div class="form-group">
 

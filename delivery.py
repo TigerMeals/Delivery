@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template, redirect
+from flask import Flask, make_response, request, jsonify, render_template, redirect
 from flask_mail import Mail,  Message
 from mail_html import user_order_html, rest_order_html
 import requests
@@ -100,10 +100,10 @@ def _postJSON(url, data):
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------
 # Portal that connects user & restaurant side.
 @app.route("/portal")
+@app.route("/")
 def portal():
     return render_template("portal.tpl")
 
-@app.route("/")
 @app.route("/home")
 @login_required
 def home():
@@ -361,10 +361,16 @@ def meals():
                 print (key + " : " + str(meal[key]))
             print()
 
-    return render_template('meals.tpl', meals=meals, \
+
+    r = make_response(render_template('meals.tpl', meals=meals, \
         id=user_id, food_prices = food_prices, \
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], checkboxes=[])
+        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], checkboxes=[]))
+
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
 
 @app.route("/cart/upload", methods=["POST"])
 @login_required

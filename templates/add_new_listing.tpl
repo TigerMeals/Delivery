@@ -9,7 +9,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <form id="add_listing" action="/listings/add?id={{id}}" method="POST" class="needs-validation" enctype=multipart/form-data novalidate>
+          <form id="add_listing" action="/listings/add" method="POST" class="needs-validation" enctype=multipart/form-data novalidate>
             <div class="modal-body">
               <div class="row">
                 <div class="col-lg-4 col-md-4">

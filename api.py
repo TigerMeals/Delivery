@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from sqlalchemy import or_, and_
 import os
+import hashlib
 import json
 
 app = Flask(__name__)
@@ -14,6 +15,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/delivery'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+
+
 ################################################################################
 class User(db.Model):
 	user_id = db.Column(db.Integer, primary_key = True)
@@ -145,6 +148,27 @@ class RestaurantSchema(ma.Schema):
 restaurant_schema = RestaurantSchema()
 restaurants_schema = RestaurantSchema(many = True)
 
+
+def _restaurant_hash(password):
+
+	# Add salting to the password
+	password = "%-AS%()*3094$(##(Q)[]}-&$@!~`^#@&" + \
+	str(password) + "---&($^()```(@*%q%n%~adf%n^#)!@("
+
+	# Hash the password
+	m = hashlib.sha256()
+	password = password.encode('utf-8')
+	m.update(password)
+
+	password = m.digest()
+
+	# Add more salting to the password
+	password = b"%-AS%()*3094$(##(Q)[]}-&$@!~`^#@&asd32423942342" + \
+	password + b"0920202029320392032123901---&($^()```(@*%q%n%~adf%n^#)!@("
+
+	return str(password)
+
+
 # Endpoint to create new restaurant
 @app.route("/restaurant", methods = ["POST"])
 def restaurant_add():
@@ -159,6 +183,10 @@ def restaurant_add():
 	email = request.json['email']
 	website = request.json['website']
 
+	# Hash the password
+	password = _restaurant_hash(password)
+
+	# Store the password securely
 	new_restaurant = Restaurant(name, image, description, address, phone, cuisine, servingSize, website, email, password)
 	db.session.add(new_restaurant)
 	db.session.commit()
@@ -169,6 +197,14 @@ def restaurant_add():
 def restaurant_detail(restaurant_id):
 	restaurant = Restaurant.query.get(restaurant_id)
 	return restaurant_schema.jsonify(restaurant)
+
+# Endpoint to get restaurant detail by email
+@app.route("/restaurant/email", methods = ["POST"])
+def restaurant_email():
+	email = request.json['email']
+	restaurant = Restaurant.query.filter_by(email=email).first()
+	return restaurant_schema.jsonify(restaurant)
+
 
 # Endpoint to get all restaurants
 @app.route("/restaurant", methods = ["GET"])
@@ -187,9 +223,14 @@ def restaurant_update(restaurant_id):
 	restaurant.phone = request.json['phone']
 	restaurant.cuisine = request.json['cuisine']
 
+	password = request.json['password']
+
+	password = _restaurant_hash(password)
+
+	restaurant.password = password
 
 	db.session.commit()
-	return restaurant_schema.jsonify(user)
+	return restaurant_schema.jsonify(restaurant)
 
 # Endpoint for restaurant's to login using email and phone number
 # verification. We will add passwords later, much later
@@ -198,13 +239,18 @@ def restaurant_login():
 	email = request.json['email']
 	password = request.json['password']
 
+	# hash the password
+	password = _restaurant_hash(password)
+
+
 	restaurant = Restaurant.query.filter_by(email = email, \
 		password = password).first()
 
 	if restaurant is None:
+		print("Login Failed")
 		return jsonify({
 				"error": "Invalid Login Error"
-			})
+		})
 
 	return restaurant_schema.jsonify(restaurant)
 
