@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-DATABASE_URL = "http://localhost:5000"
+DATABASE_URL = os.environ['DATABASE_URL']
 
 
 # Endpoint to logout a restaurant
