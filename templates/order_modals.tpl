@@ -63,13 +63,24 @@
             <div class="modal-footer">
               <div class="row">
 
-                {% if order.paid %}
-                <div class="col-4">
+                {% if order.paid and not order.delivered %}
+                <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
+                  <input type="hidden" name="order_id" value="{{order.order_id}}">
+                </form>
+                <div class="col-6">
                   <div class="text-center item-right">
                     <button class="btn btn-info" onclick="contact{{order.order_id}}()">Contact</button>
                   </div>
                 </div>
-                {% else %}
+                <form id="delivered{{order.order_id}}" action="/order/delivered" method="POST">
+                  <input type="hidden" name="order_id" value="{{order.order_id}}">
+                </form>
+                <div class="col-6">
+                  <div class="text-center item-right">
+                    <button class="btn btn-success type=" type="submit" form="delivered{{order.order_id}}">Delivered</button>
+                  </div>
+                </div>
+                {% elif not order.paid and not order.delivered %}
                 <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
                   <input type="hidden" name="order_id" value="{{order.order_id}}">
                 </form>
@@ -81,7 +92,7 @@
 
                 <div class="col-4">
                   <div class="text-center item-right">
-                    <button class="btn btn-info" onclick="contact{{order.order_id}}()">Contact</button>
+                    <a href="mailto:{{order.email}}"><button class="btn btn-info" >Contact</button></a>
                   </div>
                 </div>
 
@@ -99,8 +110,3 @@
           </div>
         </div>
       </div>
-
-      <script>function contact{{order.order_id}}() {
-        alert("Please email the user at {{order.email}}.")
-      }
-      </script>

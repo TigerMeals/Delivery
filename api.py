@@ -499,7 +499,7 @@ def order_delivered(order_id):
 
 	order.delivered = True
 	order.delivery_in_process = False
-	order.delivery_time = request.json['delivery_time']
+	# order.delivery_time = request.json['delivery_time']
 	db.session.commit()
 
 	return order_schema.jsonify(order)

@@ -270,7 +270,7 @@ def account():
     # allergies = allergyTemp
 
     print(allergies)
-     
+
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
