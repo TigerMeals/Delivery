@@ -747,4 +747,4 @@ def filter():
 
 if __name__ == '__main__':
     app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
-    app.run(host="0.0.0.0", environ.get("PORT", 5000))
+    app.run(environ.get("PORT", 5000), host="0.0.0.0")
