@@ -1,4 +1,5 @@
-from flask import Flask, make_response, request, jsonify, render_template, redirect
+from flask import Flask, make_response, \
+request, jsonify, render_template, redirect, url_for
 from flask_mail import Mail,  Message
 from mail_html import user_order_html, rest_order_html
 import requests
@@ -94,7 +95,6 @@ def _postJSON(url, data):
 
     response = r.json()
     return response
-
 
 
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------
@@ -259,10 +259,23 @@ def account():
 
     email, name, phone, address, netid, allergies = _getUser(user_id)
 
+    print("Alleriges: ----------------------------------------------")
+
+    # allergies = allergies.split(',')
+
+    # allergyTemp = []
+    # for allergy in allergies:
+    #     allergyTemp.append(allergy.strip())
+
+    # allergies = allergyTemp
+
+    print(allergies)
+     
+
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
-    return render_template('account.tpl', name=name, email=email,\
+    return render_template('account.tpl', name=name.split(), email=email,\
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
@@ -362,8 +375,10 @@ def meals():
             print()
 
 
+    error = request.args.get('error')
+
     r = make_response(render_template('meals.tpl', meals=meals, \
-        id=user_id, food_prices = food_prices, \
+        id=user_id, food_prices = food_prices, error=error,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], checkboxes=[]))
 
@@ -414,10 +429,11 @@ def upload_cart():
 
             # Check to see if the restaurant is different
             if (food_details['restaurant_id'] != current_order['restaurant_id']) and (current_order['restaurant_id'] != -1):
-                print("RESTAURANT NEEDS TO BE DIFFERENT--------------------------")
+                print("RESTAURANT NEEDS TO BE THE SAME--------------------------")
                 print(current_order['restaurant_id'])
                 print(food_details['restaurant_id'])
-                return redirect('/meals')
+
+                return redirect(url_for('meals', error="PLEASE ONLY ORDER FROM ONE RESTAURANT PER ORDER"))
 
             # Check to see if the food item already exists within the order
             for food_item in old_food_items:
@@ -425,7 +441,7 @@ def upload_cart():
                     food_item['quantity'] += int(request.form.get('quantity'))
                     # if quantity is greater than 10, reject the request
                     if food_item['quantity'] > 10:
-                        return redirect('/meals')
+                        return redirect(url_for('meals', error="PLEASE ONLY ORDER A MAXIMUM OF 10 ITEMS OF A CATERING OPTION"))
 
                     food_item['subtotal'] = food_item['quantity'] * food_item['food_price']
                     updatedOrder = {

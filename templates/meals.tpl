@@ -312,6 +312,9 @@
               <div class="sticky-top">
                 <h2>Catering Packages</h2>
                 <span class="ml-2">({{length_meals}} results)</span>
+                {% if error %}
+                <p class="text-danger mt-2">{{error}}</p>
+                {% endif %}
               </div>
             </div>
 

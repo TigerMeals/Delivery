@@ -186,7 +186,7 @@
 
                                 <div class="col-12">
                                     <label for="username"><h5>Username</h5></label>
-                                    <input type="username" class="form-control" name="username" id="username" placeholder="username" title="enter your username.">
+                                    <input type="username" class="form-control" name="username" id="username" value="{{netid}}" title="enter your username.">
                                 </div>
                             </div>
 
@@ -215,27 +215,27 @@
                               <div class="form-group col-6">
                                   <div class="col-12">
                                       <label for="p_first_name"><h5>First Name</h5></label>
-                                      <input type="text" class="form-control" name="p_first_name" id="p_first_name" placeholder="first name" title="enter your first name if any.">
+                                      <input type="text" class="form-control" name="p_first_name" id="p_first_name" value="{{name[0]}}" title="enter your first name if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
                                   <div class="col-12">
                                     <label for="p_last_name"><h5>Last Name</h5></label>
-                                      <input type="text" class="form-control" name="p_last_name" id="p_last_name" placeholder="last name" title="enter your last name if any.">
+                                      <input type="text" class="form-control" name="p_last_name" id="p_last_name" value="{{name[1]}}" title="enter your last name if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
 
                                   <div class="col-12">
                                       <label for="p_email"><h5>Email</h5></label>
-                                      <input type="text" class="form-control" name="p_email" id="p_email" placeholder="email" title="enter your email if any.">
+                                      <input type="text" class="form-control" name="p_email" id="p_email" value="{{netid}}@princeton.edu" title="enter your email if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
 
                                   <div class="col-12">
                                     <label for="p_phone"><h5>Phone Number</h5></label>
-                                      <input type="text" class="form-control" name="p_phone" id="p_phone" placeholder="phone number" title="enter your phone number if any.">
+                                      <input type="text" class="form-control" name="p_phone" id="p_phone" value="{{phone}}" title="enter your phone number if any.">
                                   </div>
                               </div>
                           </div>
@@ -248,7 +248,7 @@
                               <div class="form-group col-12">
                                   <div class="col-12">
                                       <label for="s_first_name"><h5>List Allergies</h5></label>
-                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" placeholder="first name" title="enter your first name if any.">
+                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" value="{{allergies}}" title="enter your first name if any.">
                                   </div>
                               </div>
                           </div>
@@ -261,7 +261,7 @@
                               <div class="form-group col-12">
                                   <div class="col-12">
                                       <label for="s_first_name"><h5>Preferred Delivery Location</h5></label>
-                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" placeholder="first name" title="enter your first name if any.">
+                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" value="{{address}}" title="enter your first name if any.">
                                   </div>
                               </div>
                           </div>
