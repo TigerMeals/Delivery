@@ -130,7 +130,7 @@ def home():
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
     resp = (render_template('home.tpl', user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id))
 
@@ -195,7 +195,7 @@ def about():
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
     return render_template('about.tpl', user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 
@@ -233,7 +233,7 @@ def checkout():
         order_id = json.loads(res.content)['order_id']
 
     return render_template('checkout.tpl', user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
         email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, order_id=order_id)
@@ -277,7 +277,7 @@ def account():
 
     return render_template('account.tpl', name=name.split(), email=email,\
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 
@@ -308,6 +308,54 @@ def account():
 
 
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------
+
+
+# Endpoint to delete an item from the current cart
+@app.route("/cart/delete/<food_id>", methods=["POST"])
+@login_required
+def cart_delete(food_id):
+
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    print(cas.attributes)
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
+
+    order_id = order['order_id']
+    food_items = order['food_items']
+
+    index = 0
+    for food_item in food_items:
+        if food_item['food_id'] == int(food_id):
+            food_items.pop(index)
+            break
+        index += 1
+
+    delete_url = DATABASE_URL + "/order/delete/" + str(order_id)
+
+    json = {
+        "food_items": food_items
+    }
+
+    res = requests.put(delete_url, json = json)
+    if not res.ok:
+        res.raise_for_status()
+
+    return redirect("/cart")
+
 
 
 # Endpoint to create new user
@@ -377,7 +425,7 @@ def meals():
 
     error = request.args.get('error')
 
-    r = make_response(render_template('meals.tpl', meals=meals, \
+    r = make_response(render_template('meals.tpl', meals=meals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], checkboxes=[]))
@@ -676,7 +724,7 @@ def filter():
         print()
 
     return render_template('meals.tpl', meals=meals, \
-        id=user_id, food_prices = food_prices, \
+        id=user_id, food_prices = food_prices, food_ids=food_ids,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, checkboxes=checkboxes)
 

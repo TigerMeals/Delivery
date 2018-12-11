@@ -606,6 +606,15 @@ def order_current(user_id):
 		db.session.commit()
 	return order_schema.jsonify(order)
 
+# Endpoint to delete a food item from a particular order
+@app.route("/order/delete/<order_id>", methods=["PUT"])
+def order_food_delete(order_id):
+	order = Order.query.get(order_id)
+	order.food_items = request.json['food_items']
+
+	db.session.commit()
+	return order_schema.jsonify(order)
+
 # Endpoint to delete order
 @app.route("/order/<order_id>", methods = ["DELETE"])
 def order_delete(order_id):

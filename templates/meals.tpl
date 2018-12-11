@@ -68,7 +68,9 @@
     												</span>
     										</span>
     										<span class="item-right">
+                          <form method="post"action="/cart/delete/{{food_ids[i]}}">
     												<button class="btn-sm btn-danger btn-cart fa fa-times"></button>
+                          </form>
     										</span>
     								</span>
     							</li>
