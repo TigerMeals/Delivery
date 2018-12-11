@@ -1,1 +1,3 @@
-web: python3 api.py $PORT
+web: python3 delivery.py
+web: python3 restaurant.py
+web: python3 api.py

@@ -36,7 +36,7 @@
        <!-- <h2>Restaurant Login</h2> -->
        <p>Please enter your email and password.</p>
        </div>
-        <form id="Login" class="loginForm" action="http://localhost:8081/login" method="get">
+        <form id="Login" class="loginForm" action="http://localhost:8081/login" method="post">
 
             <div class="form-group">
 
@@ -53,15 +53,14 @@
             <p>{{error}}</p>
             <div class="forgot mb-2">
               <a href="reset.html">Forgot password?</a>
+              <br>
               <a href="create_account_restaurant.html">New user? Create an account here.</a>
+              <br>
             </div>
             <button type="submit" class="btn btn-primary">Login</button>
 
           </form>
         </div>
-
-        </div>
-      </div>
       <footer class="py-4 red-bar sticky-footer">
         <div class="container">
           <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>

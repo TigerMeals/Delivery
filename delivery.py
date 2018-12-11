@@ -1,4 +1,5 @@
-from flask import Flask, make_response, request, jsonify, render_template, redirect
+from flask import Flask, make_response, \
+request, jsonify, render_template, redirect, url_for
 from flask_mail import Mail,  Message
 from mail_html import user_order_html, rest_order_html
 import requests
@@ -96,7 +97,6 @@ def _postJSON(url, data):
     return response
 
 
-
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------
 # Portal that connects user & restaurant side.
 @app.route("/portal")
@@ -130,7 +130,7 @@ def home():
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
     resp = (render_template('home.tpl', user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id))
 
@@ -195,7 +195,7 @@ def about():
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
     return render_template('about.tpl', user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 
@@ -233,7 +233,7 @@ def checkout():
         order_id = json.loads(res.content)['order_id']
 
     return render_template('checkout.tpl', user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
         email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, order_id=order_id)
@@ -259,12 +259,25 @@ def account():
 
     email, name, phone, address, netid, allergies = _getUser(user_id)
 
+    print("Alleriges: ----------------------------------------------")
+
+    # allergies = allergies.split(',')
+
+    # allergyTemp = []
+    # for allergy in allergies:
+    #     allergyTemp.append(allergy.strip())
+
+    # allergies = allergyTemp
+
+    print(allergies)
+
+
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
-    return render_template('account.tpl', name=name, email=email,\
+    return render_template('account.tpl', name=name.split(), email=email,\
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 
@@ -295,6 +308,54 @@ def account():
 
 
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------
+
+
+# Endpoint to delete an item from the current cart
+@app.route("/cart/delete/<food_id>", methods=["POST"])
+@login_required
+def cart_delete(food_id):
+
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    print(cas.attributes)
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
+
+    order_id = order['order_id']
+    food_items = order['food_items']
+
+    index = 0
+    for food_item in food_items:
+        if food_item['food_id'] == int(food_id):
+            food_items.pop(index)
+            break
+        index += 1
+
+    delete_url = DATABASE_URL + "/order/delete/" + str(order_id)
+
+    json = {
+        "food_items": food_items
+    }
+
+    res = requests.put(delete_url, json = json)
+    if not res.ok:
+        res.raise_for_status()
+
+    return redirect("/cart")
+
 
 
 # Endpoint to create new user
@@ -362,8 +423,10 @@ def meals():
             print()
 
 
-    r = make_response(render_template('meals.tpl', meals=meals, \
-        id=user_id, food_prices = food_prices, \
+    error = request.args.get('error')
+
+    r = make_response(render_template('meals.tpl', meals=meals, food_ids=food_ids,\
+        id=user_id, food_prices = food_prices, error=error,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], checkboxes=[]))
 
@@ -414,10 +477,11 @@ def upload_cart():
 
             # Check to see if the restaurant is different
             if (food_details['restaurant_id'] != current_order['restaurant_id']) and (current_order['restaurant_id'] != -1):
-                print("RESTAURANT NEEDS TO BE DIFFERENT--------------------------")
+                print("RESTAURANT NEEDS TO BE THE SAME--------------------------")
                 print(current_order['restaurant_id'])
                 print(food_details['restaurant_id'])
-                return redirect('/meals')
+
+                return redirect(url_for('meals', error="PLEASE ONLY ORDER FROM ONE RESTAURANT PER ORDER"))
 
             # Check to see if the food item already exists within the order
             for food_item in old_food_items:
@@ -425,7 +489,7 @@ def upload_cart():
                     food_item['quantity'] += int(request.form.get('quantity'))
                     # if quantity is greater than 10, reject the request
                     if food_item['quantity'] > 10:
-                        return redirect('/meals')
+                        return redirect(url_for('meals', error="PLEASE ONLY ORDER A MAXIMUM OF 10 ITEMS OF A CATERING OPTION"))
 
                     food_item['subtotal'] = food_item['quantity'] * food_item['food_price']
                     updatedOrder = {
@@ -660,7 +724,7 @@ def filter():
         print()
 
     return render_template('meals.tpl', meals=meals, \
-        id=user_id, food_prices = food_prices, \
+        id=user_id, food_prices = food_prices, food_ids=food_ids,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, checkboxes=checkboxes)
 

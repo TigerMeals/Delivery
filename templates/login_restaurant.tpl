@@ -27,13 +27,50 @@
 
 
 <body id="LoginForm">
+
+  <!-- <div class="container text-center">
+    <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
+    <h1 class="form-heading">Restaurant Login</h1>
+    <div class="login-form">
+      <div class="main-div">
+        <div class="panel">
+
+       <p>Please enter your email and password.</p>
+       </div>
+        <form id="Login" class="loginForm" action="http://localhost:8081/login" method="get">
+
+            <div class="form-group">
+
+
+                <input name="email" class="form-control" id="inputEmail" placeholder="Email Address" type="text">
+
+            </div>
+
+            <div class="form-group">
+
+                <input type="password" class="form-control" id="inputPhone" placeholder="Password" name = "password">
+
+            </div>
+            <p>{{error}}</p>
+            <div class="forgot mb-2">
+              <a href="reset.html">Forgot password?</a>
+              <br>
+              <a href="create_account_restaurant.html">New user? Create an account here.</a>
+              <br>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+
+          </form>
+        </div>
+
+        </div>
+      </div> -->
 <div class="container">
 <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
-<h1 class="form-heading text-center">Login Form</h1>
+<h1 class="form-heading text-center">Restaurant Login</h1>
 <div class="login-form">
 <div class="main-div">
   <div class="panel text-center">
-   <h2>Admin Login</h2>
    <p>Please enter your email and password</p>
    </div>
     <form id="Login" class="loginForm" action="http://localhost:8081/login" method="post">
@@ -51,10 +88,14 @@
 
             </div>
             <p>{{error}}</p>
-            <div class="forgot mb-2">
-            <a href="#">Forgot password?</a>
 
-          </div>
+            <div class="forgot mb-2">
+              <a href="reset.html">Forgot password?</a>
+              <br>
+              <a href="create_account_restaurant.html">New user? Create an account here.</a>
+              <br>
+            </div>
+
             <button type="submit" class="btn btn-primary">Login</button>
 
           </form>

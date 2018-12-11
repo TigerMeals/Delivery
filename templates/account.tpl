@@ -71,34 +71,36 @@
             </li>
             <li class="nav-item-bar justify-content-end dropdown">
               <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
-    						<span class="sr-only">(current)</span>
-    					<ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
-    						{% for i in range(0, length_cart) %}
-    							<li>
-    									<span class="item">
-    										<span class="item-left">
-    												<img
-    												src="{{food_images[i]}}"
-    												style="width:35px;height:35px;"
-    												 alt="" />
-    												<span class="item-info">
-    														<span>{{food_titles[i]}}</span>
-    														<span id = "cart_price{{i}}"></span>
+                <span class="sr-only">(current)</span>
+              <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
+                {% for i in range(0, length_cart) %}
+                  <li>
+                      <span class="item">
+                        <span class="item-left">
+                            <img
+                            src="{{food_images[i]}}"
+                            style="width:35px;height:35px;"
+                             alt="" />
+                            <span class="item-info">
+                                <span>{{food_titles[i]}}</span>
+                                <span id = "cart_price{{i}}"></span>
                                 <!-- Below needed so that price displays with 2 decimal points. -->
                                 <script>
                                   var val = parseFloat({{food_prices[i]}}).toFixed(2);
                                   document.getElementById('cart_price{{i}}').innerHTML = "price: $" + val;
                                 </script>
-    												</span>
-    										</span>
-    										<span class="item-right">
-    												<button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-    										</span>
-    								</span>
-    							</li>
+                            </span>
+                        </span>
+                        <span class="item-right">
+                          <form method="post"action="/cart/delete/{{food_ids[i]}}">
+                            <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
+                          </form>
+                        </span>
+                    </span>
+                  </li>
 
-    							<li class="divider"></li>
-    							<li>
+                  <li class="divider"></li>
+                  <li>
                     <span id = "cart_subtotal{{i}}"></span>
                     <!-- Below needed so that price displays with 2 decimal points. -->
                     <script>
@@ -106,8 +108,8 @@
                       document.getElementById('cart_subtotal{{i}}').innerHTML = "Subtotal: $" + val;
                     </script>
 
-    						{% endfor %}
-    						<span class="checkout-text item-right">
+                {% endfor %}
+                <span class="checkout-text item-right">
                     <span id = "total"></span>
                     <!-- Below needed so that price displays with 2 decimal points. -->
                     <script>
@@ -117,13 +119,14 @@
                     <a class="checkout-text item-left" href="/cart">View Cart</a>
                     <a class="checkout-text item-right" href="/checkout">Checkout</a>
                     <br>
-    							</li>
-    					</ul>
-    				</li>
-    					</ul>
-    				</div>
-    			</div>
-    		</nav>
+                  </li>
+
+              </ul>
+            </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
 
         <br>
 
@@ -186,7 +189,7 @@
 
                                 <div class="col-12">
                                     <label for="username"><h5>Username</h5></label>
-                                    <input type="username" class="form-control" name="username" id="username" placeholder="username" title="enter your username.">
+                                    <input type="username" class="form-control" name="username" id="username" value="{{netid}}" title="enter your username.">
                                 </div>
                             </div>
 
@@ -215,27 +218,27 @@
                               <div class="form-group col-6">
                                   <div class="col-12">
                                       <label for="p_first_name"><h5>First Name</h5></label>
-                                      <input type="text" class="form-control" name="p_first_name" id="p_first_name" placeholder="first name" title="enter your first name if any.">
+                                      <input type="text" class="form-control" name="p_first_name" id="p_first_name" value="{{name[0]}}" title="enter your first name if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
                                   <div class="col-12">
                                     <label for="p_last_name"><h5>Last Name</h5></label>
-                                      <input type="text" class="form-control" name="p_last_name" id="p_last_name" placeholder="last name" title="enter your last name if any.">
+                                      <input type="text" class="form-control" name="p_last_name" id="p_last_name" value="{{name[1]}}" title="enter your last name if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
 
                                   <div class="col-12">
                                       <label for="p_email"><h5>Email</h5></label>
-                                      <input type="text" class="form-control" name="p_email" id="p_email" placeholder="email" title="enter your email if any.">
+                                      <input type="text" class="form-control" name="p_email" id="p_email" value="{{netid}}@princeton.edu" title="enter your email if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
 
                                   <div class="col-12">
                                     <label for="p_phone"><h5>Phone Number</h5></label>
-                                      <input type="text" class="form-control" name="p_phone" id="p_phone" placeholder="phone number" title="enter your phone number if any.">
+                                      <input type="text" class="form-control" name="p_phone" id="p_phone" value="{{phone}}" title="enter your phone number if any.">
                                   </div>
                               </div>
                           </div>
@@ -248,7 +251,7 @@
                               <div class="form-group col-12">
                                   <div class="col-12">
                                       <label for="s_first_name"><h5>List Allergies</h5></label>
-                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" placeholder="first name" title="enter your first name if any.">
+                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" value="{{allergies}}" title="enter your first name if any.">
                                   </div>
                               </div>
                           </div>
@@ -261,7 +264,7 @@
                               <div class="form-group col-12">
                                   <div class="col-12">
                                       <label for="s_first_name"><h5>Preferred Delivery Location</h5></label>
-                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" placeholder="first name" title="enter your first name if any.">
+                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" value="{{address}}" title="enter your first name if any.">
                                   </div>
                               </div>
                           </div>

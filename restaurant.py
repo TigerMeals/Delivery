@@ -85,7 +85,7 @@ def home():
             orders = json.loads(res.content)
             length_orders = 0
             for order in orders:
-                if order['paid']:
+                if order['paid'] and not order['delivered']:
                     length_orders += 1
 
             return render_template('home_restaurant.tpl', \
@@ -120,7 +120,7 @@ def about():
         orders = json.loads(res.content)
         length_orders = 0
         for order in orders:
-            if order['paid']:
+            if order['paid'] and not order['delivered']:
                 length_orders += 1
 
     return render_template('about_restaurant.tpl', id=id,\
@@ -152,33 +152,35 @@ def orders():
     res = requests.get(orders_url)
     if not res.ok:
         res.raise_for_status()
-    else:
-        orders = json.loads(res.content)
-        active = []
-        pending = []
-        # For logging purposes
-        print ("Request Successful: ")
-        length_orders = 0
-        for order in orders:
-            if order['paid']:
-                length_orders += 1
-            price = 0
-            packages = []
-            for package in order['food_items']:
-                price += package['subtotal']
-                packages.append(package['food_title'])
-            for key in order:
-                print (key + " : " + str(order[key]))
-            order['price'] = price
-            order['packages'] = packages
-            if order['paid']:
-                active.append(order)
-            else:
-                pending.append(order)
+        return
 
+    orders = json.loads(res.content)
+    active = []
+    pending = []
+    delivered = []
+    # For logging purposes
+    print ("Request Successful: ")
+    length_orders = 0
+    for order in orders:
+        price = 0
+        packages = []
+        for package in order['food_items']:
+            price += package['subtotal']
+            packages.append(package['food_title'])
+        for key in order:
+            print (key + " : " + str(order[key]))
+        order['price'] = price
+        order['packages'] = packages
+        if order['delivered']:
+            delivered.append(order)
+        elif order['paid']:
+            active.append(order)
+        else:
+            pending.append(order)
 
+    length_orders = len(active)
     return render_template('orders_restaurant.tpl', pending=pending, \
-        active=active, id=id, length_orders = length_orders)
+        active=active, delivered=delivered, id=id, length_orders = length_orders)
 
 # Endpoint to view the restaurant account page
 @app.route("/account")
@@ -231,7 +233,7 @@ def account():
         orders = json.loads(res.content)
         length_orders = 0
         for order in orders:
-            if order['paid']:
+            if order['paid'] and not order['delivered']:
                 length_orders += 1
 
     listings_url = DATABASE_URL + "/food/restaurant/" + str(id)
@@ -302,7 +304,7 @@ def listings():
         orders = json.loads(res.content)
         length_orders = 0
         for order in orders:
-            if order['paid']:
+            if order['paid'] and not order['delivered']:
                 length_orders += 1
 
     r = make_response(render_template('listings_restaurant.tpl',
@@ -498,7 +500,7 @@ def order_deny():
     res = requests.delete(delete_order_url)
     if not res.ok:
         res.raise_for_status()
-    return redirect('/orders?id=' + id)
+    return redirect('/orders')
 
 
 # Endpoint to approve an order.
@@ -526,6 +528,35 @@ def order_approve():
     order_id = request.form.get('order_id')
     approve_order_url = DATABASE_URL + "/order/approval/" + order_id
     res = requests.post(approve_order_url)
+    if not res.ok:
+        res.raise_for_status()
+    return redirect('/orders')
+
+# Endpoint to mark an order as delivered.
+@app.route("/order/delivered", methods=["POST"])
+def order_delivered():
+    if 'username' not in session:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
+
+    username = session['username']
+
+    restaurant_info_url = DATABASE_URL + "/restaurant/email"
+
+    email = {
+        "email": str(username)
+    }
+
+    res = requests.post(restaurant_info_url, json = email)
+    if not res.ok:
+        res.raise_for_status()
+
+    restaurant_info = json.loads(res.content)
+    id = restaurant_info['restaurant_id']
+
+    order_id = request.form.get('order_id')
+    delivered_order_url = DATABASE_URL + "/order/delivered/" + order_id
+    res = requests.post(delivered_order_url)
     if not res.ok:
         res.raise_for_status()
     return redirect('/orders')

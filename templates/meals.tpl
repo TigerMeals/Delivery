@@ -68,7 +68,9 @@
     												</span>
     										</span>
     										<span class="item-right">
+                          <form method="post"action="/cart/delete/{{food_ids[i]}}">
     												<button class="btn-sm btn-danger btn-cart fa fa-times"></button>
+                          </form>
     										</span>
     								</span>
     							</li>
@@ -312,6 +314,9 @@
               <div class="sticky-top">
                 <h2>Catering Packages</h2>
                 <span class="ml-2">({{length_meals}} results)</span>
+                {% if error %}
+                <p class="text-danger mt-2">{{error}}</p>
+                {% endif %}
               </div>
             </div>
 

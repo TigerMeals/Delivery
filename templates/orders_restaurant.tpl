@@ -16,6 +16,9 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/shop-homepage.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
@@ -64,28 +67,34 @@
         <p class="lead">Please view your orders below. We thank you for partnering with TigerMeals Delivery.</p>
       </div>
 
-      <table id="pendingorders" class="table table-hover table-condensed">
-  				<thead>
-  					<tr style="color:black;">
-                <h2>Pending Orders</h2>
-  					</tr>
-  				</thead>
-					<tbody>
-            {% for o in pending %}
-              {% with order=o %}
-                {% include 'display_order.tpl' %}
-              {% endwith %}
-            {% endfor %}
-  					</tbody>
-  					<tfoot>
-  					</tfoot>
-  				</table>
-          {% for o in pending %}
-            {% with order=o %}
-              {% include 'order_modals.tpl' %}
-            {% endwith %}
-          {% endfor %}
+      <ul class="nav nav-tabs">
+        <li class="active nav-item"><a data-toggle="tab" href="#pending">Pending</a></li>
+        <li class="nav-item"><a data-toggle="tab" href="#active">Active</a></li>
+        <li class="nav-item"><a data-toggle="tab" href="#delivered" >Delivered</a></li>
+      </ul>
+      <div class="tab-content">
+        <div id="pending" class="tab-pane fade show active">
+          <br>
+          <table id="pendingorders" class="table table-hover table-condensed">
 
+    					<tbody>
+                {% for o in pending %}
+                  {% with order=o %}
+                    {% include 'display_order.tpl' %}
+                  {% endwith %}
+                {% endfor %}
+      					</tbody>
+      					<tfoot>
+      					</tfoot>
+      				</table>
+              {% for o in pending %}
+                {% with order=o %}
+                  {% include 'order_modals.tpl' %}
+                {% endwith %}
+              {% endfor %}
+        </div>
+        <div id="active" class="tab-pane fade">
+          <br>
           <table id="activeorders" class="table table-hover table-condensed">
               <thead>
                 <tr style="color:black;">
@@ -107,6 +116,32 @@
                   {% include 'order_modals.tpl' %}
                 {% endwith %}
               {% endfor %}
+          </div>
+          <div id="delivered" class="tab-pane fade">
+            <br>
+            <table id="deliveredorders" class="table table-hover table-condensed">
+                <thead>
+                  <tr style="color:black;">
+                      <h2>Delivered Orders</h2>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for o in delivered %}
+                    {% with order=o %}
+                      {% include 'display_order.tpl' %}
+                    {% endwith %}
+                  {% endfor %}
+                  </tbody>
+                  <tfoot>
+                  </tfoot>
+                </table>
+                {% for o in delivered %}
+                  {% with order=o %}
+                    {% include 'order_modals.tpl' %}
+                  {% endwith %}
+                {% endfor %}
+          </div>
+        </div>
 		  </div>
 
     </div>

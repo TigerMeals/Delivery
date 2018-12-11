@@ -11,7 +11,10 @@ app = Flask(__name__)
 # Which database to fetch from:
 basedir = os.path.abspath(os.path.dirname(__file__))
 
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jwquybqpzlgkip:23c0b734759e9e709b893431fc28995b9d543b3aaaedb030d3d51c20e3b45269@ec2-54-83-197-230.compute-1.amazonaws.com:5432/d51r1bghiruet2'
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/delivery'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -526,7 +529,7 @@ def order_delivered(order_id):
 
 	order.delivered = True
 	order.delivery_in_process = False
-	order.delivery_time = request.json['delivery_time']
+	# order.delivery_time = request.json['delivery_time']
 	db.session.commit()
 
 	return order_schema.jsonify(order)
@@ -631,6 +634,15 @@ def order_current(user_id):
 		order = Order(user_id, [], -1, None, None, None)
 		db.session.add(order)
 		db.session.commit()
+	return order_schema.jsonify(order)
+
+# Endpoint to delete a food item from a particular order
+@app.route("/order/delete/<order_id>", methods=["PUT"])
+def order_food_delete(order_id):
+	order = Order.query.get(order_id)
+	order.food_items = request.json['food_items']
+
+	db.session.commit()
 	return order_schema.jsonify(order)
 
 # Endpoint to delete order
