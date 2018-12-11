@@ -1,2 +1,2 @@
 web: python3 delivery.py
-worker: python3 api.py
+web: python3 api.py

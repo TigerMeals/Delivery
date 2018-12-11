@@ -10,7 +10,7 @@ from flask_cas import CAS, login_required, login, logout
 app = Flask(__name__)
 cas = CAS(app, '/cas')
 cas.init_app(app)
-DATABASE_URL = "http://0.0.0.0:5000"
+DATABASE_URL = "http://0.0.0.0"
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
 app.config['CAS_LOGIN_ROUTE'] = '/cas/login'
 app.config['CAS_AFTER_LOGIN'] = 'home'
