@@ -1,2 +1,2 @@
-web: python
-web: gunicorn delivery:app
+web: flask run delivery.py
+worker: flask run api.py -p 5000
