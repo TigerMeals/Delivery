@@ -5,15 +5,14 @@ from sqlalchemy import or_, and_
 import os
 import hashlib
 import json
-
-app = Flask(__name__)
+from tigermeals import app
 
 # Which database to fetch from:
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jwquybqpzlgkip:23c0b734759e9e709b893431fc28995b9d543b3aaaedb030d3d51c20e3b45269@ec2-54-83-197-230.compute-1.amazonaws.com:5432/d51r1bghiruet2'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/delivery'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -662,4 +661,4 @@ db.create_all()
 db.session.commit()
 
 if __name__ == '__main__':
-	app.run(debug=True)
+	app.run(debug=True, host='0.0.0.0', port=os.environ.get("PORT", 5000))

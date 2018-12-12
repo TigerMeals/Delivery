@@ -1,2 +1,7 @@
 #!/usr/bin/env bash
-python3 delivery.py "$@"
+# use below for heroku deployment
+# export FLASK_APP=tigermeals
+# flask run --port="$@"
+export FLASK_APP=tigermeals
+pip install -e . --user
+flask run

@@ -1,16 +1,19 @@
 from flask import Flask, make_response, \
 request, jsonify, render_template, redirect, url_for
 from flask_mail import Mail,  Message
-from mail_html import user_order_html, rest_order_html
+from tigermeals.mail_html import user_order_html, rest_order_html
 import requests
 import json
 import os
 from flask_cas import CAS, login_required, login, logout
+from tigermeals import app
 
-app = Flask(__name__)
 cas = CAS(app, '/cas')
 cas.init_app(app)
-DATABASE_URL = "http://localhost:5000"
+# DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+DATABASE_URL="http://localhost:5000"
+
+app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
 app.config['CAS_LOGIN_ROUTE'] = '/cas/login'
 app.config['CAS_AFTER_LOGIN'] = 'home'
@@ -720,24 +723,3 @@ def filter():
         id=user_id, food_prices = food_prices, food_ids=food_ids,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, checkboxes=checkboxes)
-
-
-# @app.route("/test")
-# def test():
-#     orders_url = url + "/order/6"
-#     res = requests.get(orders_url)
-#     if not res.ok:
-#         res.raise_for_status()
-#     else:
-#         meal = json.loads(res.content)
-#         # For logging purposes
-#         print ("Request Successful: ")
-#         items = meal["food_items"]
-#         for item in items:
-#             for key in item:
-#                 print (key + " : " + str(item[key]))
-#             print()
-
-if __name__ == '__main__':
-    app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
-    app.run(host="0.0.0.0", port = 8080)

@@ -11,11 +11,11 @@
     <link rel='icon' href='static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
-    <link href="static/css/bootstrap-lux.css" rel="stylesheet">
+    <link href="/static/css/bootstrap-lux.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="static/css/shop-homepage.css" rel="stylesheet">
-    <link href="static/css/boostrap-slider.css" rel="stylesheet">
+    <link href="/static/css/shop-homepage.css" rel="stylesheet">
+    <link href="/static/css/boostrap-slider.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -59,9 +59,9 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item-bar">
-              <a class="nav-link" href="/home">Home</a>
+              <a class="nav-link" href="/restaurant/home">Home</a>
             <li class="nav-item-bar">
-              <a class="nav-link" href="/about">About</a>
+              <a class="nav-link" href="/restaurant/about">About</a>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/listings">My Meals</a>

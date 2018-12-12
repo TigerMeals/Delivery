@@ -73,7 +73,7 @@
   <div class="panel text-center">
    <p>Please enter your email and password</p>
    </div>
-    <form id="Login" class="loginForm" action="http://localhost:8081/login" method="post">
+    <form id="Login" class="loginForm" action="/login" method="post">
 
             <div class="form-group">
 

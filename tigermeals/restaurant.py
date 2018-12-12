@@ -3,11 +3,12 @@ from flask import session, url_for
 import requests
 import json
 import os
+from tigermeals import app
 
-app = Flask(__name__)
 app.config["DEBUG"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-DATABASE_URL = "http://localhost:5000"
+# DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+DATABASE_URL="http://localhost:5000"
 
 
 # Endpoint to logout a restaurant
@@ -16,11 +17,6 @@ def logout():
     # remove the username from the session
     session.pop('username', None)
     return redirect(url_for('portal'))
-
-@app.route("/")
-@app.route("/portal")
-def portal():
-    return render_template("portal.tpl")
 
 # Endpoint to login a restaurant
 @app.route("/login", methods=['POST'])
@@ -51,13 +47,13 @@ def login():
                 res.raise_for_status()
             else:
                 session['username'] = request.form['email']
-                return redirect('/home')
+                return redirect('/restaurant/home')
         else:
             return render_template('login_restaurant.tpl', error="Invalid Login")
 
 # Endpoint to view homepage
-@app.route("/home")
-def home():
+@app.route("/restaurant/home")
+def home_restaurant():
     if 'username' not in session:
         print("Login screen -----------------------------------")
         return render_template('login_restaurant.tpl')
@@ -92,8 +88,8 @@ def home():
                 id=id, length_orders=length_orders)
 
 
-@app.route("/about")
-def about():
+@app.route("/restaurant/about")
+def about_restaurant():
     if 'username' not in session:
         print("Login screen -----------------------------------")
         return render_template('login_restaurant.tpl')
@@ -183,8 +179,8 @@ def orders():
         active=active, delivered=delivered, id=id, length_orders = length_orders)
 
 # Endpoint to view the restaurant account page
-@app.route("/account")
-def account():
+@app.route("/restaurant/account")
+def account_restaurant():
     if 'username' not in session:
         print("Login screen -----------------------------------")
         return render_template('login_restaurant.tpl')
@@ -373,9 +369,9 @@ def add_listing():
         if img != None:
             # Create unique url of restaurant id + food title
             # Since this is a new food item it does not yet have an ID
-            img_url = 'static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
-            img.save(img_url)
-            updateImage = {"image": "/" + img_url}
+            img_url = '/static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
+            img.save('tigermeals/' + img_url)
+            updateImage = {"image": img_url}
             update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
             requests.post(update_image_url, json=updateImage)
 
@@ -430,9 +426,9 @@ def update_listing():
         img = request.files['image']
         if img != None:
             # Img url is unique name based on the food id
-            img_url = 'static/img/' + food_id + '.jpg'
-            img.save(img_url)
-            updatedEntry["image"] = "/" + img_url
+            img_url = '/static/img/' + food_id + '.jpg'
+            img.save('tigermeals' + img_url)
+            updatedEntry["image"] = img_url
 
     res = requests.put(add_food_url, json = updatedEntry)
     print (updatedEntry)
@@ -474,7 +470,7 @@ def toggle_active():
 
 # Endpoint to deny an order.
 @app.route("/order/deny", methods=["POST"])
-def order_deny():
+def order_deny_rest():
     if 'username' not in session:
         print("Login screen -----------------------------------")
         return render_template('login_restaurant.tpl')
@@ -505,7 +501,7 @@ def order_deny():
 
 # Endpoint to approve an order.
 @app.route("/order/approve", methods=["POST"])
-def order_approve():
+def order_approve_rest():
     if 'username' not in session:
         print("Login screen -----------------------------------")
         return render_template('login_restaurant.tpl')
@@ -534,7 +530,7 @@ def order_approve():
 
 # Endpoint to mark an order as delivered.
 @app.route("/order/delivered", methods=["POST"])
-def order_delivered():
+def order_delivered_rest():
     if 'username' not in session:
         print("Login screen -----------------------------------")
         return render_template('login_restaurant.tpl')
@@ -560,7 +556,3 @@ def order_delivered():
     if not res.ok:
         res.raise_for_status()
     return redirect('/orders')
-
-if __name__ == '__main__':
-    app.secret_key = "kdlr3whrlq3ul8wDLI*ALDA(D*S(*Ah"
-    app.run(port = 8081, host = '0.0.0.0')
