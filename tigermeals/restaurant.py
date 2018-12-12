@@ -12,7 +12,7 @@ DATABASE_URL="http://localhost:5000"
 
 
 # Endpoint to logout a restaurant
-@app.route("/logout")
+@app.route("/restaurant/logout")
 def logout():
     # remove the username from the session
     session.pop('username', None)
