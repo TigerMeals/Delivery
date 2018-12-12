@@ -107,6 +107,31 @@ def user_login():
 
 	return user_schema.jsonify(user)
 
+#Endpoint to update the user account stuff
+@app.route("/user/account/update/<user_id>", methods=['PUT'])
+def user_account_update(user_id):
+	user = User.query.get(user_id)
+	firstName = request.json['first']
+	lastName = request.json['last']
+	user.phone = request.json['phone']
+	user.address = request.json['address']
+	user.allergies = request.json['allergies']
+
+	name = firstName + " " + lastName
+
+	user.name = name
+
+	db.session.commit()
+
+	return user_schema.jsonify(user)
+
+# Endpoint to get the quick stats of the users
+@app.route("/user/quickstats/<user_id>", methods=["GET"])
+def user_get_orderlength(user_id):
+	orders = Order.query.filter_by(user_id=user_id, ordered=True).all()
+
+	return orders_schema.jsonify(orders)
+
 # Endpoint to delete user
 @app.route("/user/<user_id>", methods = ["DELETE"])
 def user_delete(user_id):
@@ -376,11 +401,10 @@ def food_update(food_id):
 	return food_schema.jsonify(food)
 
 # Endpoint that sorts by price
-# Expects following in json dict: restaurants: list of restaurant ids, cuisines: list of desired cuisines, allergies: list of dietary restrictions, servings: list of serving ranges, sort: type of sort desired (popular, servings, price_low_to_high, price_high_to_low, or recent).
+# Expects following in json dict: restaurants: list of restaurant ids, allergies: list of dietary restrictions, servings: list of serving ranges, sort: type of sort desired (popular, servings, price_low_to_high, price_high_to_low, or recent).
 @app.route('/food/filter', methods = ['POST'])
 def food_filter():
 	restaurants = request.json['restaurants']
-	cuisines = request.json['cuisines']
 	# Current allergies that are options are 'Contains dairy', 'Contains meat', 'Contains eggs', 'Kosher'
 	allergies = request.json['allergies']
 
@@ -396,8 +420,6 @@ def food_filter():
 	food = Food.query
 	if restaurants is not []:
 		food = food.filter(or_(Food.restaurant_id == v for v in restaurants))
-	if cuisines is not []:
-		food = food.filter(or_(Food.cuisine == c for c in cuisines))
 	if allergies is not []:
 		food = food.filter(or_(Food.allergies.contains(a) for a in allergies))
 	if ranges is not []:

@@ -257,25 +257,73 @@ def account():
 
     print("Alleriges: ----------------------------------------------")
 
-    # allergies = allergies.split(',')
+    ## Get the quickstats of the past orders
+    quick_url = DATABASE_URL + "/user/quickstats/" + str(user_id)
+    fetch_req = requests.get(quick_url).json()
 
-    # allergyTemp = []
-    # for allergy in allergies:
-    #     allergyTemp.append(allergy.strip())
+    length_past_orders = len(fetch_req)
 
-    # allergies = allergyTemp
+    past_restaurants = []
 
-    print(allergies)
+    for order in fetch_req:
+        if order['restaurant_id'] not in past_restaurants:
+            past_restaurants.append(order['restaurant_id'])
+        print("DONE -------------------------------------------------------")
 
+    number_different_rest = len(past_restaurants)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
     return render_template('account.tpl', name=name.split(), email=email,\
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
-        food_quantity_feds=food_quantity_feds, food_images=food_images,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
+        food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
+
+
+
+@app.route("/account/update", methods=["POST"])
+@login_required
+def account_update():
+    print("ACCOUNT UPDATING ----------------------------------------")
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    firstName = request.form['p_first_name']
+    lastName = request.form['p_last_name']
+
+    phone = request.form['p_phone']
+    address = request.form['p_address']
+
+    allergies = request.form['p_allergies']
+
+    update_url = DATABASE_URL + "/user/account/update/" + str(user_id)
+
+    json = {
+        "first": firstName,
+        "last": lastName,
+        "phone": phone,
+        "address": address,
+        "allergies": allergies
+    }
+
+    requests.put(update_url, json=json)
+
+    return redirect(url_for('account'))
+
 
     # food = _getJSON(DATABASE_URL + "/food/" + str(food_id))
     # print food
@@ -476,7 +524,7 @@ def meals():
     r = make_response(render_template('meals.tpl', meals=meals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], checkboxes=[]))
+        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], sort_type="popular"))
 
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"
@@ -646,7 +694,6 @@ def ordered():
         return None
 
     rest = json.loads(res.content)
-    print (rest)
     restEmail = rest['email']
     msg = mail.send_message(
     'New TigerMeals Delivery order request!',
@@ -697,33 +744,29 @@ def filter():
     if request.method=="GET":
         return redirect('/meals')
     current_filters = []
-    checkboxes = []
     # Get restaurant ids for selected restaurants
     restaurantsIds = []
     for checkbox in request.form:
         if checkbox == "sort":
             continue
-        checkboxes.append(checkbox)
         if "restaurant" in checkbox:
             restaurantsIds.append(checkbox.split("restaurant_")[1].split("_")[1])
-            current_filters.append(checkbox.split("restaurant_")[1].split("_")[0])
-    cuisines = []
-    for cuisine in ["Asian", "American", "Drinks", "Healthy"]:
-        if request.form.get(cuisine) is not None:
-            cuisines.append(cuisine)
-            current_filters.append(cuisine)
+            current_filters.append({
+            "filter": checkbox.split("restaurant_")[1].split("_")[0],
+            "checkbox": checkbox
+            })
 
     allergies = []
     for allergy in ["Contains dairy", "Contains meat", "Contains eggs", "Kosher"]:
         if request.form.get(allergy) is not None:
             allergies.append(allergy)
-            current_filters.append(allergy)
+            current_filters.append({"filter": allergy, "checkbox": allergy})
 
     servings = []
     for serving in ["0-25", "25-50", "50-75", "75-100", "100-1000"]:
         if request.form.get(serving) is not None:
             servings.append(serving)
-            current_filters.append(servings)
+            current_filters.append({"filter": serving, "checkbox": serving})
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -742,7 +785,6 @@ def filter():
     filter_url = DATABASE_URL + "/food/filter"
     filterParams = {
     "restaurants": restaurantsIds,
-    "cuisines": cuisines,
     "allergies": allergies,
     "servings": servings,
     "sort": request.form.get('sort')
@@ -774,4 +816,4 @@ def filter():
     return render_template('meals.tpl', meals=meals, \
         id=user_id, food_prices = food_prices, food_ids=food_ids,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, checkboxes=checkboxes)
+        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, sort_type=request.form.get('sort'))
