@@ -4,11 +4,20 @@
  * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-shop-homepage/blob/master/LICENSE)
  */
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.container {
+  min-height: 85%;
+}
+
 $height-footer: 60px;
 
 body {
-  padding-top: 54px;
-  margin-bottom: $height-footer;
+/*  padding-top: 54px;*/
+/* margin-bottom: $height-footer; */
 }
 
 @media (min-width: 992px) {
