@@ -1,16 +1,17 @@
 from flask import Flask, make_response, \
 request, jsonify, render_template, redirect, url_for
 from flask_mail import Mail,  Message
-from mail_html import user_order_html, rest_order_html
+from tigermeals.mail_html import user_order_html, rest_order_html
 import requests
 import json
 import os
 from flask_cas import CAS, login_required, login, logout
+from tigermeals import app
 
-app = Flask(__name__)
 cas = CAS(app, '/cas')
 cas.init_app(app)
-DATABASE_URL = "http://0.0.0.0"
+DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
 app.config['CAS_LOGIN_ROUTE'] = '/cas/login'
 app.config['CAS_AFTER_LOGIN'] = 'home'
@@ -746,5 +747,4 @@ def filter():
 #             print()
 
 if __name__ == '__main__':
-    app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
     app.run(port=os.environ.get("PORT", 5000), host="0.0.0.0")

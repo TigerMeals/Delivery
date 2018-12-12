@@ -34,16 +34,16 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item-bar">
-              <a class="nav-link" href="/home">Home</a>
+              <a class="nav-link" href="/restaurant/home">Home</a>
             <li class="nav-item-bar active">
-              <a class="nav-link" href="/about">About</a>
+              <a class="nav-link" href="/restaurant/about">About</a>
               <span class="sr-only">(current)</span>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/listings">My Meals</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="/account">My Account</a>
+              <a class="nav-link" href="/restaurant/account">My Account</a>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/orders">View Orders ({{length_orders}} Active)</a>
@@ -86,7 +86,7 @@
           <p>Wrote the entire backend model and database, and heavily involved in the front-end development of the application, namely the restaurant version of the user interface.</p>
         </div>
         <div class="col-lg-4 col-sm-6 text-center mb-4">
-          <img class="img-fluid d-block mx-auto mb-2" src="static/img/janetheadshot.jpg" alt="">
+          <img class="img-fluid d-block mx-auto mb-2" src="/static/img/janetheadshot.jpg" alt="">
           <h3>Janet Lee
             <br>
             <small>Frontend Wiz</small>

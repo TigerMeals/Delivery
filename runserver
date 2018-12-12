@@ -1,2 +1,3 @@
 #!/usr/bin/env bash
-python3 delivery.py "$@"
+pip install -e . --user
+flask run -p $PORT
