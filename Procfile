@@ -1,1 +1,1 @@
-web gunicorn tigermeals:app
+web: gunicorn tigermeals:app
