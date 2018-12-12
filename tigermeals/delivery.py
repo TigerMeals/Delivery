@@ -116,8 +116,6 @@ def home():
     print(netid)
     print(type(netid))
 
-    print(cas.attributes)
-
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
@@ -139,11 +137,6 @@ def home():
 
 
     print("User Id: " + str(user_id))
-    if user_id is None:
-        # Redirect to login screen if the cookie is None
-        pass
-
-
 
     return resp
 
@@ -264,25 +257,73 @@ def account():
 
     print("Alleriges: ----------------------------------------------")
 
-    # allergies = allergies.split(',')
+    ## Get the quickstats of the past orders
+    quick_url = DATABASE_URL + "/user/quickstats/" + str(user_id)
+    fetch_req = requests.get(quick_url).json()
 
-    # allergyTemp = []
-    # for allergy in allergies:
-    #     allergyTemp.append(allergy.strip())
+    length_past_orders = len(fetch_req)
 
-    # allergies = allergyTemp
+    past_restaurants = []
 
-    print(allergies)
+    for order in fetch_req:
+        if order['restaurant_id'] not in past_restaurants:
+            past_restaurants.append(order['restaurant_id'])
+        print("DONE -------------------------------------------------------")
 
+    number_different_rest = len(past_restaurants)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
     return render_template('account.tpl', name=name.split(), email=email,\
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
-        food_quantity_feds=food_quantity_feds, food_images=food_images,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
+        food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
+
+
+
+@app.route("/account/update", methods=["POST"])
+@login_required
+def account_update():
+    print("ACCOUNT UPDATING ----------------------------------------")
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    firstName = request.form['p_first_name']
+    lastName = request.form['p_last_name']
+
+    phone = request.form['p_phone']
+    address = request.form['p_address']
+
+    allergies = request.form['p_allergies']
+
+    update_url = DATABASE_URL + "/user/account/update/" + str(user_id)
+
+    json = {
+        "first": firstName,
+        "last": lastName,
+        "phone": phone,
+        "address": address,
+        "allergies": allergies
+    }
+
+    requests.put(update_url, json=json)
+
+    return redirect(url_for('account'))
+
 
     # food = _getJSON(DATABASE_URL + "/food/" + str(food_id))
     # print food
@@ -311,6 +352,58 @@ def account():
 
 
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------
+
+
+# Endpoint to edit something in the cart
+@app.route("/cart/edit-quantity/<quantity>/<food_id>")
+@login_required
+def cart_edit(quantity, food_id):
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    print(cas.attributes)
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    print(quantity)
+    print(food_id)
+
+    order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
+
+    order_id = order['order_id']
+
+    food_items = order['food_items']
+
+    index = 0
+    for food_item in food_items:
+        if food_item['food_id'] == int(food_id):
+            food_item['quantity'] = int(quantity)
+            food_item['subtotal'] = food_item['quantity'] * food_item['food_price']
+            break
+        index += 1
+
+    edit_url = DATABASE_URL + "/order/delete/" + str(order_id)
+
+    json = {
+        "food_items": food_items
+    }
+
+    res = requests.put(edit_url, json = json)
+    if not res.ok:
+        res.raise_for_status()
+
+    return redirect(url_for('cart'))
+
 
 
 # Endpoint to delete an item from the current cart

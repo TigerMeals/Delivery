@@ -51,7 +51,7 @@
     <!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">TigerMeals Delivery</a>
+        <a class="navbar-brand" href="/">TigerMeals Delivery</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -145,8 +145,8 @@
             <div class="panel panel-default">
               <h5>Quick Stats </h5>
             <ul class="list-group">
-              <li class="list-group-item text-left"><span class="pull-left"><strong>Orders</strong></span> 13</li>
-              <li class="list-group-item text-left"><span class="pull-left"><strong>Restaurants</strong></span> 7</li>
+              <li class="list-group-item text-left"><span class="pull-left"><strong>Past Orders</strong></span> {{length_past_orders}}</li>
+              <li class="list-group-item text-left"><span class="pull-left"><strong>Past Restaurants</strong></span> {{number_different_rest}}</li>
               <li class="list-group-item text-left"><span class="pull-left"><strong>Overall Rating</strong></span> 4.5</li>
             </ul>
           </div>
@@ -162,7 +162,7 @@
           </div><!--/col-3-->
           <div class="col-sm-9">
               <div class="row">
-                <h1>User name</h1>
+                <h1>{{netid}}</h1>
               </div>
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item">
@@ -183,34 +183,20 @@
                   <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                   <!-- <div class="tab-pane" id="account"> -->
                     <hr>
-                        <form class="form" action="##" method="post" id="registrationForm">
+                        
                           <div class="row">
                             <div class="form-group col-6">
 
                                 <div class="col-12">
                                     <label for="username"><h5>Username</h5></label>
                                     <input type="username" class="form-control" name="username" id="username" value="{{netid}}" title="enter your username.">
+                                    <div class="text-warning">You cannot change this</div>
                                 </div>
                             </div>
 
-                          </div>
-                          <div class="row">
-                            <div class="form-group col-6">
-
-                                <div class="col-12">
-                                    <label for="password"><h5>Password</h5></label>
-                                    <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password.">
-                                </div>
-                            </div>
-                            <div class="form-group col-6">
-
-                                <div class="col-12">
-                                  <label for="password2"><h5>Verify Password</h5></label>
-                                    <input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2.">
-                                </div>
-                            </div>
                           </div>
                           <hr>
+                          <form class="form" action="/account/update" method="post" id="registrationForm">
                           <div class="row">
                               <div class="col-12">
                                 <h4 class="ml-3"> About Me </h4>
@@ -233,6 +219,7 @@
                                       <label for="p_email"><h5>Email</h5></label>
                                       <input type="text" class="form-control" name="p_email" id="p_email" value="{{netid}}@princeton.edu" title="enter your email if any.">
                                   </div>
+                                  <div class="text-warning">You cannot change this</div>
                               </div>
                               <div class="form-group col-6">
 
@@ -251,7 +238,7 @@
                               <div class="form-group col-12">
                                   <div class="col-12">
                                       <label for="s_first_name"><h5>List Allergies</h5></label>
-                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" value="{{allergies}}" title="enter your first name if any.">
+                                      <input type="text" class="form-control" name="p_allergies" id="s_first_name" value="{{allergies}}" title="enter your first name if any.">
                                   </div>
                               </div>
                           </div>
@@ -264,7 +251,7 @@
                               <div class="form-group col-12">
                                   <div class="col-12">
                                       <label for="s_first_name"><h5>Preferred Delivery Location</h5></label>
-                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" value="{{address}}" title="enter your first name if any.">
+                                      <input type="text" class="form-control" name="p_address" id="s_first_name" value="{{address}}" title="enter your first name if any.">
                                   </div>
                               </div>
                           </div>

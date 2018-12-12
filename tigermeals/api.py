@@ -107,6 +107,31 @@ def user_login():
 
 	return user_schema.jsonify(user)
 
+#Endpoint to update the user account stuff
+@app.route("/user/account/update/<user_id>", methods=['PUT'])
+def user_account_update(user_id):
+	user = User.query.get(user_id)
+	firstName = request.json['first']
+	lastName = request.json['last']
+	user.phone = request.json['phone']
+	user.address = request.json['address']
+	user.allergies = request.json['allergies']
+
+	name = firstName + " " + lastName
+
+	user.name = name
+
+	db.session.commit()
+
+	return user_schema.jsonify(user)
+
+# Endpoint to get the quick stats of the users
+@app.route("/user/quickstats/<user_id>", methods=["GET"])
+def user_get_orderlength(user_id):
+	orders = Order.query.filter_by(user_id=user_id, ordered=True).all()
+
+	return orders_schema.jsonify(orders)
+
 # Endpoint to delete user
 @app.route("/user/<user_id>", methods = ["DELETE"])
 def user_delete(user_id):
@@ -639,7 +664,11 @@ def order_current(user_id):
 @app.route("/order/delete/<order_id>", methods=["PUT"])
 def order_food_delete(order_id):
 	order = Order.query.get(order_id)
-	order.food_items = request.json['food_items']
+	food_items = request.json['food_items']
+	order.food_items = food_items
+
+	if food_items == []:
+		order.restaurant_id = -1
 
 	db.session.commit()
 	return order_schema.jsonify(order)

@@ -27,7 +27,7 @@
 		<!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">TigerMeals Delivery</a>
+        <a class="navbar-brand" href="/">TigerMeals Delivery</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -143,7 +143,7 @@
                   </script>
 									<td data-th="Quantity">
 
-                    <select id="quantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0">
+                    <select id="quantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0" onchange="handleEdit(this.value)">
                         <option value="01">1</option>
                         <option value="02">2</option>
                         <option value="03">3</option>
@@ -164,6 +164,9 @@
                               mySelect.selectedIndex = j;
                               break;
                           }
+                      }
+                      function handleEdit(value) {
+                        window.location.href = "/cart/edit-quantity/" + value + "/" + {{food_ids[i]}};
                       }
                     </script>
 									</td>
