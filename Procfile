@@ -1,1 +1,1 @@
-web: ./runserver $PORT
+web gunicorn tigermeals:app
