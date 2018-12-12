@@ -7,8 +7,8 @@ from tigermeals import app
 
 app.config["DEBUG"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-# DATABASE_URL = os.environ['DATABASE_URL']
-DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+# DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+DATABASE_URL="http://localhost:5000"
 
 
 # Endpoint to logout a restaurant
@@ -556,7 +556,3 @@ def order_delivered_rest():
     if not res.ok:
         res.raise_for_status()
     return redirect('/orders')
-
-if __name__ == '__main__':
-    app.secret_key = "kdlr3whrlq3ul8wDLI*ALDA(D*S(*Ah"
-    app.run(port=8081, host = '0.0.0.0')

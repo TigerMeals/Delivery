@@ -10,7 +10,9 @@ from tigermeals import app
 
 cas = CAS(app, '/cas')
 cas.init_app(app)
-DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+# DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+DATABASE_URL="http://localhost:5000"
+
 app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
 app.config['CAS_LOGIN_ROUTE'] = '/cas/login'
@@ -728,23 +730,3 @@ def filter():
         id=user_id, food_prices = food_prices, food_ids=food_ids,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, checkboxes=checkboxes)
-
-
-# @app.route("/test")
-# def test():
-#     orders_url = url + "/order/6"
-#     res = requests.get(orders_url)
-#     if not res.ok:
-#         res.raise_for_status()
-#     else:
-#         meal = json.loads(res.content)
-#         # For logging purposes
-#         print ("Request Successful: ")
-#         items = meal["food_items"]
-#         for item in items:
-#             for key in item:
-#                 print (key + " : " + str(item[key]))
-#             print()
-
-if __name__ == '__main__':
-    app.run(port=os.environ.get("PORT", 5000), host="0.0.0.0")

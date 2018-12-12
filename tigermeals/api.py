@@ -10,10 +10,9 @@ from tigermeals import app
 # Which database to fetch from:
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://jwquybqpzlgkip:23c0b734759e9e709b893431fc28995b9d543b3aaaedb030d3d51c20e3b45269@ec2-54-83-197-230.compute-1.amazonaws.com:5432/d51r1bghiruet2'
+
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -131,8 +130,18 @@ class Restaurant(db.Model):
 	website = db.Column(db.Unicode, unique = False)
 	cuisine = db.Column(db.Unicode, unique = False)
 	servingSize = db.Column(db.Integer, unique = False)
+	primaryFirstName = db.Column(db.Unicode, unique = False)
+	primaryLastName = db.Column(db.Unicode, unique = False)
+	primaryEmail = db.Column(db.Unicode, unique = False)
+	primaryPhone = db.Column(db.Unicode, unique = False)
+	secondaryFirstName = db.Column(db.Unicode, unique = False)
+	secondaryLastName = db.Column(db.Unicode, unique = False)
+	secondaryEmail = db.Column(db.Unicode, unique = False)
+	secondaryPhone = db.Column(db.Unicode, unique = False)
 
-	def __init__(self, name, image, description, address, phone, cuisine, servingSize, website, email, password):
+	def __init__(self, name, image, description, address, phone, cuisine, servingSize, \
+	website, email, password, primaryFirstName, primaryLastName, primaryEmail, \
+	primaryPhone, secondaryFirstName, secondaryLastName, secondaryEmail, secondaryPhone):
 		self.name = name
 		self.image = image
 		self.description = description
@@ -143,11 +152,20 @@ class Restaurant(db.Model):
 		self.website = website
 		self.email = email
 		self.password = password
+		self.primaryFirstName = primaryFirstName
+		self.primaryLastName = primaryLastName
+		self.primaryEmail = primaryEmail
+		self.primaryPhone = primaryPhone
+		self.secondaryFirstName = secondaryFirstName
+		self.secondaryLastName = secondaryLastName
+		self.secondaryEmail = secondaryEmail
+		self.secondaryPhone = secondaryPhone
 
 class RestaurantSchema(ma.Schema):
 	class Meta:
 		fields = ('restaurant_id', 'name', 'image', 'description', 'address', 'phone', 'cuisine', 'servingSize',\
-			'website', 'email', 'password')
+			'website', 'email', 'password', 'primaryFirstName', 'primaryLastName', 'primaryEmail', 'primaryPhone', \
+			'secondaryFirstName', 'secondaryLastName', 'secondaryEmail', 'secondaryPhone')
 restaurant_schema = RestaurantSchema()
 restaurants_schema = RestaurantSchema(many = True)
 
@@ -185,12 +203,22 @@ def restaurant_add():
 	servingSize = request.json['servingSize']
 	email = request.json['email']
 	website = request.json['website']
+	primaryFirstName = request.json['primaryFirstName']
+	primaryLastName = request.json['primaryLastName']
+	primaryEmail = request.json['primaryEmail']
+	primaryPhone = request.json['primaryPhone']
+	secondaryFirstName = request.json['secondaryFirstName']
+	secondaryLastName = request.json['secondaryLastName']
+	secondaryEmail = request.json['secondaryEmail']
+	secondaryPhone = request.json['secondaryPhone']
 
 	# Hash the password
 	password = _restaurant_hash(password)
 
 	# Store the password securely
-	new_restaurant = Restaurant(name, image, description, address, phone, cuisine, servingSize, website, email, password)
+	new_restaurant = Restaurant(name, image, description, address, phone, cuisine, \
+	 servingSize, website, email, password, primaryFirstName, primaryLastName, primaryEmail, primaryPhone, \
+	 secondaryFirstName, secondaryLastName, secondaryEmail, secondaryPhone)
 	db.session.add(new_restaurant)
 	db.session.commit()
 	return restaurant_schema.jsonify(new_restaurant)
