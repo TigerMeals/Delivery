@@ -113,8 +113,6 @@ def home():
     print(netid)
     print(type(netid))
 
-    print(cas.attributes)
-
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
@@ -136,11 +134,6 @@ def home():
 
 
     print("User Id: " + str(user_id))
-    if user_id is None:
-        # Redirect to login screen if the cookie is None
-        pass
-
-
 
     return resp
 

@@ -640,7 +640,11 @@ def order_current(user_id):
 @app.route("/order/delete/<order_id>", methods=["PUT"])
 def order_food_delete(order_id):
 	order = Order.query.get(order_id)
-	order.food_items = request.json['food_items']
+	food_items = request.json['food_items']
+	order.food_items = food_items
+
+	if food_items == []:
+		order.restaurant_id = -1
 
 	db.session.commit()
 	return order_schema.jsonify(order)
