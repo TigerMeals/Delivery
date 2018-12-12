@@ -306,6 +306,58 @@ def account():
 ##### SIMPLE SCREEN NAVIGATION ------------------------------------------------
 
 
+# Endpoint to edit something in the cart
+@app.route("/cart/edit-quantity/<quantity>/<food_id>")
+@login_required
+def cart_edit(quantity, food_id):
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    print(cas.attributes)
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    print(quantity)
+    print(food_id)
+
+    order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
+
+    order_id = order['order_id']
+
+    food_items = order['food_items']
+
+    index = 0
+    for food_item in food_items:
+        if food_item['food_id'] == int(food_id):
+            food_item['quantity'] = int(quantity)
+            food_item['subtotal'] = food_item['quantity'] * food_item['food_price']
+            break
+        index += 1
+
+    edit_url = DATABASE_URL + "/order/delete/" + str(order_id)
+
+    json = {
+        "food_items": food_items
+    }
+
+    res = requests.put(edit_url, json = json)
+    if not res.ok:
+        res.raise_for_status()
+
+    return redirect(url_for('cart'))
+
+
+
 # Endpoint to delete an item from the current cart
 @app.route("/cart/delete/<food_id>", methods=["POST"])
 @login_required

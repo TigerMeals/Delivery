@@ -143,7 +143,7 @@
                   </script>
 									<td data-th="Quantity">
 
-                    <select id="quantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0">
+                    <select id="quantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0" onchange="handleEdit(this.value)">
                         <option value="01">1</option>
                         <option value="02">2</option>
                         <option value="03">3</option>
@@ -164,6 +164,9 @@
                               mySelect.selectedIndex = j;
                               break;
                           }
+                      }
+                      function handleEdit(value) {
+                        window.location.href = "/cart/edit-quantity/" + value + "/" + {{food_ids[i]}};
                       }
                     </script>
 									</td>
