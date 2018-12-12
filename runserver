@@ -1,3 +1,4 @@
 #!/usr/bin/env bash
 pip install -e . --user
+export FLASK_APP=tigermeals
 flask run -p $PORT
