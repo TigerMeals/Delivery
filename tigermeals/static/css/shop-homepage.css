@@ -339,6 +339,13 @@ ul.dropdown-cart li .item-right button{
     margin: auto;
 }
 
+.createAccountForm {
+    width: 100%;
+    max-width: 850px;
+    padding: 15px;
+    margin: auto;
+}
+
 
 .nav {
   padding-left: 0;

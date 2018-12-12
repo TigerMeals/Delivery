@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>TigerMeals Delivery - Shop Meals</title>
+    <link rel='icon' href='static/img/takeout.ico'></link>
+
+    <!-- Bootstrap core CSS -->
+    <link href="static/css/bootstrap-lux.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="static/css/shop-homepage.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+    <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="#">TigerMeals Delivery</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item-bar">
+              <a class="nav-link" href="home.html">Home</a>
+            <li class="nav-item-bar">
+              <a class="nav-link" href="about.html">About</a>
+            </li>
+            <li class="nav-item-bar">
+              <a class="nav-link" href="#">My Meals</a>
+            </li>
+            <li class="nav-item-bar">
+              <a class="nav-link" href="#">My Account</a>
+            </li>
+            <li class="nav-item-bar active">
+              <a class="nav-link" href="orders.html">View Orders (4 Active)</a>
+              <span class="sr-only">(current)</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <br>
+    <!-- Page Content -->
+    <div class="container">
+
+      <div class="py-5 text-center">
+        <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
+        <h2>My orders</h2>
+        <p class="lead">Please view your orders below. We thank you for partnering with TigerMeals Delivery.</p>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal fade" id="ordernumber" tabindex="-1" role="dialog" aria-labelledby="newListingTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h3 class="modal-title" id="ordernumber">Order Number</h3>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col-4">
+                  <h5>Delivery Time</h5>
+                </div>
+                <div class="col-8">
+                  <p>Saturday, December 17th, 4:30pm</p>
+                </div>
+
+
+                <div class="col-4">
+                  <h5>Location</h5>
+                </div>
+                <div class="col-8">
+                  <p>CS Tea Room</p>
+                </div>
+
+
+                <div class="col-4">
+                  <h5>Customer Name</h5>
+                </div>
+                <div class="col-8">
+                  <p>Janet Lee</p>
+                </div>
+
+                <div class="col-4">
+                  <h5>Phone Number</h5>
+                </div>
+                <div class="col-8">
+                  <p>(408)-836-5245</p>
+                </div>
+
+                <div class="col-4">
+                  <h5>Email</h5>
+                </div>
+                <div class="col-8">
+                  <p>janetcl@princeton.edu</p>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-4">
+                  <h5>Items Ordered</h5>
+                </div>
+                <div class="col-8">
+                </div>
+
+
+                <div class="col-4">
+                  <img class="d-block w-100" src="static/img/panera.jpg"
+                    alt="First slide">
+                </div>
+                <div class="col-6">
+                  <h6>Panera Breakfast Platter</h6>
+                  <p>20 servings</p>
+                  <p><span class="text-black">Quantity: </span> 2 </p>
+                  <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
+                </div>
+                <div class="col-2">
+                  <p>$50.00 ea </p>
+                  <p><span class="text-black">Subtotal: </span> $100.00 </p>
+                </div>
+
+                <div class="col-4">
+                  <img class="d-block w-100" src="static/img/panera.jpg"
+                    alt="First slide">
+                </div>
+                <div class="col-6">
+                  <h6>Panera Coffee Tray</h6>
+                  <p>20 servings</p>
+                  <p><span class="text-black">Quantity: </span> 3 </p>
+                  <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
+                </div>
+                <div class="col-2">
+                  <p>$30.00 ea </p>
+                  <p><span class="text-black">Subtotal: </span> $90.00 </p>
+                </div>
+
+
+
+                <div class="col-4">
+                  <img class="d-block w-100" src="static/img/panera.jpg"
+                    alt="First slide">
+                </div>
+                <div class="col-6">
+                  <h6>Panera Bakery Tray</h6>
+                  <p>20 servings</p>
+                  <p><span class="text-black">Quantity: </span> 2 </p>
+                  <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
+                </div>
+                <div class="col-2">
+                  <p>$40.00 ea </p>
+                  <p><span class="text-black">Subtotal: </span> $80.00 </p>
+                </div>
+
+                <div class="col-10">
+                </div>
+                <div class="col-2">
+                  <h6>Total:</h6>
+                  <p>$170.00</p>
+                </div>
+
+              </div>
+
+             <br>
+            </div>
+            <div class="modal-footer">
+              <div class="row">
+
+                <div class="col-6">
+                  <div class="text-center item-right">
+                    <button class="btn btn-danger">Reject</button>
+                  </div>
+                </div>
+
+                <div class="col-6">
+                  <div class="text-center item-right">
+                    <button class="btn btn-success">Approve</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <table id="restaurantlistings" class="table table-hover table-condensed">
+  				<thead>
+  					<tr style="color:black;">
+                <h2>Pending Orders</h2>
+  					</tr>
+  				</thead>
+					<tbody>
+            <div class="row">
+              <div class="col-10">
+                <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                  View order
+                </button>
+              </div>
+            </div>
+            <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+              <div class="row">
+                <div class="col-md-5 order-md-1">
+                  <div class="row pl-2">
+                    <h5>Delivery Time </h5>
+                    <p class="text-muted">December 15, 2017 8:43AM</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Location </h5>
+                    <p class="text-muted">Murray Dodge Cafe</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Catering Package(s) Selected </h5>
+                    <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                    <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                    <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                  </div>
+                </div>
+                <div class = "col-md-5 order-md-2">
+                  <div class="row pl-2">
+                    <h5>Student Information </h5>
+                    <p class="text-muted">Name Here</p>
+                    <p class="text-muted">username@princeton.edu</p>
+                    <p class="text-muted">123-345-6789</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Customization </h5>
+                    <p class="text-muted" href="#">N/A</p>
+                    <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                    <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                  </div>
+                </div>
+                <div class = "col-md-2 order-md-3">
+                  <h5 class="text-success float-right">$100.00</h5>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-10">
+                <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                  View order
+                </button>
+              </div>
+            </div>
+            <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+              <div class="row">
+                <div class="col-md-5 order-md-1">
+                  <div class="row pl-2">
+                    <h5>Delivery Time </h5>
+                    <p class="text-muted">December 15, 2017 8:43AM</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Location </h5>
+                    <p class="text-muted">Murray Dodge Cafe</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Catering Package(s) Selected </h5>
+                    <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                    <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                    <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                  </div>
+                </div>
+                <div class = "col-md-5 order-md-2">
+                  <div class="row pl-2">
+                    <h5>Student Information </h5>
+                    <p class="text-muted">Name Here</p>
+                    <p class="text-muted">username@princeton.edu</p>
+                    <p class="text-muted">123-345-6789</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Customization </h5>
+                    <p class="text-muted" href="#">N/A</p>
+                    <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                    <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                  </div>
+                </div>
+                <div class = "col-md-2 order-md-3">
+                  <h5 class="text-success float-right">$100.00</h5>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-10">
+                <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                  View order
+                </button>
+              </div>
+            </div>
+            <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+              <div class="row">
+                <div class="col-md-5 order-md-1">
+                  <div class="row pl-2">
+                    <h5>Delivery Time </h5>
+                    <p class="text-muted">December 15, 2017 8:43AM</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Location </h5>
+                    <p class="text-muted">Murray Dodge Cafe</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Catering Package(s) Selected </h5>
+                    <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                    <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                    <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                  </div>
+                </div>
+                <div class = "col-md-5 order-md-2">
+                  <div class="row pl-2">
+                    <h5>Student Information </h5>
+                    <p class="text-muted">Name Here</p>
+                    <p class="text-muted">username@princeton.edu</p>
+                    <p class="text-muted">123-345-6789</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Customization </h5>
+                    <p class="text-muted" href="#">N/A</p>
+                    <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                    <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                  </div>
+                </div>
+                <div class = "col-md-2 order-md-3">
+                  <h5 class="text-success float-right">$100.00</h5>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="row">
+              <div class="col-10">
+                <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+              </div>
+              <div class="col-2">
+                <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                  View order
+                </button>
+              </div>
+            </div>
+            <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+              <div class="row">
+                <div class="col-md-5 order-md-1">
+                  <div class="row pl-2">
+                    <h5>Delivery Time </h5>
+                    <p class="text-muted">December 15, 2017 8:43AM</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Location </h5>
+                    <p class="text-muted">Murray Dodge Cafe</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Catering Package(s) Selected </h5>
+                    <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                    <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                    <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                  </div>
+                </div>
+                <div class = "col-md-5 order-md-2">
+                  <div class="row pl-2">
+                    <h5>Student Information </h5>
+                    <p class="text-muted">Name Here</p>
+                    <p class="text-muted">username@princeton.edu</p>
+                    <p class="text-muted">123-345-6789</p>
+                  </div>
+                  <div class="row pl-2">
+                    <h5>Customization </h5>
+                    <p class="text-muted" href="#">N/A</p>
+                    <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                    <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                  </div>
+                </div>
+                <div class = "col-md-2 order-md-3">
+                  <h5 class="text-success float-right">$100.00</h5>
+                </div>
+              </div>
+            </div>
+
+
+					</tbody>
+					<tfoot>
+					</tfoot>
+				</table>
+
+        <table id="restaurantlistings" class="table table-hover table-condensed">
+    				<thead>
+    					<tr style="color:black;">
+                  <h2>Orders to be Delivered</h2>
+    					</tr>
+    				</thead>
+  					<tbody>
+              <div class="row">
+                <div class="col-10">
+                  <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+                </div>
+                <div class="col-2">
+                  <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                    View order
+                  </button>
+                </div>
+              </div>
+              <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+                <div class="row">
+                  <div class="col-md-5 order-md-1">
+                    <div class="row pl-2">
+                      <h5>Delivery Time </h5>
+                      <p class="text-muted">December 15, 2017 8:43AM</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Location </h5>
+                      <p class="text-muted">Murray Dodge Cafe</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Catering Package(s) Selected </h5>
+                      <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                      <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                      <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                    </div>
+                  </div>
+                  <div class = "col-md-5 order-md-2">
+                    <div class="row pl-2">
+                      <h5>Student Information </h5>
+                      <p class="text-muted">Name Here</p>
+                      <p class="text-muted">username@princeton.edu</p>
+                      <p class="text-muted">123-345-6789</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Customization </h5>
+                      <p class="text-muted" href="#">N/A</p>
+                      <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                      <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                    </div>
+                  </div>
+                  <div class = "col-md-2 order-md-3">
+                    <h5 class="text-success float-right">$100.00</h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-10">
+                  <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+                </div>
+                <div class="col-2">
+                  <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                    View order
+                  </button>
+                </div>
+              </div>
+              <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+                <div class="row">
+                  <div class="col-md-5 order-md-1">
+                    <div class="row pl-2">
+                      <h5>Delivery Time </h5>
+                      <p class="text-muted">December 15, 2017 8:43AM</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Location </h5>
+                      <p class="text-muted">Murray Dodge Cafe</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Catering Package(s) Selected </h5>
+                      <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                      <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                      <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                    </div>
+                  </div>
+                  <div class = "col-md-5 order-md-2">
+                    <div class="row pl-2">
+                      <h5>Student Information </h5>
+                      <p class="text-muted">Name Here</p>
+                      <p class="text-muted">username@princeton.edu</p>
+                      <p class="text-muted">123-345-6789</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Customization </h5>
+                      <p class="text-muted" href="#">N/A</p>
+                      <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                      <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                    </div>
+                  </div>
+                  <div class = "col-md-2 order-md-3">
+                    <h5 class="text-success float-right">$100.00</h5>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-10">
+                  <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+                </div>
+                <div class="col-2">
+                  <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                    View order
+                  </button>
+                </div>
+              </div>
+              <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+                <div class="row">
+                  <div class="col-md-5 order-md-1">
+                    <div class="row pl-2">
+                      <h5>Delivery Time </h5>
+                      <p class="text-muted">December 15, 2017 8:43AM</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Location </h5>
+                      <p class="text-muted">Murray Dodge Cafe</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Catering Package(s) Selected </h5>
+                      <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                      <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                      <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                    </div>
+                  </div>
+                  <div class = "col-md-5 order-md-2">
+                    <div class="row pl-2">
+                      <h5>Student Information </h5>
+                      <p class="text-muted">Name Here</p>
+                      <p class="text-muted">username@princeton.edu</p>
+                      <p class="text-muted">123-345-6789</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Customization </h5>
+                      <p class="text-muted" href="#">N/A</p>
+                      <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                      <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                    </div>
+                  </div>
+                  <div class = "col-md-2 order-md-3">
+                    <h5 class="text-success float-right">$100.00</h5>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-10">
+                  <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+                </div>
+                <div class="col-2">
+                  <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                    View order
+                  </button>
+                </div>
+              </div>
+              <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+                <div class="row">
+                  <div class="col-md-5 order-md-1">
+                    <div class="row pl-2">
+                      <h5>Delivery Time </h5>
+                      <p class="text-muted">December 15, 2017 8:43AM</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Location </h5>
+                      <p class="text-muted">Murray Dodge Cafe</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Catering Package(s) Selected </h5>
+                      <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                      <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                      <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                    </div>
+                  </div>
+                  <div class = "col-md-5 order-md-2">
+                    <div class="row pl-2">
+                      <h5>Student Information </h5>
+                      <p class="text-muted">Name Here</p>
+                      <p class="text-muted">username@princeton.edu</p>
+                      <p class="text-muted">123-345-6789</p>
+                    </div>
+                    <div class="row pl-2">
+                      <h5>Customization </h5>
+                      <p class="text-muted" href="#">N/A</p>
+                      <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                      <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                    </div>
+                  </div>
+                  <div class = "col-md-2 order-md-3">
+                    <h5 class="text-success float-right">$100.00</h5>
+                  </div>
+                </div>
+              </div>
+
+
+  					</tbody>
+  					<tfoot>
+  					</tfoot>
+  				</table>
+
+          <table id="restaurantlistings" class="table table-hover table-condensed">
+      				<thead>
+      					<tr style="color:black;">
+                    <h2>Previous Orders</h2>
+      					</tr>
+      				</thead>
+    					<tbody>
+                <div class="row">
+                  <div class="col-10">
+                    <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+                  </div>
+                  <div class="col-2">
+                    <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                      View order
+                    </button>
+                  </div>
+                </div>
+                <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+                  <div class="row">
+                    <div class="col-md-5 order-md-1">
+                      <div class="row pl-2">
+                        <h5>Delivery Time </h5>
+                        <p class="text-muted">December 15, 2017 8:43AM</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Location </h5>
+                        <p class="text-muted">Murray Dodge Cafe</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Catering Package(s) Selected </h5>
+                        <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                        <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                        <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                      </div>
+                    </div>
+                    <div class = "col-md-5 order-md-2">
+                      <div class="row pl-2">
+                        <h5>Student Information </h5>
+                        <p class="text-muted">Name Here</p>
+                        <p class="text-muted">username@princeton.edu</p>
+                        <p class="text-muted">123-345-6789</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Customization </h5>
+                        <p class="text-muted" href="#">N/A</p>
+                        <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                        <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                      </div>
+                    </div>
+                    <div class = "col-md-2 order-md-3">
+                      <h5 class="text-success float-right">$100.00</h5>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-10">
+                    <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+                  </div>
+                  <div class="col-2">
+                    <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                      View order
+                    </button>
+                  </div>
+                </div>
+                <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+                  <div class="row">
+                    <div class="col-md-5 order-md-1">
+                      <div class="row pl-2">
+                        <h5>Delivery Time </h5>
+                        <p class="text-muted">December 15, 2017 8:43AM</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Location </h5>
+                        <p class="text-muted">Murray Dodge Cafe</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Catering Package(s) Selected </h5>
+                        <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                        <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                        <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                      </div>
+                    </div>
+                    <div class = "col-md-5 order-md-2">
+                      <div class="row pl-2">
+                        <h5>Student Information </h5>
+                        <p class="text-muted">Name Here</p>
+                        <p class="text-muted">username@princeton.edu</p>
+                        <p class="text-muted">123-345-6789</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Customization </h5>
+                        <p class="text-muted" href="#">N/A</p>
+                        <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                        <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                      </div>
+                    </div>
+                    <div class = "col-md-2 order-md-3">
+                      <h5 class="text-success float-right">$100.00</h5>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-10">
+                    <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+                  </div>
+                  <div class="col-2">
+                    <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                      View order
+                    </button>
+                  </div>
+                </div>
+                <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+                  <div class="row">
+                    <div class="col-md-5 order-md-1">
+                      <div class="row pl-2">
+                        <h5>Delivery Time </h5>
+                        <p class="text-muted">December 15, 2017 8:43AM</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Location </h5>
+                        <p class="text-muted">Murray Dodge Cafe</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Catering Package(s) Selected </h5>
+                        <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                        <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                        <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                      </div>
+                    </div>
+                    <div class = "col-md-5 order-md-2">
+                      <div class="row pl-2">
+                        <h5>Student Information </h5>
+                        <p class="text-muted">Name Here</p>
+                        <p class="text-muted">username@princeton.edu</p>
+                        <p class="text-muted">123-345-6789</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Customization </h5>
+                        <p class="text-muted" href="#">N/A</p>
+                        <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                        <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                      </div>
+                    </div>
+                    <div class = "col-md-2 order-md-3">
+                      <h5 class="text-success float-right">$100.00</h5>
+                    </div>
+                  </div>
+                </div>
+
+
+                <div class="row">
+                  <div class="col-10">
+                    <h4 class="mb-3 float-left" href="#">Order #9408294050</h4>
+                  </div>
+                  <div class="col-2">
+                    <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
+                      View order
+                    </button>
+                  </div>
+                </div>
+                <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
+                  <div class="row">
+                    <div class="col-md-5 order-md-1">
+                      <div class="row pl-2">
+                        <h5>Delivery Time </h5>
+                        <p class="text-muted">December 15, 2017 8:43AM</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Location </h5>
+                        <p class="text-muted">Murray Dodge Cafe</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Catering Package(s) Selected </h5>
+                        <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
+                        <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                        <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                      </div>
+                    </div>
+                    <div class = "col-md-5 order-md-2">
+                      <div class="row pl-2">
+                        <h5>Student Information </h5>
+                        <p class="text-muted">Name Here</p>
+                        <p class="text-muted">username@princeton.edu</p>
+                        <p class="text-muted">123-345-6789</p>
+                      </div>
+                      <div class="row pl-2">
+                        <h5>Customization </h5>
+                        <p class="text-muted" href="#">N/A</p>
+                        <p class="text-muted" href="#">Sangria Party Mix (1)</p>
+                        <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
+                      </div>
+                    </div>
+                    <div class = "col-md-2 order-md-3">
+                      <h5 class="text-success float-right">$100.00</h5>
+                    </div>
+                  </div>
+                </div>
+
+
+    					</tbody>
+    					<tfoot>
+    					</tfoot>
+    				</table>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- Footer -->
+    <footer class="py-4 red-bar">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  </body>
+
+</html>
