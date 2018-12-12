@@ -1,3 +1,4 @@
+README.md
 flask_cas/__init__.py
 flask_cas/cas_urls.py
 flask_cas/routing.py
