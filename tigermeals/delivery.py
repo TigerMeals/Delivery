@@ -601,7 +601,6 @@ def ordered():
         return None
 
     rest = json.loads(res.content)
-    print (rest)
     restEmail = rest['email']
     msg = mail.send_message(
     'New TigerMeals Delivery order request!',

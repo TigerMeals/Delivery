@@ -1,5 +1,7 @@
 from flask import Flask, request, make_response, jsonify, render_template, redirect
 from flask import session, url_for
+from flask_mail import Mail,  Message
+from tigermeals.mail_html import user_approved_html, rest_approved_html, user_denied_html, rest_denied_html, order_delivered_html
 import requests
 import json
 import os
@@ -7,6 +9,13 @@ from tigermeals import app
 
 app.config["DEBUG"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'tigermealsdelivery@gmail.com'
+app.config['MAIL_PASSWORD'] = 'aksnpqtutouldhna'
+mail = Mail(app)
+
 # DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
 DATABASE_URL="http://localhost:5000"
 
@@ -496,6 +505,21 @@ def order_deny_rest():
     res = requests.delete(delete_order_url)
     if not res.ok:
         res.raise_for_status()
+
+    # Send email to restaurant
+    msg = mail.send_message(
+    'Denied TigerMeals Delivery order request!',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[email['email']],
+    html=rest_denied_html())
+
+    # Send email to user
+    msg = mail.send_message(
+    'Your TigerMeals Delivery order was denied.',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[json.loads(res.content)['email']],
+    html=user_denied_html())
+
     return redirect('/orders')
 
 
@@ -526,6 +550,22 @@ def order_approve_rest():
     res = requests.post(approve_order_url)
     if not res.ok:
         res.raise_for_status()
+        return None
+
+    # Send email to restaurant
+    msg = mail.send_message(
+    'Approved TigerMeals Delivery order request!',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[email['email']],
+    html=rest_approved_html())
+
+    # Send email to user
+    msg = mail.send_message(
+    'Your TigerMeals Delivery order was approved!',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[json.loads(res.content)['email']],
+    html=user_approved_html())
+
     return redirect('/orders')
 
 # Endpoint to mark an order as delivered.
@@ -555,4 +595,20 @@ def order_delivered_rest():
     res = requests.post(delivered_order_url)
     if not res.ok:
         res.raise_for_status()
+
+    # Send email to user
+    msg = mail.send_message(
+    'Your TigerMeals Delivery order was marked as delivered!',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[json.loads(res.content)['email']],
+    html=order_delivered_html())
+
+    # Send email to restaurant
+    msg = mail.send_message(
+    'Your TigerMeals Delivery order was marked as delivered!',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[email['email']],
+    html=order_delivered_html())
+
+
     return redirect('/orders')
