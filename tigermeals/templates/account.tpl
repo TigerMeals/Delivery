@@ -130,6 +130,8 @@
 
         <br>
 
+    <br>
+
     <div class="container">
         <div class="row mt-2">
           <div class="col-sm-3"><!--left col-->
@@ -138,31 +140,22 @@
           <div class="text-center">
             <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
             <br><br>
-            <h6>Upload a different photo...</h6>
+            <h6 class="mb-0 mt-1">Upload a different photo...</h6>
             <input type="file" class="text-center center-block file-upload">
           </div></hr><br>
 
             <div class="panel panel-default">
-              <h5>Quick Stats </h5>
+              <h6 class="mb-0 mt-1">Quick Stats </h6>
             <ul class="list-group">
-              <li class="list-group-item text-left"><span class="pull-left"><strong>Past Orders</strong></span> {{length_past_orders}}</li>
-              <li class="list-group-item text-left"><span class="pull-left"><strong>Past Restaurants</strong></span> {{number_different_rest}}</li>
-              <li class="list-group-item text-left"><span class="pull-left"><strong>Overall Rating</strong></span> 4.5</li>
+              <li class="list-group-item text-left"><span class="pull-left"><strong>Orders</strong></span> {{length_past_orders}}</li>
+              <li class="list-group-item text-left"><span class="pull-left"><strong>Restaurants</strong></span> {{number_different_rest}}</li>
             </ul>
           </div>
 
-
-              <!-- <div class="panel panel-default">
-                <div class="panel-heading">Social Media</div>
-                <div class="panel-body">
-                  <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
-                </div>
-              </div> -->
-
           </div><!--/col-3-->
-          <div class="col-sm-9">
-              <div class="row">
-                <h1>{{netid}}</h1>
+          <div class="col-sm-9 mt-2">
+              <div class="row mb-2">
+                <h1 class="ml-3">My Account</h1>
               </div>
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item">
@@ -170,7 +163,15 @@
                   </li>
 
                   <li class="nav-item">
-                      <a class="nav-link" id="orders-tab" data-toggle="tab" href="#orders" role="tab" aria-controls="orders" aria-selected="true">My Orders</a>
+                      <a class="nav-link" id="pending-orders-tab" data-toggle="tab" href="#pending-orders" role="tab" aria-controls="pending-orders" aria-selected="true">My Pending Orders</a>
+                  </li>
+
+                  <li class="nav-item">
+                      <a class="nav-link" id="active-orders-tab" data-toggle="tab" href="#active-orders" role="tab" aria-controls="active-orders" aria-selected="true">My Orders To Be Delivered</a>
+                  </li>
+
+                  <li class="nav-item">
+                      <a class="nav-link" id="history-orders-tab" data-toggle="tab" href="#history-orders" role="tab" aria-controls="history-orders" aria-selected="true">My Order History</a>
                   </li>
 
               </ul>
@@ -180,474 +181,585 @@
 
 
 
-                  <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                  <!-- <div class="tab-pane" id="account"> -->
-                    <hr>
-                        
-                          <div class="row">
-                            <div class="form-group col-6">
+            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
-                                <div class="col-12">
-                                    <label for="username"><h5>Username</h5></label>
-                                    <input type="username" class="form-control" name="username" id="username" value="{{netid}}" title="enter your username.">
-                                    <div class="text-warning">You cannot change this</div>
-                                </div>
-                            </div>
+                    <form class="form mt-3" action="/account/update" method="post" id="registrationForm">
 
-                          </div>
-                          <hr>
-                          <form class="form" action="/account/update" method="post" id="registrationForm">
-                          <div class="row">
+                      <div class="row">
+                          <div class="form-group col-6">
                               <div class="col-12">
-                                <h4 class="ml-3"> About Me </h4>
-                              </div>
-                              <div class="form-group col-6">
-                                  <div class="col-12">
-                                      <label for="p_first_name"><h5>First Name</h5></label>
-                                      <input type="text" class="form-control" name="p_first_name" id="p_first_name" value="{{name[0]}}" title="enter your first name if any.">
-                                  </div>
-                              </div>
-                              <div class="form-group col-6">
-                                  <div class="col-12">
-                                    <label for="p_last_name"><h5>Last Name</h5></label>
-                                      <input type="text" class="form-control" name="p_last_name" id="p_last_name" value="{{name[1]}}" title="enter your last name if any.">
-                                  </div>
-                              </div>
-                              <div class="form-group col-6">
-
-                                  <div class="col-12">
-                                      <label for="p_email"><h5>Email</h5></label>
-                                      <input type="text" class="form-control" name="p_email" id="p_email" value="{{netid}}@princeton.edu" title="enter your email if any.">
-                                  </div>
-                                  <div class="text-warning">You cannot change this</div>
-                              </div>
-                              <div class="form-group col-6">
-
-                                  <div class="col-12">
-                                    <label for="p_phone"><h5>Phone Number</h5></label>
-                                      <input type="text" class="form-control" name="p_phone" id="p_phone" value="{{phone}}" title="enter your phone number if any.">
-                                  </div>
+                                  <label for="p_first_name"><h6 class="mb-0 mt-1">First Name</h6></label>
+                                  <input type="text" class="form-control" name="p_first_name" id="p_first_name" value="{{name[0]}}" title="enter your first name if any.">
                               </div>
                           </div>
-
-                          <hr>
-                          <div class="row">
+                          <div class="form-group col-6">
                               <div class="col-12">
-                                <h4 class="ml-3"> Allergies </h4>
-                              </div>
-                              <div class="form-group col-12">
-                                  <div class="col-12">
-                                      <label for="s_first_name"><h5>List Allergies</h5></label>
-                                      <input type="text" class="form-control" name="p_allergies" id="s_first_name" value="{{allergies}}" title="enter your first name if any.">
-                                  </div>
+                                <label for="p_last_name"><h6 class="mb-0 mt-1">Last Name</h6></label>
+                                  <input type="text" class="form-control" name="p_last_name" id="p_last_name" value="{{name[1]}}" title="enter your last name if any.">
                               </div>
                           </div>
+                          <div class="form-group col-6">
 
-                          <hr>
-                          <div class="row">
                               <div class="col-12">
-                                <h4 class="ml-3"> Delivery Preferences </h4>
+                                  <label for="p_email"><h6 class="mb-0 mt-1">Email</h6></label>
+                                  <input type="text" class="form-control" name="p_email" id="p_email" value="{{email}}" title="enter your email if any.">
+                                  <div class = "text-warning">
+                                You cannot change this
                               </div>
-                              <div class="form-group col-12">
-                                  <div class="col-12">
-                                      <label for="s_first_name"><h5>Preferred Delivery Location</h5></label>
-                                      <input type="text" class="form-control" name="p_address" id="s_first_name" value="{{address}}" title="enter your first name if any.">
-                                  </div>
                               </div>
-                          </div>
 
-                          <div class="row">
-                            <div class="form-group">
-                                 <div class="col-12 col-xs-12">
-                                      <br>
-                                     <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                                       <button class="btn" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
-                                  </div>
-                            </div>
                           </div>
-                     </form>
+                          <div class="form-group col-6">
+
+                              <div class="col-12">
+                                <label for="p_phone"><h6 class="mb-0 mt-1">Phone Number</h6></label>
+                                  <input type="text" class="form-control" name="p_phone" id="p_phone" value="{{phone}}" title="enter your phone number if any.">
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="row">
+                          <div class="form-group col-12">
+                              <div class="col-12">
+                                  <label for="s_first_name"><h6 class="mb-0 mt-1">List Allergies</h6></label>
+                                  <input type="text" class="form-control" name="p_allergies" id="s_first_name" value="{{allergies}}" title="enter your first name if any.">
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="row">
+                          <div class="form-group col-12">
+                              <div class="col-12">
+                                  <label for="s_first_name"><h6 class="mb-0 mt-1">Preferred Delivery Location</h6></label>
+                                  <input type="text" class="form-control" name="p_address" id="s_first_name" value="{{address}}" title="enter your first name if any.">
+                              </div>
+                          </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="form-group">
+                             <div class="col-12 col-xs-12">
+                                  <br>
+                                 <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+                                   <button class="btn" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+                              </div>
+                        </div>
+                      </div>
+                 </form>
+                </div>
+
+              <div class="tab-pane fade show" id="pending-orders" role="tabpanel" aria-labelledby="pending-orders-tab">
+
+
+
+              <div class="row mt-2">
+                <div class="col-10">
+                  <h4 class="float-left mt-2" href="#">Order #94050</h4>
+                </div>
+                <div class="col-2">
+                  <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
+                    View order
+                  </button>
+                </div>
+              </div>
+              <div class="card col-md-12 px-3 pt-2 mb-3 border-dark">
+
+                <div class="row">
+                  <div class="col-10">
+                    <div class="row">
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Order Placed on</h6>
                     </div>
-
-                    <div class="tab-pane fade show" id="orders" role="tabpanel" aria-labelledby="orders-tab">
-
-                      <hr>
-                      <div class="row">
-                        <h2>Orders Pending Approval</h2>
-                      </div>
-                      <div class="row">
-                        <div class="col-10">
-                          <h4 class="float-left" href="#">Order #94050</h4>
-                        </div>
-                        <div class="col-2">
-                          <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
-                            View order
-                          </button>
-                        </div>
-                      </div>
-                      <div class="row my-0">
-                        <div class="col-12">
-                          <p class="mb-0">Placed on 12/7/2018 at 3:56PM</p>
-                        </div>
-                      </div>
-                      <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
-                        <div class="row">
-                          <div class="col-md-5 order-md-1">
-                            <div class="row pl-2">
-                              <h5>Delivery Time </h5>
-                              <p class="text-muted">December 15, 2017 8:00AM</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Location </h5>
-                              <p class="text-muted">Murray Dodge Cafe</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Catering Package(s) Selected </h5>
-                              <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
-                              <p class="text-muted" href="#">Sangria Party Mix (1)</p>
-                              <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
-                            </div>
-                          </div>
-                          <div class = "col-md-5 order-md-2">
-                            <div class="row pl-2">
-                              <h5>Restaurant Information </h5>
-                              <p class="text-muted">Panera</p>
-                              <p class="text-muted">hello@panera.com</p>
-                              <p class="text-muted">123-345-6789</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Customization </h5> <br>
-                              <p class="text-muted" href="#">N/A</p>
-                              <p class="text-muted" href="#">Sangria Party Mix (1)</p>
-                              <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
-                            </div>
-                          </div>
-                          <div class = "col-md-2 order-md-3">
-                            <h5 class="text-success float-right">$100.00</h5>
-                          </div>
-                        </div>
-                      </div>
-
-
-                      <div class="row">
-                        <div class="col-10">
-                          <h4 class="float-left" href="#">Order #94055</h4>
-                        </div>
-                        <div class="col-2">
-                          <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
-                            View order
-                          </button>
-                        </div>
-                      </div>
-                      <div class="row my-0">
-                        <div class="col-12">
-                          <p class="mb-0">Placed on 12/7/2018 at 3:56PM</p>
-                        </div>
-                      </div>
-                      <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
-                        <div class="row">
-                          <div class="col-md-5 order-md-1">
-                            <div class="row pl-2">
-                              <h5>Delivery Time </h5>
-                              <p class="text-muted">December 15, 2017 8:43AM</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Location </h5>
-                              <p class="text-muted">Murray Dodge Cafe</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Catering Package(s) Selected </h5>
-                              <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
-                              <p class="text-muted" href="#">Sangria Party Mix (1)</p>
-                              <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
-                            </div>
-                          </div>
-                          <div class = "col-md-5 order-md-2">
-                            <div class="row pl-2">
-                              <h5>Restaurant Information </h5>
-                              <p class="text-muted">Panera</p>
-                              <p class="text-muted">hello@panera.com</p>
-                              <p class="text-muted">123-345-6789</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Customization </h5> <br>
-                              <p class="text-muted" href="#">N/A</p>
-                              <p class="text-muted" href="#">Sangria Party Mix (1)</p>
-                              <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
-                            </div>
-                          </div>
-                          <div class = "col-md-2 order-md-3">
-                            <h5 class="text-success float-right">$100.00</h5>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div class="row">
-                        <h2>Orders To Be Delivered</h2>
-                      </div>
-                      <div class="row">
-                        <div class="col-10">
-                          <h4 class="float-left" href="#">Order #94050</h4>
-                        </div>
-                        <div class="col-2">
-                          <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
-                            View order
-                          </button>
-                        </div>
-                      </div>
-                      <div class="row my-0">
-                        <div class="col-12">
-                          <p class="mb-0">Placed on 12/7/2018 at 3:56PM</p>
-                        </div>
-                      </div>
-                      <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
-                        <div class="row">
-                          <div class="col-md-5 order-md-1">
-                            <div class="row pl-2">
-                              <h5>Delivery Time </h5>
-                              <p class="text-muted">December 15, 2017 8:43AM</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Location </h5>
-                              <p class="text-muted">Murray Dodge Cafe</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Catering Package(s) Selected </h5>
-                              <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
-                              <p class="text-muted" href="#">Sangria Party Mix (1)</p>
-                              <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
-                            </div>
-                          </div>
-                          <div class = "col-md-5 order-md-2">
-                            <div class="row pl-2">
-                              <h5>Restaurant Information </h5>
-                              <p class="text-muted">Panera</p>
-                              <p class="text-muted">hello@panera.com</p>
-                              <p class="text-muted">123-345-6789</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Customization </h5> <br>
-                              <p class="text-muted" href="#">N/A</p>
-                              <p class="text-muted" href="#">Sangria Party Mix (1)</p>
-                              <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
-                            </div>
-                          </div>
-                          <div class = "col-md-2 order-md-3">
-                            <h5 class="text-success float-right">$100.00</h5>
-                          </div>
-                        </div>
-                      </div>
-
-
-                      <div class="row">
-                        <h2>Completed Orders</h2>
-                      </div>
-                      <div class="row">
-                        <div class="col-10">
-                          <h4 class="float-left" href="#">Order #94050</h4>
-                        </div>
-                        <div class="col-2">
-                          <button type="button" class="btn btn-info restuarant_list_button float-right" data-toggle="modal" data-target="#ordernumber">
-                            View order
-                          </button>
-                        </div>
-                      </div>
-                      <div class="row my-0">
-                        <div class="col-12">
-                          <p class="mb-0">Placed on 12/7/2018 at 3:56PM</p>
-                        </div>
-                      </div>
-                      <div class="card col-md-12 px-3 py-2 mb-3 border-dark">
-                        <div class="row">
-                          <div class="col-md-5 order-md-1">
-                            <div class="row pl-2">
-                              <h5>Delivery Time </h5>
-                              <p class="text-muted">December 15, 2017 8:43AM</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Location </h5>
-                              <p class="text-muted">Murray Dodge Cafe</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Catering Package(s) Selected </h5>
-                              <p class="text-muted" href="#">Taco Assortment for Twenty People (2)</p>
-                              <p class="text-muted" href="#">Sangria Party Mix (1)</p>
-                              <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
-                            </div>
-                          </div>
-                          <div class = "col-md-5 order-md-2">
-                            <div class="row pl-2">
-                              <h5>Restaurant Information </h5>
-                              <p class="text-muted">Panera</p>
-                              <p class="text-muted">hello@panera.com</p>
-                              <p class="text-muted">123-345-6789</p>
-                            </div>
-                            <div class="row pl-2">
-                              <h5>Customization </h5> <br>
-                              <p class="text-muted" href="#">N/A</p>
-                              <p class="text-muted" href="#">Sangria Party Mix (1)</p>
-                              <p class="text-muted" href="#">Spicy Fajita Party Platter (1)</p>
-                            </div>
-                          </div>
-                          <div class = "col-md-2 order-md-3">
-                            <h5 class="text-success float-right">$100.00</h5>
-                          </div>
-                        </div>
-                      </div>
-
+                    <div class="col-8">
+                      <p>Friday, December 7th, 3:56pm</p>
                     </div>
 
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="ordernumber" tabindex="-1" role="dialog" aria-labelledby="newListingTitle" aria-hidden="true">
-                      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h3 class="modal-title" id="ordernumber">Order Number</h3>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                            <div class="row">
-
-                              <div class="col-4">
-                                <h5>Order Placed on</h5>
-                              </div>
-                              <div class="col-8">
-                                <p>Friday, December 7th, 3:56pm</p>
-                              </div>
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Delivery Time</h6>
+                    </div>
+                    <div class="col-8">
+                      <p>Saturday, December 17th, 4:30pm</p>
+                    </div>
 
 
-                              <div class="col-4">
-                                <h5>Delivery Time</h5>
-                              </div>
-                              <div class="col-8">
-                                <p>Saturday, December 17th, 4:30pm</p>
-                              </div>
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Location</h6>
+                    </div>
+                    <div class="col-8">
+                      <p>CS Tea Room</p>
+                    </div>
 
 
-                              <div class="col-4">
-                                <h5>Location</h5>
-                              </div>
-                              <div class="col-8">
-                                <p>CS Tea Room</p>
-                              </div>
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Restaurant</h6>
+                    </div>
+                    <div class="col-8">
+                      <p>Panera</p>
+                    </div>
+                  </div>
+                </div>
+
+                  <div class="col-2">
+                    <div class="row pr-2">
+                      <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-10">
+                  <h4 class="float-left mt-2" href="#">Order #94050</h4>
+                </div>
+                <div class="col-2">
+                  <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
+                    View order
+                  </button>
+                </div>
+              </div>
+              <div class="card col-md-12 px-3 pt-2 mb-3 border-dark">
+
+                <div class="row">
+                  <div class="col-10">
+                    <div class="row">
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Order Placed on</h6>
+                    </div>
+                    <div class="col-8">
+                      <p>Friday, December 7th, 3:56pm</p>
+                    </div>
 
 
-                              <div class="col-4">
-                                <h5>Restaurant</h5>
-                              </div>
-                              <div class="col-8">
-                                <p>Panera</p>
-                              </div>
-
-                              <div class="col-4">
-                                <h5>Restaurant Phone Number</h5>
-                              </div>
-                              <div class="col-8">
-                                <p>(083)-893-3920</p>
-                              </div>
-
-                              <div class="col-4">
-                                <h5>Restaurant Email</h5>
-                              </div>
-                              <div class="col-8">
-                                <p>hello@panera.com</p>
-                              </div>
-
-                            </div>
-
-                            <div class="row">
-                              <div class="col-4">
-                                <h5>Items Ordered</h5>
-                              </div>
-                              <div class="col-8">
-                              </div>
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Delivery Time</h6>
+                    </div>
+                    <div class="col-8">
+                      <p>Saturday, December 17th, 4:30pm</p>
+                    </div>
 
 
-                              <div class="col-4">
-                                <img class="d-block w-100" src="static/img/panera.jpg"
-                                  alt="First slide">
-                              </div>
-                              <div class="col-6">
-                                <h6>Panera Breakfast Platter</h6>
-                                <p>20 servings</p>
-                                <p><span class="text-black">Quantity: </span> 2 </p>
-                                <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
-                              </div>
-                              <div class="col-2">
-                                <p>$50.00 ea </p>
-                                <p><span class="text-black">Subtotal: </span> $100.00 </p>
-                              </div>
-
-                              <div class="col-4">
-                                <img class="d-block w-100" src="static/img/panera.jpg"
-                                  alt="First slide">
-                              </div>
-                              <div class="col-6">
-                                <h6>Panera Coffee Tray</h6>
-                                <p>20 servings</p>
-                                <p><span class="text-black">Quantity: </span> 3 </p>
-                                <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
-                              </div>
-                              <div class="col-2">
-                                <p>$30.00 ea </p>
-                                <p><span class="text-black">Subtotal: </span> $90.00 </p>
-                              </div>
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Location</h6>
+                    </div>
+                    <div class="col-8">
+                      <p>CS Tea Room</p>
+                    </div>
 
 
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Restaurant</h6>
+                    </div>
+                    <div class="col-8">
+                      <p>Panera</p>
+                    </div>
+                  </div>
+                </div>
 
-                              <div class="col-4">
-                                <img class="d-block w-100" src="static/img/panera.jpg"
-                                  alt="First slide">
-                              </div>
-                              <div class="col-6">
-                                <h6>Panera Bakery Tray</h6>
-                                <p>20 servings</p>
-                                <p><span class="text-black">Quantity: </span> 2 </p>
-                                <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
-                              </div>
-                              <div class="col-2">
-                                <p>$40.00 ea </p>
-                                <p><span class="text-black">Subtotal: </span> $80.00 </p>
-                              </div>
-
-                              <div class="col-10">
-                              </div>
-                              <div class="col-2">
-                                <h6>Total:</h6>
-                                <p>$170.00</p>
-                              </div>
-
-                            </div>
-
-                           <br>
-                          </div>
-                          <div class="modal-footer">
-                            <div class="row">
+                  <div class="col-2">
+                    <div class="row pr-2">
+                      <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
 
-                              <div class="col-6">
-                                <div class="text-center item-right">
-                                  <button class="btn btn-danger">Reject</button>
-                                </div>
-                              </div>
+              <div class="row">
+                <div class="col-10">
+                  <h4 class="float-left mt-2" href="#">Order #94050</h4>
+                </div>
+                <div class="col-2">
+                  <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
+                    View order
+                  </button>
+                </div>
+              </div>
+              <div class="card col-md-12 px-3 pt-2 mb-3 border-dark">
+
+                <div class="row">
+                  <div class="col-10">
+                    <div class="row">
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Order Placed on</h6>
+                    </div>
+                    <div class="col-8">
+                      <p>Friday, December 7th, 3:56pm</p>
+                    </div>
 
 
-                              <div class="col-6">
-                                <div class="text-center item-right">
-                                  <button class="btn btn-success">Approve</button>
-                                </div>
-                              </div>
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Delivery Time</h6>
+                    </div>
+                    <div class="col-8">
+                      <p>Saturday, December 17th, 4:30pm</p>
+                    </div>
 
-                            </div>
-                          </div>
+
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Location</h6>
+                    </div>
+                    <div class="col-8">
+                      <p>CS Tea Room</p>
+                    </div>
+
+
+                    <div class="col-4">
+                      <h6 class="mb-0 mt-1">Restaurant</h6>
+                    </div>
+                    <div class="col-8">
+                      <p>Panera</p>
+                    </div>
+                  </div>
+                </div>
+
+                  <div class="col-2">
+                    <div class="row pr-2">
+                      <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+                </div>
+
+
+                <div class="tab-pane fade show" id="active-orders" role="tabpanel" aria-labelledby="active-orders-tab">
+
+                  <div class="row mt-2">
+                    <div class="col-10">
+                      <h4 class="float-left mt-2" href="#">Order #94050</h4>
+                    </div>
+                    <div class="col-2">
+                      <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
+                        View order
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card col-md-12 px-3 pt-2 mb-3 border-dark">
+
+                    <div class="row">
+                      <div class="col-10">
+                        <div class="row">
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Order Placed on</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>Friday, December 7th, 3:56pm</p>
+                        </div>
+
+
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Delivery Time</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>Saturday, December 17th, 4:30pm</p>
+                        </div>
+
+
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Location</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>CS Tea Room</p>
+                        </div>
+
+
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Restaurant</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>Panera</p>
                         </div>
                       </div>
                     </div>
-                 </div><!--/tab-content-->
 
-             </div><!--/tab-pane-->
+                      <div class="col-2">
+                        <div class="row pr-2">
+                          <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+
+
+                <div class="tab-pane fade show" id="history-orders" role="tabpanel" aria-labelledby="history-orders-tab">
+
+
+                  <div class="row mt-2">
+                    <div class="col-10">
+                      <h4 class="float-left mt-2" href="#">Order #94050</h4>
+                    </div>
+                    <div class="col-2">
+                      <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
+                        View order
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card col-md-12 px-3 pt-2 mb-3 border-dark">
+
+                    <div class="row">
+                      <div class="col-10">
+                        <div class="row">
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Order Placed on</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>Friday, December 7th, 3:56pm</p>
+                        </div>
+
+
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Delivery Time</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>Saturday, December 17th, 4:30pm</p>
+                        </div>
+
+
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Location</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>CS Tea Room</p>
+                        </div>
+
+
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Restaurant</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>Panera</p>
+                        </div>
+                      </div>
+                    </div>
+
+                      <div class="col-2">
+                        <div class="row pr-2">
+                          <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
+                          </div>
+
+                        <div class="row pr-2">
+                          <h6 class="mt-1 mb-0 float-right">Status: <br> Completed</h6>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-10">
+                      <h4 class="float-left mt-2" href="#">Order #94050</h4>
+                    </div>
+                    <div class="col-2">
+                      <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
+                        View order
+                      </button>
+                    </div>
+                  </div>
+                  <div class="card col-md-12 px-3 pt-2 mb-3 border-dark">
+
+                    <div class="row">
+                      <div class="col-10">
+                        <div class="row">
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Order Placed on</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>Friday, December 7th, 3:56pm</p>
+                        </div>
+
+
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Delivery Time</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>Saturday, December 17th, 4:30pm</p>
+                        </div>
+
+
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Location</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>CS Tea Room</p>
+                        </div>
+
+
+                        <div class="col-4">
+                          <h6 class="mb-0 mt-1">Restaurant</h6>
+                        </div>
+                        <div class="col-8">
+                          <p>Panera</p>
+                        </div>
+                      </div>
+                    </div>
+
+                      <div class="col-2">
+                        <div class="row pr-2">
+                          <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
+                        </div>
+
+                        <div class="row pr-2">
+                          <h6 class="mt-1 mb-0 float-right">Status: <br> Denied by Restaurant</h6>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+
+                </div>
+
+
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="ordernumber" tabindex="-1" role="dialog" aria-labelledby="newListingTitle" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h3 class="modal-title" id="ordernumber">Order Number</h3>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+
+                          <div class="col-4">
+                            <h6 class="mb-0 mt-1">Order Placed on</h6>
+                          </div>
+                          <div class="col-8">
+                            <p>Friday, December 7th, 3:56pm</p>
+                          </div>
+
+
+                          <div class="col-4">
+                            <h6 class="mb-0 mt-1">Delivery Time</h6>
+                          </div>
+                          <div class="col-8">
+                            <p>Saturday, December 17th, 4:30pm</p>
+                          </div>
+
+
+                          <div class="col-4">
+                            <h6 class="mb-0 mt-1">Location</h6>
+                          </div>
+                          <div class="col-8">
+                            <p>CS Tea Room</p>
+                          </div>
+
+
+                          <div class="col-4">
+                            <h6 class="mb-0 mt-1">Restaurant</h6>
+                          </div>
+                          <div class="col-8">
+                            <p>Panera</p>
+                          </div>
+
+                          <div class="col-4">
+                            <h6 class="mb-0 mt-1">Restaurant Phone Number</h6>
+                          </div>
+                          <div class="col-8">
+                            <p>(083)-893-3920</p>
+                          </div>
+
+                          <div class="col-4">
+                            <h6 class="mb-0 mt-1">Restaurant Email</h6>
+                          </div>
+                          <div class="col-8">
+                            <p>hello@panera.com</p>
+                          </div>
+
+                        </div>
+
+                        <div class="row">
+                          <div class="col-4">
+                            <h6 class="mb-0 mt-1">Items Ordered</h6>
+                          </div>
+                          <div class="col-8">
+                          </div>
+
+
+                          <div class="col-4">
+                            <img class="d-block w-100" src="static/img/panera.jpg"
+                              alt="First slide">
+                          </div>
+                          <div class="col-6">
+                            <h6 class="mb-0 mt-1">Panera Breakfast Platter</h6>
+                            <p>20 servings</p>
+                            <p><span class="text-black">Quantity: </span> 2 </p>
+                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
+                          </div>
+                          <div class="col-2">
+                            <p>$50.00 ea </p>
+                            <p><span class="text-black">Subtotal: </span> $100.00 </p>
+                          </div>
+
+                          <div class="col-4">
+                            <img class="d-block w-100" src="static/img/panera.jpg"
+                              alt="First slide">
+                          </div>
+                          <div class="col-6">
+                            <h6 class="mb-0 mt-1">Panera Coffee Tray</h6>
+                            <p>20 servings</p>
+                            <p><span class="text-black">Quantity: </span> 3 </p>
+                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
+                          </div>
+                          <div class="col-2">
+                            <p>$30.00 ea </p>
+                            <p><span class="text-black">Subtotal: </span> $90.00 </p>
+                          </div>
+
+
+
+                          <div class="col-4">
+                            <img class="d-block w-100" src="static/img/panera.jpg"
+                              alt="First slide">
+                          </div>
+                          <div class="col-6">
+                            <h6 class="mb-0 mt-1">Panera Bakery Tray</h6>
+                            <p>20 servings</p>
+                            <p><span class="text-black">Quantity: </span> 2 </p>
+                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
+                          </div>
+                          <div class="col-2">
+                            <p>$40.00 ea </p>
+                            <p><span class="text-black">Subtotal: </span> $80.00 </p>
+                          </div>
+
+                          <div class="col-10">
+                          </div>
+                          <div class="col-2">
+                            <h6 class="mb-0 mt-1">Total:</h6>
+                            <p>$170.00</p>
+                          </div>
+
+                        </div>
+
+                       <br>
+                      </div>
+                      <div class="modal-footer">
+                        <div class="row">
+
+                          <div class="col-12">
+                            <div class="text-center item-right">
+                              <button class="btn btn-info" href="mailto:tigermealsdelivery@gmail.com">Contact Restaurant</button>
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+             </div><!--/tab-content-->
+
+         </div><!--/tab-pane-->
 
 
         </div><!--/row-->
