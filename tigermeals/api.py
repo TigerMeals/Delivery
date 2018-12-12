@@ -107,6 +107,31 @@ def user_login():
 
 	return user_schema.jsonify(user)
 
+#Endpoint to update the user account stuff
+@app.route("/user/account/update/<user_id>", methods=['PUT'])
+def user_account_update(user_id):
+	user = User.query.get(user_id)
+	firstName = request.json['first']
+	lastName = request.json['last']
+	user.phone = request.json['phone']
+	user.address = request.json['address']
+	user.allergies = request.json['allergies']
+
+	name = firstName + " " + lastName
+
+	user.name = name
+
+	db.session.commit()
+
+	return user_schema.jsonify(user)
+
+# Endpoint to get the quick stats of the users
+@app.route("/user/quickstats/<user_id>", methods=["GET"])
+def user_get_orderlength(user_id):
+	orders = Order.query.filter_by(user_id=user_id, ordered=True).all()
+
+	return orders_schema.jsonify(orders)
+
 # Endpoint to delete user
 @app.route("/user/<user_id>", methods = ["DELETE"])
 def user_delete(user_id):

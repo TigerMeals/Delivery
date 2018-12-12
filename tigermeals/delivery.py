@@ -257,25 +257,73 @@ def account():
 
     print("Alleriges: ----------------------------------------------")
 
-    # allergies = allergies.split(',')
+    ## Get the quickstats of the past orders
+    quick_url = DATABASE_URL + "/user/quickstats/" + str(user_id)
+    fetch_req = requests.get(quick_url).json()
 
-    # allergyTemp = []
-    # for allergy in allergies:
-    #     allergyTemp.append(allergy.strip())
+    length_past_orders = len(fetch_req)
 
-    # allergies = allergyTemp
+    past_restaurants = []
 
-    print(allergies)
+    for order in fetch_req:
+        if order['restaurant_id'] not in past_restaurants:
+            past_restaurants.append(order['restaurant_id'])
+        print("DONE -------------------------------------------------------")
 
+    number_different_rest = len(past_restaurants)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
     return render_template('account.tpl', name=name.split(), email=email,\
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
-        food_quantity_feds=food_quantity_feds, food_images=food_images,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
+        food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
+
+
+
+@app.route("/account/update", methods=["POST"])
+@login_required
+def account_update():
+    print("ACCOUNT UPDATING ----------------------------------------")
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    firstName = request.form['p_first_name']
+    lastName = request.form['p_last_name']
+
+    phone = request.form['p_phone']
+    address = request.form['p_address']
+
+    allergies = request.form['p_allergies']
+
+    update_url = DATABASE_URL + "/user/account/update/" + str(user_id)
+
+    json = {
+        "first": firstName,
+        "last": lastName,
+        "phone": phone,
+        "address": address,
+        "allergies": allergies
+    }
+
+    requests.put(update_url, json=json)
+
+    return redirect(url_for('account'))
+
 
     # food = _getJSON(DATABASE_URL + "/food/" + str(food_id))
     # print food
