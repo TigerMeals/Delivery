@@ -1,1 +1,1 @@
-web: ./runserver
+web: ./runserver $PORT
