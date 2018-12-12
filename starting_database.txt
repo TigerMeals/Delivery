@@ -12,7 +12,15 @@
     "restaurant_id": 1,
     "servingSize": 150,
     "website": "kungfutea.com",
-    "password": "extremepanda"
+    "password": "extremepanda",
+    "primaryFirstName": "PrimKung",
+    "primaryLastName": "PrimFu",
+    "primaryEmail": "PrimEm",
+    "primaryPhone": "PrimPh",
+    "secondaryFirstName": "",
+    "secondaryLastName": "",
+    "secondaryEmail": "",
+    "secondaryPhone": ""
 }
 
 {
@@ -27,7 +35,15 @@
     "restaurant_id": 2,
     "servingSize": 100,
     "website": "tacoria.com",
-    "password": "extremetaco" 
+    "password": "extremetaco",
+    "primaryFirstName": "PrimTaco",
+    "primaryLastName": "PrimRia",
+    "primaryEmail": "PrimEm",
+    "primaryPhone": "PrimPh",
+    "secondaryFirstName": "",
+    "secondaryLastName": "",
+    "secondaryEmail": "",
+    "secondaryPhone": ""
 }
 
 ####### USERS ####################################################
