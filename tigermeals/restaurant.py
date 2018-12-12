@@ -345,7 +345,7 @@ def add_listing():
 
     add_food_url = DATABASE_URL + "/food"
     allergens = ""
-    for checkbox in range(1, 5):
+    for checkbox in range(1, 10):
         value = request.form.get('allergens' + str(checkbox))
         if value:
             allergens += value + ","
@@ -412,7 +412,7 @@ def update_listing():
     food_id = str(request.form.get("food_id"))
     add_food_url = DATABASE_URL + "/food/" + food_id
     allergens = ""
-    for checkbox in range(1, 5):
+    for checkbox in range(1, 10):
         value = request.form.get('allergens' + str(checkbox))
         if value:
             allergens += value + ","

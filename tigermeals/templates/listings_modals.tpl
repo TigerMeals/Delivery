@@ -55,35 +55,80 @@
                          </div>
                          <div class="form-group col-12">
                            <!-- Checkbox Group !-->
-                           <input type="hidden" name="food_id" value="{{listing.food_id}}">
+                          <input type="hidden" name="food_id" value="{{listing.food_id}}">
                            <label class="control-label">Dietary Restrictions</label>
                            <div class="row">
-                             <div class="col-4">
+                             <div class="col-6 col-lg-4">
                                <div class="checkbox">
                                  <label>
-                                 <input type="checkbox" name="allergens1" value="Contains dairy">
-                                 Contains dairy
-                                 </label>
-                               </div>
-                               <div class="checkbox">
-                                 <label>
-                                 <input type="checkbox"  name="allergens2" value="Contains meat">
-                                 Contains meat
+                                   <input type="checkbox" name="allergens1" value="Contains dairy">
+                                   Contains dairy
                                  </label>
                                </div>
                              </div>
-                             <div class="col-4">
+                             <div class="col-6 col-lg-4">
                                <div class="checkbox">
                                  <label>
-                                 <input type="checkbox"  name="allergens3" value="Contains eggs">
-                                 Contains eggs
+                                   <input type="checkbox"  name="allergens2" value="Contains meat">
+                                   Contains meat
                                  </label>
                                </div>
+                             </div>
+                             <div class="col-6 col-lg-4">
                                <div class="checkbox">
-                               <label>
-                               <input type="checkbox"  name="allergens4" value="Kosher">
-                               Kosher
-                               </label>
+                                 <label>
+                                   <input type="checkbox"  name="allergens3" value="Contains eggs">
+                                   Contains eggs
+                                 </label>
+                               </div>
+                             </div>
+
+                             <div class="col-6 col-lg-4">
+                               <div class="checkbox">
+                                 <label>
+                                   <input type="checkbox"  name="allergens4" value="Kosher">
+                                   Kosher
+                                 </label>
+                               </div>
+                             </div>
+                             <div class="col-6 col-lg-4">
+                               <div class="checkbox">
+                                 <label>
+                                   <input type="checkbox"  name="allergens5" value="Vegan">
+                                   Vegan
+                                 </label>
+                               </div>
+                             </div>
+                             <div class="col-6 col-lg-4">
+                               <div class="checkbox">
+                                 <label>
+                                   <input type="checkbox"  name="allergens6" value="Vegetarian">
+                                   Vegetarian
+                                 </label>
+                               </div>
+                             </div>
+                             <div class="col-6 col-lg-4">
+                               <div class="checkbox">
+                                 <label>
+                                   <input type="checkbox"  name="allergens7" value="Dairy free">
+                                   Dairy free
+                                 </label>
+                               </div>
+                             </div>
+                             <div class="col-6 col-lg-4">
+                               <div class="checkbox">
+                                 <label>
+                                   <input type="checkbox"  name="allergens8" value="Nut free">
+                                   Nut free
+                                 </label>
+                               </div>
+                             </div>
+                             <div class="col-6 col-lg-4">
+                               <div class="checkbox">
+                                 <label>
+                                   <input type="checkbox"  name="allergens9" value="Gluten free">
+                                   Gluten free
+                                 </label>
                                </div>
                              </div>
                            </div>

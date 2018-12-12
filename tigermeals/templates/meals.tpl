@@ -190,6 +190,26 @@
                         <label class="form-check-label" for="Kosher">
                           Kosher
                         </label> <br>
+                        <input class="form-check-input" type="checkbox" value="" name="Vegan" id="Vegan">
+                        <label class="form-check-label" for="Vegan">
+                          Vegan
+                        </label> <br>
+                        <input class="form-check-input" type="checkbox" value="" name="Vegetarian" id="Vegetarian">
+                        <label class="form-check-label" for="Vegetarian">
+                          Vegetarian
+                        </label> <br>
+                        <input class="form-check-input" type="checkbox" value="" name="Dairy free" id="Dairy free">
+                        <label class="form-check-label" for="Dairy free">
+                          Dairy free
+                        </label> <br>
+                        <input class="form-check-input" type="checkbox" value="" name="Nut free" id="Nut free">
+                        <label class="form-check-label" for="Nut free">
+                          Nut free
+                        </label> <br>
+                        <input class="form-check-input" type="checkbox" value="" name="Gluten free" id="Gluten free">
+                        <label class="form-check-label" for="Gluten free">
+                          Gluten free
+                        </label> <br>
                       </div>
                   </div>
                 </div>
