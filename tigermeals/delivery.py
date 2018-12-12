@@ -524,7 +524,7 @@ def meals():
     r = make_response(render_template('meals.tpl', meals=meals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], checkboxes=[]))
+        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], sort_type="popular"))
 
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"
@@ -744,33 +744,34 @@ def filter():
     if request.method=="GET":
         return redirect('/meals')
     current_filters = []
-    checkboxes = []
     # Get restaurant ids for selected restaurants
     restaurantsIds = []
     for checkbox in request.form:
         if checkbox == "sort":
             continue
-        checkboxes.append(checkbox)
         if "restaurant" in checkbox:
             restaurantsIds.append(checkbox.split("restaurant_")[1].split("_")[1])
-            current_filters.append(checkbox.split("restaurant_")[1].split("_")[0])
+            current_filters.append({
+            "filter": checkbox.split("restaurant_")[1].split("_")[0],
+            "checkbox": checkbox
+            })
     cuisines = []
     for cuisine in ["Asian", "American", "Drinks", "Healthy"]:
         if request.form.get(cuisine) is not None:
             cuisines.append(cuisine)
-            current_filters.append(cuisine)
+            current_filters.append({"filter": cuisine, "checkbox": cuisine})
 
     allergies = []
     for allergy in ["Contains dairy", "Contains meat", "Contains eggs", "Kosher"]:
         if request.form.get(allergy) is not None:
             allergies.append(allergy)
-            current_filters.append(allergy)
+            current_filters.append({"filter": allergy, "checkbox": allergy})
 
     servings = []
     for serving in ["0-25", "25-50", "50-75", "75-100", "100-1000"]:
         if request.form.get(serving) is not None:
             servings.append(serving)
-            current_filters.append(servings)
+            current_filters.append({"filter": serving, "checkbox": serving})
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -821,4 +822,4 @@ def filter():
     return render_template('meals.tpl', meals=meals, \
         id=user_id, food_prices = food_prices, food_ids=food_ids,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, checkboxes=checkboxes)
+        length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, sort_type=request.form.get('sort'))

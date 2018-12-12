@@ -115,14 +115,14 @@
 
             <h1 class="catering-header">Catering Packages</h1>
             <h4>Current filters</h4>
-            <div class="row">
             {% for f in current_filters %}
+            <div class="row">
               <div class="col-4">
-                <button class="btn btn-link no-pad" type="button"> {{f}} <span aria-hidden="true">&times;</span>
+                <button class="btn btn-link no-pad" onclick="remove_filter('{{f.checkbox}}')"> {{f.filter}} <span aria-hidden="true">&times;</span>
                 </button>
               </div>
-            {% endfor %}
             </div>
+            {% endfor %}
 
             <br>
 
@@ -271,7 +271,7 @@
                 <div class="card-header border-white bg-transparent" id="headingFive">
                   <h5 class="mb-0">
                     <div class="float-right">
-                    <input class="btn-sm btn-primary" type="submit" value="Apply Filters" onclick="filter_submit('popular')">
+                    <input class="btn-sm btn-primary" type="submit" value="Apply Filters" onclick="filter_submit()">
                   </div>
                   </h5>
                 </div>
@@ -373,11 +373,25 @@
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
-    {% for c in checkboxes %}
-      document.getElementById('{{c}}').checked = true;
+    {% for c in current_filters %}
+      document.getElementById('{{c.checkbox}}').checked = true;
     {% endfor %}
+
     function filter_submit(sort_type) {
-      document.getElementById("sort").value = sort_type;
+      // Keep sorting consistent across multiple filters unless user requests
+      // to change it
+      if (sort_type == null) {
+        document.getElementById("sort").value = "{{sort_type}}";
+      }
+      else {
+        document.getElementById("sort").value = sort_type;
+      }
+      document.getElementById("filter").submit();
+    }
+
+    function remove_filter(checkbox) {
+      document.getElementById(checkbox).checked = false;
+      document.getElementById("sort").value = "{{sort_type}}";
       document.getElementById("filter").submit();
     }
 
