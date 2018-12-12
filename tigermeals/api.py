@@ -401,11 +401,10 @@ def food_update(food_id):
 	return food_schema.jsonify(food)
 
 # Endpoint that sorts by price
-# Expects following in json dict: restaurants: list of restaurant ids, cuisines: list of desired cuisines, allergies: list of dietary restrictions, servings: list of serving ranges, sort: type of sort desired (popular, servings, price_low_to_high, price_high_to_low, or recent).
+# Expects following in json dict: restaurants: list of restaurant ids, allergies: list of dietary restrictions, servings: list of serving ranges, sort: type of sort desired (popular, servings, price_low_to_high, price_high_to_low, or recent).
 @app.route('/food/filter', methods = ['POST'])
 def food_filter():
 	restaurants = request.json['restaurants']
-	cuisines = request.json['cuisines']
 	# Current allergies that are options are 'Contains dairy', 'Contains meat', 'Contains eggs', 'Kosher'
 	allergies = request.json['allergies']
 
@@ -421,8 +420,6 @@ def food_filter():
 	food = Food.query
 	if restaurants is not []:
 		food = food.filter(or_(Food.restaurant_id == v for v in restaurants))
-	if cuisines is not []:
-		food = food.filter(or_(Food.cuisine == c for c in cuisines))
 	if allergies is not []:
 		food = food.filter(or_(Food.allergies.contains(a) for a in allergies))
 	if ranges is not []:

@@ -161,40 +161,6 @@
                   </div>
                 </div>
                 <div class="card border-light bg-transparent">
-                  <div class="card-header bg-transparent" id="headingTwo">
-                    <h5 class="mb-0">
-                      <button class="btn btn-link no-pad float-left" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                        <div class="col-sm pl-0 float-left">Cuisine </div>
-                      </button>
-                      <button class="btn btn-link no-pad float-right" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-                      <div class="col-sm pr-0 float-right"><i class="fas fa-plus"></i></div>
-                    </button>
-                    </h5>
-                  </div>
-                  <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-                    <div class="card-body">
-                      <div class="form-check">
-                        <input class="form-check-input" type="checkbox" value="" name="Asian" id="Asian">
-                        <label class="form-check-label" for="Asian">
-                          Asian
-                        </label> <br>
-                        <input class="form-check-input" type="checkbox" value="" name="American" id="American">
-                        <label class="form-check-label" for="American">
-                          American
-                        </label> <br>
-                        <input class="form-check-input" type="checkbox" name="Drinks" value="" id="Drinks">
-                        <label class="form-check-label" for="Drinks">
-                          Drinks
-                        </label> <br>
-                        <input class="form-check-input" type="checkbox" name="Healthy" value="" id="Healthy">
-                        <label class="form-check-label" for="Healthy">
-                          Healthy
-                        </label> <br>
-                      </div>
-                  </div>
-                </div>
-                </div>
-                <div class="card border-light bg-transparent">
                   <div class="card-header bg-transparent" id="headingThree">
                     <h5 class="mb-0">
                       <button class="btn btn-link no-pad float-left" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">

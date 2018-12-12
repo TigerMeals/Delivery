@@ -755,11 +755,6 @@ def filter():
             "filter": checkbox.split("restaurant_")[1].split("_")[0],
             "checkbox": checkbox
             })
-    cuisines = []
-    for cuisine in ["Asian", "American", "Drinks", "Healthy"]:
-        if request.form.get(cuisine) is not None:
-            cuisines.append(cuisine)
-            current_filters.append({"filter": cuisine, "checkbox": cuisine})
 
     allergies = []
     for allergy in ["Contains dairy", "Contains meat", "Contains eggs", "Kosher"]:
@@ -790,7 +785,6 @@ def filter():
     filter_url = DATABASE_URL + "/food/filter"
     filterParams = {
     "restaurants": restaurantsIds,
-    "cuisines": cuisines,
     "allergies": allergies,
     "servings": servings,
     "sort": request.form.get('sort')
