@@ -8,6 +8,11 @@ import string
 import random
 import os
 from tigermeals import app
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import cloudinary.utils
+import stripe
 
 app.config["DEBUG"] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -17,6 +22,12 @@ app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'tigermealsdelivery@gmail.com'
 app.config['MAIL_PASSWORD'] = 'aksnpqtutouldhna'
 mail = Mail(app)
+
+cloudinary.config(
+    cloud_name = "djclzxoun",
+    api_key = "593593232441758",
+    api_secret = "gQUTMItrljBmcZ2Po8cbVvEFJvU"
+)
 
 # DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
 DATABASE_URL="http://localhost:5000"
@@ -463,12 +474,22 @@ def add_listing():
         if img != None:
             # Create unique url of restaurant id + food title
             # Since this is a new food item it does not yet have an ID
-            img_url = '/static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
-            img.save('tigermeals/' + img_url)
-            updateImage = {"image": img_url}
+            """print(img)
+            print(img.filename)
+            print(img.stream)
+            print(type(img))"""
+            
+            #img_url = '/static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
+            #img.save('tigermeals/' + img_url)
+            #updateImage = {"image": img_url}
+            response = cloudinary.uploader.upload(img)
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], height=200)
+            #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
+            updateImage = {"image": imgurl}
+            print(updateImage)
             update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
             requests.post(update_image_url, json=updateImage)
-
+            
     return redirect('/listings')
 
 # Endpoint to update a new restaurant listing.
@@ -520,9 +541,16 @@ def update_listing():
         img = request.files['image']
         if img != None:
             # Img url is unique name based on the food id
-            img_url = '/static/img/' + food_id + '.jpg'
-            img.save('tigermeals' + img_url)
-            updatedEntry["image"] = img_url
+            response = cloudinary.uploader.upload(img)
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], height=200)
+            #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
+            updateImage = {"image": imgurl}
+            print(updateImage)
+            #update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
+            #requests.post(update_image_url, json=updateImage)
+            #img_url = '/static/img/' + food_id + '.jpg'
+            #img.save('tigermeals' + img_url)
+            updatedEntry["image"] = imgurl
 
     res = requests.put(add_food_url, json = updatedEntry)
     print (updatedEntry)
@@ -632,6 +660,7 @@ def order_approve_rest():
 
     order_id = request.form.get('order_id')
     approve_order_url = DATABASE_URL + "/order/approval/" + order_id
+
     res = requests.post(approve_order_url)
     if not res.ok:
         res.raise_for_status()
@@ -651,6 +680,32 @@ def order_approve_rest():
     recipients=[json.loads(res.content)['email']],
     html=user_approved_html())
 
+    res = requests.get(DATABASE_URL + "/order/" + str(order_id))
+    if not res.ok:
+        res.raise_for_status()
+        return None
+
+    tokenInfo = json.loads(res.content)
+
+    email = tokenInfo['email']
+    stripeToken = tokenInfo['stripeToken']
+    amount = tokenInfo['amount']
+
+    try: 
+        customer = stripe.Customer.create(
+            email=email,
+            source=stripeToken
+        )
+
+        charge = stripe.Charge.create(
+            customer=customer.id,
+            amount=int(amount),
+            currency='usd',
+            description='Catering Payment'
+        )
+
+    except stripe.error.CardError as e:
+        print("error")
     return redirect('/orders')
 
 # Endpoint to mark an order as delivered.
