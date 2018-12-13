@@ -197,7 +197,7 @@
                           <div class="form-group col-12">
 
                               <div class="col-12">
-                                <a class="btn btn-info" href="#">View my profile as a consumer</a>
+                                <a class="btn btn-info" href="/view">View my profile as a consumer</a>
                               </div>
                           </div>
                         </div>
