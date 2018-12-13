@@ -187,51 +187,80 @@
             <h4 class="mb-3">Payment</h4>
 
             <div class="d-block my-3">
-              <div class="custom-control custom-radio">
-                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" checked required>
-                <label class="custom-control-label" for="credit">Credit card</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
-                <label class="custom-control-label" for="debit">Debit card</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
-                <label class="custom-control-label" for="paypal">Paypal</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
-                <label class="custom-control-label" for="cash">Cash</label>
-                <!--<div class="text-success" id="ifYes" style="visibility:hidden">
-                  Great! Press Checkout to complete your order
-                </div>-->
-                <div class="text-success" id="ifYes" style="visibility:hidden">
-                  
+
+              <script>
+                function show_form(paymentMethod){
+                  document.getElementsByClassName('payment_form').style.display ='none'; //Hide forms
+                  document.getElementById(paymentMethod).style.display='block'; //Show desired form
+                  return true;
+                }
+              </script>
+              <form>
+
+                  <select id="selectC">
+                      <option onclick="javascript:show_form('cash')">Credit Card</option>
+                      <option onclick="javascript:show_form('debit')">Debit Card </option>
+                      <option onclick="javascript:show_form('cash')">Cash</option>
+                  </select>
+
+                  <div class="payment_form" id="cash">
+                      Form for Cash
+                  </div>
+                  <div class="payment_form" id="credit">
+                      Form for Credit
+                  </div>
+                  <div class="payment_form" id="debit">
+                      Form for Debit.
+                  </div>
+
+              </form>
+
+              <form id="paymentForm">
+                <div class="custom-control custom-radio">
+                  <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" checked required>
+                  <label class="custom-control-label" for="credit">Credit card</label>
                 </div>
+                <div class="custom-control custom-radio">
+                  <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
+                  <label class="custom-control-label" for="debit">Debit card</label>
+                </div>
+                <div class="custom-control custom-radio">
+                  <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
+                  <label class="custom-control-label" for="cash">Cash</label>
+                </div>
+                  <script>
+                    function yesCash() {
+                      var cashPayment = false;
+                      var paymentButtonVisible = false;
+                      if (document.getElementById('cash').checked) {
+                        cashPayment = true;
+                        // document.getElementById('billing_info').style.visibility ='visible';
+                        // document.getElementById('checkout_button').style.visibility ='visible';
+                      }
+                      // else {
+                      //   document.getElementById('billing_info').style.visibility ='hidden';
+                      //   document.getElementById('checkout_button').style.visibility ='hidden';
+                      //
+                      // }
+                      if (document.getElementById('credit').checked || document.getElementById('debit').checked){
+                        paymentButtonVisible = true;
+                        // document.getElementById('payment_button').style.visibility = 'visible';
+                      }
+                      // else{
+                      //   document.getElementById('payment_button').style.visibility = 'hidden';
+                      // }
+                    }
+                  </script>
+                </form>
                 <script>
-                  function yesCash() {
-                    if (document.getElementById('cash').checked) {
-                      document.getElementById('billing_info').style.visibility ='visible';
-                      document.getElementById('checkout_button').style.visibility ='visible';
-                    }
-                    else {
-                      document.getElementById('billing_info').style.visibility ='hidden';
-                      document.getElementById('checkout_button').style.visibility ='hidden';
-                    } 
-                    if (document.getElementById('credit').checked || document.getElementById('debit').checked){
-                      document.getElementById('payment_button').style.visibility = 'visible';
-                    }
-                    else{
-                      document.getElementById('payment_button').style.visibility = 'hidden';
-                    }
-                  }
+
                 </script>
-              </div>
+
         </div>
-          
-        
-      <div class="col-md-8 order-md-1" id = "payment_button" style="visibility:visible" >
-            <form action="/charge" id = "stripe_payment_button" method="post" class="needs-validation" novalidate>
+
+      {% if paymentButtonVisible %}
+      <div class="col-md-8 order-md-1" id="payment_button">
+            <form action="/charge" id="stripe_payment_button" method="post" class="needs-validation" novalidate>
 
                 <article>
                   <label>
@@ -251,10 +280,12 @@
                 <input type="time" class="form-control" id="timeCard" name="timeCard" value="12:00" required>
                 <div class="invalid-feedback">
                   Please enter a valid time.
-                </div> 
-              </div>   
-              <p>{{error}}</p>        
-               <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                </div>
+              </div>
+              {% if error != '' %}
+              <p>{{error}}</p>
+              {% endif %}
+               <script src="https://checkout.stripe.com/checkout.js" class="stripe-button btn-info"
                         data-key={{key}}
                         data-amount=String({{total}} * 100)
                         data-description="Catering Payment"
@@ -262,53 +293,18 @@
                         data-shipping-address = "true"
                         data-zip-code="true"
                         data-name="TigerMeals Checkout"
-                        data-locale="auto">      
-                </script> 
-
-
-                <!--<p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" style="visibility:visible">Checkout with Card</button></p> -->
-                <!--<script src="https://checkout.stripe.com/checkout.js"></script>
-
-                    <button id="customButton" type = "submit" style = "visibility:visible">Purchase</button>
-
-                    <script>
-                    var handler = StripeCheckout.configure({
-                      key: 'pk_test_TYooMQauvdEDq54NiTphI7jx',
-                      image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
-                      locale: 'auto',
-                      token: function(token) {
-                        // You can access the token ID with `token.id`.
-                        // Get the token ID to your server-side code for use.
-                      }
-                    });
-
-                    document.getElementById('customButton').addEventListener('click', function(e) {
-                      // Open Checkout with further options:
-                      handler.open({
-                        name: 'Stripe.com',
-                        description: '2 widgets',
-                        zipCode: true,
-                        shippingAddress: true,
-                        amount: {{total}} * 100
-                      });
-                      e.preventDefault();
-                    });
-
-                    // Close Checkout on page navigation:
-                    window.addEventListener('popstate', function() {
-                      handler.close();
-                    });
-                    </script> -->
+                        data-locale="auto">
+                </script>
                 </form>
-                
-
-          
         </div>
+        {% endif %}
+
         <br>
         <br>
         <br>
-        <div class="col-md-8 order-md-1" id = "billing_info" style="visibility:hidden" >
-          
+        {% if cashPayment %}
+        <div class="col-md-8 order-md-1" id="billing_info">
+
           <form id="checkout_form" action="/ordered?id={{user_id}}" method="POST" class="needs-validation" novalidate>
             <h4 class="mb-3">Cash Payment: Please complete this form</h4>
             <h5 class="mb-3">Shipping Address</h5>
@@ -384,16 +380,14 @@
             </div>
           </form>
         </div>
-
-
-
           <hr class="mb-4">
-          </form>
-          <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" style="visibility:hidden" form="checkout_form">Continue to checkout</button></p>
+          <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" form="checkout_form">Continue to checkout</button></p>
+        {% endif %}
+
         </div>
       </div>
     </div>
-    
+
     <!-- Footer -->
 
     <footer class="py-4 red-bar">

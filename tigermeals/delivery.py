@@ -811,7 +811,7 @@ def charge():
 
     amount = int(total * 100)
 
-    
+
     order_ordered_url = DATABASE_URL + "/order/addToken/" + str(order_id) + "/" + str(request.form['stripeToken']) + "/" + str(amount)
     #user_id = 1
     # Amount in cents
