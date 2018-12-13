@@ -624,7 +624,7 @@ def add_listing():
             #img.save('tigermeals/' + img_url)
             #updateImage = {"image": img_url}
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], height=200)
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width=200, height=200, crop = "fit")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             print(updateImage)
@@ -636,70 +636,70 @@ def add_listing():
 # Endpoint to update a new restaurant listing.
 @app.route("/listings/update", methods=["POST"])
 def update_listing():
-	if 'username' not in session:
-		print("Login screen -----------------------------------")
-		return render_template('login_restaurant.tpl')
 
-	username = session['username']
+    if 'username' not in session:
+        print("Login screen -----------------------------------")
+        return render_template('login_restaurant.tpl')
 
-	restaurant_info_url = DATABASE_URL + "/restaurant/email"
+    username = session['username']
 
-	email = {
-		"email": str(username)
-	}
+    restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
-	res = requests.post(restaurant_info_url, json = email)
-	if not res.ok:
-		res.raise_for_status()
+    email = {
+        "email": str(username)
+    }
 
-	restaurant_info = json.loads(res.content)
-	id = restaurant_info['restaurant_id']
+    res = requests.post(restaurant_info_url, json = email)
+    if not res.ok:
+        res.raise_for_status()
+
+    restaurant_info = json.loads(res.content)
+    id = restaurant_info['restaurant_id']
 
 
-	food_id = str(request.form.get("food_id"))
-	add_food_url = DATABASE_URL + "/food/" + food_id
-	allergens = ""
-	for checkbox in range(1, 10):
-		value = request.form.get('allergens' + str(checkbox))
-		if value:
-			allergens += value + ","
+    food_id = str(request.form.get("food_id"))
+    add_food_url = DATABASE_URL + "/food/" + food_id
+    allergens = ""
+    for checkbox in range(1, 10):
+        value = request.form.get('allergens' + str(checkbox))
+        if value:
+            allergens += value + ","
 
-	if (len(allergens) > 0):
-		# allergens ends with a comma if there is at least one value appended, remove it
-		allergens = allergens[:-1]
+    if (len(allergens) > 0):
+        # allergens ends with a comma if there is at least one value appended, remove it
+        allergens = allergens[:-1]
 
-	updatedEntry = {
-		"title": request.form.get('title'),
-		"description": request.form.get('description'),
-		"quantity_fed": request.form.get('quantity'),
-		"price": request.form.get('price'),
-		"allergies": allergens,
-		}
+    updatedEntry = {
+        "title": request.form.get('title'),
+        "description": request.form.get('description'),
+        "quantity_fed": request.form.get('quantity'),
+        "price": request.form.get('price'),
+        "allergies": allergens,
+        }
 
-	# Replace default image with uploaded image if it exists
-	# TODO: Replace with image upload to remote server
-	if 'image' in request.files:
-		img = request.files['image']
-		if img != None:
-			# Img url is unique name based on the food id
-			response = cloudinary.uploader.upload(img)
-			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], height=200)
-			#updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
-			updateImage = {"image": imgurl}
-			print(updateImage)
-			#update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
-			#requests.post(update_image_url, json=updateImage)
-			#img_url = '/static/img/' + food_id + '.jpg'
-			#img.save('tigermeals' + img_url)
-			updatedEntry["image"] = imgurl
+    # Replace default image with uploaded image if it exists
+    # TODO: Replace with image upload to remote server
+    if 'image' in request.files:
+        img = request.files['image']
+        if img != None:
+            # Img url is unique name based on the food id
+            response = cloudinary.uploader.upload(img)
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width=200, height=200, crop = "fit")
+            #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
+            updateImage = {"image": imgurl}
+            print(updateImage)
+            #update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
+            #requests.post(update_image_url, json=updateImage)
+            #img_url = '/static/img/' + food_id + '.jpg'
+            #img.save('tigermeals' + img_url)
+            updatedEntry["image"] = imgurl
 
-	res = requests.put(add_food_url, json = updatedEntry)
-	print (updatedEntry)
-	if not res.ok:
-		res.raise_for_status()
+    res = requests.put(add_food_url, json = updatedEntry)
+    print (updatedEntry)
+    if not res.ok:
+        res.raise_for_status()
 
-	return redirect('/listings')
-
+    return redirect('/listings')
 
 # Endpoint to make a restaurant listing active or inactive.
 @app.route("/toggle/active", methods=["POST"])
@@ -832,21 +832,23 @@ def order_approve_rest():
     stripeToken = tokenInfo['stripeToken']
     amount = tokenInfo['amount']
 
-    try:
-        customer = stripe.Customer.create(
-            email=email,
-            source=stripeToken
-        )
 
-        charge = stripe.Charge.create(
-            customer=customer.id,
-            amount=int(amount),
-            currency='usd',
-            description='Catering Payment'
-        )
+    if stripeToken is not None and stipeToken != "":
+        try: 
+            customer = stripe.Customer.create(
+                email=email,
+                source=stripeToken
+            )
 
-    except stripe.error.CardError as e:
-        print("error")
+            charge = stripe.Charge.create(
+                customer=customer.id,
+                amount=int(amount),
+                currency='usd',
+                description='Catering Payment'
+            )
+
+        except stripe.error.CardError as e:
+            print("error")
     return redirect('/orders')
 
 # Endpoint to mark an order as delivered.
