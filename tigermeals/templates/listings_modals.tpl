@@ -162,3 +162,12 @@
               </div>
             </div>
           </div>
+
+          <script>
+          var elements = document.getElementById('update_entry{{listing.food_id}}').elements;
+          for (var i = 0; i < elements.length; i++) {
+            if({{listing.allergies}}.includes(elements[i].value)) {
+              elements[i].checked = true;
+            }
+          }
+          </script>
