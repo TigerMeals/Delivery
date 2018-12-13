@@ -398,7 +398,7 @@ def add_listing():
             #img.save('tigermeals/' + img_url)
             #updateImage = {"image": img_url}
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], height=200)
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width=200, height=200, crop = "fit")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             print(updateImage)
@@ -457,7 +457,7 @@ def update_listing():
         if img != None:
             # Img url is unique name based on the food id
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], height=200)
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width=200, height=200, crop = "fit")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             print(updateImage)
@@ -606,21 +606,23 @@ def order_approve_rest():
     stripeToken = tokenInfo['stripeToken']
     amount = tokenInfo['amount']
 
-    try: 
-        customer = stripe.Customer.create(
-            email=email,
-            source=stripeToken
-        )
+    if stripeToken is not None and stipeToken != "":
+        try: 
+            customer = stripe.Customer.create(
+                email=email,
+                source=stripeToken
+            )
 
-        charge = stripe.Charge.create(
-            customer=customer.id,
-            amount=int(amount),
-            currency='usd',
-            description='Catering Payment'
-        )
+            charge = stripe.Charge.create(
+                customer=customer.id,
+                amount=int(amount),
+                currency='usd',
+                description='Catering Payment'
+            )
 
-    except stripe.error.CardError as e:
-        print("error")
+        except stripe.error.CardError as e:
+            print("error")
+    
     return redirect('/orders')
 
 # Endpoint to mark an order as delivered.
