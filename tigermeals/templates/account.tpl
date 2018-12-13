@@ -133,7 +133,7 @@
     <br>
 
     <div class="container">
-        <div class="row mt-2">
+        <div class="row">
           <div class="col-sm-3"><!--left col-->
 
 
@@ -153,7 +153,7 @@
           </div>
 
           </div><!--/col-3-->
-          <div class="col-sm-9 mt-2">
+          <div class="col-sm-9">
               <div class="row mb-2">
                 <h1 class="ml-3">My Account</h1>
               </div>
