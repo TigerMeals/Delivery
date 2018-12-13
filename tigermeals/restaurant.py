@@ -84,10 +84,22 @@ def view():
 			meal['allergies'] = meal['allergies'].split(",")
 		meal['restaurant'] = rest['name']
 
+	orders_url = DATABASE_URL + "/order/restaurant/" + str(restaurant_id)
+	res = requests.get(orders_url)
+	if not res.ok:
+		res.raise_for_status()
+
+	orders = json.loads(res.content)
+
+	length_orders = 0
+
+	for order in orders:
+		if order['paid'] and order['delivery_in_process']:
+			length_orders += 1
 
 	error = request.args.get('error')
 
-	r = make_response(render_template('restaurant_info_restaurant.tpl', meals=meals, restaurant=rest))
+	r = make_response(render_template('restaurant_info_restaurant.tpl', meals=meals, restaurant=rest, length_orders=length_orders))
 
 	r.headers["Pragma"] = "no-cache"
 	r.headers["Expires"] = "0"
