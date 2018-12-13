@@ -91,7 +91,6 @@ def user_update(user_id):
 	user.phone = request.json['phone']
 	user.address = request.json['address']
 	user.allergies = request.json['allergies']
-	user.userHistory = request.json['userHistory']
 
 	db.session.commit()
 	return user_schema.jsonify(user)
@@ -108,7 +107,7 @@ def user_login():
 		email = netid + "@princeton.edu"
 		user = User(name="",netid=netid,email=email,\
 			birthday='',phone='',address='',\
-			allergies='')
+			allergies='', image = '')
 		db.session.add(user)
 		db.session.commit()
 		return user_schema.jsonify(user)
@@ -733,6 +732,23 @@ def order_current(user_id):
 		order = Order(user_id, [], -1, None, None, None)
 		db.session.add(order)
 		db.session.commit()
+	return order_schema.jsonify(order)
+
+@app.route('/order/addToken/<order_id>/<stripeToken>/<amount>', methods = ["POST"])
+def order_orderedToken(order_id, stripeToken, amount):
+	order = Order.query.get(order_id)
+
+	order.ordered = True
+	order.name = request.json['name']
+	order.email = request.json['email']
+	order.location = request.json['location']
+	order.date = request.json['date']
+	order.delivery_time = request.json['time']
+	order.stripeToken = stripeToken
+	order.amount = amount
+
+	db.session.commit()
+
 	return order_schema.jsonify(order)
 
 # Endpoint to delete a food item from a particular order

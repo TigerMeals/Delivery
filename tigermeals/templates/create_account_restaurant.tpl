@@ -259,10 +259,8 @@
               </div>
             </div>
 
-<<<<<<< HEAD
             <p>{{error}}</p>
-=======
->>>>>>> 6f21a28597ac5e99a619426e403e99ecfd2c73fb
+
             <div class="forgot mb-2">
               <a href="/restaurant/home">Already have an account? Login here.</a>
               <br>

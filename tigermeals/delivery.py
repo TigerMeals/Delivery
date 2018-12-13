@@ -8,6 +8,10 @@ import os
 from flask_cas import CAS, login_required, login, logout
 from tigermeals import app
 import stripe
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import cloudinary.utils
 
 cas = CAS(app, '/cas')
 cas.init_app(app)
@@ -123,6 +127,7 @@ def home():
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
+    print(fetch_req.json())
     user_id = fetch_req.json()['user_id']
     print(user_id)
 
