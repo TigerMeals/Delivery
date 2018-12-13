@@ -261,7 +261,7 @@
 
             <p>{{error}}</p>
             <div class="forgot mb-2">
-              <a href="login_restaurant.html">Already have an account? Login here.</a>
+              <a href="/restaurant/home">Already have an account? Login here.</a>
               <br>
               <a href="mailto:tigermealsdelivery@gmail.com">Questions? Email us at tigermealsdelivery@gmail.com.</a>
               <br>

@@ -40,7 +40,17 @@
               <a class="nav-link" href="/about">About</a>
             </li>
             <li class="nav-item-bar active">
-              <a class="nav-link" href="/meals">Meals</a>
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
+                Meals
+              </a>
+              <span class="sr-only">(current)</span>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/meals">View all Meals</a>
+                <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
+              </div>
+            </div>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/account">My Account</a>
@@ -259,6 +269,14 @@
                   </h5>
                 </div>
               </div>
+
+              <div class="card border-white bg-transparent">
+                <div class="card-header border-white bg-transparent">
+                   <a href="/meals/restaurant" class="btn btn-outline-primary btn-block my-2 my-sm-0">View by Restaurant</a>
+                </div>
+              </div>
+
+
             </div>
           </div>
         </div>
@@ -295,8 +313,8 @@
           <div class="row">
             <div class="col-lg-8 col-md-12 mb-8">
               <div class="sticky-top">
-                <h2>Catering Packages</h2>
-                <span class="ml-2">({{length_meals}} results)</span>
+                <h2 class="mb-0">Catering Packages</h2>
+                <span class="ml-0 mt-0">({{length_meals}} results)</span>
                 {% if error %}
                 <p class="text-danger mt-2">{{error}}</p>
                 {% endif %}

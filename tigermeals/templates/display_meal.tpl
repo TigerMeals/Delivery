@@ -2,11 +2,6 @@
   <div class="card border-light h-100">
     <a href="#" data-toggle="modal" data-target="#{{meal.food_id}}"><img class="card-img-top" src="{{meal.image}}" alt=""></a>
     <div class="card-body">
-      <!-- <h4 class="card-title">
-        <a href="#">Soft Taco Party Platter</a>
-      </h4>
-      <h5>Tacoria | <p class="text-success">$64.99</p></h5>
-      <h6>40 servings</h6> -->
       <h5 class="card-title">
         <a href="#" data-toggle="modal" data-target="#{{meal.food_id}}">{{meal.title}}</a>
       </h5>
