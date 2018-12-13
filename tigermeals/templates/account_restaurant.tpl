@@ -89,7 +89,10 @@
             <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
             <br><br>
             <h6>Upload a different photo...</h6>
-            <input type="file" class="text-center center-block file-upload">
+            <form method="post" action="/user/image/update" enctype=multipart/form-data>
+              <input type="file" name="image" class="text-center center-block file-upload">
+              <div class="mt-3" align="left"><button type = "submit">Save Photo</button></div>
+            </form>
           </div></hr><br>
 
             <div class="panel panel-default">
@@ -197,7 +200,7 @@
                           <div class="form-group col-12">
 
                               <div class="col-12">
-                                <a class="btn btn-info" href="#">View my profile as a consumer</a>
+                                <a class="btn btn-info" href="/view">View my profile as a consumer</a>
                               </div>
                           </div>
                         </div>
