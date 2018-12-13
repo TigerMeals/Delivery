@@ -99,7 +99,7 @@
               <li class="list-group-item text-left"><span class="pull-left"><strong>Active Orders</strong></span> {{length_orders}}</li>
               <li class="list-group-item text-left"><span class="pull-left"><strong>Pending Orders</strong></span> {{length_pending_orders}}</li>
               <li class="list-group-item text-left"><span class="pull-left"><strong>Completed Orders</strong></span> {{length_complete_orders}}</li>
-              
+
             </ul>
           </div>
 
@@ -195,7 +195,7 @@
                           <div class="form-group col-12">
 
                               <div class="col-12">
-                                <a class="btn btn-info" href="#">View my profile as a consumer</a>
+                                <a class="btn btn-info" href="/view">View my profile as a consumer</a>
                               </div>
                           </div>
                         </div>
