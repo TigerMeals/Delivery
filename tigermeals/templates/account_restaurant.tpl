@@ -8,7 +8,7 @@
     <meta name="author" content="TigerMeals Delivery Team">
 
     <title>TigerMeals Delivery - Restaurant Account</title>
-    <link rel='icon' href='static/img/takeout.ico'></link>
+    <link rel='icon' href='/static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap-lux.css" rel="stylesheet">
@@ -43,9 +43,6 @@
 
     </script>
 
-    <script type="text/javascript">
-      $('.clockpicker').clockpicker();
-    </script>
 
 </head>
 
