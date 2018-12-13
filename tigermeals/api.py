@@ -84,7 +84,6 @@ def user_update(user_id):
 	user.phone = request.json['phone']
 	user.address = request.json['address']
 	user.allergies = request.json['allergies']
-	user.userHistory = request.json['userHistory']
 
 	db.session.commit()
 	return user_schema.jsonify(user)
@@ -101,7 +100,7 @@ def user_login():
 		email = netid + "@princeton.edu"
 		user = User(name="",netid=netid,email=email,\
 			birthday='',phone='',address='',\
-			allergies='')
+			allergies='', image = '')
 		db.session.add(user)
 		db.session.commit()
 		return user_schema.jsonify(user)

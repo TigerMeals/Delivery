@@ -123,6 +123,7 @@ def home():
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
+    print(fetch_req.json())
     user_id = fetch_req.json()['user_id']
     print(user_id)
 
