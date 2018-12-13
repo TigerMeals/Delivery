@@ -143,7 +143,7 @@
                   </script>
 									<td data-th="Quantity">
 
-                    <select id="quantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0" onchange="handleEdit(this.value)">
+                    <select id="quantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0" onchange="handleEdit(this.value, {{food_ids[i]}})">
                         <option value="01">1</option>
                         <option value="02">2</option>
                         <option value="03">3</option>
@@ -159,14 +159,16 @@
                       var food_quantity = {{food_multiplier[i]}};
                       var mySelect = document.getElementById('quantity{{food_ids[i]}}');
 
-                      for(var i, j = 0; i = mySelect.options[j]; j++) {
-                          if(i.value == food_quantity) {
+                      for(var k, j = 0; k = mySelect.options[j]; j++) {
+                          if(k.value == food_quantity) {
                               mySelect.selectedIndex = j;
                               break;
                           }
                       }
-                      function handleEdit(value) {
-                        window.location.href = "/cart/edit-quantity/" + value + "/" + {{food_ids[i]}};
+                      function handleEdit(value, food_id) {
+                        console.log(value)
+                        console.log({{food_id}})
+                        window.location.href = "/cart/edit-quantity/" + value + "/" + food_id;
                       }
                     </script>
 									</td>

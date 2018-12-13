@@ -319,6 +319,45 @@ def restaurant_delete(restaurant_id):
 	db.session.commit()
 	return restaurant_schema.jsonify(restaurant)
 
+# Endpoint to update the profile page
+@app.route("/restaurant/profile/<restaurant_id>",methods=["PUT"])
+def restaurant_profile(restaurant_id):
+	restaurant = Restaurant.query.get(restaurant_id)
+	restaurant.name = request.json['restaurant_name']
+	restaurant.description = request.json['description']
+	restaurant.phone = request.json['phone']
+	restaurant.website = request.json['website']
+	restaurant.email = request.json['email']
+	restaurant.address = request.json['location']
+
+	db.session.commit()
+
+	return restaurant_schema.jsonify(restaurant)
+
+@app.route("/restaurant/account/<restaurant_id>", methods=["PUT"])
+def restaurant_account_upgrade(restaurant_id):
+	restaurant = Restaurant.query.get(restaurant_id)
+	restaurant.primaryFirstName = request.json['firstPrim']
+	restaurant.primaryLastName = request.json['lastPrim']
+	restaurant.primaryEmail = request.json['emailPrim']
+	restaurant.primaryPhone = request.json['phonePrim']
+
+	restaurant.secondaryFirstName = request.json['firstSec']
+	restaurant.secondaryLastName = request.json['lastSec']
+	restaurant.secondaryEmail = request.json['emailSec']
+	restaurant.secondaryPhone = request.json['phoneSec']
+
+	if 'password' in request.json:
+		password = request.json['password']
+
+		password = _restaurant_hash(password)
+
+		restaurant.password = password
+
+	db.session.commit()
+
+	return restaurant_schema.jsonify(restaurant)
+
 ################################################################################
 class Food(db.Model):
 	food_id = db.Column(db.Integer, primary_key = True)

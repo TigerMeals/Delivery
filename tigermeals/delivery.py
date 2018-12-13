@@ -46,7 +46,6 @@ def _getCart(user_id):
     food_ids = []
 
     for food_item in order['food_items']:
-        print (food_item['food_id'])
         food = _getJSON(DATABASE_URL + '/food/' + str(food_item['food_id']))
 
         food_prices.append(food['price'])
@@ -61,12 +60,6 @@ def _getCart(user_id):
     if user_id is None:
         # Redirect to login screen if the cookie is None
         pass
-
-    print (food_prices)
-    print (food_descriptions)
-    print (food_titles)
-    print (food_quantity_feds)
-    print (food_images)
 
     length_cart = len(food_prices)
 
@@ -96,7 +89,6 @@ def _getJSON(url):
     r = requests.get(url=url)
     data = r.json()
 
-    print (data)
     return (data)
 
 ## POST METHOD
@@ -152,8 +144,6 @@ def home():
 def cart():
     print("cart template requested -----------------------------")
     netid = cas.username
-    print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -164,11 +154,12 @@ def cart():
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
     user_id = fetch_req.json()['user_id']
-    print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
+    print("FOOD ITEMS -------------------------------------------------")
+    print(food_ids)
 
     return render_template('cart.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,\
