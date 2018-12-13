@@ -271,7 +271,7 @@
                   <h4 class="float-left mt-2" href="#">Order #{{order['order_id']}}</h4>
                 </div>
                 <div class="col-2">
-                  <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
+                  <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#{{order['order_id']}}">
                     View order
                   </button>
                 </div>
@@ -328,6 +328,11 @@
                   </div>
                 </div>
               </div>
+              {% for o in pending_orders %}
+                {% with order=o %}
+                  {% include 'order_modals.tpl' %}
+                {% endwith %}
+              {% endfor %}
 
               {% endfor %}
 
@@ -343,7 +348,7 @@
                       <h4 class="float-left mt-2" href="#">Order #{{order['order_id']}}</h4>
                     </div>
                     <div class="col-2">
-                      <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
+                      <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#{{order['order_id']}}">
                         View order
                       </button>
                     </div>
@@ -401,6 +406,11 @@
                     </div>
                   </div>
 
+                  {% for o in inprogress_orders %}
+                    {% with order=o %}
+                      {% include 'order_modals.tpl' %}
+                    {% endwith %}
+                  {% endfor %}
                   {% endfor %}
                 </div>
 
@@ -415,7 +425,7 @@
                       <h4 class="float-left mt-2" href="#">Order #{{order['order_id']}}</h4>
                     </div>
                     <div class="col-2">
-                      <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
+                      <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#{{order['order_id']}}">
                         View order
                       </button>
                     </div>
@@ -475,194 +485,17 @@
                     </div>
                   </div>
 
+
+                  {% for o in history_orders %}
+                    {% with order=o %}
+                      {% include 'order_modals.tpl' %}
+                    {% endwith %}
+                  {% endfor %}
                   {% endfor %}
 
 
                 </div>
 
-
-
-
-                <!-- Modal -->
-                <div class="modal fade" id="ordernumber" tabindex="-1" role="dialog" aria-labelledby="newListingTitle" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h3 class="modal-title" id="ordernumber">Order Number</h3>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <div class="row">
-
-                          <div class="col-4">
-                            <h6 class="mb-0 mt-1">Order Placed on</h6>
-                          </div>
-                          <div class="col-8">
-                            <p>Friday, December 7th, 3:56pm</p>
-                          </div>
-
-
-                          <div class="col-4">
-                            <h6 class="mb-0 mt-1">Delivery Time</h6>
-                          </div>
-                          <div class="col-8">
-                            <p>Saturday, December 17th, 4:30pm</p>
-                          </div>
-
-
-                          <div class="col-4">
-                            <h6 class="mb-0 mt-1">Location</h6>
-                          </div>
-                          <div class="col-8">
-                            <p>CS Tea Room</p>
-                          </div>
-
-                          <div class="col-4">
-                            <h6 class="mb-0 mt-1">Customizations</h6>
-                          </div>
-                          <div class="col-8">
-                            <p>Call me 5 minutes before the delivery so I can let you in!</p>
-                          </div>
-
-
-                          <div class="col-4">
-                            <h6 class="mb-0 mt-1">Restaurant</h6>
-                          </div>
-                          <div class="col-8">
-                            <p><a href="../restaurant-info.html">Panera</a></p>
-                          </div>
-
-                          <div class="col-4">
-                            <h6 class="mb-0 mt-1">Restaurant Phone</h6>
-                          </div>
-                          <div class="col-8">
-                            <p>(083)-893-3920</p>
-                          </div>
-
-                          <div class="col-4">
-                            <h6 class="mb-0 mt-1">Restaurant Email</h6>
-                          </div>
-                          <div class="col-8">
-                            <p><a href="mailto:hello@panera.com">hello@panera.com</a></p>
-                          </div>
-
-                        </div>
-
-                        <div class="row">
-                          <div class="col-4">
-                            <h6 class="mb-1 mt-1">Items Ordered</h6>
-                          </div>
-                          <div class="col-8">
-                          </div>
-
-
-                          <div class="col-4">
-                            <img class="d-block w-100" src="static/img/panera.jpg"
-                              alt="First slide">
-                          </div>
-                          <div class="col-6">
-                            <h6 class="mb-0 mt-1">Panera Breakfast Platter</h6>
-                            <p>20 servings</p>
-                            <!-- <p><span class="text-black">Quantity: </span> 2 </p> -->
-                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
-                          </div>
-                          <div class="col-2">
-                            <p>$50.00 ea </p>
-                            <p><span class="text-black">Quantity: 2 </span></p>
-                            <p class="justify-content-bottom"><span class="text-black">Subtotal:  $100.00 </span></p>
-                          </div>
-
-                          <div class="col-4">
-                            <img class="d-block w-100" src="static/img/panera.jpg"
-                              alt="First slide">
-                          </div>
-                          <div class="col-6">
-                            <h6 class="mb-0 mt-1">Panera Breakfast Platter</h6>
-                            <p>20 servings</p>
-                            <!-- <p><span class="text-black">Quantity: </span> 2 </p> -->
-                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
-                          </div>
-                          <div class="col-2">
-                            <p>$50.00 ea </p>
-                            <p><span class="text-black">Quantity: 2 </span></p>
-                            <p class="justify-content-bottom"><span class="text-black">Subtotal:  $100.00 </span></p>
-                          </div>
-
-                          <div class="col-4">
-                            <img class="d-block w-100" src="static/img/panera.jpg"
-                              alt="First slide">
-                          </div>
-                          <div class="col-6">
-                            <h6 class="mb-0 mt-1">Panera Breakfast Platter</h6>
-                            <p>20 servings</p>
-                            <!-- <p><span class="text-black">Quantity: </span> 2 </p> -->
-                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
-                          </div>
-                          <div class="col-2">
-                            <p>$50.00 ea </p>
-                            <p><span class="text-black">Quantity: 2 </span></p>
-                            <p class="justify-content-bottom"><span class="text-black">Subtotal:  $100.00 </span></p>
-                          </div>
-
-                          <div class="col-4">
-                            <img class="d-block w-100" src="static/img/panera.jpg"
-                              alt="First slide">
-                          </div>
-                          <div class="col-6">
-                            <h6 class="mb-0 mt-1">Panera Coffee Tray</h6>
-                            <p>20 servings</p>
-                            <p><span class="text-black">Quantity: </span> 3 </p>
-                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
-                          </div>
-                          <div class="col-2">
-                            <p>$30.00 ea </p>
-                            <p><span class="text-black">Subtotal: </span> $90.00 </p>
-                          </div>
-
-
-
-                          <div class="col-4">
-                            <img class="d-block w-100" src="static/img/panera.jpg"
-                              alt="First slide">
-                          </div>
-                          <div class="col-6">
-                            <h6 class="mb-0 mt-1">Panera Bakery Tray</h6>
-                            <p>20 servings</p>
-                            <p><span class="text-black">Quantity: </span> 2 </p>
-                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
-                          </div>
-                          <div class="col-2">
-                            <p>$40.00 ea </p>
-                            <p><span class="text-black">Subtotal: </span> $80.00 </p>
-                          </div>
-
-                          <div class="col-10">
-                          </div>
-                          <div class="col-2">
-                            <h6 class="mb-0 mt-1">Total:</h6>
-                            <p>$170.00</p>
-                          </div>
-
-                        </div>
-
-                       <br>
-                      </div>
-                      <div class="modal-footer">
-                        <div class="row">
-
-                          <div class="col-12">
-                            <div class="text-center item-right">
-                              <button class="btn btn-info" href="mailto:tigermealsdelivery@gmail.com">Contact Restaurant</button>
-                            </div>
-                          </div>
-
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
              </div><!--/tab-content-->
 
          </div><!--/tab-pane-->
