@@ -7,6 +7,7 @@ import json
 import os
 from flask_cas import CAS, login_required, login, logout
 from tigermeals import app
+import stripe
 
 cas = CAS(app, '/cas')
 cas.init_app(app)
@@ -26,6 +27,12 @@ app.config['MAIL_USERNAME'] = 'tigermealsdelivery@gmail.com'
 app.config['MAIL_PASSWORD'] = 'aksnpqtutouldhna'
 mail = Mail(app)
 
+stripe_keys = {
+  'secret_key': 'sk_test_g9fTagqR9dXbC8lFPSem2lSM',
+  'publishable_key': 'pk_test_z4VMPhZbhdpqyLC2UF2junYl'
+}
+
+stripe.api_key = stripe_keys['secret_key']
 
 def _getCart(user_id):
     order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
@@ -39,7 +46,6 @@ def _getCart(user_id):
     food_ids = []
 
     for food_item in order['food_items']:
-        print (food_item['food_id'])
         food = _getJSON(DATABASE_URL + '/food/' + str(food_item['food_id']))
 
         food_prices.append(food['price'])
@@ -54,12 +60,6 @@ def _getCart(user_id):
     if user_id is None:
         # Redirect to login screen if the cookie is None
         pass
-
-    print (food_prices)
-    print (food_descriptions)
-    print (food_titles)
-    print (food_quantity_feds)
-    print (food_images)
 
     length_cart = len(food_prices)
 
@@ -89,7 +89,6 @@ def _getJSON(url):
     r = requests.get(url=url)
     data = r.json()
 
-    print (data)
     return (data)
 
 ## POST METHOD
@@ -145,8 +144,6 @@ def home():
 def cart():
     print("cart template requested -----------------------------")
     netid = cas.username
-    print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -157,11 +154,12 @@ def cart():
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
     user_id = fetch_req.json()['user_id']
-    print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
+    print("FOOD ITEMS -------------------------------------------------")
+    print(food_ids)
 
     return render_template('cart.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,\
@@ -232,7 +230,7 @@ def checkout():
         food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
-        email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, order_id=order_id)
+        email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, key = stripe_keys['publishable_key'], order_id=order_id)
 
 @app.route("/account")
 @login_required
@@ -264,22 +262,57 @@ def account():
     length_past_orders = len(fetch_req)
 
     past_restaurants = []
+    pending_order = []
+    inprogress_orders = []
+    history_orders = []
 
     for order in fetch_req:
         if order['restaurant_id'] not in past_restaurants:
             past_restaurants.append(order['restaurant_id'])
-        print("DONE -------------------------------------------------------")
+
+        if not order['paid']:
+            pending_order.append(order)
+
+        elif order['paid'] and order['delivery_in_process']:
+            inprogress_orders.append(order)
+
+        elif order['paid'] and not order['delivery_in_process'] and order['delivered']:
+            history_orders.append(order)
+
+        price = 0
+        for food_item in order['food_items']:
+            price += food_item['subtotal']
+
+        order['price'] = price
+
+    print("DONE -------------------------------------------------------")
+    print("PENDING ----------------------------------------------------")
+    print(pending_order)
+
+    print("IN PROGRESS ----------------------------------------------------")
+    print(inprogress_orders)
+
+    print("HISTORY -----------------------------------------------------")
+    print(history_orders)
 
     number_different_rest = len(past_restaurants)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
+    restaurants_url = DATABASE_URL + "/restaurant"
+
+    rests = requests.get(restaurants_url)
+    print("RESTAURANTS ---------------------------------------------------")
+    rests_dict = {}
+    for restaurant in rests.json():
+        rests_dict[restaurant['restaurant_id']] = restaurant['name']
+
     return render_template('account.tpl', name=name.split(), email=email,\
-        phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,\
+        phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict,\
         food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
-        food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders,\
-        length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
+        history_orders=history_orders,food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders,\
+        inprogress_orders=inprogress_orders,pending_order=pending_order,length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 
 
 
@@ -454,13 +487,12 @@ def cart_delete(food_id):
 
 
 
-# Endpoint to create new user
+# Endpoint to display all meals
 @app.route("/meals")
 @login_required
 def meals():
     meals_url = DATABASE_URL + "/food/sort/price/low-to-high"
 
-    orders_url = DATABASE_URL + "/food/sort/price/low-to-high"
     netid = cas.username
     print(netid)
     print(type(netid))
@@ -513,11 +545,6 @@ def meals():
                 return None
             meal['restaurant'] = json.loads(res.content)['name']
 
-            # For logging purposes
-            for key in meal:
-                print (key + " : " + str(meal[key]))
-            print()
-
 
     error = request.args.get('error')
 
@@ -530,6 +557,104 @@ def meals():
     r.headers["Expires"] = "0"
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
+
+# Endpoint to display restaurant view
+@app.route("/meals/restaurant")
+@login_required
+def restaurant_view():
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+
+
+    restaurants_url = DATABASE_URL + "/restaurant"
+    res = requests.get(restaurants_url)
+    if not res.ok:
+        res.raise_for_status()
+    rests = json.loads(res.content)
+    restaurants = []
+    # Update the number of packages available
+    for rest in rests:
+        food_by_rest_url = DATABASE_URL + "/food/restaurant/" + str(rest['restaurant_id'])
+        res = requests.get(food_by_rest_url)
+        if not res.ok:
+            res.raise_for_status()
+        rest['num_orders'] = len(json.loads(res.content))
+    restaurants_length = len(rest)
+    return render_template('restaurant_view.tpl', food_ids=food_ids,\
+        id=user_id, food_prices = food_prices,\
+        food_subtotals = food_subtotals, food_titles = food_titles, \
+        length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length)
+
+# Endpoint to display restaurant info
+@app.route("/meals/restaurant/<restaurant_id>")
+@login_required
+def meals_restaurant(restaurant_id):
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+
+    restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
+    res = requests.get(restaurant_url)
+    if not res.ok:
+        res.raise_for_status()
+    rest = json.loads(res.content)
+
+    meals_url = DATABASE_URL + "/food/restaurant/" + str(restaurant_id)
+    res = requests.get(meals_url)
+    if not res.ok:
+        res.raise_for_status()
+    meals = json.loads(res.content)
+
+    for meal in meals:
+        # Splice allergies into a list
+        if meal['allergies'] is "":
+            meal['allergies'] = []
+        else:
+            meal['allergies'] = meal['allergies'].split(",")
+        meal['restaurant'] = rest['name']
+
+
+    error = request.args.get('error')
+
+    r = make_response(render_template('restaurant_info.tpl', meals=meals, food_ids=food_ids,\
+        id=user_id, food_prices = food_prices, error=error,\
+        food_subtotals = food_subtotals, food_titles = food_titles, \
+        length_cart = length_cart, total=total, food_images= food_images, restaurant=rest))
+
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
+
 
 @app.route("/cart/upload", methods=["POST"])
 @login_required
@@ -631,6 +756,109 @@ def upload_cart():
             update_order_url = DATABASE_URL + "/order/" + str(order_id)
             res = requests.put(update_order_url, json = updatedOrder)
     return redirect('/meals')
+
+@login_required
+@app.route('/charge', methods=['POST'])
+def charge():
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    print(request.form)
+    #print("Hello what's up")
+
+    user_id = fetch_req.json()['user_id']
+
+    name = str(request.form['stripeBillingName'])
+    email = str(request.form['stripeEmail'])
+    address = str(request.form['stripeShippingAddressLine1'])
+    date = str(request.form['dateCard'])
+    time = str(request.form['timeCard'])
+
+
+
+    #print(user_id)
+    current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
+    res = requests.get(current_order_url)
+
+    if not res.ok:
+        res.raise_for_status()
+        return None
+
+
+
+    email, name, phone, address, netid, allergies = _getUser(user_id)
+
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+
+    if date is None or date == "" or time is None or time == "":
+        print("NONE -------------------------------------------------")
+        return render_template('checkout.tpl', user_id=user_id, food_prices=food_prices,\
+                food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
+                food_quantity_feds=food_quantity_feds, food_images=food_images,\
+                length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
+                email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, order_id=order_id, key = stripe_keys['publishable_key'], error = "Please enter date and time info!!")
+
+
+    amount = int(total * 100)
+
+    order_id = json.loads(res.content)['order_id']
+    order_ordered_url = DATABASE_URL + "/order/addToken/" + str(order_id) + "/" + str(request.form['stripeToken']) + "/" + str(amount)
+    #user_id = 1
+    # Amount in cents
+
+    #order_id = json.loads(res.content)['order_id']
+    #order_ordered_url = DATABASE_URL + "/order/ordered/" + str(order_id)
+
+    formData = {
+    "name": name,
+    "email": email,
+    "location": address,
+    "date": date,
+    "time": time
+    }
+
+    #print (formData)
+    #print (formData)
+    res = requests.post(order_ordered_url, json=formData)
+    if not res.ok:
+        res.raise_for_status()
+        return None
+
+    msg = mail.send_message(
+    'Your recent TigerMeals Delivery order!',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[email],
+    html=user_order_html())
+
+    restaurant_id = json.loads(res.content)['restaurant_id']
+    restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
+    res = requests.get(restaurant_url)
+
+    if not res.ok:
+        res.raise_for_status()
+        return None
+
+    rest = json.loads(res.content)
+    restEmail = rest['email']
+    msg = mail.send_message(
+    'New TigerMeals Delivery order request!',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[restEmail],
+    html=rest_order_html())
+    #print(request.form)
+    #print(type(request.form['stripeToken']))
+
+
+    return redirect('/order/confirmed')
 
 
 @app.route("/ordered", methods=["POST"])

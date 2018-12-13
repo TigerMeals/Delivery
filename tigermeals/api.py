@@ -228,14 +228,23 @@ def restaurant_add():
 	servingSize = request.json['servingSize']
 	email = request.json['email']
 	website = request.json['website']
-	primaryFirstName = request.json['primaryFirstName']
-	primaryLastName = request.json['primaryLastName']
-	primaryEmail = request.json['primaryEmail']
-	primaryPhone = request.json['primaryPhone']
-	secondaryFirstName = request.json['secondaryFirstName']
-	secondaryLastName = request.json['secondaryLastName']
-	secondaryEmail = request.json['secondaryEmail']
-	secondaryPhone = request.json['secondaryPhone']
+
+	if 'primaryFirstName' in request.json:
+		primaryFirstName = request.json['primaryFirstName']
+	if 'primaryLastName' in request.json:
+		primaryLastName = request.json['primaryLastName']
+	if 'primaryEmail' in request.json:
+		primaryEmail = request.json['primaryEmail']
+	if 'primaryPhone' in request.json:
+		primaryPhone = request.json['primaryPhone']
+	if 'secondaryFirstName' in request.json:
+		secondaryFirstName = request.json['secondaryFirstName']
+	if 'secondaryLastName' in request.json:
+		secondaryLastName = request.json['secondaryLastName']
+	if 'secondaryEmail' in request.json:
+		secondaryEmail = request.json['secondaryEmail']
+	if 'secondaryPhone' in request.json:
+		secondaryPhone = request.json['secondaryPhone']
 
 	# Hash the password
 	password = _restaurant_hash(password)
@@ -288,6 +297,20 @@ def restaurant_update(restaurant_id):
 	db.session.commit()
 	return restaurant_schema.jsonify(restaurant)
 
+# Endpoint to update restaurant password
+@app.route("/restaurant/password/<restaurant_id>", methods = ["PUT"])
+def restaurant_update_pass(restaurant_id):
+	restaurant = Restaurant.query.get(restaurant_id)
+
+	password = request.json['password']
+
+	password = _restaurant_hash(password)
+
+	restaurant.password = password
+
+	db.session.commit()
+	return restaurant_schema.jsonify(restaurant)
+
 # Endpoint for restaurant's to login using email and phone number
 # verification. We will add passwords later, much later
 @app.route("/restaurant/login", methods = ["POST"])
@@ -297,7 +320,6 @@ def restaurant_login():
 
 	# hash the password
 	password = _restaurant_hash(password)
-
 
 	restaurant = Restaurant.query.filter_by(email = email, \
 		password = password).first()
@@ -317,6 +339,45 @@ def restaurant_delete(restaurant_id):
 
 	db.session.delete(restaurant)
 	db.session.commit()
+	return restaurant_schema.jsonify(restaurant)
+
+# Endpoint to update the profile page
+@app.route("/restaurant/profile/<restaurant_id>",methods=["PUT"])
+def restaurant_profile(restaurant_id):
+	restaurant = Restaurant.query.get(restaurant_id)
+	restaurant.name = request.json['restaurant_name']
+	restaurant.description = request.json['description']
+	restaurant.phone = request.json['phone']
+	restaurant.website = request.json['website']
+	restaurant.email = request.json['email']
+	restaurant.address = request.json['location']
+
+	db.session.commit()
+
+	return restaurant_schema.jsonify(restaurant)
+
+@app.route("/restaurant/account/<restaurant_id>", methods=["PUT"])
+def restaurant_account_upgrade(restaurant_id):
+	restaurant = Restaurant.query.get(restaurant_id)
+	restaurant.primaryFirstName = request.json['firstPrim']
+	restaurant.primaryLastName = request.json['lastPrim']
+	restaurant.primaryEmail = request.json['emailPrim']
+	restaurant.primaryPhone = request.json['phonePrim']
+
+	restaurant.secondaryFirstName = request.json['firstSec']
+	restaurant.secondaryLastName = request.json['lastSec']
+	restaurant.secondaryEmail = request.json['emailSec']
+	restaurant.secondaryPhone = request.json['phoneSec']
+
+	if 'password' in request.json:
+		password = request.json['password']
+
+		password = _restaurant_hash(password)
+
+		restaurant.password = password
+
+	db.session.commit()
+
 	return restaurant_schema.jsonify(restaurant)
 
 ################################################################################

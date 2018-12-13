@@ -58,6 +58,10 @@
                 {% include 'display_allergy.tpl' %}
               {% endwith %}
             {% endfor %}
+            <div class="form-group">
+              <label for="customization">Comments:</label>
+              <textarea class="form-control" id="customization" rows="1"></textarea>
+            </div>
           </div>
 
           <div class="col-lg-6 col-md-6">

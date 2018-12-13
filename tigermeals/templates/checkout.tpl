@@ -32,7 +32,7 @@
     <!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="/">TigerMeals Delivery</a>
+        <a class="navbar-brand" href="#">TigerMeals Delivery</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -171,9 +171,136 @@
             </div>
           </form>
         </div>
-        <div class="col-md-8 order-md-1">
-          <h4 class="mb-3">Billing address</h4>
+        <div class="col-md-8 order-md-1" id = "payment_info">
+
+            <h4 class="mb-3">Payment</h4>
+
+            <div class="d-block my-3">
+              <div class="custom-control custom-radio">
+                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" checked required>
+                <label class="custom-control-label" for="credit">Credit card</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
+                <label class="custom-control-label" for="debit">Debit card</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
+                <label class="custom-control-label" for="paypal">Paypal</label>
+              </div>
+              <div class="custom-control custom-radio">
+                <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
+                <label class="custom-control-label" for="cash">Cash</label>
+                <!--<div class="text-success" id="ifYes" style="visibility:hidden">
+                  Great! Press Checkout to complete your order
+                </div>-->
+                <div class="text-success" id="ifYes" style="visibility:hidden">
+                  
+                </div>
+                <script>
+                  function yesCash() {
+                    if (document.getElementById('cash').checked) {
+                      document.getElementById('billing_info').style.visibility ='visible';
+                      document.getElementById('checkout_button').style.visibility ='visible';
+                    }
+                    else {
+                      document.getElementById('billing_info').style.visibility ='hidden';
+                      document.getElementById('checkout_button').style.visibility ='hidden';
+                    } 
+                    if (document.getElementById('credit').checked || document.getElementById('debit').checked){
+                      document.getElementById('payment_button').style.visibility = 'visible';
+                    }
+                    else{
+                      document.getElementById('payment_button').style.visibility = 'hidden';
+                    }
+                  }
+                </script>
+              </div>
+        </div>
+          
+        
+      <div class="col-md-8 order-md-1" id = "payment_button" style="visibility:visible" >
+            <form action="/charge" id = "stripe_payment_button" method="post" class="needs-validation" novalidate>
+
+                <article>
+                  <label>
+                    <span>Total is ${{total}}</span>
+                  </label>
+                </article>
+
+                <div class="col-md-6 mb-3">
+                <label for="date">Delivery Date</label>
+                <input type="date" class="form-control" id="dateCard" name="dateCard" required>
+                <div class="invalid-feedback">
+                  Please enter a valid date.
+                </div>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="time">Delivery Time</label>
+                <input type="time" class="form-control" id="timeCard" name="timeCard" value="12:00" required>
+                <div class="invalid-feedback">
+                  Please enter a valid time.
+                </div> 
+              </div>   
+              <p>{{error}}</p>        
+               <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                        data-key={{key}}
+                        data-amount=String({{total}} * 100)
+                        data-description="Catering Payment"
+                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                        data-shipping-address = "true"
+                        data-zip-code="true"
+                        data-name="TigerMeals Checkout"
+                        data-locale="auto">      
+                </script> 
+
+
+                <!--<p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" style="visibility:visible">Checkout with Card</button></p> -->
+                <!--<script src="https://checkout.stripe.com/checkout.js"></script>
+
+                    <button id="customButton" type = "submit" style = "visibility:visible">Purchase</button>
+
+                    <script>
+                    var handler = StripeCheckout.configure({
+                      key: 'pk_test_TYooMQauvdEDq54NiTphI7jx',
+                      image: 'https://stripe.com/img/documentation/checkout/marketplace.png',
+                      locale: 'auto',
+                      token: function(token) {
+                        // You can access the token ID with `token.id`.
+                        // Get the token ID to your server-side code for use.
+                      }
+                    });
+
+                    document.getElementById('customButton').addEventListener('click', function(e) {
+                      // Open Checkout with further options:
+                      handler.open({
+                        name: 'Stripe.com',
+                        description: '2 widgets',
+                        zipCode: true,
+                        shippingAddress: true,
+                        amount: {{total}} * 100
+                      });
+                      e.preventDefault();
+                    });
+
+                    // Close Checkout on page navigation:
+                    window.addEventListener('popstate', function() {
+                      handler.close();
+                    });
+                    </script> -->
+                </form>
+                
+
+          
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="col-md-8 order-md-1" id = "billing_info" style="visibility:hidden" >
+          
           <form id="checkout_form" action="/ordered?id={{user_id}}" method="POST" class="needs-validation" novalidate>
+            <h4 class="mb-3">Cash Payment: Please complete this form</h4>
+            <h5 class="mb-3">Shipping Address</h5>
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First Name</label>
@@ -236,127 +363,30 @@
                   Please enter a valid time.
                 </div>
               </div>
-            </div>
-
-
-            <hr class="mb-4">
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="same-address">
-              <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-            </div>
-            <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="save-info">
-              <label class="custom-control-label" for="save-info">Save this information for next time</label>
-            </div>
+              <hr class="mb-4">
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="same-address">
+                  <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="save-info">
+                  <label class="custom-control-label" for="save-info">Save this information for next time</label>
+                </div>
             <hr class="mb-4">
 
-            <h4 class="mb-3">Payment</h4>
-
-            <div class="d-block my-3">
-              <div class="custom-control custom-radio">
-                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" checked required>
-                <label class="custom-control-label" for="credit">Credit card</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
-                <label class="custom-control-label" for="debit">Debit card</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
-                <label class="custom-control-label" for="paypal">Paypal</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
-                <label class="custom-control-label" for="cash">Cash</label>
-                <div class="text-success" id="ifYes" style="visibility:hidden">
-                  Great! Press Checkout to complete your order
-                </div>
-                <script>
-                  function yesCash() {
-                    if (document.getElementById('cash').checked) {
-                      document.getElementById('ifYes').style.visibility ='visible';
-                    }
-                    else document.getElementById('ifYes').style.visibility ='hidden';
-                  }
-                </script>
-              </div>
             </div>
-            <div class="row">
-              <div class="col-md-6 mb-3">
-                <label for="cc-name">Name on card</label>
-                <input type="text" class="form-control" id="cc-name" placeholder="" required>
-                <small class="text-muted">Full name as displayed on card</small>
-                <div class="invalid-feedback">
-                  Name on card is required
-                </div>
-              </div>
-
-              <div class="col-md-6 mb-3">
-                <label for="cc-number">Credit card number</label>
-                <input type="text" class="form-control" id="cc-number" placeholder="" required>
-                <div class="invalid-feedback">
-                  Credit card number is required
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-3 mb-3">
-                <label for="cc-expiration">Expiration</label>
-                <input type="text" class="form-control" id="cc-expiration" placeholder="" required>
-                <div class="invalid-feedback">
-                  Expiration date required
-                </div>
-              </div>
-
-              <div class="col-md-3 mb-3">
-                <label for="cc-expiration">CVV</label>
-                <input type="text" class="form-control" id="cc-cvv" placeholder="" required>
-                <div class="invalid-feedback">
-                  Security code required
-                </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-md-4 mb-3">
-                <label for="country">Country</label>
-                <select class="custom-select d-block w-100" id="country" required>
-                  <option value="">Choose...</option>
-                  <option>United States</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please select a valid country.
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="state">State</label>
-                <select class="custom-select d-block w-100" id="state" required>
-                  <option value="">Choose...</option>
-                  <option>California</option>
-                </select>
-                <div class="invalid-feedback">
-                  Please provide a valid state.
-                </div>
-              </div>
-              <div class="col-md-4 mb-3">
-                <label for="zip">Zip</label>
-                <input type="text" class="form-control" id="zip" placeholder="" required>
-                <div class="invalid-feedback">
-                  Zip code required.
-                </div>
-              </div>
-            </div>
+          </form>
+        </div>
 
 
 
           <hr class="mb-4">
           </form>
-          <p><button class="btn btn-primary btn-lg btn-block" type="submit" form="checkout_form">Continue to checkout</button></p>
+          <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" style="visibility:hidden" form="checkout_form">Continue to checkout</button></p>
         </div>
       </div>
     </div>
-
+    
     <!-- Footer -->
 
     <footer class="py-4 red-bar">
