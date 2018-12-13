@@ -1,4 +1,80 @@
-# HTML and CSS for email to users after placing an order.
+#Email users to reset their passwords.
+def reset_password_html(password):
+    return """<!doctype html>
+    <html>
+      <head>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Your TigerMeals Delivery Temporary Password</title>""" + css() + """</head>
+      <body class="">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
+          <tr>
+            <td>&nbsp;</td>
+            <td class="container">
+              <div class="content">
+
+                <!-- START CENTERED WHITE CONTAINER -->
+                <span class="preheader">We received your request for a temporary password.</span>
+                <table role="presentation" class="main">
+
+                  <!-- START MAIN CONTENT AREA -->
+                  <tr>
+                    <td class="wrapper">
+                      <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td>
+                            <p>Hi there,</p>
+                            <p>Your temporary password is: """ + password + """</p>
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                              <tbody>
+                                <tr>
+                                  <td align="left">
+                                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                                      <tbody>
+                                        <tr>
+                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/">Click here to sign in.</a> </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <p>Please enter this temporary password promptly and change your password from your account upon logging in.</p>
+                            <p>Thank you for using TigerMeals Delivery!</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                <!-- END MAIN CONTENT AREA -->
+                </table>
+
+                <!-- START FOOTER -->
+                <div class="footer">
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td class="content-block">
+                        <br> Don't like these emails? <a href="#">Unsubscribe</a>.
+                      </td>
+                    </tr>
+
+                  </table>
+                </div>
+                <!-- END FOOTER -->
+
+              <!-- END CENTERED WHITE CONTAINER -->
+              </div>
+            </td>
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      </body>
+    </html>
+    """
+
+
 def user_order_html():
     return """<!doctype html>
     <html>

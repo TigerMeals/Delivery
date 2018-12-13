@@ -236,7 +236,8 @@ def restaurant_add():
 	secondaryLastName = request.json['secondaryLastName']
 	secondaryEmail = request.json['secondaryEmail']
 	secondaryPhone = request.json['secondaryPhone']
-
+	print(email)
+	print(password)
 	# Hash the password
 	password = _restaurant_hash(password)
 
@@ -288,6 +289,20 @@ def restaurant_update(restaurant_id):
 	db.session.commit()
 	return restaurant_schema.jsonify(restaurant)
 
+# Endpoint to update restaurant password
+@app.route("/restaurant/password/<restaurant_id>", methods = ["PUT"])
+def restaurant_update_pass(restaurant_id):
+	restaurant = Restaurant.query.get(restaurant_id)
+
+	password = request.json['password']
+
+	password = _restaurant_hash(password)
+
+	restaurant.password = password
+
+	db.session.commit()
+	return restaurant_schema.jsonify(restaurant)
+
 # Endpoint for restaurant's to login using email and phone number
 # verification. We will add passwords later, much later
 @app.route("/restaurant/login", methods = ["POST"])
@@ -297,11 +312,11 @@ def restaurant_login():
 
 	# hash the password
 	password = _restaurant_hash(password)
-
+	print (email)
 
 	restaurant = Restaurant.query.filter_by(email = email, \
 		password = password).first()
-
+	print(restaurant)
 	if restaurant is None:
 		print("Login Failed")
 		return jsonify({

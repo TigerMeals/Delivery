@@ -1,9 +1,11 @@
 from flask import Flask, request, make_response, jsonify, render_template, redirect
 from flask import session, url_for
 from flask_mail import Mail,  Message
-from tigermeals.mail_html import user_approved_html, rest_approved_html, user_denied_html, rest_denied_html, order_delivered_html
+from tigermeals.mail_html import user_approved_html, rest_approved_html, user_denied_html, rest_denied_html, order_delivered_html, reset_password_html
 import requests
 import json
+import string
+import random
 import os
 from tigermeals import app
 
@@ -19,13 +21,98 @@ mail = Mail(app)
 # DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
 DATABASE_URL="http://localhost:5000"
 
-
 # Endpoint to logout a restaurant
 @app.route("/restaurant/logout")
 def logout():
     # remove the username from the session
     session.pop('username', None)
     return redirect(url_for('portal'))
+
+# Endpoint for a restaurant registration form
+@app.route("/register")
+def register():
+    return render_template('create_account_restaurant.tpl')
+
+# Endpoint to reset a restaurant's password
+@app.route("/reset")
+def reset():
+    return render_template('reset_restaurant.tpl')
+
+def randompassword():
+  chars = string.ascii_uppercase + string.ascii_lowercase + string.digits
+  size = random.randint(8, 12)
+  return ''.join(random.choice(chars) for x in range(size))
+
+# Endpoint for a restaurant registration form
+# Create new temp password, update database, email to user
+@app.route("/reset/upload", methods=["POST"])
+def reset_upload():
+    email = request.form.get('email')
+    new_password = randompassword()
+    # lookup by email
+    lookup_email_url = DATABASE_URL + "/restaurant/email"
+    res = requests.post(lookup_email_url, json={"email": email})
+    if not res.ok:
+        res.raise_for_status()
+    rest_id = json.loads(res.content)['restaurant_id']
+    update_pass_url = DATABASE_URL + "/restaurant/password/" + str(rest_id)
+    requests.put(update_pass_url, json={"password": new_password})
+    if not res.ok:
+        res.raise_for_status()
+
+    # Now mail temp password to restaurant
+    msg = mail.send_message(
+    'Your TigerMeals Delivery Temporary Password',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[email],
+    html=reset_password_html(new_password))
+
+    return redirect('/restaurant/home')
+
+
+
+# Register restaurant to database
+@app.route("/register/upload", methods=["POST"])
+def register_upload():
+    registration_info = {
+    "name": request.form['name'],
+    "email": request.form['email'],
+    "password": request.form['password'],
+    "website": request.form['website'],
+    "image": "Test",
+    "phone": "111111111",
+    "description": "Test",
+    "cuisine": "Test",
+    "servingSize": "100",
+    "address": request.form['address'],
+    }
+
+    print(registration_info)
+
+    if request.form['primaryFirstName'] is not None:
+        registration_info['primaryFirstName'] = request.form['primaryFirstName']
+    if request.form['primaryLastName'] is not None:
+        registration_info['primaryLastName'] = request.form['primaryLastName']
+    if request.form['primaryEmail'] is not None:
+        registration_info['primaryEmail'] = request.form['primaryEmail']
+    if request.form['primaryPhone'] is not None:
+        registration_info['primaryPhone'] = request.form['primaryPhone']
+
+    if request.form['secondaryFirstName'] is not None:
+        registration_info['secondaryFirstName'] = request.form['secondaryFirstName']
+    if request.form['secondaryLastName'] is not None:
+        registration_info['secondaryLastName'] = request.form['secondaryLastName']
+    if request.form['secondaryEmail'] is not None:
+        registration_info['secondaryEmail'] = request.form['secondaryEmail']
+    if request.form['secondaryPhone'] is not None:
+        registration_info['secondaryPhone'] = request.form['secondaryPhone']
+
+    create_rest_url = DATABASE_URL + "/restaurant"
+    res = requests.post(create_rest_url, json=registration_info)
+    if not res.ok:
+        res.raise_for_status()
+
+    return redirect('/restaurant/home')
 
 # Endpoint to login a restaurant
 @app.route("/login", methods=['POST'])
