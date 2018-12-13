@@ -124,16 +124,18 @@
 
              <div class="tab-content">
                 <div class="tab-pane active" id="profile">
-                    <hr>
+
                       <form class="form" action="/restaurant/profile/update" method="post" id="registrationForm">
-                        <div class="row">
+                        <div class="row mt-3">
                           <div class="form-group col-12">
 
                               <div class="col-12">
                                   <label for="restaurant_name"><h5>Restaurant Name</h5></label>
+                                  {% if error %}
                                   <div class="text-warning">
                                     <p>{{error}}</p>
                                   </div>
+                                  {% endif %}
                                   <input type="text" class="form-control" name="restaurant_name" id="restaurant_name" value="{{name}}" title="enter your restaurant name if any.">
                               </div>
                           </div>
@@ -214,9 +216,9 @@
 
 
                   <div class="tab-pane" id="account">
-                    <hr>
+
                         <form class="form" action="/restaurant/account/update" method="post" id="registrationForm">
-                          <div class="row">
+                          <div class="row mt-3">
 
                             <div class="form-group col-6">
 
@@ -315,9 +317,9 @@
 
 
                  <div class="tab-pane" id="settings">
-                   <hr>
+
                        <form class="form" action="#" method="post" id="registrationForm">
-                         <div class="row">
+                         <div class="row mt-3">
                            <div class="form-group col-12">
 
                                <div class="col-12">

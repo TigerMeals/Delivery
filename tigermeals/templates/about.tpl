@@ -19,18 +19,13 @@
     <link href="static/css/boostrap-slider.css" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-    <!-- use the nordstrom style - have dropdown filters per restaurant/allergies/cuisine type/number of Servings
-    wich checkboxes
-    and have an upper display show which filters are applied
-
-    then have a sort by dropdown bar in the upper right
-    -->
 
   </head>
 
 
   <body>
 
+    <!-- Navigation -->
     <!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
@@ -43,11 +38,21 @@
             <li class="nav-item-bar">
               <a class="nav-link" href="/home">Home</a>
             </li>
-            <li class="nav-item-bar active">
+            <li class="nav-item-bar">
               <a class="nav-link" href="/about">About</a>
             </li>
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/meals">Meals</a>
+            <li class="nav-item-bar active">
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
+                Meals
+              </a>
+              <span class="sr-only">(current)</span>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/meals">View all Meals</a>
+                <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
+              </div>
+            </div>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/account">My Account</a>

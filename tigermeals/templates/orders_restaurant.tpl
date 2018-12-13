@@ -76,7 +76,12 @@
         <div id="pending" class="tab-pane fade show active">
           <br>
           <table id="pendingorders" class="table table-hover table-condensed">
-
+            <thead>
+              <tr style="color:black;">
+                  <h2 class="mb-1">Orders Pending Approval</h2>
+                  <h4><small>Please approve or deny these orders as soon as possible!</small></h4>
+              </tr>
+            </thead>
     					<tbody>
                 {% for o in pending %}
                   {% with order=o %}
@@ -98,7 +103,7 @@
           <table id="activeorders" class="table table-hover table-condensed">
               <thead>
                 <tr style="color:black;">
-                    <h2>Order To Be Delivered</h2>
+                    <h2>Orders To Be Delivered</h2>
                 </tr>
               </thead>
               <tbody>

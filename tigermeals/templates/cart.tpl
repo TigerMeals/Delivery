@@ -25,6 +25,7 @@
 	<body>
 
 		<!-- Navigation -->
+    <!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="/">TigerMeals Delivery</a>
@@ -39,44 +40,54 @@
             <li class="nav-item-bar">
               <a class="nav-link" href="/about">About</a>
             </li>
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/meals">Meals</a>
+            <li class="nav-item-bar active">
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
+                Meals
+              </a>
+              <span class="sr-only">(current)</span>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/meals">View all Meals</a>
+                <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
+              </div>
+            </div>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/account">My Account</a>
             </li>
-            <li class="nav-item-bar active justify-content-end dropdown">
+            <li class="nav-item-bar justify-content-end dropdown">
               <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
-    						<span class="sr-only">(current)</span>
-    					<ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
-    						{% for i in range(0, length_cart) %}
-    							<li>
-    									<span class="item">
-    										<span class="item-left">
-    												<img
-    												src="{{food_images[i]}}"
-    												style="width:35px;height:35px;"
-    												 alt="" />
-    												<span class="item-info">
-    														<span>{{food_titles[i]}}</span>
-    														<span id = "cart_price{{i}}"></span>
+                <span class="sr-only">(current)</span>
+              <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
+                {% for i in range(0, length_cart) %}
+                  <li>
+                      <span class="item">
+                        <span class="item-left">
+                            <img
+                            src="{{food_images[i]}}"
+                            style="width:35px;height:35px;"
+                             alt="" />
+                            <span class="item-info">
+                                <span>{{food_titles[i]}}</span>
+                                <span id = "cart_price{{i}}"></span>
                                 <!-- Below needed so that price displays with 2 decimal points. -->
                                 <script>
                                   var val = parseFloat({{food_prices[i]}}).toFixed(2);
                                   document.getElementById('cart_price{{i}}').innerHTML = "price: $" + val;
                                 </script>
-    												</span>
-    										</span>
-    										<span class="item-right">
+                            </span>
+                        </span>
+                        <span class="item-right">
                           <form method="post"action="/cart/delete/{{food_ids[i]}}">
-    												<button class="btn-sm btn-danger btn-cart fa fa-times"></button>
+                            <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
                           </form>
-    										</span>
-    								</span>
-    							</li>
+                        </span>
+                    </span>
+                  </li>
 
-    							<li class="divider"></li>
-    							<li>
+                  <li class="divider"></li>
+                  <li>
                     <span id = "cart_subtotal{{i}}"></span>
                     <!-- Below needed so that price displays with 2 decimal points. -->
                     <script>
@@ -84,8 +95,8 @@
                       document.getElementById('cart_subtotal{{i}}').innerHTML = "Subtotal: $" + val;
                     </script>
 
-    						{% endfor %}
-    						<span class="checkout-text item-right">
+                {% endfor %}
+                <span class="checkout-text item-right">
                     <span id = "total"></span>
                     <!-- Below needed so that price displays with 2 decimal points. -->
                     <script>
@@ -95,14 +106,14 @@
                     <a class="checkout-text item-left" href="/cart">View Cart</a>
                     <a class="checkout-text item-right" href="/checkout">Checkout</a>
                     <br>
-    							</li>
+                  </li>
 
-    					</ul>
-    				</li>
-    					</ul>
-    				</div>
-    			</div>
-    		</nav>
+              </ul>
+            </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
 
 <br>
 		<!-- Page Content -->
@@ -182,7 +193,6 @@
 									<td data-th="Serving Size" class= "text-center">
 									{{food_quantity_feds[i]}}</td>
 									<td class="actions" data-th="">
-										<button class="btn btn-info btn-sm"><i class="fa fa-sync-alt"></i></button>
 									<form method="post"action="/cart/delete/{{food_ids[i]}}">
 										<button type="submit"id="delete{{food_ids[i]}}"class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
 									</form>

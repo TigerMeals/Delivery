@@ -2,11 +2,6 @@
   <div class="card border-light h-100">
     <a href="#" data-toggle="modal" data-target="#{{meal.food_id}}"><img class="card-img-top" src="{{meal.image}}" alt=""></a>
     <div class="card-body">
-      <!-- <h4 class="card-title">
-        <a href="#">Soft Taco Party Platter</a>
-      </h4>
-      <h5>Tacoria | <p class="text-success">$64.99</p></h5>
-      <h6>40 servings</h6> -->
       <h5 class="card-title">
         <a href="#" data-toggle="modal" data-target="#{{meal.food_id}}">{{meal.title}}</a>
       </h5>
@@ -91,6 +86,20 @@
             <label>Select quantity</label>
           </div>
 
+          <!-- <h6>Subtotal: <small>$<span id="modal_subtotal{{meal.food_id}}"></small></h6> -->
+          <!-- <script>
+            var food_quantity;
+            var val = parseFloat({{meal.price}}).toFixed(2);
+            var mySelect = document.getElementById("formQuantity");
+
+            for(var i, j = 0; i = mySelect.options[j]; j++) {
+                if(i.value == food_quantity) {
+                    mySelect.selectedIndex = j;
+                    break;
+                }
+            }
+            document.getElementById('modal_subtotal{{meal.food_id}}').innerHTML = food_quantity;
+          </script> -->
 
           <div class="modal-add-to-cart">
             <div class="text-center item-right">

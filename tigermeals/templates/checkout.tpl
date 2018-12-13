@@ -30,9 +30,10 @@
   <body>
 
     <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">TigerMeals Delivery</a>
+        <a class="navbar-brand" href="/">TigerMeals Delivery</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -44,13 +45,23 @@
             <li class="nav-item-bar">
               <a class="nav-link" href="/about">About</a>
             </li>
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/meals">Meals</a>
+            <li class="nav-item-bar active">
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
+                Meals
+              </a>
+              <span class="sr-only">(current)</span>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/meals">View all Meals</a>
+                <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
+              </div>
+            </div>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/account">My Account</a>
             </li>
-            <li class="nav-item-bar active justify-content-end dropdown">
+            <li class="nav-item-bar justify-content-end dropdown">
               <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
                 <span class="sr-only">(current)</span>
               <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
@@ -364,10 +375,6 @@
                 </div>
               </div>
               <hr class="mb-4">
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="same-address">
-                  <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
-                </div>
                 <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" id="save-info">
                   <label class="custom-control-label" for="save-info">Save this information for next time</label>

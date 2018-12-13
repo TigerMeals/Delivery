@@ -798,6 +798,7 @@ def charge():
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+    order_id = json.loads(res.content)['order_id']
 
     if date is None or date == "" or time is None or time == "":
         print("NONE -------------------------------------------------")
@@ -810,7 +811,7 @@ def charge():
 
     amount = int(total * 100)
 
-    order_id = json.loads(res.content)['order_id']
+    
     order_ordered_url = DATABASE_URL + "/order/addToken/" + str(order_id) + "/" + str(request.form['stripeToken']) + "/" + str(amount)
     #user_id = 1
     # Amount in cents
