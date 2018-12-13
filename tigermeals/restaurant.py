@@ -338,6 +338,7 @@ def orders():
 		for package in order['food_items']:
 			price += package['subtotal']
 			packages.append(package['food_title'])
+
 		for key in order:
 			print (key + " : " + str(order[key]))
 		order['price'] = price
