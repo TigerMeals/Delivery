@@ -228,14 +228,23 @@ def restaurant_add():
 	servingSize = request.json['servingSize']
 	email = request.json['email']
 	website = request.json['website']
-	primaryFirstName = request.json['primaryFirstName']
-	primaryLastName = request.json['primaryLastName']
-	primaryEmail = request.json['primaryEmail']
-	primaryPhone = request.json['primaryPhone']
-	secondaryFirstName = request.json['secondaryFirstName']
-	secondaryLastName = request.json['secondaryLastName']
-	secondaryEmail = request.json['secondaryEmail']
-	secondaryPhone = request.json['secondaryPhone']
+
+	if 'primaryFirstName' in request.json:
+		primaryFirstName = request.json['primaryFirstName']
+	if 'primaryLastName' in request.json:
+		primaryLastName = request.json['primaryLastName']
+	if 'primaryEmail' in request.json:
+		primaryEmail = request.json['primaryEmail']
+	if 'primaryPhone' in request.json:
+		primaryPhone = request.json['primaryPhone']
+	if 'secondaryFirstName' in request.json:
+		secondaryFirstName = request.json['secondaryFirstName']
+	if 'secondaryLastName' in request.json:
+		secondaryLastName = request.json['secondaryLastName']
+	if 'secondaryEmail' in request.json:
+		secondaryEmail = request.json['secondaryEmail']
+	if 'secondaryPhone' in request.json:
+		secondaryPhone = request.json['secondaryPhone']
 
 	# Hash the password
 	password = _restaurant_hash(password)

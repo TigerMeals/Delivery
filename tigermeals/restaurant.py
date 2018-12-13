@@ -80,8 +80,6 @@ def reset_upload():
 
     return redirect('/restaurant/home')
 
-
-
 # Register restaurant to database
 @app.route("/register/upload", methods=["POST"])
 def register_upload():
@@ -478,7 +476,7 @@ def add_listing():
             print(img.filename)
             print(img.stream)
             print(type(img))"""
-            
+
             #img_url = '/static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
             #img.save('tigermeals/' + img_url)
             #updateImage = {"image": img_url}
@@ -489,7 +487,7 @@ def add_listing():
             print(updateImage)
             update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
             requests.post(update_image_url, json=updateImage)
-            
+
     return redirect('/listings')
 
 # Endpoint to update a new restaurant listing.
@@ -691,7 +689,7 @@ def order_approve_rest():
     stripeToken = tokenInfo['stripeToken']
     amount = tokenInfo['amount']
 
-    try: 
+    try:
         customer = stripe.Customer.create(
             email=email,
             source=stripeToken

@@ -8,7 +8,7 @@
   <meta name="author" content="">
 
   <title>TigerMeals Delivery - Reset Restaurant Account Password</title>
-  <link rel='icon' href='static/img/takeout.ico'></link>
+  <link rel='icon' href='/static/img/takeout.ico'></link>
 
   <!-- Bootstrap core CSS -->
   <link href="static/css/bootstrap-lux.css" rel="stylesheet">
