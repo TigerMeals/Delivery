@@ -257,6 +257,14 @@ def restaurant_add():
 	db.session.commit()
 	return restaurant_schema.jsonify(new_restaurant)
 
+
+@app.route("/restaurant/image/<restaurant_id>", methods=["POST"])
+def restaurant_update_image(restaurant_id):
+	restaurant = Restaurant.query.get(restaurant_id)
+	restaurant.image = request.json['image']
+	db.session.commit()
+	return restaurant_schema.jsonify(food)
+
 # Endpoint to get restaurant detail by id
 @app.route("/restaurant/<restaurant_id>", methods = ["GET"])
 def restaurant_detail(restaurant_id):
@@ -351,6 +359,7 @@ def restaurant_profile(restaurant_id):
 	restaurant.website = request.json['website']
 	restaurant.email = request.json['email']
 	restaurant.address = request.json['location']
+	#restaurant.image = request.json['image']
 
 	db.session.commit()
 
