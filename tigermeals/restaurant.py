@@ -137,6 +137,13 @@ def register_upload():
 	if request.form['password'] != request.form['password2']:
 		return render_template('create_account_restaurant.tpl', error="Passwords did not match.")
 
+	cuisine = ""
+	for checkbox in ['Chinese', 'Healthy', 'Indian', 'Mexican', 'Drinks', 'American', 'Breakfast', 'Italian', 'Asian']:
+		if request.form.get(checkbox) is not None:
+			if len(cuisine) > 0:
+				cuisine += ","
+			cuisine += checkbox
+	print(cuisine)
 	registration_info = {
 	"name": request.form['name'],
 	"email": request.form['email'],
@@ -145,7 +152,7 @@ def register_upload():
 	"image": "",
 	"phone": "",
 	"description": "",
-	"cuisine": "",
+	"cuisine": cuisine,
 	"servingSize": "100",
 	"address": request.form['address'],
 	}
@@ -888,7 +895,7 @@ def order_approve_rest():
 
 
     if stripeToken is not None and stipeToken != "":
-        try: 
+        try:
             customer = stripe.Customer.create(
                 email=email,
                 source=stripeToken

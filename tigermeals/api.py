@@ -380,6 +380,16 @@ def restaurant_account_upgrade(restaurant_id):
 
 	return restaurant_schema.jsonify(restaurant)
 
+
+@app.route("/restaurant/filter", methods=["POST"])
+def restaurant_filter():
+	restaurants = Restaurant.query
+	cuisines = request.json.get('cuisines')
+	cuisines = cuisines.split(",")
+	if cuisines is not []:
+		restaurants = restaurants.filter(or_(Restaurant.cuisine.contains(c) for c in cuisines))
+	return restaurants_schema.jsonify(restaurants.all())
+
 ################################################################################
 class Food(db.Model):
 	food_id = db.Column(db.Integer, primary_key = True)

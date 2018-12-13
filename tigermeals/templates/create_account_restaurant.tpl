@@ -186,8 +186,83 @@
               </div>
             </div>
 
-            <hr>
+            <h4>Cuisine Types</h4>
+            <p>Check all of the boxes that correspond to your restaurant's cuisine tag.</p>
+            <div class="row" align="center">
+              <div class="col-6 col-lg-4">
+                <div class="checkbox" align="left">
+                  <label>
+                    <input type="checkbox" name="Chinese">
+                    Chinese
+                  </label>
+                </div>
+              </div>
+              <div class="col-6 col-lg-4">
+                <div class="checkbox" align="left">
+                  <label>
+                    <input type="checkbox"  name="Mexican">
+                    Mexican
+                  </label>
+                </div>
+              </div>
+              <div class="col-6 col-lg-4">
+                <div class="checkbox" align="left">
+                  <label>
+                    <input type="checkbox"  name="American">
+                    American
+                  </label>
+                </div>
+              </div>
 
+              <div class="col-6 col-lg-4">
+                <div class="checkbox" align="left">
+                  <label>
+                    <input type="checkbox"  name="Healthy">
+                    Healthy
+                  </label>
+                </div>
+              </div>
+              <div class="col-6 col-lg-4">
+                <div class="checkbox" align="left">
+                  <label>
+                    <input type="checkbox"  name="Drinks">
+                    Drinks
+                  </label>
+                </div>
+              </div>
+              <div class="col-6 col-lg-4">
+                <div class="checkbox" align="left">
+                  <label>
+                    <input type="checkbox"  name="Breakfast">
+                    Breakfast
+                  </label>
+                </div>
+              </div>
+              <div class="col-6 col-lg-4">
+                <div class="checkbox" align="left">
+                  <label>
+                    <input type="checkbox"  name="Indian">
+                    Indian
+                  </label>
+                </div>
+              </div>
+              <div class="col-6 col-lg-4">
+                <div class="checkbox" align="left">
+                  <label>
+                    <input type="checkbox"  name="Indian">
+                    Italian
+                  </label>
+                </div>
+                <div class="checkbox" align="left">
+                  <label>
+                    <input type="checkbox"  name="Indian">
+                    Asian
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <hr>
 
             <div class="row">
               <div class="col-12">
