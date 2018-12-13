@@ -829,7 +829,9 @@ def order_approve_rest():
     tokenInfo = json.loads(res.content)
 
     email = tokenInfo['email']
-    stripeToken = tokenInfo['stripeToken']
+    stripeToken = None
+    if 'stripeToken' in tokenInfo:
+    	stripeToken = tokenInfo['stripeToken']
     amount = tokenInfo['amount']
 
 

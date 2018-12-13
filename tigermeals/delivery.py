@@ -594,7 +594,7 @@ def restaurant_view():
         if not res.ok:
             res.raise_for_status()
         rest['num_orders'] = len(json.loads(res.content))
-    restaurants_length = len(rest)
+    restaurants_length = len(rests)
     return render_template('restaurant_view.tpl', food_ids=food_ids,\
         id=user_id, food_prices = food_prices,\
         food_subtotals = food_subtotals, food_titles = food_titles, \

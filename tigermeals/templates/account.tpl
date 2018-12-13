@@ -298,7 +298,7 @@
                       <h6 class="mb-0 mt-1">Location</h6>
                     </div>
                     <div class="col-8">
-                      <p>{{order['address']}}</p>
+                      <p>{{order['location']}}</p>
                     </div>
 
 
@@ -313,8 +313,12 @@
 
                   <div class="col-2">
                     <div class="row pr-2">
-                      <h6 id="order{{order[order_id]}}"class="mt-1 mb-0 text-success float-right">${{order['price']}}</h6>
-                    </div>
+                          <h6 class="mt-1 mb-0 text-success float-right">$<span id="price{{order['order_id']}}">{{order['price']}}</span></h6>
+                          </div>
+                          <script>
+                            var val = parseFloat({{order['price']}}).toFixed(2);
+                            document.getElementById("price{{order['order_id']}}").innerHTML = val;
+                          </script>
                     <div class="row pr-2">
                           <h6 class="mt-1 mb-0 float-right">Status: <br> Pending</h6>
                     </div>
@@ -366,7 +370,7 @@
                           <h6 class="mb-0 mt-1">Location</h6>
                         </div>
                         <div class="col-8">
-                          <p>{{order['address']}}</p>
+                          <p>{{order['location']}}</p>
                         </div>
 
 
@@ -381,8 +385,12 @@
 
                       <div class="col-2">
                         <div class="row pr-2">
-                          <h6 class="mt-1 mb-0 text-success float-right">${{order['price']}}</h6>
-                        </div>
+                          <h6 class="mt-1 mb-0 text-success float-right">$<span id="price{{order['order_id']}}">{{order['price']}}</span></h6>
+                          </div>
+                          <script>
+                            var val = parseFloat({{order['price']}}).toFixed(2);
+                            document.getElementById("price{{order['order_id']}}").innerHTML = val;
+                          </script>
                         <div class="row pr-2">
                           <h6 class="mt-1 mb-0 float-right">Status: <br> In Progress</h6>
                         </div>
@@ -434,7 +442,7 @@
                           <h6 class="mb-0 mt-1">Location</h6>
                         </div>
                         <div class="col-8">
-                          <p>{{order['address']}}</p>
+                          <p>{{order['location']}}</p>
                         </div>
 
 
@@ -449,8 +457,12 @@
 
                       <div class="col-2">
                         <div class="row pr-2">
-                          <h6 class="mt-1 mb-0 text-success float-right">${{order['price']}}</h6>
+                          <h6 class="mt-1 mb-0 text-success float-right">$<span id="price{{order['order_id']}}">{{order['price']}}</span></h6>
                           </div>
+                          <script>
+                            var val = parseFloat({{order['price']}}).toFixed(2);
+                            document.getElementById("price{{order['order_id']}}").innerHTML = val;
+                          </script>
 
                         <div class="row pr-2">
                           <h6 class="mt-1 mb-0 float-right">Status: <br> Completed</h6>
