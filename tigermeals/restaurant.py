@@ -79,15 +79,13 @@ def register_upload():
     "email": request.form['email'],
     "password": request.form['password'],
     "website": request.form['website'],
-    "image": "Test",
-    "phone": "111111111",
-    "description": "Test",
-    "cuisine": "Test",
+    "image": "",
+    "phone": "",
+    "description": "",
+    "cuisine": "",
     "servingSize": "100",
     "address": request.form['address'],
     }
-
-    print(registration_info)
 
     if request.form['primaryFirstName'] is not None:
         registration_info['primaryFirstName'] = request.form['primaryFirstName']

@@ -312,11 +312,10 @@ def restaurant_login():
 
 	# hash the password
 	password = _restaurant_hash(password)
-	print (email)
 
 	restaurant = Restaurant.query.filter_by(email = email, \
 		password = password).first()
-	print(restaurant)
+	
 	if restaurant is None:
 		print("Login Failed")
 		return jsonify({
