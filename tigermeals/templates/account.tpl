@@ -64,12 +64,11 @@
             <li class="nav-item-bar">
               <a class="nav-link" href="/about">About</a>
             </li>
-            <li class="nav-item-bar active">
+            <li class="nav-item-bar">
             <div class="dropdown">
               <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
                 Meals
               </a>
-              <span class="sr-only">(current)</span>
 
               <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                 <a class="dropdown-item" href="/meals">View all Meals</a>
@@ -77,9 +76,20 @@
               </div>
             </div>
             </li>
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/account">My Account</a>
+            <li class="nav-item-bar active">
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
+                My Account
+              </a>
+              <span class="sr-only">(current)</span>
+
+              <div class="dropdown-menu" aria-labelledby="logoutLink">
+                <a class="dropdown-item" href="/account">My account</a>
+                <a class="dropdown-item" href="/logout">Logout</a>
+              </div>
+            </div>
             </li>
+
             <li class="nav-item-bar justify-content-end dropdown">
               <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
                 <span class="sr-only">(current)</span>

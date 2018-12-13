@@ -59,6 +59,7 @@
               </a>
 
               <div class="dropdown-menu" aria-labelledby="logoutLink">
+                <a class="dropdown-item" href="/account">My account</a>
                 <a class="dropdown-item" href="/logout">Logout</a>
               </div>
             </div>
