@@ -152,7 +152,7 @@
             <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
             <br><br>
             <h6>Upload a different photo...</h6>
-            <form method="post" action="/restaurant/image/update" enctype=multipart/form-data>
+            <form method="post" action="/user/image/update" enctype=multipart/form-data>
               <input type="file" name="image" class="text-center center-block file-upload">
               <button type = "submit">Save Photo</button>
             </form>

@@ -245,7 +245,6 @@ def account():
     data = {
         "netid": netid
     }
-
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
     user_id = fetch_req.json()['user_id']
@@ -302,6 +301,11 @@ def account():
 
     restaurants_url = DATABASE_URL + "/restaurant"
 
+    userData = _getJSON(DATABASE_URL + '/user/' + str(user_id))
+
+    image = userData['image']
+
+
     rests = requests.get(restaurants_url)
     print("RESTAURANTS ---------------------------------------------------")
     rests_dict = {}
@@ -312,7 +316,7 @@ def account():
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict,\
         food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
         history_orders=history_orders,food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders,\
-        inprogress_orders=inprogress_orders,pending_order=pending_order,length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
+        inprogress_orders=inprogress_orders,pending_order=pending_order, image=image, length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 
 
 
@@ -437,6 +441,52 @@ def cart_edit(quantity, food_id):
 
     return redirect(url_for('cart'))
 
+
+@app.route("/user/image/update", methods=["POST"])
+def user_image_update():
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    print(cas.attributes)
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    #restaurant_info = json.loads(res.content)
+    #id = restaurant_info['restaurant_id']
+    print ("Should start here")
+    if 'image' in request.files:
+        img = request.files['image']
+        if img is not None:
+            print("here")
+            # Create unique url of restaurant id + food title
+            # Since this is a new food item it does not yet have an ID
+            """print(img)
+            print(img.filename)
+            print(img.stream)
+            print(type(img))"""
+
+            #img_url = '/static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
+            #img.save('tigermeals/' + img_url)
+            #updateImage = {"image": img_url}
+            print(img)
+            print(img.filename)
+            response = cloudinary.uploader.upload(img)
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width=200, height=200, crop = "fit")
+            #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
+            updateImage = {"image": imgurl}
+            print(updateImage)
+            update_image_url = DATABASE_URL + "/user/image/" + str(user_id)
+            requests.post(update_image_url, json=updateImage)
+    return redirect(url_for('account'))
 
 
 # Endpoint to delete an item from the current cart

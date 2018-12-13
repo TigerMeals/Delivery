@@ -73,6 +73,13 @@ def user_detail(user_id):
 	user = User.query.get(user_id)
 	return user_schema.jsonify(user)
 
+@app.route("/user/image/<user_id>", methods=["POST"])
+def user_update_image(user_id):
+	user = User.query.get(user_id)
+	user.image = request.json['image']
+	db.session.commit()
+	return user_schema.jsonify(user)
+
 # Endpoint to update user
 @app.route("/user/<user_id>", methods = ["PUT"])
 def user_update(user_id):
