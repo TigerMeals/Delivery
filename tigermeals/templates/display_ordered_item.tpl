@@ -11,15 +11,15 @@
 
 </div>
 <div class="col-2">
-  <p>$<span id = "{{order_id}}item_price{{item.food_id}}"></span> ea </p>
+  <p>$<span id = "{{order.order_id}}item_price{{item.food_id}}"></span> ea </p>
   <!-- Below needed so that price displays with 2 decimal points. -->
   <script>
     var val = parseFloat({{item.food_price}}).toFixed(2);
-    document.getElementById("{{order_id}}item_price{{item.food_id}}").innerHTML = val;
+    document.getElementById("{{order.order_id}}item_price{{item.food_id}}").innerHTML = val;
   </script>
-  <p><span class="text-black">Subtotal: </span> <span id = "{{order_id}}item_subtotal{{item.food_id}}"></span> </p>
+  <p><span class="text-black">Subtotal: </span> <span id = "{{order.order_id}}item_subtotal{{item.food_id}}"></span> </p>
   <script>
     var val = parseFloat({{item.subtotal}}).toFixed(2);
-    document.getElementById("{{order_id}}item_subtotal{{item.food_id}}").innerHTML = val;
+    document.getElementById("{{order.order_id}}item_subtotal{{item.food_id}}").innerHTML = val;
   </script>
 </div>

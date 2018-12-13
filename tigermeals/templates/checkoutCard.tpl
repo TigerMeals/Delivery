@@ -20,6 +20,7 @@
     <!-- use the nordstrom style - have dropdown filters per restaurant/allergies/cuisine type/number of Servings
     wich checkboxes
     and have an upper display show which filters are applied
+
     then have a sort by dropdown bar in the upper right
     -->
 
@@ -29,10 +30,9 @@
   <body>
 
     <!-- Navigation -->
-    <!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="/">TigerMeals Delivery</a>
+        <a class="navbar-brand" href="#">TigerMeals Delivery</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -45,30 +45,12 @@
               <a class="nav-link" href="/about">About</a>
             </li>
             <li class="nav-item-bar">
-            <div class="dropdown">
-              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
-                Meals
-              </a>
-
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="/meals">View all Meals</a>
-                <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
-              </div>
-            </div>
+              <a class="nav-link" href="/meals">Meals</a>
             </li>
             <li class="nav-item-bar">
-            <div class="dropdown">
-              <a class="nav-link btn-danger dropdown-toggle" href="/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
-                My Account
-              </a>
-
-              <div class="dropdown-menu" aria-labelledby="logoutLink">
-                <a class="dropdown-item" href="/account">My account</a>
-                <a class="dropdown-item" href="/logout">Logout</a>
-              </div>
-            </div>
+              <a class="nav-link" href="/account">My Account</a>
             </li>
-            <li class="nav-item-bar justify-content-end dropdown">
+            <li class="nav-item-bar active justify-content-end dropdown">
               <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
                 <span class="sr-only">(current)</span>
               <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
@@ -131,7 +113,7 @@
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
         <h2>Checkout form</h2>
-        <p class="lead">Please complete your order below. We thank you for shopping with TigerMeals Delivery.</p>
+        <p class="lead">Please click "Pay with Card" to complete your order.</p>
       </div>
 
       <div class="row">
@@ -189,79 +171,12 @@
             </div>
           </form>
         </div>
-        <div class="col-md-8 order-md-1" id = "payment_info">
-
-            <h4 class="mb-3">Payment</h4>
-
-            <div class="d-block my-3">
-              <div class="custom-control custom-radio">
-                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" checked required>
-                <label class="custom-control-label" for="credit">Credit card</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
-                <label class="custom-control-label" for="debit">Debit card</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
-                <label class="custom-control-label" for="paypal">Paypal</label>
-              </div>
-              <div class="custom-control custom-radio">
-                <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
-                <label class="custom-control-label" for="cash">Cash</label>
-                <!--<div class="text-success" id="ifYes" style="visibility:hidden">
-                  Great! Press Checkout to complete your order
-                </div>-->
-                <div class="text-success" id="ifYes" style="visibility:hidden">
-
-                </div>
-                <script>
-                  function yesCash() {
-                    if (document.getElementById('cash').checked) {
-                      document.getElementById('billing_info').style.visibility ='visible';
-                      document.getElementById('checkout_button').style.visibility ='visible';
-                    }
-                    else {
-                      document.getElementById('billing_info').style.visibility ='hidden';
-                      document.getElementById('checkout_button').style.visibility ='hidden';
-                    }
-                    if (document.getElementById('credit').checked || document.getElementById('debit').checked){
-                      document.getElementById('payment_button').style.visibility = 'visible';
-                    }
-                    else{
-                      document.getElementById('payment_button').style.visibility = 'hidden';
-                    }
-                  }
-                </script>
-              </div>
-        </div>
-
-
+       
+          
+        
       <div class="col-md-8 order-md-1" id = "payment_button" style="visibility:visible" >
-            <form action="/charge" id = "stripe_payment_button" method="post" class="needs-validation" novalidate>
-
-                <article>
-                  <label>
-                    <span>Total is ${{total}}</span>
-                  </label>
-                </article>
-
-                <div class="col-md-6 mb-3">
-                <label for="date">Delivery Date</label>
-                <input type="date" class="form-control" id="dateCard" name="dateCard" required>
-                <div class="invalid-feedback">
-                  Please enter a valid date.
-                </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="time">Delivery Time</label>
-                <input type="time" class="form-control" id="timeCard" name="timeCard" value="12:00" required>
-                <div class="invalid-feedback">
-                  Please enter a valid time.
-                </div>
-              </div>
-              <p>{{error}}</p>
-               <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+            <form action="/charge?id={{user_id}}" id = "stripe_payment_button" method="post" class="needs-validation" novalidate>       
+                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                         data-key={{key}}
                         data-amount=String({{total}} * 100)
                         data-description="Catering Payment"
@@ -269,13 +184,13 @@
                         data-shipping-address = "true"
                         data-zip-code="true"
                         data-name="TigerMeals Checkout"
-                        data-locale="auto">
-                </script>
+                        data-locale="auto">      
+                </script> 
 
-
-                <!--<p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" style="visibility:visible">Checkout with Card</button></p> -->
                 <!--<script src="https://checkout.stripe.com/checkout.js"></script>
+
                     <button id="customButton" type = "submit" style = "visibility:visible">Purchase</button>
+
                     <script>
                     var handler = StripeCheckout.configure({
                       key: 'pk_test_TYooMQauvdEDq54NiTphI7jx',
@@ -286,6 +201,7 @@
                         // Get the token ID to your server-side code for use.
                       }
                     });
+
                     document.getElementById('customButton').addEventListener('click', function(e) {
                       // Open Checkout with further options:
                       handler.open({
@@ -297,21 +213,22 @@
                       });
                       e.preventDefault();
                     });
+
                     // Close Checkout on page navigation:
                     window.addEventListener('popstate', function() {
                       handler.close();
                     });
                     </script> -->
                 </form>
+                
 
-
-
+          
         </div>
         <br>
         <br>
         <br>
         <div class="col-md-8 order-md-1" id = "billing_info" style="visibility:hidden" >
-
+          
           <form id="checkout_form" action="/ordered?id={{user_id}}" method="POST" class="needs-validation" novalidate>
             <h4 class="mb-3">Cash Payment: Please complete this form</h4>
             <h5 class="mb-3">Shipping Address</h5>
@@ -379,6 +296,10 @@
               </div>
               <hr class="mb-4">
                 <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="same-address">
+                  <label class="custom-control-label" for="same-address">Shipping address is the same as my billing address</label>
+                </div>
+                <div class="custom-control custom-checkbox">
                   <input type="checkbox" class="custom-control-input" id="save-info">
                   <label class="custom-control-label" for="save-info">Save this information for next time</label>
                 </div>
@@ -396,7 +317,7 @@
         </div>
       </div>
     </div>
-
+    
     <!-- Footer -->
 
     <footer class="py-4 red-bar">
@@ -429,6 +350,7 @@
         });
       }, false);
     })();
+
     </script>
   </body>
 

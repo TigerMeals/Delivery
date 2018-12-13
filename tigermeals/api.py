@@ -29,23 +29,23 @@ class User(db.Model):
 	phone = db.Column(db.Unicode, unique = False)
 	address = db.Column(db.Unicode, unique = False)
 	allergies = db.Column(db.Unicode, unique = False)
-	userHistory = db.Column(db.JSON, unique = False)
+	image = db.Column(db.Unicode, unique = False)
 
 
-	def __init__(self, netid, name, email, birthday, phone, address, allergies, userHistory = 0):
+	def __init__(self, netid, name, email, birthday, phone, address, allergies, image):
 		self.name = name
 		self.email = email
 		self.birthday = birthday
 		self.phone = phone
 		self.address = address
 		self.allergies = allergies
-		self.userHistory = userHistory
 		self.netid = netid
+		self.image = image
 
 
 class UserSchema(ma.Schema):
 	class Meta:
-		fields = ('user_id', 'netid', 'name', 'email', 'birthday', 'phone', 'address', 'allergies', 'userHistory')
+		fields = ('user_id', 'netid', 'name', 'email', 'birthday', 'phone', 'address', 'allergies', 'image')
 
 user_schema = UserSchema()
 users_schema = UserSchema(many = True)
@@ -60,8 +60,9 @@ def user_add():
 	phone = request.json['phone']
 	address = request.json['address']
 	allergies = request.json['allergies']
+	image = request.json['image']
 
-	new_user = User(netid, name, email, birthday, phone, address, allergies)
+	new_user = User(netid, name, email, birthday, phone, address, allergies, image)
 	db.session.add(new_user)
 	db.session.commit()
 	return user_schema.jsonify(new_user)
@@ -83,7 +84,6 @@ def user_update(user_id):
 	user.phone = request.json['phone']
 	user.address = request.json['address']
 	user.allergies = request.json['allergies']
-	user.userHistory = request.json['userHistory']
 
 	db.session.commit()
 	return user_schema.jsonify(user)
@@ -100,7 +100,7 @@ def user_login():
 		email = netid + "@princeton.edu"
 		user = User(name="",netid=netid,email=email,\
 			birthday='',phone='',address='',\
-			allergies='')
+			allergies='', image = '')
 		db.session.add(user)
 		db.session.commit()
 		return user_schema.jsonify(user)
@@ -257,6 +257,14 @@ def restaurant_add():
 	db.session.commit()
 	return restaurant_schema.jsonify(new_restaurant)
 
+
+@app.route("/restaurant/image/<restaurant_id>", methods=["POST"])
+def restaurant_update_image(restaurant_id):
+	restaurant = Restaurant.query.get(restaurant_id)
+	restaurant.image = request.json['image']
+	db.session.commit()
+	return restaurant_schema.jsonify(restaurant)
+
 # Endpoint to get restaurant detail by id
 @app.route("/restaurant/<restaurant_id>", methods = ["GET"])
 def restaurant_detail(restaurant_id):
@@ -351,6 +359,7 @@ def restaurant_profile(restaurant_id):
 	restaurant.website = request.json['website']
 	restaurant.email = request.json['email']
 	restaurant.address = request.json['location']
+	#restaurant.image = request.json['image']
 
 	db.session.commit()
 

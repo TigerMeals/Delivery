@@ -334,6 +334,8 @@
               </div>
             </div>
 
+            <p>{{error}}</p>
+
             <div class="forgot mb-2">
               <a href="/restaurant/home">Already have an account? Login here.</a>
               <br>
