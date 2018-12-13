@@ -177,7 +177,7 @@
             <p>Serving as our immediate point of contact, Mohamed met with the team on a weekly basis to provide suggesstions, deliverables, and insight to the project. He is essential to the success of this project.</p>
           </div>
         </div>
-
+      </div>
       <!-- /.container -->
 
 
