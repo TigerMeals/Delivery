@@ -44,6 +44,69 @@ def logout():
 def register():
     return render_template('create_account_restaurant.tpl')
 
+# Endpoint for a restaurant to view their profile
+@app.route("/view")
+def view():
+	if 'username' not in session:
+		print("Login screen -----------------------------------")
+		return render_template('login_restaurant.tpl')
+
+	username = session['username']
+
+	restaurant_info_url = DATABASE_URL + "/restaurant/email"
+
+	email = {
+		"email": str(username)
+	}
+
+	res = requests.post(restaurant_info_url, json = email)
+	if not res.ok:
+		res.raise_for_status()
+
+	restaurant_id = json.loads(res.content)['restaurant_id']
+	restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
+	res = requests.get(restaurant_url)
+	if not res.ok:
+		res.raise_for_status()
+	rest = json.loads(res.content)
+
+	meals_url = DATABASE_URL + "/food/restaurant/" + str(restaurant_id)
+	res = requests.get(meals_url)
+	if not res.ok:
+		res.raise_for_status()
+	meals = json.loads(res.content)
+
+	for meal in meals:
+		# Splice allergies into a list
+		if meal['allergies'] is "":
+			meal['allergies'] = []
+		else:
+			meal['allergies'] = meal['allergies'].split(",")
+		meal['restaurant'] = rest['name']
+
+	orders_url = DATABASE_URL + "/order/restaurant/" + str(restaurant_id)
+	res = requests.get(orders_url)
+	if not res.ok:
+		res.raise_for_status()
+
+	orders = json.loads(res.content)
+
+	length_orders = 0
+
+	for order in orders:
+		if order['paid'] and order['delivery_in_process']:
+			length_orders += 1
+
+	error = request.args.get('error')
+
+	r = make_response(render_template('restaurant_info_restaurant.tpl', meals=meals, restaurant=rest, length_orders=length_orders))
+
+	r.headers["Pragma"] = "no-cache"
+	r.headers["Expires"] = "0"
+	r.headers['Cache-Control'] = 'public, max-age=0'
+	return r
+
+
 # Endpoint to reset a restaurant's password
 @app.route("/reset")
 def reset():
@@ -83,43 +146,46 @@ def reset_upload():
 # Register restaurant to database
 @app.route("/register/upload", methods=["POST"])
 def register_upload():
-    registration_info = {
-    "name": request.form['name'],
-    "email": request.form['email'],
-    "password": request.form['password'],
-    "website": request.form['website'],
-    "image": "",
-    "phone": "",
-    "description": "",
-    "cuisine": "",
-    "servingSize": "100",
-    "address": request.form['address'],
-    }
+	if request.form['password'] != request.form['password2']:
+		return render_template('create_account_restaurant.tpl', error="Passwords did not match.")
 
-    if request.form['primaryFirstName'] is not None:
-        registration_info['primaryFirstName'] = request.form['primaryFirstName']
-    if request.form['primaryLastName'] is not None:
-        registration_info['primaryLastName'] = request.form['primaryLastName']
-    if request.form['primaryEmail'] is not None:
-        registration_info['primaryEmail'] = request.form['primaryEmail']
-    if request.form['primaryPhone'] is not None:
-        registration_info['primaryPhone'] = request.form['primaryPhone']
+	registration_info = {
+	"name": request.form['name'],
+	"email": request.form['email'],
+	"password": request.form['password'],
+	"website": request.form['website'],
+	"image": "",
+	"phone": "",
+	"description": "",
+	"cuisine": "",
+	"servingSize": "100",
+	"address": request.form['address'],
+	}
 
-    if request.form['secondaryFirstName'] is not None:
-        registration_info['secondaryFirstName'] = request.form['secondaryFirstName']
-    if request.form['secondaryLastName'] is not None:
-        registration_info['secondaryLastName'] = request.form['secondaryLastName']
-    if request.form['secondaryEmail'] is not None:
-        registration_info['secondaryEmail'] = request.form['secondaryEmail']
-    if request.form['secondaryPhone'] is not None:
-        registration_info['secondaryPhone'] = request.form['secondaryPhone']
+	if request.form['primaryFirstName'] is not None:
+	    registration_info['primaryFirstName'] = request.form['primaryFirstName']
+	if request.form['primaryLastName'] is not None:
+	    registration_info['primaryLastName'] = request.form['primaryLastName']
+	if request.form['primaryEmail'] is not None:
+	    registration_info['primaryEmail'] = request.form['primaryEmail']
+	if request.form['primaryPhone'] is not None:
+	    registration_info['primaryPhone'] = request.form['primaryPhone']
 
-    create_rest_url = DATABASE_URL + "/restaurant"
-    res = requests.post(create_rest_url, json=registration_info)
-    if not res.ok:
-        res.raise_for_status()
+	if request.form['secondaryFirstName'] is not None:
+	    registration_info['secondaryFirstName'] = request.form['secondaryFirstName']
+	if request.form['secondaryLastName'] is not None:
+	    registration_info['secondaryLastName'] = request.form['secondaryLastName']
+	if request.form['secondaryEmail'] is not None:
+	    registration_info['secondaryEmail'] = request.form['secondaryEmail']
+	if request.form['secondaryPhone'] is not None:
+	    registration_info['secondaryPhone'] = request.form['secondaryPhone']
 
-    return redirect('/restaurant/home')
+	create_rest_url = DATABASE_URL + "/restaurant"
+	res = requests.post(create_rest_url, json=registration_info)
+	if not res.ok:
+	    res.raise_for_status()
+
+	return redirect('/restaurant/home')
 
 # Endpoint to login a restaurant
 @app.route("/login", methods=['POST'])
@@ -884,7 +950,9 @@ def order_approve_rest():
     tokenInfo = json.loads(res.content)
 
     email = tokenInfo['email']
-    stripeToken = tokenInfo['stripeToken']
+    stripeToken = None
+    if 'stripeToken' in tokenInfo:
+    	stripeToken = tokenInfo['stripeToken']
     amount = tokenInfo['amount']
 
 

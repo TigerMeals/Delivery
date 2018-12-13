@@ -26,6 +26,7 @@
   <body>
 
     <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="/">TigerMeals Delivery</a>
@@ -37,11 +38,21 @@
             <li class="nav-item-bar">
               <a class="nav-link" href="/home">Home</a>
             </li>
-            <li class="nav-item-bar active">
+            <li class="nav-item-bar">
               <a class="nav-link" href="/about">About</a>
             </li>
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/meals">Meals</a>
+            <li class="nav-item-bar active">
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
+                Meals
+              </a>
+              <span class="sr-only">(current)</span>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/meals">View all Meals</a>
+                <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
+              </div>
+            </div>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/account">My Account</a>

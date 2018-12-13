@@ -49,6 +49,7 @@
 <body>
 
     <!-- Navigation -->
+    <!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
         <a class="navbar-brand" href="/">TigerMeals Delivery</a>
@@ -63,10 +64,20 @@
             <li class="nav-item-bar">
               <a class="nav-link" href="/about">About</a>
             </li>
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/meals">Meals</a>
-            </li>
             <li class="nav-item-bar active">
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
+                Meals
+              </a>
+              <span class="sr-only">(current)</span>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/meals">View all Meals</a>
+                <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
+              </div>
+            </div>
+            </li>
+            <li class="nav-item-bar">
               <a class="nav-link" href="/account">My Account</a>
             </li>
             <li class="nav-item-bar justify-content-end dropdown">
@@ -290,7 +301,7 @@
                       <h6 class="mb-0 mt-1">Location</h6>
                     </div>
                     <div class="col-8">
-                      <p>{{order['address']}}</p>
+                      <p>{{order['location']}}</p>
                     </div>
 
 
@@ -305,8 +316,12 @@
 
                   <div class="col-2">
                     <div class="row pr-2">
-                      <h6 id="order{{order[order_id]}}"class="mt-1 mb-0 text-success float-right">${{order['price']}}</h6>
-                    </div>
+                          <h6 class="mt-1 mb-0 text-success float-right">$<span id="price{{order['order_id']}}">{{order['price']}}</span></h6>
+                          </div>
+                          <script>
+                            var val = parseFloat({{order['price']}}).toFixed(2);
+                            document.getElementById("price{{order['order_id']}}").innerHTML = val;
+                          </script>
                     <div class="row pr-2">
                           <h6 class="mt-1 mb-0 float-right">Status: <br> Pending</h6>
                     </div>
@@ -358,7 +373,7 @@
                           <h6 class="mb-0 mt-1">Location</h6>
                         </div>
                         <div class="col-8">
-                          <p>{{order['address']}}</p>
+                          <p>{{order['location']}}</p>
                         </div>
 
 
@@ -373,8 +388,12 @@
 
                       <div class="col-2">
                         <div class="row pr-2">
-                          <h6 class="mt-1 mb-0 text-success float-right">${{order['price']}}</h6>
-                        </div>
+                          <h6 class="mt-1 mb-0 text-success float-right">$<span id="price{{order['order_id']}}">{{order['price']}}</span></h6>
+                          </div>
+                          <script>
+                            var val = parseFloat({{order['price']}}).toFixed(2);
+                            document.getElementById("price{{order['order_id']}}").innerHTML = val;
+                          </script>
                         <div class="row pr-2">
                           <h6 class="mt-1 mb-0 float-right">Status: <br> In Progress</h6>
                         </div>
@@ -426,7 +445,7 @@
                           <h6 class="mb-0 mt-1">Location</h6>
                         </div>
                         <div class="col-8">
-                          <p>{{order['address']}}</p>
+                          <p>{{order['location']}}</p>
                         </div>
 
 
@@ -441,8 +460,12 @@
 
                       <div class="col-2">
                         <div class="row pr-2">
-                          <h6 class="mt-1 mb-0 text-success float-right">${{order['price']}}</h6>
+                          <h6 class="mt-1 mb-0 text-success float-right">$<span id="price{{order['order_id']}}">{{order['price']}}</span></h6>
                           </div>
+                          <script>
+                            var val = parseFloat({{order['price']}}).toFixed(2);
+                            document.getElementById("price{{order['order_id']}}").innerHTML = val;
+                          </script>
 
                         <div class="row pr-2">
                           <h6 class="mt-1 mb-0 float-right">Status: <br> Completed</h6>

@@ -11,10 +11,10 @@
   <link rel='icon' href='/static/img/takeout.ico'></link>
 
   <!-- Bootstrap core CSS -->
-  <link href="static/css/bootstrap-lux.css" rel="stylesheet">
+  <link href="/static/css/bootstrap-lux.css" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="static/css/shop-homepage.css" rel="stylesheet">
+  <link href="/static/css/shop-homepage.css" rel="stylesheet">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/static/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
   <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
@@ -33,6 +33,7 @@
        <!-- <h2>Restaurant Login</h2> -->
        <p>We're excited to have you!</p>
        </div>
+         <p class="text-warning text-danger">{{error}}</p>
         <form id="register" class="createAccountForm needs-validation" action="/register/upload" method="post" novalidate>
 
           <div class="row">
@@ -50,7 +51,7 @@
             </div>
             <div class="form-group col-md-6">
                 <div class="col-12">
-                  <input name="email" class="form-control" id="restaurantEmail" placeholder="Restaurant Email" type="text" required>
+                  <input name="email" class="form-control" id="restaurantEmail" placeholder="Restaurant Email" type="email" required>
                   <div class="invalid-feedback" align="left">
                     Please enter a valid email address.
                   </div>
@@ -59,7 +60,7 @@
 
             <div class="form-group col-md-6">
               <div class="col-12">
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password" name = "password" required>
+                <input type="password" class="form-control" id="password" placeholder="Password" name = "password" required>
                 <div class="invalid-feedback" align="left">
                   Please a password.
                 </div>
@@ -210,14 +211,14 @@
 
                   <div class="col-12">
                       <!-- <label for="primaryEmail"><h5>Email</h5></label> -->
-                      <input type="text" class="form-control" name="primaryEmail" id="primaryEmail" placeholder="Email" title="enter your email if any.">
+                      <input type="email" class="form-control" name="primaryEmail" id="primaryEmail" placeholder="Email" title="enter your email if any.">
                   </div>
               </div>
               <div class="form-group col-md-6 justify-content-right">
 
                   <div class="col-12">
                     <!-- <label for="primaryPhone"><h5>Phone Number</h5></label> -->
-                      <input type="text" class="form-control" name="primaryPhone" id="primaryPhone" placeholder="Phone Number" title="enter your phone number if any.">
+                      <input type="email" class="form-control" name="primaryPhone" id="primaryPhone" placeholder="Phone Number" title="enter your phone number if any.">
                   </div>
               </div>
             </div>
@@ -258,10 +259,8 @@
               </div>
             </div>
 
-
-            <p>{{error}}</p>
             <div class="forgot mb-2">
-              <a href="login_restaurant.html">Already have an account? Login here.</a>
+              <a href="/restaurant/home">Already have an account? Login here.</a>
               <br>
               <a href="mailto:tigermealsdelivery@gmail.com">Questions? Email us at tigermealsdelivery@gmail.com.</a>
               <br>

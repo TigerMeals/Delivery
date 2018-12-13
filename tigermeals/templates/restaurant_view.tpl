@@ -40,7 +40,17 @@
               <a class="nav-link" href="/about">About</a>
             </li>
             <li class="nav-item-bar active">
-              <a class="nav-link" href="/meals">Meals</a>
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
+                Meals
+              </a>
+              <span class="sr-only">(current)</span>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/meals">View all Meals</a>
+                <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
+              </div>
+            </div>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/account">My Account</a>
@@ -184,6 +194,16 @@
                 </h5>
               </div>
             </div>
+
+
+            <div class="card border-white bg-transparent">
+              <div class="card-header border-white bg-transparent">
+                 <a href="/meals" class="btn btn-outline-primary btn-block my-2 my-sm-0">View by Meals</a>
+              </div>
+            </div>
+
+
+
           </div>
         </div>
         </div>
@@ -220,15 +240,20 @@
           <div class="sticky-top sticky-catering">
           <div class="row">
             <div class="col-lg-6 col-md-12 mb-8">
+              <h2 class="mb-0">Restaurants</h2>
+              <span class="ml-0 mt-0">({{restaurants_length}} results)</span>
+              {% if error %}
+              <p class="text-danger mt-2">{{error}}</p>
+              {% endif %}
               <!-- <h2>Restaurants</h2> -->
-              <h4 class="ml-1">{{restaurants_length}} results</h4>
+              <!-- <h4 class="ml-1">{{restaurants_length}} results</h4> -->
             </div>
 
             <div class="col-lg-6 mb-4 float-right">
               <form class="card card-sm border-white ">
                   <div class="card-body border-white bg-transparent row no-gutters align-items-center px-0 py-0">
                       <div class="col-auto">
-                          <i class="fas fa-search h4 text-body"></i>
+                          <!-- <i class="fas fa-search h4 text-body"></i> -->
                       </div>
                       <!--end of col-->
                       <div class="col">
