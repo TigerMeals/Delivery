@@ -7,6 +7,7 @@ import json
 import os
 from flask_cas import CAS, login_required, login, logout
 from tigermeals import app
+import stripe
 
 cas = CAS(app, '/cas')
 cas.init_app(app)
@@ -26,6 +27,12 @@ app.config['MAIL_USERNAME'] = 'tigermealsdelivery@gmail.com'
 app.config['MAIL_PASSWORD'] = 'aksnpqtutouldhna'
 mail = Mail(app)
 
+stripe_keys = {
+  'secret_key': 'sk_test_g9fTagqR9dXbC8lFPSem2lSM',
+  'publishable_key': 'pk_test_z4VMPhZbhdpqyLC2UF2junYl'
+}
+
+stripe.api_key = stripe_keys['secret_key']
 
 def _getCart(user_id):
     order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
@@ -232,7 +239,7 @@ def checkout():
         food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
         food_quantity_feds=food_quantity_feds, food_images=food_images,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
-        email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, order_id=order_id)
+        email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, key = stripe_keys['publishable_key'], order_id=order_id)
 
 @app.route("/account")
 @login_required
@@ -631,6 +638,109 @@ def upload_cart():
             update_order_url = DATABASE_URL + "/order/" + str(order_id)
             res = requests.put(update_order_url, json = updatedOrder)
     return redirect('/meals')
+
+@login_required
+@app.route('/charge', methods=['POST'])
+def charge():
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+    
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    print(request.form)
+    #print("Hello what's up")
+
+    user_id = fetch_req.json()['user_id']
+    
+    name = str(request.form['stripeBillingName'])
+    email = str(request.form['stripeEmail'])
+    address = str(request.form['stripeShippingAddressLine1'])
+    date = str(request.form['dateCard'])
+    time = str(request.form['timeCard'])
+
+    
+    
+    #print(user_id)
+    current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
+    res = requests.get(current_order_url)
+
+    if not res.ok:
+        res.raise_for_status()
+        return None
+
+    
+    
+    email, name, phone, address, netid, allergies = _getUser(user_id)
+
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+
+    if date is None or date == "" or time is None or time == "":
+        print("NONE -------------------------------------------------")
+        return render_template('checkout.tpl', user_id=user_id, food_prices=food_prices,\
+                food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
+                food_quantity_feds=food_quantity_feds, food_images=food_images,\
+                length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
+                email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, order_id=order_id, key = stripe_keys['publishable_key'], error = "Please enter date and time info!!")
+
+
+    amount = int(total * 100)
+
+    order_id = json.loads(res.content)['order_id']
+    order_ordered_url = DATABASE_URL + "/order/addToken/" + str(order_id) + "/" + str(request.form['stripeToken']) + "/" + str(amount)
+    #user_id = 1
+    # Amount in cents
+    
+    #order_id = json.loads(res.content)['order_id']
+    #order_ordered_url = DATABASE_URL + "/order/ordered/" + str(order_id)
+
+    formData = {
+    "name": name,
+    "email": email,
+    "location": address,
+    "date": date,
+    "time": time
+    }
+
+    #print (formData)
+    #print (formData)
+    res = requests.post(order_ordered_url, json=formData)
+    if not res.ok:
+        res.raise_for_status()
+        return None
+
+    msg = mail.send_message(
+    'Your recent TigerMeals Delivery order!',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[email],
+    html=user_order_html())
+
+    restaurant_id = json.loads(res.content)['restaurant_id']
+    restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
+    res = requests.get(restaurant_url)
+
+    if not res.ok:
+        res.raise_for_status()
+        return None
+
+    rest = json.loads(res.content)
+    restEmail = rest['email']
+    msg = mail.send_message(
+    'New TigerMeals Delivery order request!',
+    sender='tigermealsdelivery@gmail.com',
+    recipients=[restEmail],
+    html=rest_order_html())
+    #print(request.form)
+    #print(type(request.form['stripeToken']))
+    
+
+    return redirect('/order/confirmed')
 
 
 @app.route("/ordered", methods=["POST"])
