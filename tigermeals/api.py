@@ -40,7 +40,7 @@ class User(db.Model):
 		self.address = address
 		self.allergies = allergies
 		self.netid = netid
-		self.image = ""
+		self.image = image
 
 
 class UserSchema(ma.Schema):
