@@ -146,46 +146,44 @@
               <div id="collapseTwo" aria-labelledby="headingTwo" data-parent="#accordionExample">
                 <div class="card-body">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="American">
-                    <label class="form-check-label" for="American">
-                      American
-                    </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Asian">
-                    <label class="form-check-label" for="Asian">
-                      Asian
-                    </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Breakfast">
-                    <label class="form-check-label" for="Breakfast">
-                      Breakfast
-                    </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Chinese">
-                    <label class="form-check-label" for="Chinese">
-                      Chinese
-                    </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Drinks">
-                    <label class="form-check-label" for="Drinks">
-                      Drinks
-                    </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Fast-Food">
-                    <label class="form-check-label" for="Fast-Food">
-                      Fast Food
-                    </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Healthy">
-                    <label class="form-check-label" for="Healthy">
-                      Healthy
-                    </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Indian">
-                    <label class="form-check-label" for="Indian">
-                      Indian
-                    </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Italian">
-                    <label class="form-check-label" for="Italian">
-                      Italian
-                    </label> <br>
-                    <input class="form-check-input" type="checkbox" value="" id="Mexican">
-                    <label class="form-check-label" for="Mexican">
-                      Mexican
-                    </label> <br>
+                    <form id="filter" action="/meals/restaurant/filter" method="post">
+                      <input class="form-check-input" type="checkbox" value="" name="American" id="American">
+                      <label class="form-check-label" for="American">
+                        American
+                      </label> <br>
+                      <input class="form-check-input" type="checkbox" value="" name="Asian" id="Asian">
+                      <label class="form-check-label" for="Asian">
+                        Asian
+                      </label> <br>
+                      <input class="form-check-input" type="checkbox" value="" name="Breakfast" id="Breakfast">
+                      <label class="form-check-label" for="Breakfast">
+                        Breakfast
+                      </label> <br>
+                      <input class="form-check-input" type="checkbox" value="" name="Chinese" id="Chinese">
+                      <label class="form-check-label" for="Chinese">
+                        Chinese
+                      </label> <br>
+                      <input class="form-check-input" type="checkbox" value="" name="Drinks" id="Drinks">
+                      <label class="form-check-label" for="Drinks">
+                        Drinks
+                      </label> <br>
+                      <input class="form-check-input" type="checkbox" value="" name="Healthy" id="Healthy">
+                      <label class="form-check-label" for="Healthy">
+                        Healthy
+                      </label> <br>
+                      <input class="form-check-input" type="checkbox" value="" name="Indian" id="Indian">
+                      <label class="form-check-label" for="Indian">
+                        Indian
+                      </label> <br>
+                      <input class="form-check-input" type="checkbox" value="" name="Italian" id="Italian">
+                      <label class="form-check-label" for="Italian">
+                        Italian
+                      </label> <br>
+                      <input class="form-check-input" type="checkbox" value="" name="Mexican" id="Mexican">
+                      <label class="form-check-label" for="Mexican">
+                        Mexican
+                      </label> <br>
+                    </form>
                   </div>
               </div>
             </div>
@@ -196,7 +194,7 @@
               <div class="card-header border-white bg-transparent" id="headingFive">
                 <h5 class="mb-0">
                   <div class="float-right">
-                  <input class="btn-sm btn-primary" type="submit" value="Apply Filters">
+                  <input class="btn-sm btn-primary" type="submit" value="Apply Filters" form="filter">
                 </div>
                   <!-- <button class="btn btn-link no-pad float-right" type="button" h>
                   <div class="col-sm pr-0 float-right">Apply Filters</div> -->
@@ -305,6 +303,11 @@
     </div>
     <!-- /.container -->
 
+    <script>
+    {% for c in cuisines %}
+      document.getElementById('{{c}}').checked = true;
+    {% endfor %}
+    </script>
     <!-- Footer -->
     <footer class="py-4 red-bar">
       <div class="container">
