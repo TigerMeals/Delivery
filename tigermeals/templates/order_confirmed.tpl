@@ -41,11 +41,27 @@
               <a class="nav-link" href="/about">About</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/meals">Meals</a>
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
+                Meals
+              </a>
 
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/meals">View all Meals</a>
+                <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
+              </div>
+            </div>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/account">My Account</a>
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
+                My Account
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="logoutLink">
+                <a class="dropdown-item" href="/logout">Logout</a>
+              </div>
+            </div>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="#">Checkout</a>
