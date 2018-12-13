@@ -91,7 +91,7 @@
             <h6>Upload a different photo...</h6>
             <form method="post" action="/restaurant/image/update" enctype=multipart/form-data>
               <input type="file" name="image" class="text-center center-block file-upload">
-              <button type = "submit">Save Photo</button>
+              <div class="mt-3" align="left"><button type = "submit">Save Photo</button></div>
             </form>
           </div></hr><br>
 
