@@ -849,7 +849,7 @@ def charge():
 
 
 
-    email, name, phone, address, netid, allergies = _getUser(user_id)
+    email_user, name_user, phone, address_user, netid, allergies = _getUser(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
@@ -861,7 +861,7 @@ def charge():
                 food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
                 food_quantity_feds=food_quantity_feds, food_images=food_images,\
                 length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
-                email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, order_id=order_id, key = stripe_keys['publishable_key'], error = "Please enter date and time info!!")
+                email=email_user, name=name_user, phone=phone,address=address_user, netid=netid, id=user_id, order_id=order_id, key = stripe_keys['publishable_key'], error = "Please enter date and time info!!")
 
 
     amount = int(total * 100)
