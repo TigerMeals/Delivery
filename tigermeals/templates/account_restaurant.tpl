@@ -97,8 +97,9 @@
             <ul class="list-group">
               <li class="list-group-item text-left"><span class="pull-left"><strong>Listings</strong></span> {{length_listings}}</li>
               <li class="list-group-item text-left"><span class="pull-left"><strong>Active Orders</strong></span> {{length_orders}}</li>
-              <li class="list-group-item text-left"><span class="pull-left"><strong>Total Orders</strong></span> 37</li>
-              <li class="list-group-item text-left"><span class="pull-left"><strong>Overall Rating</strong></span> 4.5</li>
+              <li class="list-group-item text-left"><span class="pull-left"><strong>Pending Orders</strong></span> {{length_pending_orders}}</li>
+              <li class="list-group-item text-left"><span class="pull-left"><strong>Completed Orders</strong></span> {{length_complete_orders}}</li>
+              
             </ul>
           </div>
 
@@ -113,7 +114,7 @@
           </div><!--/col-3-->
         	<div class="col-sm-9">
               <div class="row">
-                <h1>User name</h1>
+                <h1>{{name}}</h1>
               </div>
               <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#profile" class="mr-2">Profile</a></li>
@@ -124,12 +125,15 @@
              <div class="tab-content">
                 <div class="tab-pane active" id="profile">
                     <hr>
-                      <form class="form" action="##" method="post" id="registrationForm">
+                      <form class="form" action="/restaurant/profile/update" method="post" id="registrationForm">
                         <div class="row">
                           <div class="form-group col-12">
 
                               <div class="col-12">
                                   <label for="restaurant_name"><h5>Restaurant Name</h5></label>
+                                  <div class="text-warning">
+                                    <p>{{error}}</p>
+                                  </div>
                                   <input type="text" class="form-control" name="restaurant_name" id="restaurant_name" value="{{name}}" title="enter your restaurant name if any.">
                               </div>
                           </div>
@@ -139,7 +143,7 @@
 
                               <div class="col-12">
                                   <label for="description"><h5>Description</h5></label>
-                                    <textarea class="form-control" id="description" rows="2" title="enter your restaurant description if any.">{{description}}</textarea>
+                                    <textarea class="form-control" id="description"name="description" rows="2" title="enter your restaurant description if any.">{{description}}</textarea>
                               </div>
                           </div>
                         </div>
@@ -172,7 +176,7 @@
 
                               <div class="col-12">
                                   <label for="address"><h5>Address</h5></label>
-                                  <input type="text" class="form-control" id="address" value="{{address}}" title="enter a location">
+                                  <input type="text" class="form-control" id="address" value="{{address}}" title="enter a location"name="location">
                               </div>
                           </div>
                         </div>
@@ -191,7 +195,7 @@
                           <div class="form-group col-12">
 
                               <div class="col-12">
-                                <a class="btn btn-info" href="home.html">View my profile as a consumer</a>
+                                <a class="btn btn-info" href="#">View my profile as a consumer</a>
                               </div>
                           </div>
                         </div>
@@ -211,24 +215,16 @@
 
                   <div class="tab-pane" id="account">
                     <hr>
-                        <form class="form" action="##" method="post" id="registrationForm">
+                        <form class="form" action="/restaurant/account/update" method="post" id="registrationForm">
                           <div class="row">
+
                             <div class="form-group col-6">
 
                                 <div class="col-12">
-                                    <label for="username"><h5>Username</h5></label>
-                                    <input type="username" class="form-control" name="username" id="username" placeholder="username" title="enter your username.">
-                                </div>
-                            </div>
-
-                          </div>
-                          <div class="row">
-                            <div class="form-group col-6">
-
-                                <div class="col-12">
-                                    <label for="password"><h5>Password</h5></label>
+                                    <label for="password"><h5>Change Password</h5></label>
                                     <input type="password" class="form-control" name="password" id="password" placeholder="password" title="enter your password.">
                                 </div>
+
                             </div>
                             <div class="form-group col-6">
 
@@ -237,6 +233,7 @@
                                     <input type="password" class="form-control" name="password2" id="password2" placeholder="password2" title="enter your password2.">
                                 </div>
                             </div>
+
                           </div>
                           <hr>
                           <div class="row">
@@ -246,27 +243,27 @@
                               <div class="form-group col-6">
                                   <div class="col-12">
                                       <label for="p_first_name"><h5>First Name</h5></label>
-                                      <input type="text" class="form-control" name="p_first_name" id="p_first_name" placeholder="first name" title="enter your first name if any.">
+                                      <input type="text" class="form-control" name="p_first_name" id="p_first_name" value="{{primaryFirstName}}" title="enter your first name if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
                                   <div class="col-12">
                                     <label for="p_last_name"><h5>Last Name</h5></label>
-                                      <input type="text" class="form-control" name="p_last_name" id="p_last_name" placeholder="last name" title="enter your last name if any.">
+                                      <input type="text" class="form-control" name="p_last_name" id="p_last_name" value="{{primaryLastName}}" title="enter your last name if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
 
                                   <div class="col-12">
                                       <label for="p_email"><h5>Email</h5></label>
-                                      <input type="text" class="form-control" name="p_email" id="p_email" placeholder="email" title="enter your email if any.">
+                                      <input type="text" class="form-control" name="p_email" id="p_email" value="{{primaryEmail}}" title="enter your email if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
 
                                   <div class="col-12">
                                     <label for="p_phone"><h5>Phone Number</h5></label>
-                                      <input type="text" class="form-control" name="p_phone" id="p_phone" placeholder="phone number" title="enter your phone number if any.">
+                                      <input type="text" class="form-control" name="p_phone" id="p_phone" value="{{primaryPhone}}" title="enter your phone number if any.">
                                   </div>
                               </div>
                           </div>
@@ -279,27 +276,27 @@
                               <div class="form-group col-6">
                                   <div class="col-12">
                                       <label for="s_first_name"><h5>First Name</h5></label>
-                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" placeholder="first name" title="enter your first name if any.">
+                                      <input type="text" class="form-control" name="s_first_name" id="s_first_name" value="{{secondaryFirstName}}" title="enter your first name if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
                                   <div class="col-12">
                                     <label for="s_last_name"><h5>Last Name</h5></label>
-                                      <input type="text" class="form-control" name="s_last_name" id="s_last_name" placeholder="last name" title="enter your last name if any.">
+                                      <input type="text" class="form-control" name="s_last_name" id="s_last_name" value="{{secondaryLastName}}" title="enter your last name if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
 
                                   <div class="col-12">
                                       <label for="s_email"><h5>Email</h5></label>
-                                      <input type="text" class="form-control" name="s_email" id="s_email" placeholder="email" title="enter your email if any.">
+                                      <input type="text" class="form-control" name="s_email" id="s_email" value="{{secondaryEmail}}" title="enter your email if any.">
                                   </div>
                               </div>
                               <div class="form-group col-6">
 
                                   <div class="col-12">
                                     <label for="s_phone"><h5>Phone Number</h5></label>
-                                      <input type="text" class="form-control" name="s_phone" id="s_phone" placeholder="phone number" title="enter your phone number if any.">
+                                      <input type="text" class="form-control" name="s_phone" id="s_phone" value="{{secondaryPhone}}" title="enter your phone number if any.">
                                   </div>
                               </div>
                           </div>
@@ -319,7 +316,7 @@
 
                  <div class="tab-pane" id="settings">
                    <hr>
-                       <form class="form" action="##" method="post" id="registrationForm">
+                       <form class="form" action="#" method="post" id="registrationForm">
                          <div class="row">
                            <div class="form-group col-12">
 

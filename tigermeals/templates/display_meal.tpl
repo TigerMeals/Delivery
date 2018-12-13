@@ -58,6 +58,10 @@
                 {% include 'display_allergy.tpl' %}
               {% endwith %}
             {% endfor %}
+            <div class="form-group">
+              <label for="customization">Comments:</label>
+              <textarea class="form-control" id="customization" rows="1"></textarea>
+            </div>
           </div>
 
           <div class="col-lg-6 col-md-6">
@@ -87,6 +91,20 @@
             <label>Select quantity</label>
           </div>
 
+          <!-- <h6>Subtotal: <small>$<span id="modal_subtotal{{meal.food_id}}"></small></h6> -->
+          <!-- <script>
+            var food_quantity;
+            var val = parseFloat({{meal.price}}).toFixed(2);
+            var mySelect = document.getElementById("formQuantity");
+
+            for(var i, j = 0; i = mySelect.options[j]; j++) {
+                if(i.value == food_quantity) {
+                    mySelect.selectedIndex = j;
+                    break;
+                }
+            }
+            document.getElementById('modal_subtotal{{meal.food_id}}').innerHTML = food_quantity;
+          </script> -->
 
           <div class="modal-add-to-cart">
             <div class="text-center item-right">

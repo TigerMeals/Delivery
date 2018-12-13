@@ -9,7 +9,7 @@
     <meta name="author" content="">
 
     <title>TigerMeals Delivery - Shop Meals</title>
-    <link rel='icon' href='takeout.ico'></link>
+    <link rel='icon' href='/static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap-lux.css" rel="stylesheet">
@@ -114,6 +114,7 @@
           <div class="sticky-top">
 
             <h1 class="catering-header">Catering Packages</h1>
+
             <h4>Current filters</h4>
             {% for f in current_filters %}
             <div class="row">
@@ -130,11 +131,7 @@
 
             <div class="accordion" id="accordionExample">
               <div class="card border-light bg-transparent">
-                <!-- <div class="card-header bg-transparent" id="current">
-                  <h5 class="mb-0">
-                      <div class="col-sm pl-0 float-left">Current filters: </div>
-                  </h5>
-                </div> -->
+
                 <div class="card-header bg-transparent" id="headingOne">
                   <h5 class="mb-0">
                     <button class="btn btn-link no-pad float-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">

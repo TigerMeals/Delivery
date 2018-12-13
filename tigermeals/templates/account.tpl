@@ -8,7 +8,7 @@
     <meta name="author" content="TigerMeals Delivery Team">
 
     <title>TigerMeals Delivery - My Account</title>
-    <link rel='icon' href='static/img/takeout.ico'></link>
+    <link rel='icon' href='/static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap-lux.css" rel="stylesheet">
@@ -250,11 +250,11 @@
 
               <div class="tab-pane fade show" id="pending-orders" role="tabpanel" aria-labelledby="pending-orders-tab">
 
-
+                {% for order in pending_order %}
 
               <div class="row mt-2">
                 <div class="col-10">
-                  <h4 class="float-left mt-2" href="#">Order #94050</h4>
+                  <h4 class="float-left mt-2" href="#">Order #{{order['order_id']}}</h4>
                 </div>
                 <div class="col-2">
                   <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
@@ -271,7 +271,7 @@
                       <h6 class="mb-0 mt-1">Order Placed on</h6>
                     </div>
                     <div class="col-8">
-                      <p>Friday, December 7th, 3:56pm</p>
+                      <p>{{order['date']}}</p>
                     </div>
 
 
@@ -279,7 +279,7 @@
                       <h6 class="mb-0 mt-1">Delivery Time</h6>
                     </div>
                     <div class="col-8">
-                      <p>Saturday, December 17th, 4:30pm</p>
+                      <p>{{order['delivery_time']}}</p>
                     </div>
 
 
@@ -287,7 +287,7 @@
                       <h6 class="mb-0 mt-1">Location</h6>
                     </div>
                     <div class="col-8">
-                      <p>CS Tea Room</p>
+                      <p>{{order['address']}}</p>
                     </div>
 
 
@@ -295,140 +295,34 @@
                       <h6 class="mb-0 mt-1">Restaurant</h6>
                     </div>
                     <div class="col-8">
-                      <p>Panera</p>
+                      <p>{{rests_dict[order['restaurant_id']]}}</p>
                     </div>
                   </div>
                 </div>
 
                   <div class="col-2">
                     <div class="row pr-2">
-                      <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
+                      <h6 id="order{{order[order_id]}}"class="mt-1 mb-0 text-success float-right">${{order['price']}}</h6>
                     </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row mt-3">
-                <div class="col-10">
-                  <h4 class="float-left mt-2" href="#">Order #94050</h4>
-                </div>
-                <div class="col-2">
-                  <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
-                    View order
-                  </button>
-                </div>
-              </div>
-              <div class="card col-md-12 px-3 pt-2 mb-3 border-dark">
-
-                <div class="row">
-                  <div class="col-10">
-                    <div class="row">
-                    <div class="col-4">
-                      <h6 class="mb-0 mt-1">Order Placed on</h6>
-                    </div>
-                    <div class="col-8">
-                      <p>Friday, December 7th, 3:56pm</p>
-                    </div>
-
-
-                    <div class="col-4">
-                      <h6 class="mb-0 mt-1">Delivery Time</h6>
-                    </div>
-                    <div class="col-8">
-                      <p>Saturday, December 17th, 4:30pm</p>
-                    </div>
-
-
-                    <div class="col-4">
-                      <h6 class="mb-0 mt-1">Location</h6>
-                    </div>
-                    <div class="col-8">
-                      <p>CS Tea Room</p>
-                    </div>
-
-
-                    <div class="col-4">
-                      <h6 class="mb-0 mt-1">Restaurant</h6>
-                    </div>
-                    <div class="col-8">
-                      <p>Panera</p>
-                    </div>
-                  </div>
-                </div>
-
-                  <div class="col-2">
                     <div class="row pr-2">
-                      <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
+                          <h6 class="mt-1 mb-0 float-right">Status: <br> Pending</h6>
                     </div>
                   </div>
                 </div>
               </div>
 
-
-              <div class="row">
-                <div class="col-10">
-                  <h4 class="float-left mt-2" href="#">Order #94050</h4>
-                </div>
-                <div class="col-2">
-                  <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
-                    View order
-                  </button>
-                </div>
-              </div>
-              <div class="card col-md-12 px-3 pt-2 mb-3 border-dark">
-
-                <div class="row">
-                  <div class="col-10">
-                    <div class="row">
-                    <div class="col-4">
-                      <h6 class="mb-0 mt-1">Order Placed on</h6>
-                    </div>
-                    <div class="col-8">
-                      <p>Friday, December 7th, 3:56pm</p>
-                    </div>
-
-
-                    <div class="col-4">
-                      <h6 class="mb-0 mt-1">Delivery Time</h6>
-                    </div>
-                    <div class="col-8">
-                      <p>Saturday, December 17th, 4:30pm</p>
-                    </div>
-
-
-                    <div class="col-4">
-                      <h6 class="mb-0 mt-1">Location</h6>
-                    </div>
-                    <div class="col-8">
-                      <p>CS Tea Room</p>
-                    </div>
-
-
-                    <div class="col-4">
-                      <h6 class="mb-0 mt-1">Restaurant</h6>
-                    </div>
-                    <div class="col-8">
-                      <p>Panera</p>
-                    </div>
-                  </div>
-                </div>
-
-                  <div class="col-2">
-                    <div class="row pr-2">
-                      <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              {% endfor %}
 
                 </div>
 
 
                 <div class="tab-pane fade show" id="active-orders" role="tabpanel" aria-labelledby="active-orders-tab">
 
+                  {% for order in inprogress_orders %}
+
                   <div class="row mt-2">
                     <div class="col-10">
-                      <h4 class="float-left mt-2" href="#">Order #94050</h4>
+                      <h4 class="float-left mt-2" href="#">Order #{{order['order_id']}}</h4>
                     </div>
                     <div class="col-2">
                       <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
@@ -445,7 +339,7 @@
                           <h6 class="mb-0 mt-1">Order Placed on</h6>
                         </div>
                         <div class="col-8">
-                          <p>Friday, December 7th, 3:56pm</p>
+                          <p>{{order['date']}}</p>
                         </div>
 
 
@@ -453,7 +347,7 @@
                           <h6 class="mb-0 mt-1">Delivery Time</h6>
                         </div>
                         <div class="col-8">
-                          <p>Saturday, December 17th, 4:30pm</p>
+                          <p>{{order['delivery_time']}}</p>
                         </div>
 
 
@@ -461,7 +355,7 @@
                           <h6 class="mb-0 mt-1">Location</h6>
                         </div>
                         <div class="col-8">
-                          <p>CS Tea Room</p>
+                          <p>{{order['address']}}</p>
                         </div>
 
 
@@ -469,30 +363,34 @@
                           <h6 class="mb-0 mt-1">Restaurant</h6>
                         </div>
                         <div class="col-8">
-                          <p>Panera</p>
+                          <p>{{rests_dict[order['restaurant_id']]}}</p>
                         </div>
                       </div>
                     </div>
 
                       <div class="col-2">
                         <div class="row pr-2">
-                          <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
+                          <h6 class="mt-1 mb-0 text-success float-right">${{order['price']}}</h6>
+                        </div>
+                        <div class="row pr-2">
+                          <h6 class="mt-1 mb-0 float-right">Status: <br> In Progress</h6>
                         </div>
                       </div>
                     </div>
                   </div>
 
-
+                  {% endfor %}
                 </div>
 
 
 
                 <div class="tab-pane fade show" id="history-orders" role="tabpanel" aria-labelledby="history-orders-tab">
 
+                  {% for order in history_orders %}
 
                   <div class="row mt-2">
                     <div class="col-10">
-                      <h4 class="float-left mt-2" href="#">Order #94050</h4>
+                      <h4 class="float-left mt-2" href="#">Order #{{order['order_id']}}</h4>
                     </div>
                     <div class="col-2">
                       <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
@@ -509,7 +407,7 @@
                           <h6 class="mb-0 mt-1">Order Placed on</h6>
                         </div>
                         <div class="col-8">
-                          <p>Friday, December 7th, 3:56pm</p>
+                          <p>{{order['date']}}</p>
                         </div>
 
 
@@ -517,7 +415,7 @@
                           <h6 class="mb-0 mt-1">Delivery Time</h6>
                         </div>
                         <div class="col-8">
-                          <p>Saturday, December 17th, 4:30pm</p>
+                          <p>{{order['delivery_time']}}</p>
                         </div>
 
 
@@ -525,7 +423,7 @@
                           <h6 class="mb-0 mt-1">Location</h6>
                         </div>
                         <div class="col-8">
-                          <p>CS Tea Room</p>
+                          <p>{{order['address']}}</p>
                         </div>
 
 
@@ -533,14 +431,14 @@
                           <h6 class="mb-0 mt-1">Restaurant</h6>
                         </div>
                         <div class="col-8">
-                          <p>Panera</p>
+                          <p>{{rests_dict[order['restaurant_id']]}}</p>
                         </div>
                       </div>
                     </div>
 
                       <div class="col-2">
                         <div class="row pr-2">
-                          <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
+                          <h6 class="mt-1 mb-0 text-success float-right">${{order['price']}}</h6>
                           </div>
 
                         <div class="row pr-2">
@@ -551,65 +449,7 @@
                     </div>
                   </div>
 
-                  <div class="row">
-                    <div class="col-10">
-                      <h4 class="float-left mt-2" href="#">Order #94050</h4>
-                    </div>
-                    <div class="col-2">
-                      <button type="button" class="btn btn-info restuarant_list_button float-right mb-2" data-toggle="modal" data-target="#ordernumber">
-                        View order
-                      </button>
-                    </div>
-                  </div>
-                  <div class="card col-md-12 px-3 pt-2 mb-3 border-dark">
-
-                    <div class="row">
-                      <div class="col-10">
-                        <div class="row">
-                        <div class="col-4">
-                          <h6 class="mb-0 mt-1">Order Placed on</h6>
-                        </div>
-                        <div class="col-8">
-                          <p>Friday, December 7th, 3:56pm</p>
-                        </div>
-
-
-                        <div class="col-4">
-                          <h6 class="mb-0 mt-1">Delivery Time</h6>
-                        </div>
-                        <div class="col-8">
-                          <p>Saturday, December 17th, 4:30pm</p>
-                        </div>
-
-
-                        <div class="col-4">
-                          <h6 class="mb-0 mt-1">Location</h6>
-                        </div>
-                        <div class="col-8">
-                          <p>CS Tea Room</p>
-                        </div>
-
-
-                        <div class="col-4">
-                          <h6 class="mb-0 mt-1">Restaurant</h6>
-                        </div>
-                        <div class="col-8">
-                          <p>Panera</p>
-                        </div>
-                      </div>
-                    </div>
-
-                      <div class="col-2">
-                        <div class="row pr-2">
-                          <h6 class="mt-1 mb-0 text-success float-right">$100.00</h6>
-                        </div>
-
-                        <div class="row pr-2">
-                          <h6 class="mt-1 mb-0 float-right">Status: <br> Denied by Restaurant</h6>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  {% endfor %}
 
 
                 </div>
@@ -653,16 +493,23 @@
                             <p>CS Tea Room</p>
                           </div>
 
+                          <div class="col-4">
+                            <h6 class="mb-0 mt-1">Customizations</h6>
+                          </div>
+                          <div class="col-8">
+                            <p>Call me 5 minutes before the delivery so I can let you in!</p>
+                          </div>
+
 
                           <div class="col-4">
                             <h6 class="mb-0 mt-1">Restaurant</h6>
                           </div>
                           <div class="col-8">
-                            <p>Panera</p>
+                            <p><a href="../restaurant-info.html">Panera</a></p>
                           </div>
 
                           <div class="col-4">
-                            <h6 class="mb-0 mt-1">Restaurant Phone Number</h6>
+                            <h6 class="mb-0 mt-1">Restaurant Phone</h6>
                           </div>
                           <div class="col-8">
                             <p>(083)-893-3920</p>
@@ -672,14 +519,14 @@
                             <h6 class="mb-0 mt-1">Restaurant Email</h6>
                           </div>
                           <div class="col-8">
-                            <p>hello@panera.com</p>
+                            <p><a href="mailto:hello@panera.com">hello@panera.com</a></p>
                           </div>
 
                         </div>
 
                         <div class="row">
                           <div class="col-4">
-                            <h6 class="mb-0 mt-1">Items Ordered</h6>
+                            <h6 class="mb-1 mt-1">Items Ordered</h6>
                           </div>
                           <div class="col-8">
                           </div>
@@ -692,12 +539,45 @@
                           <div class="col-6">
                             <h6 class="mb-0 mt-1">Panera Breakfast Platter</h6>
                             <p>20 servings</p>
-                            <p><span class="text-black">Quantity: </span> 2 </p>
+                            <!-- <p><span class="text-black">Quantity: </span> 2 </p> -->
                             <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
                           </div>
                           <div class="col-2">
                             <p>$50.00 ea </p>
-                            <p><span class="text-black">Subtotal: </span> $100.00 </p>
+                            <p><span class="text-black">Quantity: 2 </span></p>
+                            <p class="justify-content-bottom"><span class="text-black">Subtotal:  $100.00 </span></p>
+                          </div>
+
+                          <div class="col-4">
+                            <img class="d-block w-100" src="static/img/panera.jpg"
+                              alt="First slide">
+                          </div>
+                          <div class="col-6">
+                            <h6 class="mb-0 mt-1">Panera Breakfast Platter</h6>
+                            <p>20 servings</p>
+                            <!-- <p><span class="text-black">Quantity: </span> 2 </p> -->
+                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
+                          </div>
+                          <div class="col-2">
+                            <p>$50.00 ea </p>
+                            <p><span class="text-black">Quantity: 2 </span></p>
+                            <p class="justify-content-bottom"><span class="text-black">Subtotal:  $100.00 </span></p>
+                          </div>
+
+                          <div class="col-4">
+                            <img class="d-block w-100" src="static/img/panera.jpg"
+                              alt="First slide">
+                          </div>
+                          <div class="col-6">
+                            <h6 class="mb-0 mt-1">Panera Breakfast Platter</h6>
+                            <p>20 servings</p>
+                            <!-- <p><span class="text-black">Quantity: </span> 2 </p> -->
+                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
+                          </div>
+                          <div class="col-2">
+                            <p>$50.00 ea </p>
+                            <p><span class="text-black">Quantity: 2 </span></p>
+                            <p class="justify-content-bottom"><span class="text-black">Subtotal:  $100.00 </span></p>
                           </div>
 
                           <div class="col-4">
@@ -763,7 +643,7 @@
 
 
         </div><!--/row-->
-      </div> <!--container-->/
+      </div> <!--container-->
 
       <footer class="py-4 red-bar">
         <div class="container">
