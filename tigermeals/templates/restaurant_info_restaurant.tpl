@@ -89,28 +89,18 @@
                 <li class="nav-item-bar">
                   <a class="nav-link" href="/restaurant/about">About</a>
                 </li>
-                <li class="nav-item-bar active">
-                <div class="dropdown">
-                  <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
-                    Meals
-                  </a>
-                  <span class="sr-only">(current)</span>
-
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a class="dropdown-item" href="/meals">View all Meals</a>
-                    <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
-                  </div>
-                </div>
+                <li class="nav-item-bar">
+                  <a class="nav-link" href="/listings">My Meals</a>
                 </li>
                 <li class="nav-item-bar">
                 <div class="dropdown">
-                  <a class="nav-link btn-danger dropdown-toggle" href="/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
+                  <a class="nav-link btn-danger dropdown-toggle" href="/restaurant/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
                     My Account
                   </a>
 
                   <div class="dropdown-menu" aria-labelledby="logoutLink">
-                    <a class="dropdown-item" href="/account">My account</a>
-                    <a class="dropdown-item" href="/logout">Logout</a>
+                    <a class="dropdown-item" href="/restaurant/account">My account</a>
+                    <a class="dropdown-item" href="/restaurant/logout">Logout</a>
                   </div>
                 </div>
                 </li>

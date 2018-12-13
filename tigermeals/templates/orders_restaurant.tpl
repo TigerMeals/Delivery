@@ -46,11 +46,12 @@
             </li>
             <li class="nav-item-bar">
             <div class="dropdown">
-              <a class="nav-link btn-danger dropdown-toggle" href="/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
+              <a class="nav-link btn-danger dropdown-toggle" href="/restaurant/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
                 My Account
               </a>
 
               <div class="dropdown-menu" aria-labelledby="logoutLink">
+                <a class="dropdown-item" href="/restaurant/account">My account</a>
                 <a class="dropdown-item" href="/restaurant/logout">Logout</a>
               </div>
             </div>
