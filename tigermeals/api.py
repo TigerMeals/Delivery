@@ -288,6 +288,20 @@ def restaurant_update(restaurant_id):
 	db.session.commit()
 	return restaurant_schema.jsonify(restaurant)
 
+# Endpoint to update restaurant password
+@app.route("/restaurant/password/<restaurant_id>", methods = ["PUT"])
+def restaurant_update_pass(restaurant_id):
+	restaurant = Restaurant.query.get(restaurant_id)
+
+	password = request.json['password']
+
+	password = _restaurant_hash(password)
+
+	restaurant.password = password
+
+	db.session.commit()
+	return restaurant_schema.jsonify(restaurant)
+
 # Endpoint for restaurant's to login using email and phone number
 # verification. We will add passwords later, much later
 @app.route("/restaurant/login", methods = ["POST"])
@@ -297,7 +311,6 @@ def restaurant_login():
 
 	# hash the password
 	password = _restaurant_hash(password)
-
 
 	restaurant = Restaurant.query.filter_by(email = email, \
 		password = password).first()
@@ -547,10 +560,8 @@ class Order(db.Model):
 	date = db.Column(db.Unicode, unique = False)
 	time = db.Column(db.Unicode, unique = False)
 	location = db.Column(db.Unicode, unique = False)
-	stripeToken = db.Column(db.Unicode, unique = False)
-	amount = db.Column(db.Integer, unique = False)
 
-	def __init__(self, user_id, food_items, restaurant_id, date, order_time, location , delivery_time = None, ordered = False, paid = False, delivery_in_process = False, delivered = False, name = None, email = None, address = None, stripeToken = "", amount = 0):
+	def __init__(self, user_id, food_items, restaurant_id, date, order_time, location , delivery_time = None, ordered = False, paid = False, delivery_in_process = False, delivered = False, name = None, email = None, address = None):
 		self.user_id = user_id
 		self.food_items = food_items
 		self.restaurant_id = restaurant_id
@@ -565,12 +576,10 @@ class Order(db.Model):
 		self.order_time = order_time
 		self.location = location
 		self.delivery_time = delivery_time
-		self.stripeToken = stripeToken
-		self.amount = amount
 
 class OrderSchema(ma.Schema):
 	class Meta:
-		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address', 'stripeToken', 'amount')
+		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address')
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many = True)
@@ -598,22 +607,6 @@ def order_delivered(order_id):
 
 	return order_schema.jsonify(order)
 
-@app.route('/order/addToken/<order_id>/<stripeToken>/<amount>', methods = ["POST"])
-def order_orderedToken(order_id, stripeToken, amount):
-	order = Order.query.get(order_id)
-
-	order.ordered = True
-	order.name = request.json['name']
-	order.email = request.json['email']
-	order.location = request.json['location']
-	order.date = request.json['date']
-	order.delivery_time = request.json['time']
-	order.stripeToken = stripeToken
-	order.amount = amount
-
-	db.session.commit()
-
-	return order_schema.jsonify(order)
 
 # Endpoint to place an order
 @app.route('/order/ordered/<order_id>', methods = ["POST"])

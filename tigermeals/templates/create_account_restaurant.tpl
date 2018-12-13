@@ -1,17 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-
-  <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> -->
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>TigerMeals Delivery - Restaurant New Account</title>
+  <title>TigerMeals Delivery - Create New Restaurant Account</title>
   <link rel='icon' href='static/img/takeout.ico'></link>
 
   <!-- Bootstrap core CSS -->
@@ -26,118 +22,81 @@
 </head>
 
 
-<body id="LoginForm">
-  <div class="container text-center">
+<body>
+  <!-- Navigation -->
+  <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container">
+      <a class="navbar-brand" href="#">TigerMeals Delivery</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+      </div>
+    </div>
+  </nav>
+  <br>
+  <div class="container text-center mb-5">
     <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
     <h1 class="form-heading">Create Restaurant Account</h1>
     <div class="login-form">
       <div class="main-div">
         <div class="panel">
        <!-- <h2>Restaurant Login</h2> -->
-       <p>Please enter your email and password.</p>
+       <p>We're excited to have you!</p>
+       <br>
        </div>
-        <form id="Login" class="loginForm" action="http://localhost:8081/login" method="get">
+        <form id="register" class="createAccountForm" action="/register/upload" method="post">
 
-            <div class="form-group">
-
-
-                <input name="userName" class="form-control" id="userName" placeholder="User Name" type="text">
-
+          <div class="row">
+            <div class="col-12">
+              <h4 class="ml-3" align="left"> Restaurant Info </h4>
+              <br>
             </div>
 
-            <div class="form-group">
-
-                <input type="password" class="form-control" id="inputPassword" placeholder="Password" name = "password">
-
-            </div>
-            <div class="form-group">
-
-
-                <input name="restaurantName" class="form-control" id="restaurantName" placeholder="Restaurant Name" type="text">
-
-            </div>
-            <div class="form-group">
-
-
-                <input name="restaurantEmail" class="form-control" id="restaurantEmail" placeholder="Restaurant Email" type="text">
-
-            </div>
-
-            <div class="row">
+            <div class="form-group col-md-6">
                 <div class="col-12">
-                  <h4 class="ml-3"> Primary Contact </h4>
+                  <input name="name" class="form-control" id="restaurantName" placeholder="Restaurant Name" type="text">
                 </div>
-                <div class="form-group col-6">
-                    <div class="col-12">
-                        <label for="p_first_name"><h5>First Name</h5></label>
-                        <input type="text" class="form-control" name="p_first_name" id="p_first_name" placeholder="first name" title="enter your first name if any.">
-                    </div>
-                </div>
-                <div class="form-group col-6">
-                    <div class="col-12">
-                      <label for="p_last_name"><h5>Last Name</h5></label>
-                        <input type="text" class="form-control" name="p_last_name" id="p_last_name" placeholder="last name" title="enter your last name if any.">
-                    </div>
-                </div>
-                <div class="form-group col-6">
-
-                    <div class="col-12">
-                        <label for="p_email"><h5>Email</h5></label>
-                        <input type="text" class="form-control" name="p_email" id="p_email" placeholder="email" title="enter your email if any.">
-                    </div>
-                </div>
-                <div class="form-group col-6">
-
-                    <div class="col-12">
-                      <label for="p_phone"><h5>Phone Number</h5></label>
-                        <input type="text" class="form-control" name="p_phone" id="p_phone" placeholder="phone number" title="enter your phone number if any.">
-                    </div>
+            </div>
+            <div class="form-group col-md-6">
+                <div class="col-12">
+                  <input name="email" class="form-control" id="restaurantEmail" placeholder="Restaurant Email" type="text">
                 </div>
             </div>
 
-
-            <div class="row">
-              <div class="form-group col-6">
-
-                  <div class="col-12">
-                      <label for="phone"><h5>Phone</h5></label>
-                      <input type="text" class="form-control" name="phone" id="phone" placeholder="enter phone" title="enter your phone number if any.">
-                  </div>
-              </div>
-
-              <div class="form-group col-6">
-                  <div class="col-12">
-                     <label for="website"><h5>Website</h5></label>
-                      <input type="text" class="form-control" name="website" id="website" placeholder="enter website" title="enter your website if any.">
-                  </div>
+            <div class="form-group col-md-6">
+              <div class="col-12">
+                <input type="password" class="form-control" id="inputPassword" placeholder="Password" name = "password">
               </div>
             </div>
 
-            <div class="row">
-              <div class="form-group col-6">
-
-                  <div class="col-12">
-                      <label for="email"><h5>Email</h5></label>
-                      <input type="email" class="form-control" name="email" id="email" placeholder="you@email.com" title="enter your email.">
-                  </div>
-              </div>
-              <div class="form-group col-6">
-
-                  <div class="col-12">
-                      <label for="address"><h5>Address</h5></label>
-                      <input type="text" class="form-control" id="address" placeholder="somewhere" title="enter a location">
-                  </div>
+            <div class="form-group col-md-6">
+              <div class="col-12">
+                <input type="password" class="form-control" id="password2" placeholder="Confirm Password" name = "password2">
               </div>
             </div>
+
+            <div class="form-group col-md-6 justify-content-right">
+              <div class="col-12">
+                  <input name="website" class="form-control" id="restaurantWebsite" placeholder="Restaurant Website" type="text">
+              </div>
+            </div>
+            <div class="form-group col-md-6 justify-content-right">
+                <div class="col-12">
+                  <input name="address" class="form-control" id="restaurantAddress" placeholder="Restaurant Address" type="text">
+              </div>
+            </div>
+          </div>
+          <hr>
 
             <div class="row">
               <div class="col-12">
                 <div class="form-group col-12">
-                  <h5 class="mr-2">Hours of Operation</h5>
-
+                  <h5 class="mr-2" align="left">Hours of Operation</h5>
+                  <br>
                   <div class="row mb-2">
                     <div class="col-6">
-                        <label for="sunday1"><h6 class="mb-0">Sunday</h6></label>
+                        <label for="sunday1"><h6 class="mb-0">Sunday Opening</h6></label>
                         <input type="time" class="form-control" id="sunday1" name="sunday1" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -145,7 +104,7 @@
                     </div>
 
                     <div class="col-6">
-                        <label for="sunday2"><h6 class="mb-0" style="color:white;">Sunday Closing</h6></label>
+                        <label for="sunday2"><h6 class="mb-0">Sunday Closing</h6></label>
                         <input type="time" class="form-control" id="sunday2" name="sunday2" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -155,7 +114,7 @@
 
                   <div class="row mb-2">
                     <div class="col-6">
-                        <label for="monday1"><h6 class="mb-0">Monday</h6></label>
+                        <label for="monday1"><h6 class="mb-0">Monday Opening</h6></label>
                         <input type="time" class="form-control" id="monday1" name="monday1" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -163,7 +122,7 @@
                     </div>
 
                     <div class="col-6">
-                        <label for="monday2"><h6 class="mb-0" style="color:white;">Monday Closing</h6></label>
+                        <label for="monday2"><h6 class="mb-0">Monday Closing</h6></label>
                         <input type="time" class="form-control" id="monday2" name="monday2" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -173,7 +132,7 @@
 
                   <div class="row mb-2">
                     <div class="col-6">
-                        <label for="tuesday1"><h6 class="mb-0">Tuesday</h6></label>
+                        <label for="tuesday1"><h6 class="mb-0">Tuesday Opening</h6></label>
                         <input type="time" class="form-control" id="tuesday1" name="tuesday1" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -181,7 +140,7 @@
                     </div>
 
                     <div class="col-6">
-                        <label for="tuesday2"><h6 class="mb-0" style="color:white;">Tuesday Closing</h6></label>
+                        <label for="tuesday2"><h6 class="mb-0">Tuesday Closing</h6></label>
                         <input type="time" class="form-control" id="tuesday2" name="tuesday2" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -191,7 +150,7 @@
 
                   <div class="row mb-2">
                     <div class="col-6">
-                        <label for="wednesday1"><h6 class="mb-0">Wednesday</h6></label>
+                        <label for="wednesday1"><h6 class="mb-0">Wednesday Opening</h6></label>
                         <input type="time" class="form-control" id="wednesday1" name="wednesday1" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -199,7 +158,7 @@
                     </div>
 
                     <div class="col-6">
-                        <label for="wednesday2"><h6 class="mb-0" style="color:white;">Wednesday Closing</h6></label>
+                        <label for="wednesday2"><h6 class="mb-0">Wednesday Closing</h6></label>
                         <input type="time" class="form-control" id="wednesday2" name="wednesday2" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -209,7 +168,7 @@
 
                   <div class="row mb-2">
                     <div class="col-6">
-                        <label for="thursday1"><h6 class="mb-0">Thursday</h6></label>
+                        <label for="thursday1"><h6 class="mb-0">Thursday Opening</h6></label>
                         <input type="time" class="form-control" id="thursday1" name="thursday1" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -217,7 +176,7 @@
                     </div>
 
                     <div class="col-6">
-                        <label for="thursday2"><h6 class="mb-0" style="color:white;">Thursday Closing</h6></label>
+                        <label for="thursday2"><h6 class="mb-0">Thursday Closing</h6></label>
                         <input type="time" class="form-control" id="thursday2" name="thursday2" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -227,7 +186,7 @@
 
                   <div class="row mb-2">
                     <div class="col-6">
-                        <label for="friday1"><h6 class="mb-0">Friday</h6></label>
+                        <label for="friday1"><h6 class="mb-0">Friday Opening</h6></label>
                         <input type="time" class="form-control" id="friday1" name="friday1" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -235,7 +194,7 @@
                     </div>
 
                     <div class="col-6">
-                        <label for="friday2"><h6 class="mb-0" style="color:white;">Friday Closing</h6></label>
+                        <label for="friday2"><h6 class="mb-0">Friday Closing</h6></label>
                         <input type="time" class="form-control" id="friday2" name="friday2" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -245,7 +204,7 @@
 
                   <div class="row mb-2">
                     <div class="col-6">
-                        <label for="saturday1"><h6 class="mb-0">Saturday</h6></label>
+                        <label for="saturday1"><h6 class="mb-0">Saturday Opening</h6></label>
                         <input type="time" class="form-control" id="saturday1" name="saturday1" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
@@ -253,25 +212,101 @@
                     </div>
 
                     <div class="col-6">
-                        <label for="saturday2"><h6 class="mb-0" style="color:white;">Saturday Closing</h6></label>
+                        <label for="saturday2"><h6 class="mb-0">Saturday Closing</h6></label>
                         <input type="time" class="form-control" id="saturday2" name="saturday2" required>
                         <div class="invalid-feedback">
                           Please enter a valid time.
                         </div>
                     </div>
                   </div>
-
-
                 </div>
               </div>
             </div>
 
+            <hr>
+
+
+            <div class="row">
+              <div class="col-12">
+                <h4 class="ml-3" align="left"> Primary Contact Info </h4>
+                <br>
+              </div>
+
+              <div class="form-group col-md-6">
+                  <div class="col-12">
+                      <!-- <label for="primaryFirstName"><h5>First Name</h5></label> -->
+                      <input type="text" class="form-control" name="primaryFirstName" id="primaryFirstName" placeholder="First Name" title="enter your first name if any.">
+                  </div>
+              </div>
+              <div class="form-group col-md-6">
+                  <div class="col-12">
+                    <!-- <label for="primaryLastName"><h5>Last Name</h5></label> -->
+                      <input type="text" class="form-control" name="primaryLastName" id="primaryLastName" placeholder="Last Name" title="enter your last name if any.">
+                  </div>
+              </div>
+
+              <div class="form-group col-md-6 justify-content-right">
+
+                  <div class="col-12">
+                      <!-- <label for="primaryEmail"><h5>Email</h5></label> -->
+                      <input type="text" class="form-control" name="primaryEmail" id="primaryEmail" placeholder="Email" title="enter your email if any.">
+                  </div>
+              </div>
+              <div class="form-group col-md-6 justify-content-right">
+
+                  <div class="col-12">
+                    <!-- <label for="primaryPhone"><h5>Phone Number</h5></label> -->
+                      <input type="text" class="form-control" name="primaryPhone" id="primaryPhone" placeholder="Phone Number" title="enter your phone number if any.">
+                  </div>
+              </div>
+            </div>
+
+            <hr>
+
+            <div class="row">
+              <div class="col-12">
+                <h4 class="ml-3" align="left"> Secondary Contact Info </h4>
+                <br>
+              </div>
+
+              <div class="form-group col-md-6">
+                  <div class="col-12">
+                      <!-- <label for="secondaryFirstName"><h5>First Name</h5></label> -->
+                      <input type="text" class="form-control" name="secondaryFirstName" id="secondaryFirstName" placeholder="First Name" title="enter your first name if any.">
+                  </div>
+              </div>
+              <div class="form-group col-md-6">
+                  <div class="col-12">
+                    <!-- <label for="secondaryLastName"><h5>Last Name</h5></label> -->
+                      <input type="text" class="form-control" name="secondaryLastName" id="secondaryLastName" placeholder="Last Name" title="enter your last name if any.">
+                  </div>
+              </div>
+
+              <div class="form-group col-md-6 justify-content-right">
+
+                  <div class="col-12">
+                      <!-- <label for="secondaryEmail"><h5>Email</h5></label> -->
+                      <input type="text" class="form-control" name="secondaryEmail" id="secondaryEmail" placeholder="Email" title="enter your email if any.">
+                  </div>
+              </div>
+              <div class="form-group col-md-6 justify-content-right">
+
+                  <div class="col-12">
+                    <!-- <label for="secondaryPhone"><h5>Phone Number</h5></label> -->
+                      <input type="text" class="form-control" name="secondaryPhone" id="secondaryPhone" placeholder="Phone Number" title="enter your phone number if any.">
+                  </div>
+              </div>
+            </div>
+
+
             <p>{{error}}</p>
             <div class="forgot mb-2">
-              <a href="reset.html">Forgot password?</a>
-              <a href="create_account_restaurant.html">New user? Create an account here.</a>
+              <a href="login_restaurant.html">Already have an account? Login here.</a>
+              <br>
+              <a href="mailto:tigermealsdelivery@gmail.com">Questions? Email us at tigermealsdelivery@gmail.com.</a>
+              <br>
             </div>
-            <button type="submit" class="btn btn-primary">Login</button>
+            <button type="submit" class="btn btn-primary">Register!</button>
 
           </form>
         </div>
