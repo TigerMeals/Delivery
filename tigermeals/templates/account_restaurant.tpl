@@ -8,7 +8,7 @@
     <meta name="author" content="TigerMeals Delivery Team">
 
     <title>TigerMeals Delivery - Restaurant Account</title>
-    <link rel='icon' href='static/img/takeout.ico'></link>
+    <link rel='icon' href='/static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap-lux.css" rel="stylesheet">
@@ -43,9 +43,6 @@
 
     </script>
 
-    <script type="text/javascript">
-      $('.clockpicker').clockpicker();
-    </script>
 
 </head>
 
@@ -60,6 +57,7 @@
           <ul class="navbar-nav ml-auto">
             <li class="nav-item-bar">
               <a class="nav-link" href="/restaurant/home">Home</a>
+            </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/restaurant/about">About</a>
             </li>
@@ -67,8 +65,16 @@
               <a class="nav-link" href="/listings">My Meals</a>
             </li>
             <li class="nav-item-bar active">
-              <a class="nav-link" href="#">My Account</a>
-                <span class="sr-only">(current)</span>
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/restaurant/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
+                My Account
+              </a>
+              <span class="sr-only">(current)</span>
+              <div class="dropdown-menu" aria-labelledby="logoutLink">
+                <a class="dropdown-item" href="/restaurant/account">My account</a>
+                <a class="dropdown-item" href="/restaurant/logout">Logout</a>
+              </div>
+            </div>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/orders">View Orders ({{length_orders}} Active)</a>

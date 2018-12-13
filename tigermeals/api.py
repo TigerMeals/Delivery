@@ -73,6 +73,13 @@ def user_detail(user_id):
 	user = User.query.get(user_id)
 	return user_schema.jsonify(user)
 
+@app.route("/user/image/<user_id>", methods=["POST"])
+def user_update_image(user_id):
+	user = User.query.get(user_id)
+	user.image = request.json['image']
+	db.session.commit()
+	return user_schema.jsonify(user)
+
 # Endpoint to update user
 @app.route("/user/<user_id>", methods = ["PUT"])
 def user_update(user_id):
@@ -735,6 +742,23 @@ def order_current(user_id):
 		order = Order(user_id, [], -1, None, None, None)
 		db.session.add(order)
 		db.session.commit()
+	return order_schema.jsonify(order)
+
+@app.route('/order/addToken/<order_id>/<stripeToken>/<amount>', methods = ["POST"])
+def order_orderedToken(order_id, stripeToken, amount):
+	order = Order.query.get(order_id)
+
+	order.ordered = True
+	order.name = request.json['name']
+	order.email = request.json['email']
+	order.location = request.json['location']
+	order.date = request.json['date']
+	order.delivery_time = request.json['time']
+	order.stripeToken = stripeToken
+	order.amount = amount
+
+	db.session.commit()
+
 	return order_schema.jsonify(order)
 
 # Endpoint to delete a food item from a particular order

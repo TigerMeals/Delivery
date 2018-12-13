@@ -43,7 +43,16 @@
               <a class="nav-link" href="/listings">My Meals</a>
             </li>
             <li class="nav-item-bar">
-              <a class="nav-link" href="/restaurant/account">My Account</a>
+              <div class="dropdown">
+                <a class="nav-link btn-danger dropdown-toggle" href="/restaurant/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
+                  My Account
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="logoutLink">
+                  <a class="dropdown-item" href="/restaurant/account">My account</a>
+                  <a class="dropdown-item" href="/restaurant/logout">Logout</a>
+                </div>
+              </div>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/orders">View Orders ({{length_orders}} Active)</a>
@@ -129,8 +138,8 @@
         </footer>
 
         <!-- Bootstrap core JavaScript -->
-        <script src="static/vendor/jquery/jquery.min.js"></script>
-        <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="/static/vendor/jquery/jquery.min.js"></script>
+        <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
       </body>
 
     </html>
