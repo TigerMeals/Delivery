@@ -336,6 +336,13 @@ def orders():
 		price = 0
 		packages = []
 		for package in order['food_items']:
+			food_id = package['food_id']
+			# look up food_id
+			lookup_food_url = DATABASE_URL + "/food/" + str(food_id)
+			res = requests.get(lookup_food_url)
+			if not res.ok:
+				res.raise_for_status()
+			package['image'] = json.loads(res.content)['image']
 			price += package['subtotal']
 			packages.append(package['food_title'])
 		for key in order:
