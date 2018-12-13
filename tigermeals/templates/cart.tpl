@@ -180,7 +180,6 @@
 									<td data-th="Serving Size" class= "text-center">
 									{{food_quantity_feds[i]}}</td>
 									<td class="actions" data-th="">
-										<button class="btn btn-info btn-sm"><i class="fa fa-sync-alt"></i></button>
 									<form method="post"action="/cart/delete/{{food_ids[i]}}">
 										<button type="submit"id="delete{{food_ids[i]}}"class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
 									</form>

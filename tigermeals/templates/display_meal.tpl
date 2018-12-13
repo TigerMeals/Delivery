@@ -87,6 +87,20 @@
             <label>Select quantity</label>
           </div>
 
+          <!-- <h6>Subtotal: <small>$<span id="modal_subtotal{{meal.food_id}}"></small></h6> -->
+          <!-- <script>
+            var food_quantity;
+            var val = parseFloat({{meal.price}}).toFixed(2);
+            var mySelect = document.getElementById("formQuantity");
+
+            for(var i, j = 0; i = mySelect.options[j]; j++) {
+                if(i.value == food_quantity) {
+                    mySelect.selectedIndex = j;
+                    break;
+                }
+            }
+            document.getElementById('modal_subtotal{{meal.food_id}}').innerHTML = food_quantity;
+          </script> -->
 
           <div class="modal-add-to-cart">
             <div class="text-center item-right">

@@ -653,16 +653,23 @@
                             <p>CS Tea Room</p>
                           </div>
 
+                          <div class="col-4">
+                            <h6 class="mb-0 mt-1">Customizations</h6>
+                          </div>
+                          <div class="col-8">
+                            <p>Call me 5 minutes before the delivery so I can let you in!</p>
+                          </div>
+
 
                           <div class="col-4">
                             <h6 class="mb-0 mt-1">Restaurant</h6>
                           </div>
                           <div class="col-8">
-                            <p>Panera</p>
+                            <p><a href="../restaurant-info.html">Panera</a></p>
                           </div>
 
                           <div class="col-4">
-                            <h6 class="mb-0 mt-1">Restaurant Phone Number</h6>
+                            <h6 class="mb-0 mt-1">Restaurant Phone</h6>
                           </div>
                           <div class="col-8">
                             <p>(083)-893-3920</p>
@@ -672,14 +679,14 @@
                             <h6 class="mb-0 mt-1">Restaurant Email</h6>
                           </div>
                           <div class="col-8">
-                            <p>hello@panera.com</p>
+                            <p><a href="mailto:hello@panera.com">hello@panera.com</a></p>
                           </div>
 
                         </div>
 
                         <div class="row">
                           <div class="col-4">
-                            <h6 class="mb-0 mt-1">Items Ordered</h6>
+                            <h6 class="mb-1 mt-1">Items Ordered</h6>
                           </div>
                           <div class="col-8">
                           </div>
@@ -692,12 +699,45 @@
                           <div class="col-6">
                             <h6 class="mb-0 mt-1">Panera Breakfast Platter</h6>
                             <p>20 servings</p>
-                            <p><span class="text-black">Quantity: </span> 2 </p>
+                            <!-- <p><span class="text-black">Quantity: </span> 2 </p> -->
                             <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
                           </div>
                           <div class="col-2">
                             <p>$50.00 ea </p>
-                            <p><span class="text-black">Subtotal: </span> $100.00 </p>
+                            <p><span class="text-black">Quantity: 2 </span></p>
+                            <p class="justify-content-bottom"><span class="text-black">Subtotal:  $100.00 </span></p>
+                          </div>
+
+                          <div class="col-4">
+                            <img class="d-block w-100" src="static/img/panera.jpg"
+                              alt="First slide">
+                          </div>
+                          <div class="col-6">
+                            <h6 class="mb-0 mt-1">Panera Breakfast Platter</h6>
+                            <p>20 servings</p>
+                            <!-- <p><span class="text-black">Quantity: </span> 2 </p> -->
+                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
+                          </div>
+                          <div class="col-2">
+                            <p>$50.00 ea </p>
+                            <p><span class="text-black">Quantity: 2 </span></p>
+                            <p class="justify-content-bottom"><span class="text-black">Subtotal:  $100.00 </span></p>
+                          </div>
+
+                          <div class="col-4">
+                            <img class="d-block w-100" src="static/img/panera.jpg"
+                              alt="First slide">
+                          </div>
+                          <div class="col-6">
+                            <h6 class="mb-0 mt-1">Panera Breakfast Platter</h6>
+                            <p>20 servings</p>
+                            <!-- <p><span class="text-black">Quantity: </span> 2 </p> -->
+                            <p><span class="text-black">Customizations: </span> Extra cream cheese </p>
+                          </div>
+                          <div class="col-2">
+                            <p>$50.00 ea </p>
+                            <p><span class="text-black">Quantity: 2 </span></p>
+                            <p class="justify-content-bottom"><span class="text-black">Subtotal:  $100.00 </span></p>
                           </div>
 
                           <div class="col-4">
@@ -763,7 +803,7 @@
 
 
         </div><!--/row-->
-      </div> <!--container-->/
+      </div> <!--container-->
 
       <footer class="py-4 red-bar">
         <div class="container">
