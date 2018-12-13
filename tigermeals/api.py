@@ -32,16 +32,15 @@ class User(db.Model):
 	image = db.Column(db.Unicode, unique = False)
 
 
-	def __init__(self, netid, name, email, birthday, phone, address, allergies, userHistory = 0, image):
+	def __init__(self, netid, name, email, birthday, phone, address, allergies, image):
 		self.name = name
 		self.email = email
 		self.birthday = birthday
 		self.phone = phone
 		self.address = address
 		self.allergies = allergies
-		self.userHistory = userHistory
 		self.netid = netid
-		self.image = ""
+		self.image = image
 
 
 class UserSchema(ma.Schema):
