@@ -599,7 +599,58 @@ def restaurant_view():
     return render_template('restaurant_view.tpl', food_ids=food_ids,\
         id=user_id, food_prices = food_prices,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length)
+        length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length, cuisines=[])
+
+
+# Endpoint to display restaurant view
+@app.route("/meals/restaurant/filter", methods=["POST"])
+@login_required
+def restaurant_view_filter():
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+    cuisine = ""
+    for checkbox in ['Chinese', 'Healthy', 'Indian', 'Mexican', 'Drinks', 'American', 'Breakfast', 'Italian', 'Asian']:
+        if request.form.get(checkbox) is not None:
+            if len(cuisine) > 0:
+        	       cuisine += ","
+            cuisine += checkbox
+
+    restaurants_url = DATABASE_URL + "/restaurant/filter"
+    res = requests.post(restaurants_url, json={"cuisines": cuisine})
+    cuisineSplit = cuisine.split(",")
+
+    if not res.ok:
+        res.raise_for_status()
+    rests = json.loads(res.content)
+    restaurants = []
+    # Update the number of packages available
+    for rest in rests:
+        food_by_rest_url = DATABASE_URL + "/food/restaurant/" + str(rest['restaurant_id'])
+        res = requests.get(food_by_rest_url)
+        if not res.ok:
+            res.raise_for_status()
+        rest['num_orders'] = len(json.loads(res.content))
+    restaurants_length = len(rests)
+    return render_template('restaurant_view.tpl', food_ids=food_ids,\
+        id=user_id, food_prices = food_prices,\
+        food_subtotals = food_subtotals, food_titles = food_titles, \
+        length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length, cuisines=cuisineSplit)
+
 
 # Endpoint to display restaurant info
 @app.route("/meals/restaurant/<restaurant_id>")
@@ -623,38 +674,7 @@ def meals_restaurant(restaurant_id):
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
-    restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
-    res = requests.get(restaurant_url)
-    if not res.ok:
-        res.raise_for_status()
-    rest = json.loads(res.content)
 
-    meals_url = DATABASE_URL + "/food/restaurant/" + str(restaurant_id)
-    res = requests.get(meals_url)
-    if not res.ok:
-        res.raise_for_status()
-    meals = json.loads(res.content)
-
-    for meal in meals:
-        # Splice allergies into a list
-        if meal['allergies'] is "":
-            meal['allergies'] = []
-        else:
-            meal['allergies'] = meal['allergies'].split(",")
-        meal['restaurant'] = rest['name']
-
-
-    error = request.args.get('error')
-
-    r = make_response(render_template('restaurant_info.tpl', meals=meals, food_ids=food_ids,\
-        id=user_id, food_prices = food_prices, error=error,\
-        food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images, restaurant=rest))
-
-    r.headers["Pragma"] = "no-cache"
-    r.headers["Expires"] = "0"
-    r.headers['Cache-Control'] = 'public, max-age=0'
-    return r
 
 
 @app.route("/cart/upload", methods=["POST"])
@@ -795,11 +815,10 @@ def charge():
 
 
 
-    email, name, phone, address, netid, allergies = _getUser(user_id)
+    email_user, name, phone, address_user, netid, allergies = _getUser(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
-    order_id = json.loads(res.content)['order_id']
 
     if date is None or date == "" or time is None or time == "":
         print("NONE -------------------------------------------------")
@@ -807,12 +826,12 @@ def charge():
                 food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
                 food_quantity_feds=food_quantity_feds, food_images=food_images,\
                 length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
-                email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, order_id=order_id, key = stripe_keys['publishable_key'], error = "Please enter date and time info!!")
+                email=email_user, name=name, phone=phone,address=address_user, netid=netid, id=user_id, order_id=order_id, key = stripe_keys['publishable_key'], error = "Please enter date and time info!!")
 
 
     amount = int(total * 100)
 
-
+    order_id = json.loads(res.content)['order_id']
     order_ordered_url = DATABASE_URL + "/order/addToken/" + str(order_id) + "/" + str(request.form['stripeToken']) + "/" + str(amount)
     #user_id = 1
     # Amount in cents
