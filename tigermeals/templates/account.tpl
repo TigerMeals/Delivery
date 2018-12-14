@@ -418,7 +418,7 @@
 
                   {% endfor %}
                   {% for o in inprogress_orders %}
-                {% with order=o %}
+                {% with order=o,user=True %}
                   {% include 'order_modals.tpl' %}
                 {% endwith %}
               {% endfor %}
@@ -497,7 +497,7 @@
 
                   {% endfor %}
                   {% for o in history_orders %}
-                    {% with order=o %}
+                    {% with order=o,user=True %}
                       {% include 'order_modals.tpl' %}
                     {% endwith %}
                   {% endfor %}

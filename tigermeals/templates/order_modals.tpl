@@ -65,9 +65,7 @@
             </div>
             <div class="modal-footer">
               <div class="row">
-                {% if user %}
-
-                {% else %}
+                {% if not user %}
 
                 {% if order.paid and not order.delivered %}
                 <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
@@ -110,6 +108,7 @@
                     <button class="btn btn-success type=" type="submit" form="approve{{order.order_id}}">Approve</button>
                   </div>
                 </div>
+                {% else %}
                 {% endif %}
                 {% endif %}
               </div>
