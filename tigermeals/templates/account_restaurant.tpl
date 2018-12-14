@@ -64,18 +64,23 @@
             <li class="nav-item-bar">
               <a class="nav-link" href="/listings">My Meals</a>
             </li>
-            <li class="nav-item-bar">
-              <div class="dropdown">
-                <a class="nav-link btn-danger dropdown-toggle"  role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
-                  My Account
-                </a>
-
-                <div class="dropdown-menu" aria-labelledby="logoutLink">
-                  <a class="dropdown-item" href="/restaurant/account">My account</a>
-                  <a class="dropdown-item" href="/restaurant/logout">Logout</a>
-                </div>
-              </div>
+            <li class="nav-item-bar active">
+              <a class="nav-link" href="/restaurant/account">My Meals</a>
+              <span class="sr-only">(current)</span>
             </li>
+            <!-- <li class="nav-item-bar active">
+            <div class="dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="/restaurant/account" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
+                My Account
+              </a>
+              <span class="sr-only">(current)</span>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/restaurant/account">My account</a>
+                <a class="dropdown-item" href="/restaurant/logout">Logout</a>
+              </div>
+            </div>
+            </li> -->
             <li class="nav-item-bar">
               <a class="nav-link" href="/orders">View Orders ({{length_orders}} Active)</a>
             </li>
@@ -123,7 +128,12 @@
           </div><!--/col-3-->
         	<div class="col-sm-9">
               <div class="row">
-                <h1>{{name}}</h1>
+                <div class="col-6">
+                  <h1>{{name}}</h1>
+                </div>
+                <div class="col-6 align-self-right justify-content-end">
+                  <a class="mt-1 btn btn-sm btn-warning float-right justify-content-end" href="/restaurant/logout">Logout</a>
+                </div>
               </div>
               <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#profile" class="mr-2">Profile</a></li>
