@@ -47,6 +47,8 @@ def _getRestaurantEmails():
     for rest in restaurants:
         rests[rest['restaurant_id']] = rest['email']
 
+    print(rests)
+
     return rests
 
 def _getCart(user_id):

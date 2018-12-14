@@ -422,7 +422,7 @@
 
                   {% endfor %}
                   {% for o in inprogress_orders %}
-                {% with order=o,user=True %}
+                {% with order=o,user=True,email=rest_emails_dict[o['restaurant_id']] %}
                   {% include 'order_modals.tpl' %}
                 {% endwith %}
               {% endfor %}
@@ -501,7 +501,7 @@
 
                   {% endfor %}
                   {% for o in history_orders %}
-                    {% with order=o,user=True %}
+                    {% with order=o,user=True, email=rest_emails_dict[o['restaurant_id']] %}
                       {% include 'order_modals.tpl' %}
                     {% endwith %}
                   {% endfor %}
