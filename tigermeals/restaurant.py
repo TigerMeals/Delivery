@@ -189,7 +189,7 @@ def register_upload():
 	"password": request.form['password'],
 	"website": request.form['website'],
 	"image": "",
-	"phone": "",
+	"phone": request.form['phone'],
 	"description": "",
 	"cuisine": cuisine,
 	"servingSize": "100",

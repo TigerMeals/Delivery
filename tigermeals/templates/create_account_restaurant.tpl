@@ -92,6 +92,15 @@
                   </div>
               </div>
             </div>
+
+            <div class="form-group col-md-6">
+                <div class="col-12">
+                  <input name="phone" class="form-control" id="restaurantPhone" placeholder="Restaurant Phone" type="text" required>
+                  <div class="invalid-feedback" align="left">
+                    Please enter the restaurant phone number.
+                  </div>
+                </div>
+            </div>
           </div>
           <hr>
 
