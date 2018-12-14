@@ -65,7 +65,7 @@
               <a class="nav-link" href="/listings">My Meals</a>
             </li>
             <li class="nav-item-bar active">
-              <a class="nav-link" href="/restaurant/account">My Meals</a>
+              <a class="nav-link" href="/restaurant/account">My Account</a>
               <span class="sr-only">(current)</span>
             </li>
             <!-- <li class="nav-item-bar active">

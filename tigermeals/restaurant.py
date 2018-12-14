@@ -143,6 +143,10 @@ def reset_upload():
     res = requests.post(lookup_email_url, json={"email": email})
     if not res.ok:
         res.raise_for_status()
+
+    if res.json() == {}:
+    	return render_template('reset_restaurant.tpl', error="Email is not owned by a registered restaurant")
+
     rest_id = json.loads(res.content)['restaurant_id']
     update_pass_url = DATABASE_URL + "/restaurant/password/" + str(rest_id)
     requests.put(update_pass_url, json={"password": new_password})
