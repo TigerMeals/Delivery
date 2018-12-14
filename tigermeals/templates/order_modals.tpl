@@ -50,13 +50,12 @@
                 <div class="col-8">
                 </div>
 
+                
                 {% for i in order.food_items %}
                   {% with item=i %}
                     {% include 'display_ordered_item.tpl' %}
                   {% endwith %}
                 {% endfor %}
-
-
 
               </div>
 
