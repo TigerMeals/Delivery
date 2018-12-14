@@ -12,7 +12,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://tigermealsdelivery@gmail.com:Tiger2020@hidden-springs-97786.herokuapp.com/delivery"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://vinaypa@hotmail.com:tigermealsDelivery1!@tigermeals.herokuapp.com/delivery"
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
