@@ -80,6 +80,9 @@ def view():
 	hours = []
 	for hour in rest['hours']:
 		# Convert time to a readable format
+		if hour == "":
+			hours.append("CLOSED")
+			continue
 		hr = hour.split(":")[0]
 		min = hour.split(":")[1]
 		time = "am"

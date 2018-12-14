@@ -743,14 +743,17 @@ def meals_restaurant(restaurant_id):
     rest['hours'] = rest['hours'].split(",")
     hours = []
     for hour in rest['hours']:
-    	# Convert time to a readable format
-    	hr = hour.split(":")[0]
-    	min = hour.split(":")[1]
-    	time = "am"
-    	if int(hr) > 12:
-    		hr = str(int(hr) - 12)
-    		time = "pm"
-    	hours.append(hr + ":" + min + " " + time)
+        if hour == "":
+            hours.append("CLOSED")
+            continue
+        # Convert time to a readable format
+        hr = hour.split(":")[0]
+        min = hour.split(":")[1]
+        time = "am"
+        if int(hr) > 12:
+        	hr = str(int(hr) - 12)
+        	time = "pm"
+        hours.append(hr + ":" + min + " " + time)
 
     for meal in meals:
         # Splice allergies into a list
