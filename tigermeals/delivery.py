@@ -271,6 +271,14 @@ def account():
     history_orders = []
 
     for order in fetch_req:
+        for package in order['food_items']:
+            food_id = package['food_id']
+            # look up food_id
+            lookup_food_url = DATABASE_URL + "/food/" + str(food_id)
+
+            food_image = _getJSON(lookup_food_url)['image']
+            package['image'] = food_image
+
         if order['restaurant_id'] not in past_restaurants:
             past_restaurants.append(order['restaurant_id'])
 
