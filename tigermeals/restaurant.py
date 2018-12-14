@@ -576,7 +576,7 @@ def image_update():
             print(img)
             print(img.filename)
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width=200, height=200, crop = "fit")
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             print(updateImage)
@@ -788,7 +788,7 @@ def add_listing():
             #img.save('tigermeals/' + img_url)
             #updateImage = {"image": img_url}
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width=200, height=200, crop = "fit")
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             print(updateImage)
