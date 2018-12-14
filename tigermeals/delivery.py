@@ -899,7 +899,7 @@ def charge():
         return None
 
 
-
+    order_id = json.loads(res.content)['order_id']
 
     email_user, name_user, phone, address_user, netid, allergies = _getUser(user_id)
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
@@ -917,7 +917,7 @@ def charge():
 
     amount = int(total * 100)
 
-    order_id = json.loads(res.content)['order_id']
+    
     order_ordered_url = DATABASE_URL + "/order/addToken/" + str(order_id) + "/" + str(request.form['stripeToken']) + "/" + str(amount)
     #user_id = 1
     # Amount in cents
