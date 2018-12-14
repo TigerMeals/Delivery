@@ -97,7 +97,11 @@
 
 
           <div class="text-center">
+            {% if image != "": %}
             <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
+            {% else %}
+            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+            {% endif %}
             <br><br>
             <h6>Upload a different photo...</h6>
             <form method="post" action="/restaurant/image/update" enctype=multipart/form-data>
