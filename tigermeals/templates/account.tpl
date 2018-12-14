@@ -342,7 +342,7 @@
 
               {% endfor %}
               {% for o in pending_order %}
-                {% with order=o %}
+                {% with order=o, user=True %}
                   {% include 'order_modals.tpl' %}
                 {% endwith %}
               {% endfor %}
