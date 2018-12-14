@@ -74,7 +74,16 @@
         <!-- <div class="row"> -->
           <input type="hidden" id="food_id" name="food_id" value="{{meal.food_id}}"></input>
         <div class="col-lg-3 col-md-3">
-          <select form="add_to_cart{{meal.food_id}}" class="form-control item-left" formid="quantity" name="quantity" size="0">
+          <script>
+          function update_quantity{{meal.food_id}}() {
+            var s = document.getElementById('quantity{{meal.food_id}}');
+            var quantity = s.options[s.selectedIndex].value;
+            var subtotal = quantity * parseFloat({{meal.price}});
+            var val = parseFloat(subtotal).toFixed(2);
+            document.getElementById('subtotal{{meal.food_id}}').innerHTML = val;
+          }
+          </script>
+          <select onchange="update_quantity{{meal.food_id}}()" id="quantity{{meal.food_id}}" form="add_to_cart{{meal.food_id}}" class="form-control item-left" formid="quantity" name="quantity" size="0">
               <option value="01">1</option>
               <option value="02">2</option>
               <option value="03">3</option>
@@ -88,6 +97,14 @@
             </select>
             <label>Select quantity</label>
           </div>
+          <div class="col-md-3" align="right">
+            <p class="strong"> Subtotal:
+            $<span class="text-success" id="subtotal{{meal.food_id}}"></span></p>
+          </div>
+          <script>
+            var val = parseFloat({{meal.price}}).toFixed(2);
+            document.getElementById('subtotal{{meal.food_id}}').innerHTML = val;
+          </script>
 
 
           <div class="modal-add-to-cart">
