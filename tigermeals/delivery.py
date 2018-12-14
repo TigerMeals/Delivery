@@ -15,8 +15,8 @@ import cloudinary.utils
 
 cas = CAS(app, '/cas')
 cas.init_app(app)
-# DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
-DATABASE_URL="http://localhost:5000"
+DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+# DATABASE_URL="http://localhost:5000"
 
 app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
@@ -954,7 +954,7 @@ def charge():
 
     amount = int(total * 100)
 
-    
+
     order_ordered_url = DATABASE_URL + "/order/addToken/" + str(order_id) + "/" + str(request.form['stripeToken']) + "/" + str(amount)
     #user_id = 1
     # Amount in cents

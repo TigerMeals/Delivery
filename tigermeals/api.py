@@ -11,8 +11,8 @@ from tigermeals import app
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://vinaypa@hotmail.com:tigermealsDelivery1!@https://tigermeals.herokuapp.com/delivery"
+# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
