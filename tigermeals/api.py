@@ -619,7 +619,7 @@ class Order(db.Model):
 
 class OrderSchema(ma.Schema):
 	class Meta:
-		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address')
+		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address','stripeToken','amount')
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many = True)
