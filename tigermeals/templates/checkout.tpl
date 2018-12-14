@@ -196,7 +196,7 @@
               </div>
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item">
-                      <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pay with Card (Credit or Debit)</a>
+                      <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pay with Credit or Debit Card</a>
                   </li>
 
                   <li class="nav-item">
@@ -212,6 +212,10 @@
 
             <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
               <form action="/charge" id = "stripe_payment_button" method="post" class="needs-validation" novalidate>
+                <br>
+                <h4 class="mb-3">Card Payment</h4>
+
+                <p class="mb-3"><strong class="text-danger">Note that the Shipping Address that Stripe requests is the Delivery Address!</strong></p>
 
                 <div class="col-md-6 mb-3">
                 <label for="date">Delivery Date</label>
@@ -225,15 +229,15 @@
                 <input type="time" class="form-control" id="timeCard" name="timeCard" value="12:00" required>
                 <div class="invalid-feedback">
                   Please enter a valid time.
-                </div> 
-              </div>   
+                </div>
+              </div>
               <p class="text-danger">{{error}}</p>
               <article>
                   <label>
-                    <span>Total is ${{total}}</span>
+                    <span>Total is ${{total}}.</span>
                   </label>
                 </article>
-                  
+
                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                         data-key={{key}}
                         data-amount=String({{total}} * 100)
@@ -242,17 +246,19 @@
                         data-shipping-address = "true"
                         data-zip-code="true"
                         data-name="TigerMeals Checkout"
-                        data-locale="auto">      
-                </script> 
+                        data-locale="auto">
+                </script>
               </form>
+            <br>
+            <br>
             <br>
           </div>
 
-              <div class="tab-pane fade show" id="pending-orders" role="tabpanel" aria-labelledby="pending-orders-tab">
-<form id="checkout_form" action="/ordered?id={{user_id}}" method="POST" class="needs-validation" novalidate>
-  <br>
-            <h4 class="mb-3">Cash Payment: Please complete this form</h4>
-            <h5 class="mb-3">Shipping Address</h5>
+          <div class="tab-pane fade show" id="pending-orders" role="tabpanel" aria-labelledby="pending-orders-tab">
+           <form id="checkout_form" action="/ordered?id={{user_id}}" method="POST" class="needs-validation" novalidate>
+            <br>
+            <h4 class="mb-3">Cash Payment</h4>
+
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="firstName">First Name</label>
@@ -292,10 +298,10 @@
             </div>
 
             <div class="mb-3">
-              <label for="address">Address</label>
+              <label for="address">Delivery Address</label>
               <input type="text" class="form-control" id="address" name="address" placeholder="" value="{{address}}" required>
               <div class="invalid-feedback">
-                Please enter your shipping address.
+                Please enter your delivery address.
               </div>
             </div>
 
@@ -324,9 +330,11 @@
             </div>
           </form>
           <br>
-        <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" style="visibility:visible" form="checkout_form">Continue to checkout</button></p>
+        <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" form="checkout_form">Continue to checkout</button></p>
+        <br>
+        <br>
           </div>
-         
+
              <!--/tab-content-->
 
          </div><!--/tab-pane-->
@@ -334,7 +342,7 @@
 
         </div><!--/row-->
       </div> <!--container-->
-      
+
         </div>
       </div>
     </div>
