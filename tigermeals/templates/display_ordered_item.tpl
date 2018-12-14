@@ -1,5 +1,5 @@
 <div class="col-4">
-  <img class="d-block w-100" src="/static/img/panera.jpg"
+  <img class="d-block w-100" src="{{item.image}}"
     alt="First slide">
 </div>
 <div class="col-6">

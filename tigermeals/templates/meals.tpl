@@ -135,7 +135,9 @@
 
             <h1 class="catering-header">Catering Packages</h1>
 
+            {% if current_filters %}
             <h4>Current filters</h4>
+            {% endif %}
             {% for f in current_filters %}
             <div class="row">
               <div class="col-4">
