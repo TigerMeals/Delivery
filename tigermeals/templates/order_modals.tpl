@@ -72,7 +72,7 @@
                 </form>
                 <div class="col-6">
                   <div class="text-center item-right">
-                    <button class="btn btn-info" onclick="contact{{order.order_id}}()">Contact</button>
+                    <button class="btn btn-info" href="mailto:{{order.email}}">Contact</button>
                   </div>
                 </div>
                 <form id="delivered{{order.order_id}}" action="/order/delivered" method="POST">
