@@ -966,9 +966,11 @@ def order_approve_rest():
 
     email = tokenInfo['email']
     stripeToken = None
+    amount = 0
     if 'stripeToken' in tokenInfo:
     	stripeToken = tokenInfo['stripeToken']
-    amount = tokenInfo['amount']
+    if 'amount' in tokenInfo:
+    	amount = tokenInfo['amount']
 
 
     if stripeToken is not None and stipeToken != "":
