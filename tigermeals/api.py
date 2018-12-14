@@ -12,7 +12,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql+psycopg2://vinaypa@hotmail.com:tigermealsDelivery1!@https://tigermeals.herokuapp.com/delivery"
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -791,8 +791,6 @@ def order_delete(order_id):
 	db.session.commit()
 	return order_schema.jsonify(order)
 
-db.create_all()
-db.session.commit()
 
 if __name__ == '__main__':
 	app.run(debug=True, host='0.0.0.0', port=os.environ.get("PORT", 5000))
