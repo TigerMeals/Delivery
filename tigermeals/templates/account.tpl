@@ -346,7 +346,7 @@
 
               {% endfor %}
               {% for o in pending_order %}
-                {% with order=o, user=True %}
+                {% with order=o, user=True, email=rest_emails_dict[o['restaurant_id']] %}
                   {% include 'order_modals.tpl' %}
                 {% endwith %}
               {% endfor %}

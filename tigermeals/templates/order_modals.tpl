@@ -111,9 +111,9 @@
 
                 {% endif %}
                 {% else %}
-                <div class="col-6">
+                <div class="col-8">
                   <div class="text-center item-right">
-                    <a href="#"><button class="btn btn-info" >Contact</button></a>
+                    <a href="mailto:{{email}}"><button class="btn btn-info" >Contact Restaurant</button></a>
                   </div>
                 </div>
                 {% endif %}
