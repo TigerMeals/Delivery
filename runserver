@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 export FLASK_APP=tigermeals
+export DISABLE_SQLALCHEMY_CEXT=1
 #export FLASK_ENV=development
 pip install -e . --user
 flask run
