@@ -92,6 +92,15 @@
                   </div>
               </div>
             </div>
+
+            <div class="form-group col-md-6">
+                <div class="col-12">
+                  <input name="restaurantPhone" class="form-control" id="restaurantPhone" placeholder="Restaurant Phone" type="text" required>
+                  <div class="invalid-feedback" align="left">
+                    Please enter the restaurant phone number.
+                  </div>
+                </div>
+            </div>
           </div>
           <hr>
 
@@ -249,13 +258,15 @@
               <div class="col-6 col-lg-4">
                 <div class="checkbox" align="left">
                   <label>
-                    <input type="checkbox"  name="Indian">
+                    <input type="checkbox"  name="Italian">
                     Italian
                   </label>
                 </div>
+              </div>
+              <div class="col-6 col-lg-4">
                 <div class="checkbox" align="left">
                   <label>
-                    <input type="checkbox"  name="Indian">
+                    <input type="checkbox"  name="Asian">
                     Asian
                   </label>
                 </div>

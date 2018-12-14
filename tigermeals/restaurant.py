@@ -143,6 +143,10 @@ def reset_upload():
     res = requests.post(lookup_email_url, json={"email": email})
     if not res.ok:
         res.raise_for_status()
+
+    if res.json() == {}:
+    	return render_template('reset_restaurant.tpl', error="Email is not owned by a registered restaurant")
+
     rest_id = json.loads(res.content)['restaurant_id']
     update_pass_url = DATABASE_URL + "/restaurant/password/" + str(rest_id)
     requests.put(update_pass_url, json={"password": new_password})
@@ -189,7 +193,7 @@ def register_upload():
 	"password": request.form['password'],
 	"website": request.form['website'],
 	"image": "",
-	"phone": "",
+	"phone": request.form['restaurantPhone'],
 	"description": "",
 	"cuisine": cuisine,
 	"servingSize": "100",
@@ -576,7 +580,7 @@ def image_update():
             print(img)
             print(img.filename)
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width=200, height=200, crop = "fit")
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             print(updateImage)
@@ -788,7 +792,7 @@ def add_listing():
             #img.save('tigermeals/' + img_url)
             #updateImage = {"image": img_url}
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width=200, height=200, crop = "fit")
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             print(updateImage)
@@ -848,7 +852,7 @@ def update_listing():
         if img is not None:
             # Img url is unique name based on the food id
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width=200, height=200, crop = "fit")
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             print(updateImage)

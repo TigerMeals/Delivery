@@ -94,9 +94,9 @@
             </select>
             <label>Select quantity</label>
           </div>
-          <div class="col-md-3" align="right">
-            <p class="strong"> Subtotal:
-            $<span class="text-success" id="subtotal{{meal.food_id}}"></span></p>
+          <div class="col-md-3" align="left">
+            <p class="strong text-primary"> Subtotal:
+            <span class="text-success">$</span><span class="text-success" id="subtotal{{meal.food_id}}"></span></p>
           </div>
           <script>
             var val = parseFloat({{meal.price}}).toFixed(2);

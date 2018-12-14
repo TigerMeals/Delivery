@@ -90,25 +90,24 @@
     "allergies": "Dairy",
     "cuisine": "Chinese",
     "description": "100 ct Bubble Tea for all of your cravings.",
-    "food_id": 1,
-    "image": "/static/img/kungfu.jpg",
+    "image": "",
     "price": 359.99,
     "quantity_fed": 100,
     "restaurant_id": 1,
-    "timesOrdered": 23,
+    "timesOrdered": 0,
     "title": "100 ct Bubble Tea"
 }
+
 
 {
     "allergies": "Dairy, Gluten",
     "cuisine": "Mexican",
     "description": "50 ct Tacos for all of your cravings.",
-    "food_id": 2,
-    "image": "/static/img/tacoria.jpg",
+    "image": "",
     "price": 209.99,
     "quantity_fed": 50,
     "restaurant_id": 2,
-    "timesOrdered": 36,
+    "timesOrdered": 0,
     "title": "50 ct Taco Set"
 }
 
@@ -137,21 +136,3 @@
     "timesOrdered": 0,
     "title": "Quesadilla"
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
