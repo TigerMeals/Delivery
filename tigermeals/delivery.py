@@ -728,18 +728,38 @@ def meals_restaurant(restaurant_id):
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
-    get_rest_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
-
-    res = _getJSON(get_rest_url)
+    restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
+    res = requests.get(restaurant_url)
+    if not res.ok:
+        res.raise_for_status()
+    rest = json.loads(res.content)
 
     meals_url = DATABASE_URL + "/food/restaurant/" + str(restaurant_id)
+    res = requests.get(meals_url)
+    if not res.ok:
+        res.raise_for_status()
+    meals = json.loads(res.content)
 
-    meals = _getJSON(meals_url)
+    for meal in meals:
+        # Splice allergies into a list
+        if meal['allergies'] is "":
+            meal['allergies'] = []
+        else:
+            meal['allergies'] = meal['allergies'].split(",")
+        meal['restaurant'] = rest['name']
 
-    print("PRINTING THAT SHIT fsdfhsdlfuhsdf")
-    print(meals)
 
-    return render_template("restaurant_info.tpl", restaurant = res, length_cart=length_cart,meals=meals)
+    error = request.args.get('error')
+
+    r = make_response(render_template('restaurant_info.tpl', meals=meals, food_ids=food_ids,\
+        id=user_id, food_prices = food_prices, error=error,\
+        food_subtotals = food_subtotals, food_titles = food_titles, \
+        length_cart = length_cart, total=total, food_images= food_images, restaurant=rest))
+
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
 
 
 @app.route("/cart/upload", methods=["POST"])
