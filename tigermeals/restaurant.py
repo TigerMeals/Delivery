@@ -973,7 +973,7 @@ def order_approve_rest():
     	amount = tokenInfo['amount']
 
 
-    if stripeToken is not None and stipeToken != "":
+    if stripeToken is not None and stripeToken != "":
         try:
             customer = stripe.Customer.create(
                 email=email,
