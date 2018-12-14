@@ -76,6 +76,18 @@ def view():
 		res.raise_for_status()
 	meals = json.loads(res.content)
 
+	rest['hours'] = rest['hours'].split(",")
+	hours = []
+	for hour in rest['hours']:
+		# Convert time to a readable format
+		hr = hour.split(":")[0]
+		min = hour.split(":")[1]
+		time = "am"
+		if int(hr) > 12:
+			hr = str(int(hr) - 12)
+			time = "pm"
+		hours.append(hr + ":" + min + " " + time)
+
 	for meal in meals:
 		# Splice allergies into a list
 		if meal['allergies'] is "":
@@ -99,7 +111,7 @@ def view():
 
 	error = request.args.get('error')
 
-	r = make_response(render_template('restaurant_info_restaurant.tpl', meals=meals, restaurant=rest, length_orders=length_orders))
+	r = make_response(render_template('restaurant_info_restaurant.tpl', meals=meals, restaurant=rest, length_orders=length_orders, hours=hours))
 
 	r.headers["Pragma"] = "no-cache"
 	r.headers["Expires"] = "0"
@@ -156,6 +168,18 @@ def register_upload():
 				cuisine += ","
 			cuisine += checkbox
 	print(cuisine)
+	hours = ""
+	for day in ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']:
+		start_time = request.form.get(day + '1')
+		if start_time is None:
+			start_time = ""
+		end_time = request.form.get(day + '2')
+		if end_time is None:
+			end_time = ""
+		if len(hours) > 0:
+			hours += ","
+		hours += start_time + "," + end_time
+
 	registration_info = {
 	"name": request.form['name'],
 	"email": request.form['email'],
@@ -167,6 +191,7 @@ def register_upload():
 	"cuisine": cuisine,
 	"servingSize": "100",
 	"address": request.form['address'],
+	"hours": hours
 	}
 
 	if request.form['primaryFirstName'] is not None:
