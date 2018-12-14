@@ -15,7 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/static/css/shop-homepage.css" rel="stylesheet">
-    <link href="/static/css/boostrap-slider.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -64,17 +64,17 @@
             <li class="nav-item-bar">
               <a class="nav-link" href="/listings">My Meals</a>
             </li>
-            <li class="nav-item-bar active">
-            <div class="dropdown">
-              <a class="nav-link btn-danger dropdown-toggle" href="/restaurant/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
-                My Account
-              </a>
-              <span class="sr-only">(current)</span>
-              <div class="dropdown-menu" aria-labelledby="logoutLink">
-                <a class="dropdown-item" href="/restaurant/account">My account</a>
-                <a class="dropdown-item" href="/restaurant/logout">Logout</a>
+            <li class="nav-item-bar">
+              <div class="dropdown">
+                <a class="nav-link btn-danger dropdown-toggle"  role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
+                  My Account
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="logoutLink">
+                  <a class="dropdown-item" href="/restaurant/account">My account</a>
+                  <a class="dropdown-item" href="/restaurant/logout">Logout</a>
+                </div>
               </div>
-            </div>
             </li>
             <li class="nav-item-bar">
               <a class="nav-link" href="/orders">View Orders ({{length_orders}} Active)</a>
@@ -134,7 +134,7 @@
              <div class="tab-content">
                 <div class="tab-pane active" id="profile">
 
-                      <form class="form" action="/restaurant/profile/update" method="post" id="registrationForm">
+                      <form class="form" action="/restaurant/profile/update" method="post" id="profileForm">
                         <div class="row mt-3">
                           <div class="form-group col-12">
 
@@ -226,7 +226,7 @@
 
                   <div class="tab-pane" id="account">
 
-                        <form class="form" action="/restaurant/account/update" method="post" id="registrationForm">
+                        <form class="form" action="/restaurant/account/update" method="post" id="accountForm">
                           <div class="row mt-3">
 
                             <div class="form-group col-6">
@@ -327,7 +327,7 @@
 
                  <div class="tab-pane" id="settings">
 
-                       <form class="form" action="#" method="post" id="registrationForm">
+                       <form class="form" action="#" method="post" id="settingsForm">
                          <div class="row mt-3">
                            <div class="form-group col-12">
 

@@ -338,14 +338,14 @@
                   </div>
                 </div>
               </div>
-              {% for o in pending_orders %}
+              
+
+              {% endfor %}
+              {% for o in pending_order %}
                 {% with order=o %}
                   {% include 'order_modals.tpl' %}
                 {% endwith %}
               {% endfor %}
-
-              {% endfor %}
-
                 </div>
 
 
@@ -416,12 +416,12 @@
                     </div>
                   </div>
 
+                  {% endfor %}
                   {% for o in inprogress_orders %}
-                    {% with order=o %}
-                      {% include 'order_modals.tpl' %}
-                    {% endwith %}
-                  {% endfor %}
-                  {% endfor %}
+                {% with order=o %}
+                  {% include 'order_modals.tpl' %}
+                {% endwith %}
+              {% endfor %}
                 </div>
 
 
@@ -495,14 +495,12 @@
                     </div>
                   </div>
 
-
+                  {% endfor %}
                   {% for o in history_orders %}
                     {% with order=o %}
                       {% include 'order_modals.tpl' %}
                     {% endwith %}
                   {% endfor %}
-                  {% endfor %}
-
 
                 </div>
 

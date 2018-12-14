@@ -728,7 +728,18 @@ def meals_restaurant(restaurant_id):
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
 
+    get_rest_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
 
+    res = _getJSON(get_rest_url)
+
+    meals_url = DATABASE_URL + "/food/restaurant/" + str(restaurant_id)
+
+    meals = _getJSON(meals_url)
+
+    print("PRINTING THAT SHIT fsdfhsdlfuhsdf")
+    print(meals)
+
+    return render_template("restaurant_info.tpl", restaurant = res, length_cart=length_cart,meals=meals)
 
 
 @app.route("/cart/upload", methods=["POST"])
