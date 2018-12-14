@@ -595,8 +595,13 @@ class Order(db.Model):
 	date = db.Column(db.Unicode, unique = False)
 	time = db.Column(db.Unicode, unique = False)
 	location = db.Column(db.Unicode, unique = False)
+	stripeToken = db.Column(db.Unicode, unique = True)
+	amount = db.Column(db.Unicode, unique = False)
 
-	def __init__(self, user_id, food_items, restaurant_id, date, order_time, location , delivery_time = None, ordered = False, paid = False, delivery_in_process = False, delivered = False, name = None, email = None, address = None):
+	def __init__(self, user_id, food_items, restaurant_id, \
+		date, order_time, location , delivery_time = None, \
+		ordered = False, paid = False, delivery_in_process = False, \
+		delivered = False, name = None, email = None, address = None, stripeToken=None,amount=None):
 		self.user_id = user_id
 		self.food_items = food_items
 		self.restaurant_id = restaurant_id
