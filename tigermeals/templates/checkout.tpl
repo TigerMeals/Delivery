@@ -160,7 +160,12 @@
               <small class="text-muted">{{food_descriptions[i]}}</small>
             </td>
             <td>
-              <span class="text-muted">${{food_prices[i]}}</span>
+              <span id ="money{{food_ids[i]}}"onload="editPrices()"class="text-muted"></span>
+              <script>
+                var val = parseFloat({{food_prices[i]}}).toFixed(2);
+                document.getElementById('money{{food_ids[i]}}').innerHTML = "$" + val
+                  // document.getElementById('SumTotal').innerHTML = "Total: $" + val;
+              </script>
             </td>
             </tr>
             </table>
@@ -176,7 +181,7 @@
             </li>
             <li class="list-group-item d-flex justify-content-between">
               <span>Total (USD)</span>
-              <strong>${{total}}</strong>
+              <strong>$<span id="CheckoutSumTotal"></span></strong>
             </li>
           </ul>
 
@@ -234,9 +239,14 @@
               <p class="text-danger">{{error}}</p>
               <article>
                   <label>
-                    <span>Total is ${{total}}.</span>
+                    <span id="SumTotal">Total is ${{total}}.</span>
                   </label>
                 </article>
+                <script>
+                  var val = parseFloat({{total}}).toFixed(2);
+                  document.getElementById('SumTotal').innerHTML = "Total: $" + val;
+                  document.getElementById('CheckoutSumTotal').innerHTML =  val;
+                </script>
 
                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                         data-key={{key}}
@@ -255,7 +265,7 @@
           </div>
 
           <div class="tab-pane fade show" id="pending-orders" role="tabpanel" aria-labelledby="pending-orders-tab">
-           <form id="checkout_form" action="/ordered?id={{user_id}}" method="POST" class="needs-validation" novalidate>
+           <form id="checkout_form" action="/ordered" method="POST" class="needs-validation" novalidate>
             <br>
             <h4 class="mb-3">Cash Payment</h4>
 
