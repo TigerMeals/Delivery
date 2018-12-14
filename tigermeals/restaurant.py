@@ -193,7 +193,7 @@ def register_upload():
 	"password": request.form['password'],
 	"website": request.form['website'],
 	"image": "",
-	"phone": request.form['phone'],
+	"phone": request.form['restaurantPhone'],
 	"description": "",
 	"cuisine": cuisine,
 	"servingSize": "100",
