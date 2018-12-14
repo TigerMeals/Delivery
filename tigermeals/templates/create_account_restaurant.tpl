@@ -249,13 +249,15 @@
               <div class="col-6 col-lg-4">
                 <div class="checkbox" align="left">
                   <label>
-                    <input type="checkbox"  name="Indian">
+                    <input type="checkbox"  name="Italian">
                     Italian
                   </label>
                 </div>
+              </div>
+              <div class="col-6 col-lg-4">
                 <div class="checkbox" align="left">
                   <label>
-                    <input type="checkbox"  name="Indian">
+                    <input type="checkbox"  name="Asian">
                     Asian
                   </label>
                 </div>
