@@ -161,6 +161,7 @@ class Restaurant(db.Model):
 	email = db.Column(db.Unicode, unique = True)
 	website = db.Column(db.Unicode, unique = False)
 	cuisine = db.Column(db.Unicode, unique = False)
+	hours = db.Column(db.Unicode, unique = False)
 	servingSize = db.Column(db.Integer, unique = False)
 	primaryFirstName = db.Column(db.Unicode, unique = False)
 	primaryLastName = db.Column(db.Unicode, unique = False)
@@ -171,7 +172,7 @@ class Restaurant(db.Model):
 	secondaryEmail = db.Column(db.Unicode, unique = False)
 	secondaryPhone = db.Column(db.Unicode, unique = False)
 
-	def __init__(self, name, image, description, address, phone, cuisine, servingSize, \
+	def __init__(self, name, image, description, address, phone, cuisine, servingSize, hours, \
 	website, email, password, primaryFirstName, primaryLastName, primaryEmail, \
 	primaryPhone, secondaryFirstName, secondaryLastName, secondaryEmail, secondaryPhone):
 		self.name = name
@@ -184,6 +185,7 @@ class Restaurant(db.Model):
 		self.website = website
 		self.email = email
 		self.password = password
+		self.hours = hours
 		self.primaryFirstName = primaryFirstName
 		self.primaryLastName = primaryLastName
 		self.primaryEmail = primaryEmail
@@ -195,7 +197,7 @@ class Restaurant(db.Model):
 
 class RestaurantSchema(ma.Schema):
 	class Meta:
-		fields = ('restaurant_id', 'name', 'image', 'description', 'address', 'phone', 'cuisine', 'servingSize',\
+		fields = ('restaurant_id', 'name', 'image', 'description', 'address', 'phone', 'cuisine', 'servingSize', 'hours',\
 			'website', 'email', 'password', 'primaryFirstName', 'primaryLastName', 'primaryEmail', 'primaryPhone', \
 			'secondaryFirstName', 'secondaryLastName', 'secondaryEmail', 'secondaryPhone')
 restaurant_schema = RestaurantSchema()
@@ -231,6 +233,7 @@ def restaurant_add():
 	description = request.json['description']
 	address = request.json['address']
 	phone = request.json['phone']
+	hours = request.json['hours']
 	cuisine = request.json['cuisine']
 	servingSize = request.json['servingSize']
 	email = request.json['email']
@@ -258,7 +261,7 @@ def restaurant_add():
 
 	# Store the password securely
 	new_restaurant = Restaurant(name, image, description, address, phone, cuisine, \
-	 servingSize, website, email, password, primaryFirstName, primaryLastName, primaryEmail, primaryPhone, \
+	 servingSize, hours, website, email, password, primaryFirstName, primaryLastName, primaryEmail, primaryPhone, \
 	 secondaryFirstName, secondaryLastName, secondaryEmail, secondaryPhone)
 	db.session.add(new_restaurant)
 	db.session.commit()

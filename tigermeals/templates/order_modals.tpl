@@ -50,13 +50,12 @@
                 <div class="col-8">
                 </div>
 
+
                 {% for i in order.food_items %}
                   {% with item=i %}
                     {% include 'display_ordered_item.tpl' %}
                   {% endwith %}
                 {% endfor %}
-
-
 
               </div>
 
@@ -65,6 +64,7 @@
             </div>
             <div class="modal-footer">
               <div class="row">
+                {% if not user %}
 
                 {% if order.paid and not order.delivered %}
                 <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
@@ -72,7 +72,7 @@
                 </form>
                 <div class="col-6">
                   <div class="text-center item-right">
-                    <button class="btn btn-info" onclick="contact{{order.order_id}}()">Contact</button>
+                    <a href="mailto:{{order.email}}"><button class="btn btn-info">Contact</button></a>
                   </div>
                 </div>
                 <form id="delivered{{order.order_id}}" action="/order/delivered" method="POST">
@@ -107,6 +107,8 @@
                     <button class="btn btn-success type=" type="submit" form="approve{{order.order_id}}">Approve</button>
                   </div>
                 </div>
+                {% else %}
+                {% endif %}
                 {% endif %}
               </div>
             </div>

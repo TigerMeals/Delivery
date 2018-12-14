@@ -159,7 +159,11 @@
 
 
           <div class="text-center">
+            {% if image != "": %}
             <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
+            {% else %}
+            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+            {% endif %}
             <br><br>
             <h6>Upload a different photo...</h6>
             <form method="post" action="/user/image/update" enctype=multipart/form-data>
@@ -338,11 +342,11 @@
                   </div>
                 </div>
               </div>
-              
+
 
               {% endfor %}
               {% for o in pending_order %}
-                {% with order=o %}
+                {% with order=o, user=True %}
                   {% include 'order_modals.tpl' %}
                 {% endwith %}
               {% endfor %}
@@ -418,7 +422,7 @@
 
                   {% endfor %}
                   {% for o in inprogress_orders %}
-                {% with order=o %}
+                {% with order=o,user=True %}
                   {% include 'order_modals.tpl' %}
                 {% endwith %}
               {% endfor %}
@@ -497,7 +501,7 @@
 
                   {% endfor %}
                   {% for o in history_orders %}
-                    {% with order=o %}
+                    {% with order=o,user=True %}
                       {% include 'order_modals.tpl' %}
                     {% endwith %}
                   {% endfor %}

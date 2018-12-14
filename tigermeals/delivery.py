@@ -271,6 +271,14 @@ def account():
     history_orders = []
 
     for order in fetch_req:
+        for package in order['food_items']:
+            food_id = package['food_id']
+            # look up food_id
+            lookup_food_url = DATABASE_URL + "/food/" + str(food_id)
+
+            food_image = _getJSON(lookup_food_url)['image']
+            package['image'] = food_image
+
         if order['restaurant_id'] not in past_restaurants:
             past_restaurants.append(order['restaurant_id'])
 
@@ -740,6 +748,21 @@ def meals_restaurant(restaurant_id):
         res.raise_for_status()
     meals = json.loads(res.content)
 
+    rest['hours'] = rest['hours'].split(",")
+    hours = []
+    for hour in rest['hours']:
+        if hour == "":
+            hours.append("CLOSED")
+            continue
+        # Convert time to a readable format
+        hr = hour.split(":")[0]
+        min = hour.split(":")[1]
+        time = "am"
+        if int(hr) > 12:
+        	hr = str(int(hr) - 12)
+        	time = "pm"
+        hours.append(hr + ":" + min + " " + time)
+
     for meal in meals:
         # Splice allergies into a list
         if meal['allergies'] is "":
@@ -754,7 +777,7 @@ def meals_restaurant(restaurant_id):
     r = make_response(render_template('restaurant_info.tpl', meals=meals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error,\
         food_subtotals = food_subtotals, food_titles = food_titles, \
-        length_cart = length_cart, total=total, food_images= food_images, restaurant=rest))
+        length_cart = length_cart, total=total, food_images= food_images, restaurant=rest, hours=hours))
 
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"

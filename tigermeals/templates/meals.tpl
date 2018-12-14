@@ -138,6 +138,7 @@
             {% if current_filters %}
             <h4>Current filters</h4>
             {% endif %}
+            
             {% for f in current_filters %}
             <div class="row">
               <div class="col-4">
