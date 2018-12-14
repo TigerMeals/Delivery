@@ -2,6 +2,5 @@
 
 export FLASK_APP=tigermeals
 #export FLASK_ENV=development
-pip3 install -e . --user
-pip3 install cloudinary
+pip install -e . --user
 flask run
