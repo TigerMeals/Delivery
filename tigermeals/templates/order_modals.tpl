@@ -108,7 +108,14 @@
                   </div>
                 </div>
                 {% else %}
+
                 {% endif %}
+                {% else %}
+                <div class="col-6">
+                  <div class="text-center item-right">
+                    <a href="#"><button class="btn btn-info" >Contact</button></a>
+                  </div>
+                </div>
                 {% endif %}
               </div>
             </div>
