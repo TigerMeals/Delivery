@@ -12,7 +12,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
-app.config['SQLALCHEMY_DATABASE_URI'] = "http://hidden-springs-97786.herokuapp.com"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URI']
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
