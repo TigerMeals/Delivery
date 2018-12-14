@@ -189,68 +189,50 @@
             </div>
           </form>
         </div>
+        <div class="col-md-8 order-md-1" id = "payment_info">
 
-        <div class = "col-md-8 order-md-1" >
-              <div class="row mb-2">
-                <h1 class="ml-3">Payment</h1>
+            <h4 class="mb-3">Payment</h4>
+
+            <div class="d-block my-3">
+              <div class="custom-control custom-radio">
+                <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
+                <label class="custom-control-label" for="credit">Card Payment (Credit and Debit)</label>
               </div>
-              <ul class="nav nav-tabs" id="myTab" role="tablist">
-                  <li class="nav-item">
-                      <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Pay with Card (Credit or Debit)</a>
-                  </li>
+              
+              <div class="custom-control custom-radio">
+                <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" checked required>
+                <label class="custom-control-label" for="cash">Cash</label>
+                <!--<div class="text-success" id="ifYes" style="visibility:hidden">
+                  Great! Press Checkout to complete your order
+                </div>-->
+                <div class="text-success" id="ifYes" style="visibility:hidden">
 
-                  <li class="nav-item">
-                      <a class="nav-link" id="pending-orders-tab" data-toggle="tab" href="#pending-orders" role="tab" aria-controls="pending-orders" aria-selected="true"> Pay with Cash</a>
-                  </li>
-
-              </ul>
-
-
-            <div class="tab-content profile-tab" id="myTabContent">
-
-
-
-            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-              <form action="/charge" id = "stripe_payment_button" method="post" class="needs-validation" novalidate>
-
-                <div class="col-md-6 mb-3">
-                <label for="date">Delivery Date</label>
-                <input type="date" class="form-control" id="dateCard" name="dateCard" required>
-                <div class="invalid-feedback">
-                  Please enter a valid date.
                 </div>
+                <script>
+                  function yesCash() {
+                    if (document.getElementById('cash').checked) {
+                      /*document.getElementById('billing_info').style.visibility ='visible';
+                      document.getElementById('checkout_button').style.visibility ='visible';*/
+                    }
+                    else {
+                      /*document.getElementById('billing_info').style.visibility ='hidden';
+                      document.getElementById('checkout_button').style.visibility ='hidden';*/
+                    }
+                    if (document.getElementById('credit').checked || document.getElementById('debit').checked){
+                      /*document.getElementById('payment_button').style.visibility = 'visible';*/
+                    }
+                    else{
+                      /*document.getElementById('payment_button').style.visibility = 'hidden';*/
+                    }
+                  }
+                </script>
               </div>
-              <div class="col-md-6 mb-3">
-                <label for="time">Delivery Time</label>
-                <input type="time" class="form-control" id="timeCard" name="timeCard" value="12:00" required>
-                <div class="invalid-feedback">
-                  Please enter a valid time.
-                </div> 
-              </div>   
-              <p class="text-danger">{{error}}</p>
-              <article>
-                  <label>
-                    <span>Total is ${{total}}</span>
-                  </label>
-                </article>
-                  
-               <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                        data-key={{key}}
-                        data-amount=String({{total}} * 100)
-                        data-description="Catering Payment"
-                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                        data-shipping-address = "true"
-                        data-zip-code="true"
-                        data-name="TigerMeals Checkout"
-                        data-locale="auto">      
-                </script> 
-              </form>
-            <br>
-          </div>
+        </div>
+        <br>
 
-              <div class="tab-pane fade show" id="pending-orders" role="tabpanel" aria-labelledby="pending-orders-tab">
-<form id="checkout_form" action="/ordered?id={{user_id}}" method="POST" class="needs-validation" novalidate>
-  <br>
+        <div class="col-md-8 order-md-1" id = "billing_info" style="visibility:visible" >
+
+          <form id="checkout_form" action="/ordered?id={{user_id}}" method="POST" class="needs-validation" novalidate>
             <h4 class="mb-3">Cash Payment: Please complete this form</h4>
             <h5 class="mb-3">Shipping Address</h5>
             <div class="row">
@@ -320,21 +302,17 @@
                   <input type="checkbox" class="custom-control-input" id="save-info">
                   <label class="custom-control-label" for="save-info">Save this information for next time</label>
                 </div>
+            <hr class="mb-4">
 
             </div>
           </form>
-          <br>
-        <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" style="visibility:visible" form="checkout_form">Continue to checkout</button></p>
-          </div>
-         
-             <!--/tab-content-->
-
-         </div><!--/tab-pane-->
+        </div>
 
 
-        </div><!--/row-->
-      </div> <!--container-->
-      
+
+          <hr class="mb-4">
+          </form>
+          <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" style="visibility:hidden" form="checkout_form">Continue to checkout</button></p>
         </div>
       </div>
     </div>

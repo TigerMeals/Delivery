@@ -173,49 +173,49 @@
                 <h6 class="mt-1 mb-0"><small>Sunday </small></h6>
               </div>
               <div class="col-8">
-                <p class="mt-0 mb-0">10:00am - 9:00pm</p>
+                <p class="mt-0 mb-0">{{hours[0]}} - {{hours[1]}}</p>
               </div>
 
               <div class="col-4">
                 <h6 class="mt-1 mb-0"><small>Monday </small></h6>
               </div>
               <div class="col-8">
-                <p class="mt-0 mb-0">10:00am - 9:00pm</p>
+                <p class="mt-0 mb-0">{{hours[2]}} - {{hours[3]}}</p>
               </div>
 
               <div class="col-4">
                 <h6 class="mt-1 mb-0"><small>Tuesday </small></h6>
               </div>
               <div class="col-8">
-                <p class="mt-0 mb-0">10:00am - 9:00pm</p>
+                <p class="mt-0 mb-0">{{hours[4]}} - {{hours[5]}}</p>
               </div>
 
               <div class="col-4">
                 <h6 class="mt-1 mb-0"><small>Wednesday </small></h6>
               </div>
               <div class="col-8">
-                <p class="mt-0 mb-0">10:00am - 9:00pm</p>
+                <p class="mt-0 mb-0">{{hours[6]}} - {{hours[7]}}</p>
               </div>
 
               <div class="col-4">
                 <h6 class="mt-1 mb-0"><small>Thursday </small></h6>
               </div>
               <div class="col-8">
-                <p class="mt-0 mb-0">10:00am - 9:00pm</p>
+                <p class="mt-0 mb-0">{{hours[8]}} - {{hours[9]}}</p>
               </div>
 
               <div class="col-4">
                 <h6 class="mt-1 mb-0"><small>Friday </small></h6>
               </div>
               <div class="col-8">
-                <p class="mt-0 mb-0">10:00am - 9:00pm</p>
+                <p class="mt-0 mb-0">{{hours[10]}} - {{hours[11]}}</p>
               </div>
 
               <div class="col-4">
                 <h6 class="mt-1 mb-0"><small>Saturday</small></h6>
               </div>
               <div class="col-8">
-                <p class="mt-0 mb-0">10:00am - 9:00pm</p>
+                <p class="mt-0 mb-0">{{hours[12]}} - {{hours[13]}}</p>
               </div>
               <div class="col-12">
                 <a class="btn btn-info" href="/restaurant/account">Back to my account details</a>
