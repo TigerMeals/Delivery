@@ -306,22 +306,6 @@
                       </div>
                         <div class="modal-footer">
                           <button type="button" data-toggle="modal" data-target="#7" data-dismiss="modal"> Previous Tip</button>
-                          <button type="button" data-toggle="modal" data-target="#9" data-dismiss="modal"> Next Tip</button>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="modal fade" id="9" tabindex="-1" role="dialog" aria-hidden="true">
-                  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
-                      </div>
-                      <div class = "modal-body">
-                          Once you have added all the meal packages you would like to order in your cart, you can navigate to the checkout page by clicking the green checkout button. You can also click the view cart drop down and click on "checkout".
-                      </div>
-                        <div class="modal-footer">
-                          <button type="button" data-toggle="modal" data-target="#8" data-dismiss="modal"> Previous Tip</button>
                           <button type="button" data-toggle="modal" data-target="#10" data-dismiss="modal"> Next Tip</button>
                         </div>
                     </div>
