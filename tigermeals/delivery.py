@@ -38,6 +38,19 @@ stripe_keys = {
 
 stripe.api_key = stripe_keys['secret_key']
 
+# Returns a dictionary of the emails of the restaurants
+def _getRestaurantEmails():
+    restaurant_url = DATABASE_URL + "/restaurant"
+
+    restaurants = _getJSON(restaurant_url)
+    rests = {}
+    for rest in restaurants:
+        rests[rest['restaurant_id']] = rest['email']
+
+    print(rests)
+
+    return rests
+
 def _getCart(user_id):
     order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
     food_prices = []
@@ -318,16 +331,17 @@ def account():
 
     image = userData['image']
 
-
     rests = requests.get(restaurants_url)
     print("RESTAURANTS ---------------------------------------------------")
     rests_dict = {}
     for restaurant in rests.json():
         rests_dict[restaurant['restaurant_id']] = restaurant['name']
 
+    rest_emails_dict = _getRestaurantEmails()
+
     return render_template('account.tpl', name=name.split(), email=email,\
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict,\
-        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
+        rest_emails_dict=rest_emails_dict,food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
         history_orders=history_orders,food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders,\
         inprogress_orders=inprogress_orders,pending_order=pending_order, image=image, length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 

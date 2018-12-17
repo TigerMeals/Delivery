@@ -34,12 +34,21 @@
                   <p>{{order.name}}</p>
                 </div>
 
+                {% if user %}
+                <div class="col-4">
+                  <h5>Restaurant Email</h5>
+                </div>
+                <div class="col-8">
+                  <p>{{email}}</p>
+                </div>
+                {% else %}
                 <div class="col-4">
                   <h5>Email</h5>
                 </div>
                 <div class="col-8">
                   <p>{{order.email}}</p>
                 </div>
+                {% endif %}
 
               </div>
 
@@ -111,9 +120,9 @@
 
                 {% endif %}
                 {% else %}
-                <div class="col-6">
+                <div class="col-8">
                   <div class="text-center item-right">
-                    <a href="#"><button class="btn btn-info" >Contact</button></a>
+                    <a href="mailto:{{email}}"><button class="btn btn-info" >Contact Restaurant</button></a>
                   </div>
                 </div>
                 {% endif %}
