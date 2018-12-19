@@ -276,6 +276,9 @@
         {% endif %}
         {% if not hasMeals %}
         <span class="text-primary">This restaurant doesn't have any available catering packages yet. 😢</span>
+        <br>
+        <br>
+        <br>
         {% endif %}
       </div>
 
