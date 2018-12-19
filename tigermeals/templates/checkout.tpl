@@ -407,6 +407,23 @@
     <script src="static/vendor/jquery/jquery.min.js"></script>
     <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
+      $(function(){
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+
+        $(window).resize(function(e) {
+          if($(window).width()<=768){
+            $("#wrapper").removeClass("toggled");
+          }else{
+            $("#wrapper").addClass("toggled");
+          }
+        });
+      });
+
+    </script>
+    <script>
     // Disables form submissions if there are invalid fields
     // Adapted from https://getbootstrap.com/docs/4.0/components/forms/#validation
     (function() {
