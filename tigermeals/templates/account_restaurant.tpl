@@ -230,7 +230,6 @@
                                <div class="col-12 col-xs-12">
                                     <br>
                                   	<button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                                   	<button class="btn" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
                                 </div>
                           </div>
                         </div>
@@ -331,7 +330,6 @@
                                  <div class="col-12 col-xs-12">
                                       <br>
                                      <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                                       <button class="btn" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
                                   </div>
                             </div>
                           </div>
@@ -429,7 +427,6 @@
                                 <div class="col-12 col-xs-12">
                                      <br>
                                    	<button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                                    	<button class="btn" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
                                  </div>
                            </div>
                          </div>
