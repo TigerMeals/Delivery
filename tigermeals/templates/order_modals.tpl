@@ -27,14 +27,13 @@
                 </div>
 
 
+                {% if user %}
                 <div class="col-4">
-                  <h5>Customer Name</h5>
+                  <h5>Restaurant Name</h5>
                 </div>
                 <div class="col-8">
-                  <p>{{order.name}}</p>
+                  <p>{{restaurant}}</p>
                 </div>
-
-                {% if user %}
                 <div class="col-4">
                   <h5>Restaurant Email</h5>
                 </div>
@@ -42,6 +41,12 @@
                   <p>{{email}}</p>
                 </div>
                 {% else %}
+                <div class="col-4">
+                  <h5>Customer Name</h5>
+                </div>
+                <div class="col-8">
+                  <p>{{order.name}}</p>
+                </div>
                 <div class="col-4">
                   <h5>Email</h5>
                 </div>
@@ -120,7 +125,7 @@
 
                 {% endif %}
                 {% else %}
-                <div class="col-8">
+                <div class="col-12">
                   <div class="text-center item-right">
                     <a href="mailto:{{email}}"><button class="btn btn-info" >Contact Restaurant</button></a>
                   </div>

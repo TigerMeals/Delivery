@@ -316,7 +316,7 @@
 
                 <div class="card border-white bg-transparent">
                   <div class="card-header border-white bg-transparent">
-                     <a href="/meals/restaurant" class="btn btn-outline-primary btn-block my-2 my-sm-0">View by Restaurant</a>
+                     <a href="/meals/restaurant" class="btn btn-outline-primary btn-block my-2 my-sm-0 text-center">View by Restaurant</a>
                   </div>
                 </div>
 
