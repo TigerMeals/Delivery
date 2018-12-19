@@ -267,11 +267,16 @@
       <!-- Related Projects Row -->
       <h3 class="my-4">Available Catering Packages</h3>
       <div class="row">
-        {% for m in meals %}
-          {% with meal=m %}
-            {% include 'display_meal.tpl' %}
-          {% endwith %}
-        {% endfor %}
+        {% if hasMeals %}
+          {% for m in meals %}
+            {% with meal=m %}
+              {% include 'display_meal.tpl' %}
+            {% endwith %}
+          {% endfor %}
+        {% endif %}
+        {% if not hasMeals %}
+        <span class="text-primary">This restaurant doesn't have any available catering packages yet. 😢</span>
+        {% endif %}
       </div>
 
 
