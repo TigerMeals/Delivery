@@ -29,8 +29,8 @@ cloudinary.config(
 	api_secret = "gQUTMItrljBmcZ2Po8cbVvEFJvU"
 )
 
-# DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
-DATABASE_URL="http://localhost:5000"
+DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+#DATABASE_URL="http://localhost:5000"
 
 # Endpoint to logout a restaurant
 @app.route("/restaurant/logout")
