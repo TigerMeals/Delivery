@@ -50,7 +50,7 @@
     <body class="text-center">
       <div class="form-signin white_background">
         <div class="row justify-content-md-center">
-          <img class="mb-4 display-block center-block" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
+          <img class="mb-4 display-block center-block align-self-center" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
         </div>
         <h3 class="font-weight-light text-center">Welcome to </h3>
         <h1 class="mb-3 font-weight-strong text-center">TigerMeals Delivery</h1>
