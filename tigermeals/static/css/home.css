@@ -293,16 +293,8 @@ body, html {
 }
 
 .bg {
-    /* The image used */
-    background-image: url("../img/nassau.jpg");
+  background-color: #d9534f;
 
-    /* Full height */
-    height: 100%;
-
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
 }
 
 body {
@@ -382,7 +374,7 @@ body {
 
 .white_background {
   background-color: white;
-  opacity: 0.8;
+  opacity: 1.0;
 }
 
 body {
