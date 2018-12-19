@@ -323,7 +323,7 @@
                       <br>
                       <img class ="d-block mx-auto mb-4" src='https://res.cloudinary.com/djclzxoun/image/upload/v1544946007/CheckoutForm.png' width="500" height="300">
                         <div class="modal-footer">
-                          <button type="button" data-toggle="modal" data-target="#9" data-dismiss="modal"> Previous Tip</button>
+                          <button type="button" data-toggle="modal" data-target="#8" data-dismiss="modal"> Previous Tip</button>
                           <button type="button" data-toggle="modal" data-target="#11" data-dismiss="modal"> Next Tip</button>
                         </div>
                     </div>
@@ -377,7 +377,7 @@
                       <br>
                       <!--<img class ="d-block mx-auto mb-4" src='https://res.cloudinary.com/djclzxoun/image/upload/v1544946581/MyAccount.png' width="200" height="400"> -->
                         <div class="modal-footer">
-                          <button type="button" data-toggle="modal" data-target="#10" data-dismiss="modal"> Previous Tip</button>
+                          <button type="button" data-toggle="modal" data-target="#12" data-dismiss="modal"> Previous Tip</button>
                           <button type="button" data-toggle="modal" data-dismiss="modal">End Tutorial</button>
                         </div>
                     </div>
