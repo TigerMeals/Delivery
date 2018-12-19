@@ -14,7 +14,7 @@
     <link href="/static/css/bootstrap-lux.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="/static/css/shop-homepage.css" rel="stylesheet">
+    <link href="/static/css/restaurant.css" rel="stylesheet">
 
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
@@ -230,7 +230,6 @@
                                <div class="col-12 col-xs-12">
                                     <br>
                                   	<button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                                   	<button class="btn" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
                                 </div>
                           </div>
                         </div>
@@ -331,7 +330,6 @@
                                  <div class="col-12 col-xs-12">
                                       <br>
                                      <button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                                       <button class="btn" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
                                   </div>
                             </div>
                           </div>
@@ -429,7 +427,6 @@
                                 <div class="col-12 col-xs-12">
                                      <br>
                                    	<button class="btn btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
-                                    	<button class="btn" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
                                  </div>
                            </div>
                          </div>

@@ -1,1 +1,1 @@
-<button type="button" class="btn-sm btn-info restuarant_list_button" disabled>{{allergy}}</button>
+<button type="button" class="btn-sm btn-primary restuarant_list_button">{{allergy}}</button>

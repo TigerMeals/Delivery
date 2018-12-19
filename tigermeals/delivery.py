@@ -15,8 +15,8 @@ import cloudinary.utils
 
 cas = CAS(app, '/cas')
 cas.init_app(app)
-DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
-# DATABASE_URL="http://localhost:5000"
+# DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+DATABASE_URL="http://localhost:5000"
 
 app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
@@ -61,6 +61,7 @@ def _getCart(user_id):
     food_subtotals = []
     food_multiplier = []
     food_ids = []
+    empty_cart = True
 
     for food_item in order['food_items']:
         food = _getJSON(DATABASE_URL + '/food/' + str(food_item['food_id']))
@@ -80,10 +81,13 @@ def _getCart(user_id):
 
     length_cart = len(food_prices)
 
+    if length_cart > 0:
+        empty_cart = False
+
     total = sum(food_subtotals)
 
     return food_prices, food_descriptions, food_titles, food_quantity_feds,\
-        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart
 
 
 
@@ -145,11 +149,11 @@ def home():
     print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
 
     resp = (render_template('home.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
-        food_quantity_feds=food_quantity_feds, food_images=food_images,\
+        food_quantity_feds=food_quantity_feds, food_images=food_images, empty_cart = empty_cart, \
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id))
 
 
@@ -174,14 +178,14 @@ def cart():
     user_id = fetch_req.json()['user_id']
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
 
     print("FOOD ITEMS -------------------------------------------------")
     print(food_ids)
 
     return render_template('cart.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,\
-        food_quantity_feds=food_quantity_feds, food_images=food_images,\
+        food_quantity_feds=food_quantity_feds, food_images=food_images, empty_cart=empty_cart,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier = food_multiplier, food_ids = food_ids, id=user_id)
 
 @app.route("/about")
@@ -204,11 +208,11 @@ def about():
     print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
 
     return render_template('about.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
-        food_quantity_feds=food_quantity_feds, food_images=food_images,\
+        food_quantity_feds=food_quantity_feds, food_images=food_images, empty_cart = empty_cart,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 
 @app.route("/checkout")
@@ -231,7 +235,7 @@ def checkout():
     print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
 
     email, name, phone, address, netid, allergies = _getUser(user_id)
 
@@ -246,7 +250,7 @@ def checkout():
 
     return render_template('checkout.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
-        food_quantity_feds=food_quantity_feds, food_images=food_images,\
+        food_quantity_feds=food_quantity_feds, food_images=food_images, empty_cart=empty_cart,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
         email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, key = stripe_keys['publishable_key'], order_id=order_id)
 
@@ -323,7 +327,7 @@ def account():
     number_different_rest = len(past_restaurants)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
 
     restaurants_url = DATABASE_URL + "/restaurant"
 
@@ -340,9 +344,9 @@ def account():
     rest_emails_dict = _getRestaurantEmails()
 
     return render_template('account.tpl', name=name.split(), email=email,\
-        phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict,\
+        phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict, food_multiplier = food_multiplier,\
         rest_emails_dict=rest_emails_dict,food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
-        history_orders=history_orders,food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders,\
+        history_orders=history_orders,food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders, empty_cart=empty_cart,\
         inprogress_orders=inprogress_orders,pending_order=pending_order, image=image, length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 
 
@@ -586,7 +590,7 @@ def meals():
     print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
 
     restaurants_url = DATABASE_URL + "/restaurant"
     res = requests.get(restaurants_url)
@@ -626,8 +630,8 @@ def meals():
     error = request.args.get('error')
 
     r = make_response(render_template('meals.tpl', meals=meals, food_ids=food_ids,\
-        id=user_id, food_prices = food_prices, error=error,\
-        food_subtotals = food_subtotals, food_titles = food_titles, \
+        id=user_id, food_prices = food_prices, error=error, empty_cart = empty_cart, \
+        food_subtotals = food_subtotals, food_titles = food_titles, food_multiplier = food_multiplier, \
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], sort_type="popular"))
 
     r.headers["Pragma"] = "no-cache"
@@ -655,7 +659,7 @@ def restaurant_view():
     print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
 
 
     restaurants_url = DATABASE_URL + "/restaurant"
@@ -673,8 +677,8 @@ def restaurant_view():
         rest['num_orders'] = len(json.loads(res.content))
     restaurants_length = len(rests)
     return render_template('restaurant_view.tpl', food_ids=food_ids,\
-        id=user_id, food_prices = food_prices,\
-        food_subtotals = food_subtotals, food_titles = food_titles, \
+        id=user_id, food_prices = food_prices, food_multiplier = food_multiplier, \
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, \
         length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length, cuisines=[])
 
 
@@ -698,7 +702,7 @@ def restaurant_view_filter():
     print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
     cuisine = ""
     for checkbox in ['Chinese', 'Healthy', 'Indian', 'Mexican', 'Drinks', 'American', 'Breakfast', 'Italian', 'Asian']:
         if request.form.get(checkbox) is not None:
@@ -724,7 +728,7 @@ def restaurant_view_filter():
     restaurants_length = len(rests)
     return render_template('restaurant_view.tpl', food_ids=food_ids,\
         id=user_id, food_prices = food_prices,\
-        food_subtotals = food_subtotals, food_titles = food_titles, \
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,\
         length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length, cuisines=cuisineSplit)
 
 
@@ -748,7 +752,7 @@ def meals_restaurant(restaurant_id):
     print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
 
     restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
     res = requests.get(restaurant_url)
@@ -789,8 +793,8 @@ def meals_restaurant(restaurant_id):
     error = request.args.get('error')
 
     r = make_response(render_template('restaurant_info.tpl', meals=meals, food_ids=food_ids,\
-        id=user_id, food_prices = food_prices, error=error,\
-        food_subtotals = food_subtotals, food_titles = food_titles, \
+        id=user_id, food_prices = food_prices, error=error, food_multiplier = food_multiplier, \
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,\
         length_cart = length_cart, total=total, food_images= food_images, restaurant=rest, hours=hours))
 
     r.headers["Pragma"] = "no-cache"
@@ -940,13 +944,13 @@ def charge():
 
     email_user, name_user, phone, address_user, netid, allergies = _getUser(user_id)
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
 
     if date is None or date == "" or time is None or time == "":
         print("NONE -------------------------------------------------")
         return render_template('checkout.tpl', user_id=user_id, food_prices=food_prices,\
                 food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
-                food_quantity_feds=food_quantity_feds, food_images=food_images,\
+                food_quantity_feds=food_quantity_feds, food_images=food_images, empty_cart=empty_cart,\
                 length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
 
                 email=email_user, name=name_user, phone=phone,address=address_user, netid=netid, id=user_id, order_id=order_id, key = stripe_keys['publishable_key'], error = "Please enter date and time info!!")
@@ -1141,7 +1145,7 @@ def filter():
             current_filters.append({"filter": serving, "checkbox": serving})
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids = _getCart(user_id)
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
 
     restaurants_url = DATABASE_URL + "/restaurant"
     res = requests.get(restaurants_url)
@@ -1187,5 +1191,5 @@ def filter():
 
     return render_template('meals.tpl', meals=meals, \
         id=user_id, food_prices = food_prices, food_ids=food_ids,\
-        food_subtotals = food_subtotals, food_titles = food_titles, \
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, \
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, sort_type=request.form.get('sort'))
