@@ -175,8 +175,8 @@
                       </div>
                       <br>
                       <div class="modal-body">
-                        Welcome to the start of the tutorial! We will walk you through the process of ordering a meal, 
-                        viewing your cart, and checking out items. Click outside the modal at any time to exit the tutorial. 
+                        Welcome to the start of the tutorial! We will walk you through the process of ordering a meal,
+                        viewing your cart, and checking out items. Click outside the modal at any time to exit the tutorial.
                     </div>
                         <div class="modal-footer">
                           <button type="button" data-toggle="modal" data-target="#2" data-dismiss="modal"> Next Tip</button>
@@ -193,7 +193,7 @@
                       </div>
                       <br>
                       <div class="modal-body">
-                      Check out the meal packages we offer by clicking the "meals" option on the navbar. You can also click the "view by restaurants" tab under the meals navbar tab to see all the restaurants that offer packages. 
+                      Check out the meal packages we offer by clicking the "meals" option on the navbar. You can also click the "view by restaurants" tab under the meals navbar tab to see all the restaurants that offer packages.
                     </div>
                       <br>
                       <img style="width:50%" class ="d-block mx-auto mb-4" src='https://res.cloudinary.com/djclzxoun/image/upload/v1544935604/navbarMeals.png'>
@@ -211,7 +211,7 @@
                         <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
                       </div>
                       <div class = "modal-body">
-                          Once you are on the meals page, add filters if you have any dietary restrictions or allergies to narrow down your meal options. Click the "Apply Filters" button to apply the filters you checked off. 
+                          Once you are on the meals page, add filters if you have any dietary restrictions or allergies to narrow down your meal options. Click the "Apply Filters" button to apply the filters you checked off.
                       </div>
                       <br>
                       <img class ="d-block mx-auto mb-4" src='https://res.cloudinary.com/djclzxoun/image/upload/v1544940846/Filtering.png' width="200" height="260">
@@ -229,7 +229,7 @@
                         <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
                       </div>
                       <div class = "modal-body">
-                          You can also apply different sorts with the "Sort By" drop down on the right side of a page. 
+                          You can also apply different sorts with the "Sort By" drop down on the right side of a page.
                       </div>
                       <br>
                       <img class ="d-block mx-auto mb-4" src='https://res.cloudinary.com/djclzxoun/image/upload/v1544941112/Sorting.png' width="200" height="260">
@@ -247,11 +247,11 @@
                         <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
                       </div>
                       <div class = "modal-body">
-                          If you are interested in a particular package, click on an image of a catering package to view the information. Select a quantity and click "Add to Cart" to add this item to your cart. 
+                          If you are interested in a particular package, click on an image of a catering package to view the information. Select a quantity and click "Add to Cart" to add this item to your cart.
                       </div>
                           <br>
                           <img class ="d-block mx-auto mb-4" src='https://res.cloudinary.com/djclzxoun/image/upload/v1544943136/BubbleTeaModal.png' width="350" height="200">
-                      
+
                         <div class="modal-footer">
                           <button type="button" data-toggle="modal" data-target="#4" data-dismiss="modal"> Previous Tip</button>
                           <button type="button" data-toggle="modal" data-target="#6" data-dismiss="modal"> Next Tip</button>
@@ -266,7 +266,7 @@
                         <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
                       </div>
                       <div class = "modal-body">
-                          You can always view the catering packages you've added to your cart by clicking the "View Cart" tab in the navbar. If you want to update your order quantities and edit your orders, click the "View Cart" option in the dropdown to take you to the full view cart page. 
+                          You can always view the catering packages you've added to your cart by clicking the "View Cart" tab in the navbar. If you want to update your order quantities and edit your orders, click the "View Cart" option in the dropdown to take you to the full view cart page.
                       </div>
                       <br>
                       <img class ="d-block mx-auto mb-4" src='https://res.cloudinary.com/djclzxoun/image/upload/v1545001462/View_Cart_Drop_Down.png' width="400" height="300">
@@ -284,7 +284,7 @@
                         <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
                       </div>
                       <div class = "modal-body">
-                          Once you are on the view cart page, you can update your quantities by clicking the quantities bar, or remove an item from your cart by pressing the red delete button. 
+                          Once you are on the view cart page, you can update your quantities by clicking the quantities bar, or remove an item from your cart by pressing the red delete button.
                       </div>
                       <br>
                       <img class ="d-block mx-auto mb-4" src='https://res.cloudinary.com/djclzxoun/image/upload/v1544943573/FullCartPage.png' width="500" height="250">
@@ -318,7 +318,7 @@
                         <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
                       </div>
                       <div class = "modal-body">
-                          One the checkout page, you can either choose to pay with card or cash by clicking the approriate tab. Remember to fill out a date and time before proceed with your payment. Note that you will only be charged when the restaurant approves your order. 
+                          One the checkout page, you can either choose to pay with card or cash by clicking the approriate tab. Remember to fill out a date and time before proceed with your payment. Note that you will only be charged when the restaurant approves your order.
                       </div>
                       <br>
                       <img class ="d-block mx-auto mb-4" src='https://res.cloudinary.com/djclzxoun/image/upload/v1544946007/CheckoutForm.png' width="500" height="300">
@@ -336,7 +336,7 @@
                         <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
                       </div>
                       <div class = "modal-body">
-                          If you want to view your pending orders or update your profile, click the "Account" tab on the navbar. You can also use this to logout of your session whenever you wish. 
+                          If you want to view your pending orders or update your profile, click the "Account" tab on the navbar. You can also use this to logout of your session whenever you wish.
                       </div>
                       <br>
                       <img class ="d-block mx-auto mb-4" src='https://res.cloudinary.com/djclzxoun/image/upload/v1544946581/MyAccount.png' width="300" height="300">
@@ -354,7 +354,7 @@
                         <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
                       </div>
                       <div class = "modal-body">
-                          From here, you can edit your profile information, and update a new profile picture for your account. If you have specific dietary restrictions, list these here. Alternate between tabs to view your pending order, orders to be delivered, and your order history. 
+                          From here, you can edit your profile information, and update a new profile picture for your account. If you have specific dietary restrictions, list these here. Alternate between tabs to view your pending order, orders to be delivered, and your order history.
                       </div>
                       <br>
                       <!--<img class ="d-block mx-auto mb-4" src='https://res.cloudinary.com/djclzxoun/image/upload/v1544946581/MyAccount.png' width="200" height="400"> -->

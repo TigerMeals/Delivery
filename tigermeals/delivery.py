@@ -789,12 +789,19 @@ def meals_restaurant(restaurant_id):
             meal['allergies'] = meal['allergies'].split(",")
         meal['restaurant'] = rest['name']
 
+    hasMeals = False
+    if (len(meals) > 0):
+        hasMeals = True
 
     error = request.args.get('error')
 
     r = make_response(render_template('restaurant_info.tpl', meals=meals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error, food_multiplier = food_multiplier, \
+<<<<<<< HEAD
         food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,\
+=======
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, hasMeals = hasMeals,\
+>>>>>>> 538f04595bcf2e90d7d250892df89e1a3dcafa61
         length_cart = length_cart, total=total, food_images= food_images, restaurant=rest, hours=hours))
 
     r.headers["Pragma"] = "no-cache"
