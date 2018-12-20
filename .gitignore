@@ -1,5 +1,6 @@
 # ignore compiled files
 *.pyc
+*.egg-info
 
 # ignore DS_Store
 .DS_STORE
