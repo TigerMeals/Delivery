@@ -37,10 +37,10 @@
     <!-- Navigation -->
         <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
           <div class="container">
-            <a class="navbar-brand" href="#">TigerMeals Delivery</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <!-- <a class="navbar-brand" href="#">TigerMeals Delivery</a> -->
+            <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
-            </button>
+            </button> -->
             <div class="collapse navbar-collapse" id="navbarResponsive">
             </div>
           </div>
@@ -50,13 +50,13 @@
     <body class="text-center">
       <div class="form-signin white_background">
         <div class="row justify-content-md-center">
-          <img class="mb-4 display-block center-block" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
+          <img class="mb-4 display-block center-block align-self-center" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
         </div>
         <h3 class="font-weight-light text-center">Welcome to </h3>
         <h1 class="mb-3 font-weight-strong text-center">TigerMeals Delivery</h1>
         <h5 class="font-weight-light text-center">I am a... </h5>
-        <button class="btn btn-primary btn-block" onclick="window.location.href='/home';"><strong>Student</strong></button>
-        <button class="btn btn-primary btn-block" onclick="window.location.href='/restaurant/home';"><strong>Restaurant</strong></button>
+        <button class="btn btn-primary btn-block" onclick="window.location.href='/meals';"><strong>Student</strong></button>
+        <button class="btn btn-primary btn-block" onclick="window.location.href='/orders';"><strong>Restaurant</strong></button>
       </div>
     </body>
 

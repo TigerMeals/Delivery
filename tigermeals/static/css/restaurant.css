@@ -16,13 +16,13 @@ html, body {
 $height-footer: 60px;
 
 body {
-  padding-top: 54px;
+/*  padding-top: 54px;*/
 /* margin-bottom: $height-footer; */
 }
 
 @media (min-width: 992px) {
   body {
-    /* padding-top: 56px; */
+    padding-top: 56px;
   }
 }
 
@@ -356,12 +356,11 @@ ul.dropdown-cart li .item-right button{
 }
 
 
-/* .nav {
+.nav {
   padding-left: 0;
   margin-bottom: 0;
   list-style: none;
-
-} */
+}
 .nav > li {
   position: relative;
   display: block;
@@ -371,12 +370,12 @@ ul.dropdown-cart li .item-right button{
   display: block;
   padding: 10px 15px;
 }
-/* .nav > li > a:hover,
+.nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
   background-color: #eee;
-} */
-/* .nav > li.disabled > a {
+}
+.nav > li.disabled > a {
   color: #777;
 }
 .nav > li.disabled > a:hover,
@@ -385,25 +384,25 @@ ul.dropdown-cart li .item-right button{
   text-decoration: none;
   cursor: not-allowed;
   background-color: transparent;
-} */
-/* .nav .open > a,
+}
+.nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
   background-color: #eee;
   border-color: #337ab7;
-} */
-/* .nav .nav-divider {
+}
+.nav .nav-divider {
   height: 1px;
   margin: 9px 0;
   overflow: hidden;
   background-color: #e5e5e5;
-} */
+}
 .nav > li > a > img {
   max-width: none;
 }
-/* .nav-tabs {
+.nav-tabs {
   border-bottom: 1px solid #ddd;
-} */
+}
 .nav-tabs > li {
   float: left;
   margin-bottom: -1px;
@@ -414,7 +413,7 @@ ul.dropdown-cart li .item-right button{
   border: 1px solid transparent;
   border-radius: 4px 4px 0 0;
 }
-/* .nav-tabs > li > a:hover {
+.nav-tabs > li > a:hover {
   border-color: #eee #eee #ddd;
 }
 .nav-tabs > li.active > a,
@@ -425,7 +424,7 @@ ul.dropdown-cart li .item-right button{
   background-color: #fff;
   border: 1px solid #ddd;
   border-bottom-color: transparent;
-} */
+}
 .nav-tabs.nav-justified {
   width: 100%;
   border-bottom: 0;
@@ -454,13 +453,13 @@ ul.dropdown-cart li .item-right button{
   margin-right: 0;
   border-radius: 4px;
 }
-/* .nav-tabs.nav-justified > .active > a,
+.nav-tabs.nav-justified > .active > a,
 .nav-tabs.nav-justified > .active > a:hover,
 .nav-tabs.nav-justified > .active > a:focus {
   border: 1px solid #ddd;
-} */
+}
 @media (min-width: 768px) {
-  /* .nav-tabs.nav-justified > li > a {
+  .nav-tabs.nav-justified > li > a {
     border-bottom: 1px solid #ddd;
     border-radius: 4px 4px 0 0;
   }
@@ -468,7 +467,7 @@ ul.dropdown-cart li .item-right button{
   .nav-tabs.nav-justified > .active > a:hover,
   .nav-tabs.nav-justified > .active > a:focus {
     border-bottom-color: #fff;
-  } */
+  }
 }
 .nav-pills > li {
   float: left;
@@ -479,12 +478,12 @@ ul.dropdown-cart li .item-right button{
 .nav-pills > li + li {
   margin-left: 2px;
 }
-/* .nav-pills > li.active > a,
+.nav-pills > li.active > a,
 .nav-pills > li.active > a:hover,
 .nav-pills > li.active > a:focus {
   color: #fff;
   background-color: #337ab7;
-} */
+}
 .nav-stacked > li {
   float: none;
 }
@@ -522,13 +521,13 @@ ul.dropdown-cart li .item-right button{
   margin-right: 0;
   border-radius: 4px;
 }
-/* .nav-tabs-justified > .active > a,
+.nav-tabs-justified > .active > a,
 .nav-tabs-justified > .active > a:hover,
 .nav-tabs-justified > .active > a:focus {
   border: 1px solid #ddd;
-} */
+}
 @media (min-width: 768px) {
-  /* .nav-tabs-justified > li > a {
+  .nav-tabs-justified > li > a {
     border-bottom: 1px solid #ddd;
     border-radius: 4px 4px 0 0;
   }
@@ -536,7 +535,7 @@ ul.dropdown-cart li .item-right button{
   .nav-tabs-justified > .active > a:hover,
   .nav-tabs-justified > .active > a:focus {
     border-bottom-color: #fff;
-  } */
+  }
 }
 .tab-content > .tab-pane {
   display: none;
@@ -558,156 +557,4 @@ ul.dropdown-cart li .item-right button{
     border: none;
     outline: none;
     box-shadow: none;
-}
-
-
-
-/* for the meals page new cart! */
-
-body {
-  overflow-x: hidden;
-}
-
-.cart-content {
-  min-height: 500px;
-}
-
-#wrapper {
-  padding-top: 70px;
-  padding-left: 0;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-#wrapper.toggled {
-  padding-right: 250px;
-}
-
-#sidebar-wrapper {
-  z-index: 1000;
-  position: fixed;
-  right: 250px;
-  width: 0;
-  height: 100%;
-  margin-right: -250px;
-  overflow-y: auto;
-  background: #eee;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
-  transition: all 0.5s ease;
-}
-
-#wrapper.toggled #sidebar-wrapper {
-  width: 250px;
-}
-
-#page-content-wrapper {
-  width: 100%;
-  position: absolute;
-  padding-top: 12px;
-  min-width: 87%;
-}
-
-#wrapper.toggled #page-content-wrapper {
-  position: absolute;
-  margin-right: 0px;
-}
-
-
-/* Sidebar Styles */
-
-.sidebar-nav {
-  position: absolute;
-  top: 0;
-  width: 250px;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.sidebar-nav li {
-  text-indent: 20px;
-  line-height: 40px;
-}
-
-.sidebar-nav li a {
-  display: block;
-  text-decoration: none;
-  color: black;
-}
-
-.sidebar-nav li a:hover {
-  text-decoration: none;
-  color: black;
-  background: #eee;
-}
-
-.sidebar-nav li a:active, .sidebar-nav li a:focus {
-  text-decoration: none;
-}
-
-.sidebar-nav>.sidebar-brand {
-  height: 65px;
-  font-size: 18px;
-  line-height: 60px;
-}
-
-.sidebar-nav>.sidebar-brand a {
-  color: black;
-}
-
-.sidebar-nav>.sidebar-brand a:hover {
-  color: black;
-  background: none;
-}
-
-.absolute-position {
-  position: absolute;
-}
-
-
-
-@media(min-width:768px) {
-  #wrapper {
-    padding-left: 0;
-  }
-  #wrapper.toggled {
-    padding-right: 250px;
-  }
-  #sidebar-wrapper {
-    width: 0;
-  }
-  #wrapper.toggled #sidebar-wrapper {
-    /* width: 250px; */
-  }
-  #page-content-wrapper {
-    /* padding: 20px; */
-    position: relative;
-    min-height: 87%;
-  }
-  #wrapper.toggled #page-content-wrapper {
-    position: relative;
-    margin-right: 0;
-  }
-}
-
-.right-align-text {
-  text-align: right;
-}
-
-.transparent-btn {
-  border: none;
-  background-color: inherit;
-}
-
-.container-fluid {
-  min-height: 87%;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
 }

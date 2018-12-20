@@ -25,23 +25,21 @@
   <body>
 
     <!-- Navigation -->
-    <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="/">TigerMeals Delivery</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/home">Home</a>
-            </li>
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/about">About</a>
-            </li>
-            <li class="nav-item-bar active">
+    <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
+      <a class="navbar-brand" href="/home">TigerMeals Delivery</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="nav navbar-nav ml-auto">
+          <li class="nav-item-bar">
+            <a class="nav-link" href="/home">Home</a>
+          <li class="nav-item-bar">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+          <li class="nav-item-bar active">
             <div class="dropdown">
-              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
+              <a class="nav-link btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
                 Meals
               </a>
               <span class="sr-only">(current)</span>
@@ -51,87 +49,124 @@
                 <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
               </div>
             </div>
-            </li>
-            <li class="nav-item-bar">
-            <div class="dropdown">
-              <a class="nav-link btn-danger dropdown-toggle" href="/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
-                My Account
-              </a>
+          </li>
+          <li class="nav-item-bar">
+            <a class="nav-link" href="/account">My Account</a>
+          </li>
+          <li class="nav-item-bar">
+            <a class="nav-link" id="menu-toggle">View Cart</i></a>
+          </li>
+          <li class="nav-item-bar mr-4">
+            <a class="nav-link" href="/logout">Logout</i></a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-              <div class="dropdown-menu" aria-labelledby="logoutLink">
-                <a class="dropdown-item" href="/account">My account</a>
-                <a class="dropdown-item" href="/logout">Logout</a>
-              </div>
+
+  <div id="wrapper">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+      <div class="row justify-content-center">
+        <h2 class="mt-3">My Cart</h2>
+      </div>
+
+      <hr class="mt-1">
+
+      {% if empty_cart %}
+      <div class="cart-content text-primary text-center">
+
+          Your cart is currently empty.
+
+      </div>
+      {% endif %}
+
+      {% if (not empty_cart) %}
+      <div class="cart-content text-primary">
+          {% for i in range(0, length_cart) %}
+          <div class="row mr-0 ml-0">
+            <div class="col-1 pr-0">
+              {{food_multiplier[i]}}
             </div>
-            </li>
-            <li class="nav-item-bar justify-content-end dropdown">
-              <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
-    						<span class="sr-only">(current)</span>
-    					<ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
-    						{% for i in range(0, length_cart) %}
-    							<li>
-    									<span class="item">
-    										<span class="item-left">
-    												<img
-    												src="{{food_images[i]}}"
-    												style="width:35px;height:35px;"
-    												 alt="" />
-    												<span class="item-info">
-    														<span>{{food_titles[i]}}</span>
-    														<span id = "cart_price{{i}}"></span>
-                                <!-- Below needed so that price displays with 2 decimal points. -->
-                                <script>
-                                  var val = parseFloat({{food_prices[i]}}).toFixed(2);
-                                  document.getElementById('cart_price{{i}}').innerHTML = "price: $" + val;
-                                </script>
-    												</span>
-    										</span>
-    										<span class="item-right">
-                          <form method="post"action="/cart/delete/{{food_ids[i]}}">
-    												<button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-                          </form>
-    										</span>
-    								</span>
-    							</li>
+            <div class="col-6">
+              {{food_titles[i]}}
+            </div>
+            <div class="col-1 px-0">
+              <form method="post" action="/cart/delete/{{food_ids[i]}}">
+                <button class="transparent-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+              </form>
+              <!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
+            </div>
+            <div class="col-4 pl-0 pr-3 right-align-text">
+              <span id="cart_subtotal{{i}}"></span>
+              <script>
+                var val = parseFloat({{food_subtotals[i]}}).toFixed(2);
+                document.getElementById('cart_subtotal{{i}}').innerHTML = "$" + val;
+              </script>
+            </div>
+          </div>
+          {% endfor %}
 
-    							<li class="divider"></li>
-    							<li>
-                    <span id = "cart_subtotal{{i}}"></span>
-                    <!-- Below needed so that price displays with 2 decimal points. -->
-                    <script>
-                      var val = parseFloat({{food_subtotals[i]}}).toFixed(2);
-                      document.getElementById('cart_subtotal{{i}}').innerHTML = "Subtotal: $" + val;
-                    </script>
+          <hr>
+          <div class="row mr-0 ml-0">
+            <div class="col-7 pr-0">
+              Item Subtotal:
+            </div>
+            <div class="col-5 pl-0 pr-3 right-align-text">
+              <span id="total"></span>
 
-    						{% endfor %}
-    						<span class="checkout-text item-right">
-                    <span id = "total"></span>
-                    <!-- Below needed so that price displays with 2 decimal points. -->
-                    <script>
-                      var val = parseFloat({{total}}).toFixed(2);
-                      document.getElementById('total').innerHTML = "Total: $" + val;
-                    </script>
-                    <a class="checkout-text item-left" href="/cart">View Cart</a>
-                    <a class="checkout-text item-right" href="/checkout">Checkout</a>
-                    <br>
-    							</li>
+              <script>
+                var val = parseFloat({{total}}).toFixed(2);
+                document.getElementById('total').innerHTML = "$" + val;
+              </script>
+            </div>
+          </div>
 
-    					</ul>
-    				</li>
-    					</ul>
-    				</div>
-    			</div>
-    		</nav>
+          <div class="row mr-0 ml-0">
+            <div class="col-7 pr-0">
+              Delivery Fee:
+            </div>
+            <div class="col-5 pr-3 right-align-text">
+              $5.00
+            </div>
+          </div>
 
-    <br>
+          <div class="row mr-0 ml-0">
+            <div class="col-7 pr-0">
+              Order Total:
+            </div>
+            <div class="col-5 pl-0 pr-3 right-align-text">
+              <span id="orderTotal"></span>
+
+              <script>
+                var subTotal = parseInt({{total}}) + parseInt(5);
+                var valTotal = parseFloat(subTotal).toFixed(2);
+                document.getElementById('orderTotal').innerHTML = "$" + valTotal;
+              </script>
+            </div>
+          </div>
+        </div>
+
+        <div class="row justify-content-center">
+          <a href="/checkout"><button class="btn btn-success">Checkout</button></a>
+        </div>
+        {% endif %}
+
+    </div> <!-- /#sidebar-wrapper -->
+
+
+
     <!-- Page Content -->
-    <div class="container">
+    <div id="page-content-wrapper">
+    <!-- Page Content -->
+    <div class="container-fluid container">
       <div class="row">
 
         <div class="col-lg-3">
           <div class="sticky-top">
 
-          <h1 class="catering-header">Restaurants</h1>
+          <h2 class="mt-0 mb-3">Restaurants</h2>
           <h4>Filter by</h4>
 
           <div class="accordion" id="accordionExample">
@@ -205,7 +240,7 @@
 
             <div class="card border-white bg-transparent">
               <div class="card-header border-white bg-transparent">
-                 <a href="/meals" class="btn btn-outline-primary btn-block my-2 my-sm-0">View by Meals</a>
+                 <a href="/meals" class="btn btn-outline-primary btn-block my-2 my-sm-0 text-center">View by Meals</a>
               </div>
             </div>
 
@@ -217,7 +252,7 @@
 
         <div class="col-lg-9">
 
-          <div id="carouselExampleIndicators" class="carousel slide mt-4 mb-2" data-ride="carousel">
+          <div id="carouselExampleIndicators" class="carousel slide mt-0 mb-0" data-ride="carousel">
             <ol class="carousel-indicators">
               <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
               <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
@@ -303,11 +338,6 @@
     </div>
     <!-- /.container -->
 
-    <script>
-    {% for c in cuisines %}
-      document.getElementById('{{c}}').checked = true;
-    {% endfor %}
-    </script>
     <!-- Footer -->
     <footer class="py-4 red-bar">
       <div class="container">
@@ -315,10 +345,39 @@
       </div>
       <!-- /.container -->
     </footer>
+  </div>
+  <!-- #page-content-wrapper -->
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="/static/vendor/jquery/jquery.min.js"></script>
-    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </div>
+  <!-- #wrapper -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="/static/vendor/jquery/jquery.min.js"></script>
+  <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script>
+    $(function(){
+      $("#menu-toggle").click(function(e) {
+          e.preventDefault();
+          $("#wrapper").toggleClass("toggled");
+      });
+
+      $(window).resize(function(e) {
+        if($(window).width()<=768){
+          $("#wrapper").removeClass("toggled");
+        }else{
+          $("#wrapper").addClass("toggled");
+        }
+      });
+    });
+
+  </script>
+  <script>
+  {% for c in cuisines %}
+    document.getElementById('{{c}}').checked = true;
+  {% endfor %}
+  </script>
+
+
 
   </body>
 
