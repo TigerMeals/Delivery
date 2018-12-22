@@ -1136,7 +1136,7 @@ def filter():
             })
 
     allergies = []
-    for allergy in ["Contains meat", "Contains eggs", "Kosher", "Vegan", "Vegetarian", "Dairy free", "Nut free", "Gluten free"]:
+    for allergy in ["Contains dairy", "Contains meat", "Contains eggs", "Kosher", "Vegan", "Vegetarian", "Dairy free", "Nut free", "Gluten free"]:
         if request.form.get(allergy) is not None:
             allergies.append(allergy)
             current_filters.append({"filter": allergy, "checkbox": allergy})
