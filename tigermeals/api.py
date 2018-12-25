@@ -229,7 +229,8 @@ def _restaurant_hash(password):
 def restaurant_add():
 	name = request.json['name']
 	password = request.json['password']
-	image = request.json['image']
+	#image = request.json['image']
+	image = ""
 	description = request.json['description']
 	address = request.json['address']
 	phone = request.json['phone']
@@ -238,6 +239,7 @@ def restaurant_add():
 	servingSize = request.json['servingSize']
 	email = request.json['email']
 	website = request.json['website']
+
 
 	if 'primaryFirstName' in request.json:
 		primaryFirstName = request.json['primaryFirstName']
@@ -255,6 +257,9 @@ def restaurant_add():
 		secondaryEmail = request.json['secondaryEmail']
 	if 'secondaryPhone' in request.json:
 		secondaryPhone = request.json['secondaryPhone']
+	if 'image' in request.json:
+		image = request.json['image']
+		print(image)
 
 	# Hash the password
 	password = _restaurant_hash(password)
@@ -791,6 +796,8 @@ def order_delete(order_id):
 	db.session.commit()
 	return order_schema.jsonify(order)
 
+db.create_all()
+db.session.commit()
 
 if __name__ == '__main__':
 	app.run(debug=True, host='0.0.0.0', port=os.environ.get("PORT", 5000))

@@ -187,6 +187,14 @@ def register_upload():
 			hours += ","
 		hours += start_time + "," + end_time
 
+
+	imgurl = None
+	if 'image' in request.files:
+		img = request.files['image']
+		if img is not None:
+			response = cloudinary.uploader.upload(img)
+			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
+
 	registration_info = {
 	"name": request.form['name'],
 	"email": request.form['email'],
@@ -218,6 +226,9 @@ def register_upload():
 	    registration_info['secondaryEmail'] = request.form['secondaryEmail']
 	if request.form['secondaryPhone'] is not None:
 	    registration_info['secondaryPhone'] = request.form['secondaryPhone']
+	if imgurl is not None:
+		registration_info['image'] = imgurl
+
 
 	create_rest_url = DATABASE_URL + "/restaurant"
 	res = requests.post(create_rest_url, json=registration_info)
@@ -588,7 +599,47 @@ def image_update():
             requests.post(update_image_url, json=updateImage)
     return redirect(url_for('account_restaurant'))
 
+@app.route("/restaurant/image/registrationUpdate", methods=["POST"])
+def image_update_registration():
+    #username = session['username']
 
+    #restaurant_info_url = DATABASE_URL + "/restaurant/email"
+
+    #email = {
+    #    "email": str(username)
+    #}
+
+    res = requests.post(restaurant_info_url, json = email)
+    if not res.ok:
+        res.raise_for_status()
+
+    restaurant_info = json.loads(res.content)
+    id = restaurant_info['restaurant_id']
+    print ("Should start here")
+    if 'image' in request.files:
+        img = request.files['image']
+        if img is not None:
+            print("here")
+            # Create unique url of restaurant id + food title
+            # Since this is a new food item it does not yet have an ID
+            """print(img)
+            print(img.filename)
+            print(img.stream)
+            print(type(img))"""
+
+            #img_url = '/static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
+            #img.save('tigermeals/' + img_url)
+            #updateImage = {"image": img_url}
+            print(img)
+            print(img.filename)
+            response = cloudinary.uploader.upload(img)
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
+            #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
+            updateImage = {"image": imgurl}
+            print(updateImage)
+            update_image_url = DATABASE_URL + "/restaurant/image/" + str(id)
+            requests.post(update_image_url, json=updateImage)
+    return render_template('create_account_restaurant.tpl', image=imgurl)
 
 # Endpoint to update the account pane of the restaurant
 @app.route("/restaurant/account/update", methods=["POST"])
