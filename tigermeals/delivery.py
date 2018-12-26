@@ -15,8 +15,8 @@ import cloudinary.utils
 
 cas = CAS(app, '/cas')
 cas.init_app(app)
-# DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
-DATABASE_URL="http://localhost:5000"
+#DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+ DATABASE_URL="http://localhost:5000"
 
 app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
@@ -789,10 +789,14 @@ def meals_restaurant(restaurant_id):
             meal['allergies'] = meal['allergies'].split(",")
         meal['restaurant'] = rest['name']
 
+    hasMeals = False
+    if (len(meals) < 0):
+        hasMeals = True
+
 
     error = request.args.get('error')
 
-    r = make_response(render_template('restaurant_info.tpl', meals=meals, food_ids=food_ids,\
+    r = make_response(render_template('restaurant_info.tpl', meals=meals, hasMeals = hasMeals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error, food_multiplier = food_multiplier, \
         food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,\
         length_cart = length_cart, total=total, food_images= food_images, restaurant=rest, hours=hours))
