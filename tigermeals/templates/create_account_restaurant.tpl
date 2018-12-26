@@ -34,10 +34,23 @@
        <p>We're excited to have you!</p>
        </div>
          <p class="text-warning text-danger">{{error}}</p>
-        <form id="register" class="createAccountForm needs-validation" action="/register/upload" method="post" novalidate>
+        <form id="register" class="createAccountForm needs-validation" action="/register/upload" method="post" enctype=multipart/form-data novalidate>
+
+            <div class="text-center">
+            {% if image != "": %}
+            <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
+            {% else %}
+            <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
+            {% endif %}
+            <br><br>
+            <h6>Upload a profile picture (optional)</h6>
+            <input type="file" name="image" class="text-center center-block file-upload" enctype=multipart/form-data>
+          
+          </div></hr><br> 
+
 
           <div class="row">
-            <div class="col-12">
+            <div class = "col-12">
               <h4 class="ml-3"> Restaurant Info </h4>
             </div>
 

@@ -1,1 +1,10 @@
+<<<<<<< HEAD
 hidden-springs-97786
+=======
+# ignore compiled files
+*.pyc
+*.egg-info
+
+# ignore DS_Store
+.DS_STORE
+>>>>>>> 13522bf7f4d98d82e8af2168f3734ee5c3eb8aee

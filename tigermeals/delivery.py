@@ -728,7 +728,7 @@ def restaurant_view_filter():
     restaurants_length = len(rests)
     return render_template('restaurant_view.tpl', food_ids=food_ids,\
         id=user_id, food_prices = food_prices,\
-        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,\
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,food_multiplier=food_multiplier,\
         length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length, cuisines=cuisineSplit)
 
 
@@ -790,15 +790,20 @@ def meals_restaurant(restaurant_id):
         meal['restaurant'] = rest['name']
 
     hasMeals = False
+<<<<<<< HEAD
     if (len(meals) < 0):
         hasMeals = True
 
+=======
+    if (len(meals) > 0):
+        hasMeals = True
+>>>>>>> 13522bf7f4d98d82e8af2168f3734ee5c3eb8aee
 
     error = request.args.get('error')
 
     r = make_response(render_template('restaurant_info.tpl', meals=meals, hasMeals = hasMeals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error, food_multiplier = food_multiplier, \
-        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,\
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, hasMeals = hasMeals,\
         length_cart = length_cart, total=total, food_images= food_images, restaurant=rest, hours=hours))
 
     r.headers["Pragma"] = "no-cache"
@@ -1137,7 +1142,7 @@ def filter():
             })
 
     allergies = []
-    for allergy in ["Contains meat", "Contains eggs", "Kosher", "Vegan", "Vegetarian", "Dairy free", "Nut free", "Gluten free"]:
+    for allergy in ["Contains dairy", "Contains meat", "Contains eggs", "Kosher", "Vegan", "Vegetarian", "Dairy free", "Nut free", "Gluten free"]:
         if request.form.get(allergy) is not None:
             allergies.append(allergy)
             current_filters.append({"filter": allergy, "checkbox": allergy})
@@ -1195,5 +1200,5 @@ def filter():
 
     return render_template('meals.tpl', meals=meals, \
         id=user_id, food_prices = food_prices, food_ids=food_ids,\
-        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, \
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, food_multiplier=food_multiplier,\
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, sort_type=request.form.get('sort'))
