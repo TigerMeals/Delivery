@@ -174,7 +174,7 @@ def register_upload():
 			if len(cuisine) > 0:
 				cuisine += ","
 			cuisine += checkbox
-	print(cuisine)
+
 	hours = ""
 	for day in ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']:
 		start_time = request.form.get(day + '1')
@@ -373,7 +373,6 @@ def orders():
 	pending = []
 	delivered = []
 	# For logging purposes
-	print ("Request Successful: ")
 	length_orders = 0
 	for order in orders:
 		price = 0
@@ -389,8 +388,6 @@ def orders():
 			price += package['subtotal']
 			packages.append(package['food_title'])
 
-		for key in order:
-			print (key + " : " + str(order[key]))
 		order['price'] = price
 		order['packages'] = packages
 		if order['delivered']:
@@ -573,28 +570,14 @@ def image_update():
 
     restaurant_info = json.loads(res.content)
     id = restaurant_info['restaurant_id']
-    print ("Should start here")
+
     if 'image' in request.files:
         img = request.files['image']
         if img is not None:
-            print("here")
-            # Create unique url of restaurant id + food title
-            # Since this is a new food item it does not yet have an ID
-            """print(img)
-            print(img.filename)
-            print(img.stream)
-            print(type(img))"""
-
-            #img_url = '/static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
-            #img.save('tigermeals/' + img_url)
-            #updateImage = {"image": img_url}
-            print(img)
-            print(img.filename)
             response = cloudinary.uploader.upload(img)
             imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
-            print(updateImage)
             update_image_url = DATABASE_URL + "/restaurant/image/" + str(id)
             requests.post(update_image_url, json=updateImage)
     return redirect(url_for('account_restaurant'))
@@ -615,28 +598,13 @@ def image_update_registration():
 
     restaurant_info = json.loads(res.content)
     id = restaurant_info['restaurant_id']
-    print ("Should start here")
     if 'image' in request.files:
         img = request.files['image']
         if img is not None:
-            print("here")
-            # Create unique url of restaurant id + food title
-            # Since this is a new food item it does not yet have an ID
-            """print(img)
-            print(img.filename)
-            print(img.stream)
-            print(type(img))"""
-
-            #img_url = '/static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
-            #img.save('tigermeals/' + img_url)
-            #updateImage = {"image": img_url}
-            print(img)
-            print(img.filename)
             response = cloudinary.uploader.upload(img)
             imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
-            print(updateImage)
             update_image_url = DATABASE_URL + "/restaurant/image/" + str(id)
             requests.post(update_image_url, json=updateImage)
     return render_template('create_account_restaurant.tpl', image=imgurl)
@@ -743,10 +711,7 @@ def listings():
 		listings = json.loads(res.content)
 		active_listings = []
 		inactive_listings = []
-		print ("Request Successful: ")
 		for listing in listings:
-			for key in listing:
-				print (key + " : " + str(listing[key]))
 			if listing['allergies'] is "":
 				listing['allergies'] = []
 			else:
@@ -755,7 +720,6 @@ def listings():
 				active_listings.append(listing)
 			else:
 				inactive_listings.append(listing)
-		print ()
 
 	orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
 	res = requests.get(orders_url)
@@ -832,21 +796,11 @@ def add_listing():
     if 'image' in request.files:
         img = request.files['image']
         if img is not None:
-            # Create unique url of restaurant id + food title
-            # Since this is a new food item it does not yet have an ID
-            """print(img)
-            print(img.filename)
-            print(img.stream)
-            print(type(img))"""
 
-            #img_url = '/static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
-            #img.save('tigermeals/' + img_url)
-            #updateImage = {"image": img_url}
             response = cloudinary.uploader.upload(img)
             imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
-            print(updateImage)
             update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
             requests.post(update_image_url, json=updateImage)
 
@@ -904,17 +858,10 @@ def update_listing():
             # Img url is unique name based on the food id
             response = cloudinary.uploader.upload(img)
             imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
-            #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
-            print(updateImage)
-            #update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
-            #requests.post(update_image_url, json=updateImage)
-            #img_url = '/static/img/' + food_id + '.jpg'
-            #img.save('tigermeals' + img_url)
             updatedEntry["image"] = imgurl
 
     res = requests.put(add_food_url, json = updatedEntry)
-    print (updatedEntry)
     if not res.ok:
         res.raise_for_status()
 

@@ -47,8 +47,6 @@ def _getRestaurantEmails():
     for rest in restaurants:
         rests[rest['restaurant_id']] = rest['email']
 
-    print(rests)
-
     return rests
 
 def _getCart(user_id):
@@ -134,7 +132,6 @@ def home():
 
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -194,7 +191,6 @@ def about():
     print("about template requested -----------------------------")
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -260,7 +256,6 @@ def account():
     print("account template requested -----------------------------")
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -357,7 +352,6 @@ def account_update():
     print("ACCOUNT UPDATING ----------------------------------------")
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -428,9 +422,6 @@ def account_update():
 def cart_edit(quantity, food_id):
     netid = cas.username
     print(netid)
-    print(type(netid))
-
-    print(cas.attributes)
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -479,8 +470,6 @@ def user_image_update():
     print(netid)
     print(type(netid))
 
-    print(cas.attributes)
-
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
@@ -491,30 +480,22 @@ def user_image_update():
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
     user_id = fetch_req.json()['user_id']
-    #restaurant_info = json.loads(res.content)
-    #id = restaurant_info['restaurant_id']
-    print ("Should start here")
+
     if 'image' in request.files:
         img = request.files['image']
         if img is not None:
-            print("here")
             # Create unique url of restaurant id + food title
             # Since this is a new food item it does not yet have an ID
-            """print(img)
-            print(img.filename)
-            print(img.stream)
-            print(type(img))"""
 
             #img_url = '/static/img/' + str(json.loads(res.content)['food_id']) + '.jpg'
             #img.save('tigermeals/' + img_url)
             #updateImage = {"image": img_url}
-            print(img)
-            print(img.filename)
+
             response = cloudinary.uploader.upload(img)
             imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
-            print(updateImage)
+
             update_image_url = DATABASE_URL + "/user/image/" + str(user_id)
             requests.post(update_image_url, json=updateImage)
     return redirect(url_for('account'))
@@ -527,7 +508,6 @@ def cart_delete(food_id):
 
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     print(cas.attributes)
 
@@ -576,7 +556,6 @@ def meals():
 
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -645,7 +624,6 @@ def meals():
 def restaurant_view():
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -688,7 +666,6 @@ def restaurant_view():
 def restaurant_view_filter():
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -738,7 +715,6 @@ def restaurant_view_filter():
 def meals_restaurant(restaurant_id):
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -812,7 +788,6 @@ def meals_restaurant(restaurant_id):
 def upload_cart():
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -891,8 +866,6 @@ def upload_cart():
              "subtotal": int(request.form.get('quantity')) * food_details['price']}
              )
 
-            print (old_food_items)
-
             updatedOrder = {
                 "user_id": user_id,
                 "food_items": old_food_items,
@@ -913,7 +886,6 @@ def upload_cart():
 def charge():
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -923,7 +895,6 @@ def charge():
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
     print(request.form)
-    #print("Hello what's up")
 
     user_id = fetch_req.json()['user_id']
 
@@ -933,9 +904,6 @@ def charge():
     date = str(request.form['dateCard'])
     time = str(request.form['timeCard'])
 
-
-
-    #print(user_id)
     current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
     res = requests.get(current_order_url)
 
@@ -967,9 +935,6 @@ def charge():
     #user_id = 1
     # Amount in cents
 
-    #order_id = json.loads(res.content)['order_id']
-    #order_ordered_url = DATABASE_URL + "/order/ordered/" + str(order_id)
-
     formData = {
     "name": name,
     "email": email,
@@ -978,8 +943,6 @@ def charge():
     "time": time
     }
 
-    #print (formData)
-    #print (formData)
     res = requests.post(order_ordered_url, json=formData)
     if not res.ok:
         res.raise_for_status()
@@ -1006,8 +969,6 @@ def charge():
     sender='tigermealsdelivery@gmail.com',
     recipients=[restEmail],
     html=rest_order_html())
-    #print(request.form)
-    #print(type(request.form['stripeToken']))
 
 
     return redirect('/order/confirmed')
@@ -1018,7 +979,6 @@ def charge():
 def ordered():
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -1053,7 +1013,6 @@ def ordered():
     "date": date,
     "time": time
     }
-    print (formData)
     res = requests.post(order_ordered_url, json=formData)
     if not res.ok:
         res.raise_for_status()
@@ -1088,7 +1047,6 @@ def ordered():
 def order_confirmed():
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -1108,7 +1066,6 @@ def order_confirmed():
 def filter():
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
@@ -1188,10 +1145,6 @@ def filter():
             res.raise_for_status()
             return None
         meal['restaurant'] = json.loads(res.content)['name']
-        # For logging purposes
-        for key in meal:
-            print (key + " : " + str(meal[key]))
-        print()
 
     return render_template('meals.tpl', meals=meals, \
         id=user_id, food_prices = food_prices, food_ids=food_ids,\

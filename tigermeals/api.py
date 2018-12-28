@@ -259,7 +259,6 @@ def restaurant_add():
 		secondaryPhone = request.json['secondaryPhone']
 	if 'image' in request.json:
 		image = request.json['image']
-		print(image)
 
 	# Hash the password
 	password = _restaurant_hash(password)
