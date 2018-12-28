@@ -24,52 +24,40 @@
 
 
   <body>
-
     <!-- Navigation -->
-    <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="#">TigerMeals Delivery</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-              <a class="nav-link" href="/home">Home</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="/about">About</a>
-            </li>
-            <li class="nav-item">
-            <div class="dropdown">
-              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
+    <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
+      <a class="navbar-brand" href="/home">TigerMeals Delivery</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="nav navbar-nav ml-auto">
+          <li class="nav-item-bar" id="nav-home">
+            <a class="nav-link" href="/home">Home</a>
+          <li class="nav-item-bar" id="nav-about">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+          <li class="nav-item-bar" id="nav-meals">
+            <div class="dropdown" id="nav-meals-dropdown">
+              <a class="nav-link btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
                 Meals
               </a>
-
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+              <div class="dropdown-menu dropdown-content" aria-labelledby="dropdownMenuLink">
                 <a class="dropdown-item" href="/meals">View all Meals</a>
                 <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
               </div>
             </div>
-            </li>
-            <li class="nav-item">
-            <div class="dropdown">
-              <a class="nav-link btn-danger dropdown-toggle" href="/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
-                My Account
-              </a>
-
-              <div class="dropdown-menu" aria-labelledby="logoutLink">
-                <a class="dropdown-item" href="/account">My account</a>
-                <a class="dropdown-item" href="/logout">Logout</a>
-              </div>
-            </div>
-            </li>
-            <li class="nav-item active">
-              <a class="nav-link" href="#">Checkout</a>
-              <span class="sr-only">(current)</span>
-            </li>
-          </ul>
-        </div>
+          </li>
+          <li class="nav-item-bar" id="nav-account">
+            <a class="nav-link" href="/account">My Account</a>
+          </li>
+          <li class="nav-item-bar active">
+            <a class="nav-link">Checkout</i></a>
+          </li>
+          <li class="nav-item-bar mr-4">
+            <a class="nav-link" href="/logout">Logout</i></a>
+          </li>
+        </ul>
       </div>
     </nav>
 
