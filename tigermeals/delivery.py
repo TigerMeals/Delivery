@@ -661,7 +661,7 @@ def restaurant_view():
 
 
 # Endpoint to display restaurant view
-@app.route("/meals/restaurant/filter", methods=["POST"])
+@app.route("/meals/restaurant/filter", methods=["POST", "GET"])
 @login_required
 def restaurant_view_filter():
     netid = cas.username
@@ -677,6 +677,9 @@ def restaurant_view_filter():
 
     user_id = fetch_req.json()['user_id']
     print(user_id)
+
+    if request.method=="GET":
+        return redirect('/meals/restaurant')
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
