@@ -790,20 +790,15 @@ def meals_restaurant(restaurant_id):
         meal['restaurant'] = rest['name']
 
     hasMeals = False
-<<<<<<< HEAD
-    if (len(meals) < 0):
-        hasMeals = True
 
-=======
     if (len(meals) > 0):
         hasMeals = True
->>>>>>> 13522bf7f4d98d82e8af2168f3734ee5c3eb8aee
 
     error = request.args.get('error')
 
     r = make_response(render_template('restaurant_info.tpl', meals=meals, hasMeals = hasMeals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error, food_multiplier = food_multiplier, \
-        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, hasMeals = hasMeals,\
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,\
         length_cart = length_cart, total=total, food_images= food_images, restaurant=rest, hours=hours))
 
     r.headers["Pragma"] = "no-cache"
