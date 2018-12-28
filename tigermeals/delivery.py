@@ -150,7 +150,7 @@ def home():
 
     resp = (render_template('home.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
-        food_quantity_feds=food_quantity_feds, food_images=food_images, empty_cart = empty_cart, \
+        food_quantity_feds=food_quantity_feds, food_images=food_images, food_multiplier = food_multiplier, empty_cart = empty_cart, \
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id))
 
 
@@ -208,7 +208,7 @@ def about():
 
     return render_template('about.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
-        food_quantity_feds=food_quantity_feds, food_images=food_images, empty_cart = empty_cart,\
+        food_quantity_feds=food_quantity_feds, food_images=food_images, food_multiplier=food_multiplier, empty_cart = empty_cart,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 
 @app.route("/checkout")
