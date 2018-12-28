@@ -56,7 +56,7 @@
         <h1 class="mb-3 font-weight-strong text-center">TigerMeals Delivery</h1>
         <h5 class="font-weight-light text-center">I am a... </h5>
         <button class="btn btn-primary btn-block" onclick="window.location.href='/meals';"><strong>Student</strong></button>
-        <button class="btn btn-primary btn-block" href="/orders"><strong>Restaurant</strong></button>
+        <button class="btn btn-primary btn-block" onclick="window.location.href='/orders';"><strong>Restaurant</strong></button>
       </div>
     </body>
 
