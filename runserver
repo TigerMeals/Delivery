@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 export FLASK_APP=tigermeals
-# export FLASK_ENV=development
+export FLASK_ENV=development
 pip install -e . --user
 flask run
