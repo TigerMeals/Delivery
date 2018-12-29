@@ -32,7 +32,7 @@
   </head>
 
   <body id="page-top">
-    {% include 'nav.tpl' %}>
+    {% include 'nav.tpl' %}
     <script>
       document.getElementById('nav-home').classList.add('active');
     </script>

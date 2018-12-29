@@ -47,7 +47,7 @@
 </head>
 
 <body>
-  {% include 'nav.tpl' %}>
+  {% include 'nav.tpl' %}
   <script>
     document.getElementById('nav-account').classList.add('active');
   </script>

@@ -24,7 +24,7 @@
 
 
   <body>
-    {% include 'nav.tpl' %}>
+    {% include 'nav.tpl' %}
     <script>
       document.getElementById('nav-about').classList.add('active');
     </script>
