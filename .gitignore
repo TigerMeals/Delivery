@@ -1,6 +1,6 @@
 
 hidden-springs-97786
-=======
+
 # ignore compiled files
 *.pyc
 *.egg-info

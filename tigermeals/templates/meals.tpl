@@ -304,12 +304,14 @@
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
+      var cart_visible_num = 0;
+      var cart_visible = False;
       $(function(){
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
+            cart_visible_num++;
             $("#wrapper").toggleClass("toggled");
         });
-
         $(window).resize(function(e) {
           if($(window).width()<=768){
             $("#wrapper").removeClass("toggled");
@@ -318,14 +320,11 @@
           }
         });
       });
-
     </script>
-
     <script>
     {% for c in current_filters %}
       document.getElementById('{{c.checkbox}}').checked = true;
     {% endfor %}
-
     function filter_submit(sort_type) {
       // Keep sorting consistent across multiple filters unless user requests
       // to change it
@@ -337,14 +336,11 @@
       }
       document.getElementById("filter").submit();
     }
-
     function remove_filter(checkbox) {
       document.getElementById(checkbox).checked = false;
       document.getElementById("sort").value = "{{sort_type}}";
       document.getElementById("filter").submit();
     }
-
     </script>
   </body>
-
 </html>

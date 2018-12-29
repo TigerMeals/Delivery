@@ -23,6 +23,7 @@
   </head>
 
   <body>
+
     {% include 'nav.tpl' %}>
     <script>
       document.getElementById('nav-meals').classList.add('active');
