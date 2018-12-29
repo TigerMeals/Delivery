@@ -309,7 +309,6 @@
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
-
         $(window).resize(function(e) {
           if($(window).width()<=768){
             $("#wrapper").removeClass("toggled");
@@ -318,14 +317,11 @@
           }
         });
       });
-
     </script>
-
     <script>
     {% for c in current_filters %}
       document.getElementById('{{c.checkbox}}').checked = true;
     {% endfor %}
-
     function filter_submit(sort_type) {
       // Keep sorting consistent across multiple filters unless user requests
       // to change it
@@ -337,14 +333,11 @@
       }
       document.getElementById("filter").submit();
     }
-
     function remove_filter(checkbox) {
       document.getElementById(checkbox).checked = false;
       document.getElementById("sort").value = "{{sort_type}}";
       document.getElementById("filter").submit();
     }
-
     </script>
   </body>
-
 </html>
