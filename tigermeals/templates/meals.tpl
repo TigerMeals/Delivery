@@ -24,6 +24,7 @@
 
   <body>
 
+<<<<<<< HEAD
     <!-- Navigation -->
     <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
       <a class="navbar-brand" href="/home">TigerMeals Delivery</a>
@@ -185,6 +186,13 @@
         {% endif %}
 
     </div> <!-- /#sidebar-wrapper -->
+=======
+  {% include 'nav.tpl' %}>
+  <script>
+    document.getElementById('nav-meals').classList.add('active');
+    document.getElementById('nav-meals-dropdown').classList.add('active');
+  </script>
+>>>>>>> cb639b8b674f7c62f29f819240706a2ccb557ee8
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
@@ -389,7 +397,11 @@
               <div class="col-lg-8 col-md-12 mb-8">
                 <div class="sticky-top">
                   <h2 class="mb-0">Catering Packages</h2>
+                  {% if length_meals == 1 %}
+                  <span class="ml-0 mt-0">({{length_meals}} result)</span>
+                  {% else %}
                   <span class="ml-0 mt-0">({{length_meals}} results)</span>
+                  {% endif %}
                   {% if error %}
                   <p class="text-danger mt-2">{{error}}</p>
                   {% endif %}

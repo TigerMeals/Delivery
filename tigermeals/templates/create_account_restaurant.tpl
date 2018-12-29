@@ -19,6 +19,29 @@
 
   <script type="text/javascript" src="js/jquery-1.10.2.min.js"></script>
 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script>
+    $(document).ready(function() {
+
+        var readURL = function(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('.avatar').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(".file-upload").on('change', function(){
+            readURL(this);
+        });
+    });
+
+  </script>
 </head>
 
 
@@ -35,20 +58,13 @@
        </div>
          <p class="text-warning text-danger">{{error}}</p>
         <form id="register" class="createAccountForm needs-validation" action="/register/upload" method="post" enctype=multipart/form-data novalidate>
-
-            <div class="text-center">
-            {% if image != "": %}
-            <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
-            {% else %}
+          <div class="text-center">
             <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
-            {% endif %}
             <br><br>
             <h6>Upload a profile picture (optional)</h6>
             <input type="file" name="image" class="text-center center-block file-upload" enctype=multipart/form-data>
-          
-          </div></hr><br> 
-
-
+          </div>
+          <br>
           <div class="row">
             <div class = "col-12">
               <h4 class="ml-3"> Restaurant Info </h4>

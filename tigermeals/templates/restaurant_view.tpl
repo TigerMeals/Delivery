@@ -23,6 +23,7 @@
   </head>
 
   <body>
+<<<<<<< HEAD
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
@@ -154,6 +155,13 @@
         {% endif %}
 
     </div> <!-- /#sidebar-wrapper -->
+=======
+    {% include 'nav.tpl' %}>
+    <script>
+      document.getElementById('nav-meals').classList.add('active');
+      document.getElementById('nav-meals-dropdown').classList.add('active');
+    </script>
+>>>>>>> cb639b8b674f7c62f29f819240706a2ccb557ee8
 
 
 
@@ -283,7 +291,11 @@
           <div class="row">
             <div class="col-lg-6 col-md-12 mb-8">
               <h2 class="mb-0">Restaurants</h2>
+              {% if restaurants_length == 1 %}
+              <span class="ml-0 mt-0">({{restaurants_length}} result)</span>
+              {% else %}
               <span class="ml-0 mt-0">({{restaurants_length}} results)</span>
+              {% endif %}
               {% if error %}
               <p class="text-danger mt-2">{{error}}</p>
               {% endif %}

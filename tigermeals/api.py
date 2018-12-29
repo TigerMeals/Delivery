@@ -259,7 +259,6 @@ def restaurant_add():
 		secondaryPhone = request.json['secondaryPhone']
 	if 'image' in request.json:
 		image = request.json['image']
-		print(image)
 
 	# Hash the password
 	password = _restaurant_hash(password)
@@ -524,6 +523,7 @@ def food_filter():
 	food = food.filter_by(active = True)
 	if (sort == "popular"):
 		result = food.order_by(Food.timesOrdered).all()
+		result.reverse()
 	if (sort == "servings"):
 		result = food.order_by(Food.quantity_fed).all()
 	if (sort == "price_low_to_high"):
@@ -668,6 +668,11 @@ def order_ordered(order_id):
 	order.date = request.json['date']
 	order.delivery_time = request.json['time']
 
+	# increment timesOrdered field of all food items being ordered
+	for item in order.food_items:
+		food = Food.query.get(item['food_id'])
+		food.timesOrdered += 1
+
 	db.session.commit()
 
 	return order_schema.jsonify(order)
@@ -769,6 +774,10 @@ def order_orderedToken(order_id, stripeToken, amount):
 	order.delivery_time = request.json['time']
 	order.stripeToken = stripeToken
 	order.amount = amount
+	# increment timesOrdered field of all food items being ordered
+	for item in order.food_items:
+		food = Food.query.get(item['food_id'])
+		food.timesOrdered += 1
 
 	db.session.commit()
 

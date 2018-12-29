@@ -32,107 +32,10 @@
   </head>
 
   <body id="page-top">
-
-    <!-- Navigation -->
-    <!-- Navigation -->
-    <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="/home">TigerMeals Delivery</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item-bar active">
-              <a class="nav-link" href="/home">Home</a>
-              <span class="sr-only">(current)</span>
-            </li>
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/about">About</a>
-            </li>
-            <li class="nav-item-bar">
-            <div class="dropdown">
-              <a class="nav-link btn-danger dropdown-toggle" href="/meals" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
-                Meals
-              </a>
-
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="/meals">View all Meals</a>
-                <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
-              </div>
-            </div>
-            </li>
-            <li class="nav-item-bar">
-            <div class="dropdown">
-              <a class="nav-link btn-danger dropdown-toggle" href="/account" role="button" id="logoutLink" data-toggle="dropdown"  aria-expanded="false">
-                My Account
-              </a>
-
-              <div class="dropdown-menu" aria-labelledby="logoutLink">
-                <a class="dropdown-item" href="/account">My account</a>
-                <a class="dropdown-item" href="/logout">Logout</a>
-              </div>
-            </div>
-            </li>
-            <li class="nav-item-bar justify-content-end dropdown">
-              <a class="nav-link justify-content-end" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> View Cart ({{length_cart}}) <i class="fa fa-caret-down"></i></a>
-                <span class="sr-only">(current)</span>
-              <ul class="dropdown-menu dropdown-menu-left dropdown-cart" role="menu">
-                {% for i in range(0, length_cart) %}
-                  <li>
-                      <span class="item">
-                        <span class="item-left">
-                            <img
-                            src="{{food_images[i]}}"
-                            style="width:35px;height:35px;"
-                             alt="" />
-                            <span class="item-info">
-                                <span>{{food_titles[i]}}</span>
-                                <span id = "cart_price{{i}}"></span>
-                                <!-- Below needed so that price displays with 2 decimal points. -->
-                                <script>
-                                  var val = parseFloat({{food_prices[i]}}).toFixed(2);
-                                  document.getElementById('cart_price{{i}}').innerHTML = "price: $" + val;
-                                </script>
-                            </span>
-                        </span>
-                        <span class="item-right">
-                          <form method="post"action="/cart/delete/{{food_ids[i]}}">
-                            <button class="btn-sm btn-danger btn-cart fa fa-times"></button>
-                          </form>
-                        </span>
-                    </span>
-                  </li>
-
-                  <li class="divider"></li>
-                  <li>
-                    <span id = "cart_subtotal{{i}}"></span>
-                    <!-- Below needed so that price displays with 2 decimal points. -->
-                    <script>
-                      var val = parseFloat({{food_subtotals[i]}}).toFixed(2);
-                      document.getElementById('cart_subtotal{{i}}').innerHTML = "Subtotal: $" + val;
-                    </script>
-
-                {% endfor %}
-                <span class="checkout-text item-right">
-                    <span id = "total"></span>
-                    <!-- Below needed so that price displays with 2 decimal points. -->
-                    <script>
-                      var val = parseFloat({{total}}).toFixed(2);
-                      document.getElementById('total').innerHTML = "Total: $" + val;
-                    </script>
-                    <a class="checkout-text item-left" href="/cart">View Cart</a>
-
-                    <a class="checkout-text item-right" href="/checkout">Checkout</a>
-                    <br>
-                  </li>
-              </ul>
-            </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
-
+    {% include 'nav.tpl' %}>
+    <script>
+      document.getElementById('nav-home').classList.add('active');
+    </script>
 
     <div class="container">
       <div class="py-5 text-center">
@@ -433,6 +336,23 @@
     <!-- Bootstrap core JavaScript -->
     <script src="static/vendor/jquery/jquery.min.js"></script>
     <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      $(function(){
+        $("#menu-toggle").click(function(e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+
+        $(window).resize(function(e) {
+          if($(window).width()<=768){
+            $("#wrapper").removeClass("toggled");
+          }else{
+            $("#wrapper").addClass("toggled");
+          }
+        });
+      });
+
+    </script>
 
     <!-- Plugin JavaScript -->
     <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
