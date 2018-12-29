@@ -16,7 +16,7 @@ import cloudinary.utils
 cas = CAS(app, '/cas')
 cas.init_app(app)
 #DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
- DATABASE_URL="http://localhost:5000"
+DATABASE_URL="http://localhost:5000"
 
 app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
@@ -470,7 +470,7 @@ def cart_edit(quantity, food_id):
     if not res.ok:
         res.raise_for_status()
 
-    return redirect(url_for('cart'))
+    return redirect(url_for('meals'))
 
 
 @app.route("/user/image/update", methods=["POST"])
@@ -521,7 +521,7 @@ def user_image_update():
 
 
 # Endpoint to delete an item from the current cart
-@app.route("/cart/delete/<food_id>", methods=["POST"])
+@app.route("/meals/delete/<food_id>", methods=["POST"])
 @login_required
 def cart_delete(food_id):
 
@@ -564,12 +564,56 @@ def cart_delete(food_id):
     if not res.ok:
         res.raise_for_status()
 
-    return redirect("/cart")
+    return redirect("/meals")
 
+# Endpoint to delete an item from the current cart
+@app.route("/meals/restaurant/delete/<food_id>", methods=["POST"])
+@login_required
+def cart_delete_restaurant(food_id):
 
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    print(cas.attributes)
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
+
+    order_id = order['order_id']
+    food_items = order['food_items']
+
+    index = 0
+    for food_item in food_items:
+        if food_item['food_id'] == int(food_id):
+            food_items.pop(index)
+            break
+        index += 1
+
+    delete_url = DATABASE_URL + "/order/delete/" + str(order_id)
+
+    json = {
+        "food_items": food_items
+    }
+
+    res = requests.put(delete_url, json = json)
+    if not res.ok:
+        res.raise_for_status()
+
+    return redirect("/meals/restaurant")
 
 # Endpoint to display all meals
-@app.route("/meals")
+@app.route("/meals/")
 @login_required
 def meals():
     meals_url = DATABASE_URL + "/food/sort/price/low-to-high"
@@ -588,6 +632,8 @@ def meals():
 
     user_id = fetch_req.json()['user_id']
     print(user_id)
+
+    cart_visible = requests.get("cart_visible")
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
@@ -630,7 +676,7 @@ def meals():
     error = request.args.get('error')
 
     r = make_response(render_template('meals.tpl', meals=meals, food_ids=food_ids,\
-        id=user_id, food_prices = food_prices, error=error, empty_cart = empty_cart, \
+        id=user_id, food_prices = food_prices, error=error, empty_cart = empty_cart, cart_visible = cart_visible, \
         food_subtotals = food_subtotals, food_titles = food_titles, food_multiplier = food_multiplier, \
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], sort_type="popular"))
 
@@ -790,18 +836,13 @@ def meals_restaurant(restaurant_id):
         meal['restaurant'] = rest['name']
 
     hasMeals = False
-<<<<<<< HEAD
-    if (len(meals) < 0):
-        hasMeals = True
 
-=======
     if (len(meals) > 0):
         hasMeals = True
->>>>>>> 13522bf7f4d98d82e8af2168f3734ee5c3eb8aee
 
     error = request.args.get('error')
 
-    r = make_response(render_template('restaurant_info.tpl', meals=meals, hasMeals = hasMeals, food_ids=food_ids,\
+    r = make_response(render_template('restaurant_info.tpl', meals=meals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error, food_multiplier = food_multiplier, \
         food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, hasMeals = hasMeals,\
         length_cart = length_cart, total=total, food_images= food_images, restaurant=rest, hours=hours))

@@ -93,7 +93,7 @@
               {{food_titles[i]}}
             </div>
             <div class="col-1 px-0">
-              <form method="post" action="/cart/delete/{{food_ids[i]}}">
+              <form method="post" action="/meals/restaurant/delete/{{food_ids[i]}}">
                 <button class="transparent-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
               </form>
               <!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
