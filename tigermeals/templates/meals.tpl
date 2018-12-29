@@ -304,14 +304,12 @@
     <script src="/static/vendor/jquery/jquery.min.js"></script>
     <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
-      var cart_visible_num = 0;
-      var cart_visible = False;
       $(function(){
         $("#menu-toggle").click(function(e) {
             e.preventDefault();
-            cart_visible_num++;
             $("#wrapper").toggleClass("toggled");
         });
+
         $(window).resize(function(e) {
           if($(window).width()<=768){
             $("#wrapper").removeClass("toggled");
@@ -320,6 +318,7 @@
           }
         });
       });
+
     </script>
     <script>
     {% for c in current_filters %}
