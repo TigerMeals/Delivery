@@ -15,6 +15,7 @@ import cloudinary.utils
 
 cas = CAS(app, '/cas')
 cas.init_app(app)
+
 # DATABASE_URL = "http://tigermeals.herokuapp.com"
 DATABASE_URL="http://localhost:5000"
 
@@ -546,7 +547,51 @@ def cart_delete(food_id):
 
     return redirect("/cart")
 
+# Endpoint to delete an item from the current cart
+@app.route("/meals/restaurant/delete/<food_id>", methods=["POST"])
+@login_required
+def cart_delete_restaurant(food_id):
 
+    netid = cas.username
+    print(netid)
+    print(type(netid))
+
+    print(cas.attributes)
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
+
+    order_id = order['order_id']
+    food_items = order['food_items']
+
+    index = 0
+    for food_item in food_items:
+        if food_item['food_id'] == int(food_id):
+            food_items.pop(index)
+            break
+        index += 1
+
+    delete_url = DATABASE_URL + "/order/delete/" + str(order_id)
+
+    json = {
+        "food_items": food_items
+    }
+
+    res = requests.put(delete_url, json = json)
+    if not res.ok:
+        res.raise_for_status()
+
+    return redirect("/meals/restaurant")
 
 # Endpoint to display all meals
 @app.route("/meals")
@@ -567,6 +612,8 @@ def meals():
 
     user_id = fetch_req.json()['user_id']
     print(user_id)
+
+    # cart_visible = requests.get("cart_visible")
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
@@ -609,7 +656,7 @@ def meals():
     error = request.args.get('error')
 
     r = make_response(render_template('meals.tpl', meals=meals, food_ids=food_ids,\
-        id=user_id, food_prices = food_prices, error=error, empty_cart = empty_cart, \
+        id=user_id, food_prices = food_prices, error=error, empty_cart = empty_cart,  \
         food_subtotals = food_subtotals, food_titles = food_titles, food_multiplier = food_multiplier, \
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=[], sort_type="popular"))
 
@@ -775,9 +822,9 @@ def meals_restaurant(restaurant_id):
 
     error = request.args.get('error')
 
-    r = make_response(render_template('restaurant_info.tpl', meals=meals, hasMeals = hasMeals, food_ids=food_ids,\
+    r = make_response(render_template('restaurant_info.tpl', meals=meals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error, food_multiplier = food_multiplier, \
-        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,\
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, hasMeals = hasMeals,\
         length_cart = length_cart, total=total, food_images= food_images, restaurant=rest, hours=hours))
 
     r.headers["Pragma"] = "no-cache"
