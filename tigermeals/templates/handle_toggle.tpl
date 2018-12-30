@@ -25,15 +25,6 @@
         }
     });
 
-    $(window).resize(function(e) {
-      if($(window).width()<=768){
-        $("#wrapper").removeClass("toggled");
-        document.cookie="toggled=false";
-      } else {
-        $("#wrapper").addClass("toggled");
-        document.cookie="toggled=true";
-      }
-    });
   });
 
 </script>
