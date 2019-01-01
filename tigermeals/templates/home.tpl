@@ -90,8 +90,8 @@
             <div class="card border-light h-100">
               <a href="#" data-toggle="modal" data-target="#1"><img class="card-img-top" alt=""></a>
               <div class="card-body">
-                <h5 class="card-title">
-                  New User? Check out our website <a href="#" data-toggle="modal" data-target="#1"> tutorial!</a>
+                <h5 class="card-title text-primary">
+                  New User? Check out our website <a href="#" class="text-danger" data-toggle="modal" data-target="#1"> tutorial!</a>
                 </h5>
               </div>
             </div>
