@@ -14,9 +14,9 @@
               <a class="nav-link btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
                 Meals
               </a>
-              <div class="dropdown-menu dropdown-content" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="/meals">View all Meals</a>
-                <a class="dropdown-item" href="/meals/restaurant">View by Restaurant</a>
+              <div class="dropdown-menu dropdown-content mt-0" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/meals">View all meals</a>
+                <a class="dropdown-item" href="/meals/restaurant">View by restaurant</a>
               </div>
             </div>
           </li>
