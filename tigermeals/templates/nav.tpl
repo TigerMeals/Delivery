@@ -119,7 +119,7 @@
             </div>
 
             <div class="row justify-content-center">
-              <a href="/checkout"><button class="btn btn-success">Checkout</button></a>
+              <a href="/cart"><button class="btn btn-success">Checkout</button></a>
             </div>
             {% endif %}
 

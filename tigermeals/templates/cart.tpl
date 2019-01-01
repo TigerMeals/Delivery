@@ -158,21 +158,22 @@
     <!-- Page Content -->
     <div id="page-content-wrapper">
       <div class="container-fluid container">
-
+        <div class="row">
+          <div class="col-12">
+            <h2 class="pt-1">Review Cart</h2>
+          </div>
+        </div>
   			<table id="cart" class="table table-hover table-condensed">
   				<thead>
-  					<tr>
-  					<th style="padding-top:1rem; padding-bottom:0rem; border-top:0rem;border-bottom:0rem;"> <h2> View Cart </h2> </th>
-  				</tr>
-  				<tr>
-  					<th style="width:50%; color:black;">Product</th>
-  					<th style="width:10%; color:black;">Price</th>
-  					<th style="width:8%; color:black;">Quantity</th>
+    				<tr>
+    					<th style="width:50%; color:black;">Product</th>
+    					<th style="width:10%; color:black;">Price</th>
+    					<th style="width:8%; color:black;">Quantity</th>
 
-  					<th style="width:10%; color:black;" class="text-center">Subtotal</th>
-  					<th style="width:16%; color:black;">Serving Size</th>
-  					<th style="width:6%"></th>
-  				</tr>
+    					<th style="width:10%; color:black;" class="text-center">Subtotal</th>
+    					<th style="width:16%; color:black;">Serving Size</th>
+    					<th style="width:6%"></th>
+    				</tr>
   			</thead>
   			<tbody>
   				{% for i in range(0, length_cart) %}
@@ -253,15 +254,60 @@
               document.getElementById('total_table').innerHTML = val;
             </script>
   				</tr>
-  				<tr>
+  				<!-- <tr>
   					<td><a href="/meals" class="btn btn-outline-primary"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
   					<td colspan="2" class="hidden-xs"></td>
   					<td class="hidden-xs text-center"></td>
   					<td><a href="/checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
-  				</tr>
+  				</tr> -->
   			</tfoot>
   		</table>
 		</div>
+
+    <div class="container-fluid container">
+      <div class="row">
+        <div class="col-12">
+          <h2>Delivery Information</h2>
+        </div>
+
+        <div class="col-lg-6 col-md-6 mb-3">
+          <label for="date">Delivery Date</label>
+          <input type="date" class="form-control" id="dateCard" name="dateCard" required>
+          <div class="invalid-feedback">
+            Please enter a valid date.
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 mb-3">
+          <label for="time">Delivery Time</label>
+          <input type="time" class="form-control" id="timeCard" name="timeCard" value="12:00" required>
+          <div class="invalid-feedback">
+            Please enter a valid time.
+          </div>
+        </div>
+        <div class="col-lg-6 col-md-6 mb-3">
+          <label for="date">Delivery Location</label>
+          <input type="text" class="form-control" id="locationCard" name="locationCard" required>
+          <div class="invalid-feedback">
+            Please enter a valid location.
+          </div>
+        </div>
+        <div class="col-lg-12 col-md-6 mb-3">
+          <label for="date">Delivery Instructions</label>
+          <input type="text" class="form-control" id="instructionsCard" name="instructionsCard" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid container mb-5">
+      <div class="row">
+        <div class="col-6 justify-content-left">
+          <a href="/meals" class="btn btn-outline-primary"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+        </div>
+        <div class="col-6 justify-content-right text-right">
+          <a href="/checkout" class="text-right btn btn-success">Checkout <i class="fa fa-angle-right"></i></a>
+        </div>
+      </div>
+    </div>
 
     <!-- Footer -->
     <footer class="py-4 red-bar">

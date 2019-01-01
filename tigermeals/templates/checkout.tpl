@@ -125,19 +125,19 @@
                 <p class="mb-3"><strong class="text-danger">Note that the Shipping Address that Stripe requests is the Delivery Address!</strong></p>
 
                 <div class="col-md-6 mb-3">
-                <label for="date">Delivery Date</label>
-                <input type="date" class="form-control" id="dateCard" name="dateCard" required>
-                <div class="invalid-feedback">
-                  Please enter a valid date.
+                  <label for="date">Delivery Date</label>
+                  <input type="date" class="form-control" id="dateCard" name="dateCard" required>
+                  <div class="invalid-feedback">
+                    Please enter a valid date.
+                  </div>
                 </div>
-              </div>
-              <div class="col-md-6 mb-3">
-                <label for="time">Delivery Time</label>
-                <input type="time" class="form-control" id="timeCard" name="timeCard" value="12:00" required>
-                <div class="invalid-feedback">
-                  Please enter a valid time.
+                <div class="col-md-6 mb-3">
+                  <label for="time">Delivery Time</label>
+                  <input type="time" class="form-control" id="timeCard" name="timeCard" value="12:00" required>
+                  <div class="invalid-feedback">
+                    Please enter a valid time.
+                  </div>
                 </div>
-              </div>
               <p class="text-danger">{{error}}</p>
               <article>
                   <label>
