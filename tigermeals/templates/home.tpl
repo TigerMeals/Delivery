@@ -392,7 +392,7 @@
                   <div class="panel panel-default">
               		  <div class="panel-heading p-3 mb-3" role="tab" id="heading5">
               			<h5 class="panel-title mb-0">
-              			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="true" aria-controls="collapse5">
+              			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse5" aria-expanded="true" aria-controls="collapse5">
               				Can I modify my order once I've submitted it?
               			  </a>
               			</h5>
@@ -407,7 +407,7 @@
                   <div class="panel panel-default">
               		  <div class="panel-heading p-3 mb-3" role="tab" id="heading6">
               			<h5 class="panel-title mb-0">
-              			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="true" aria-controls="collapse6">
+              			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse6" aria-expanded="true" aria-controls="collapse6">
               				Can I cancel a pending order?
               			  </a>
               			</h5>
