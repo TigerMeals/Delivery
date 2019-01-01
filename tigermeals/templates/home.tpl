@@ -57,28 +57,28 @@
             <div class="row">
               <div class="col-lg-3 col-md-6 text-center">
                 <div class="service-box mt-5 mx-auto">
-                  <i class="fas fa-4x fa-mouse-pointer text-primary mb-3 sr-icon-1"></i>
+                  <i class="fas fa-4x fa-mouse-pointer text-danger mb-3 sr-icon-1"></i>
                   <h4 class="mb-3 text-primary">Browse</h4>
                   <p class="text-dark mb-0">Choose from our wide selection of catering packages, from Princeton's most popular restaurants.</p>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 text-center">
                 <div class="service-box mt-5 mx-auto">
-                  <i class="fas fa-4x fa-utensils text-primary mb-3 sr-icon-2"></i>
+                  <i class="fas fa-4x fa-utensils text-danger mb-3 sr-icon-2"></i>
                   <h4 class="mb-3 text-primary">Order</h4>
                   <p class="text-primary mb-0">Order from one restaurant at a time. Schedule your order to be delivered anywhere on campus, at the time of your event.</p>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 text-center">
                 <div class="service-box mt-5 mx-auto">
-                  <i class="fas fa-4x fa-hourglass-half text-primary mb-3 sr-icon-3"></i>
+                  <i class="fas fa-4x fa-hourglass-half text-danger mb-3 sr-icon-3"></i>
                   <h4 class="mb-3 text-primary">Wait</h4>
                   <p class="text-primary mb-0">Wait for the restaurant to approve your order - you don't get charged for the order until then!</p>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 text-center">
                 <div class="service-box mt-5 mx-auto">
-                  <i class="fas fa-4x fa-smile-beam text-primary mb-3 sr-icon-4"></i>
+                  <i class="fas fa-4x fa-smile-beam text-danger mb-3 sr-icon-4"></i>
                   <h4 class="mb-3 text-primary">Eat</h4>
                   <p class="text-primary mb-0">Get your food delivered directly to your event!</p>
                 </div>
@@ -431,7 +431,7 @@
 
 
     <div class="container">
-      <div class="py-5 px-5 ">
+      <div class="pt-5 px-5 ">
         <!-- Team Members Row -->
         <div class="row">
           <div class="col-lg-12 text-center">
@@ -470,6 +470,12 @@
             <h5><small>COS 333 Course Teacher Assistant</small></h5>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="conatiner">
+      <div class="row px-5 mt-1 mb-3 justify-content-center">
+        <p>Questions? Contact us at <a href="mailto:tigermealsdelivery@gmail.com">tigermealsdelivery@gmail.com</a>.</p>
       </div>
     </div>
 
