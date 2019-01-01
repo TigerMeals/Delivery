@@ -73,7 +73,7 @@
                 <div class="service-box mt-5 mx-auto">
                   <i class="fas fa-4x fa-hourglass-half text-danger mb-3 sr-icon-3"></i>
                   <h4 class="mb-3 text-primary">Wait</h4>
-                  <p class="text-primary mb-0">Wait for the restaurant to approve your order - you don't get charged for the order until then!</p>
+                  <p class="text-primary mb-0">Wait for the restaurant to approve your order - you don't get charged for the order until it is approved!</p>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 text-center">
@@ -384,7 +384,7 @@
               		  </div>
               		  <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading4">
               			<div class="panel-body px-3 mb-4">
-              			  <p>No, you can only order from one restaurant at a time to ensure that payment goes through properly.</p>
+              			  <p>No, you can only order from one restaurant at a time. To order from multiple restaurants, please place a new order.</p>
               			</div>
               		  </div>
               		</div>
@@ -399,7 +399,7 @@
               		  </div>
               		  <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading5">
               			<div class="panel-body px-3 mb-4">
-              			  <p>No, you unfortunately cannot modify your order. We recommend calling the restaurant directly to make the necessary modifications or to cancel the order and place a new one.</p>
+              			  <p>No, you cannot modify your order once it is placed. We recommend calling the restaurant directly to make the necessary modifications or to have them cancel the order so you can place a new one.</p>
               			</div>
               		  </div>
               		</div>
