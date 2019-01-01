@@ -254,12 +254,6 @@
               document.getElementById('total_table').innerHTML = val;
             </script>
   				</tr>
-  				<!-- <tr>
-  					<td><a href="/meals" class="btn btn-outline-primary"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-  					<td colspan="2" class="hidden-xs"></td>
-  					<td class="hidden-xs text-center"></td>
-  					<td><a href="/checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
-  				</tr> -->
   			</tfoot>
   		</table>
 		</div>
@@ -271,40 +265,46 @@
         </div>
 
         <div class="col-lg-6 col-md-6 mb-3">
-          <label for="date">Delivery Date</label>
+          <label for="date" class="text-primary">Delivery Date</label>
           <input type="date" class="form-control" id="dateCard" name="dateCard" required>
           <div class="invalid-feedback">
             Please enter a valid date.
           </div>
         </div>
         <div class="col-lg-6 col-md-6 mb-3">
-          <label for="time">Delivery Time</label>
+          <label for="time" class="text-primary">Delivery Time</label>
           <input type="time" class="form-control" id="timeCard" name="timeCard" value="12:00" required>
           <div class="invalid-feedback">
             Please enter a valid time.
           </div>
         </div>
         <div class="col-lg-6 col-md-6 mb-3">
-          <label for="date">Delivery Location</label>
+          <label for="text" class="text-primary">Delivery Location</label>
           <input type="text" class="form-control" id="locationCard" name="locationCard" required>
           <div class="invalid-feedback">
             Please enter a valid location.
           </div>
         </div>
         <div class="col-lg-12 col-md-6 mb-3">
-          <label for="date">Delivery Instructions</label>
-          <input type="text" class="form-control" id="instructionsCard" name="instructionsCard" required>
+          <p>
+            <a data-toggle="collapse" href="#collapseExample"aria-expanded="false" aria-controls="collapseExample">
+              Add delivery instructions <i class="fas fa-sm fa-plus text-primary sr-icon-1"></i>
+            </a>
+          </p>
+          <div class="collapse" id="collapseExample">
+              <input type="text" class="form-control form-control-lg" id="instructionsCard" name="instructionsCard" rows="3">
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="container-fluid container mb-5">
+    <div class="container-fluid container mb-5 mt-4">
       <div class="row">
         <div class="col-6 justify-content-left">
           <a href="/meals" class="btn btn-outline-primary"><i class="fa fa-angle-left"></i> Continue Shopping</a>
         </div>
         <div class="col-6 justify-content-right text-right">
-          <a href="/checkout" class="text-right btn btn-success">Checkout <i class="fa fa-angle-right"></i></a>
+          <a href="/checkout" class="text-right btn btn-success">Go to payment <i class="fa fa-angle-right"></i></a>
         </div>
       </div>
     </div>
