@@ -9,9 +9,6 @@
         <ul class="nav navbar-nav ml-auto">
           <li class="nav-item-bar" id="nav-home">
             <a class="nav-link" href="/home">Home</a>
-          <li class="nav-item-bar" id="nav-about">
-            <a class="nav-link" href="/about">About</a>
-          </li>
           <li class="nav-item-bar" id="nav-meals">
             <div class="dropdown" id="nav-meals-dropdown">
               <a class="nav-link btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
