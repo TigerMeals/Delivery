@@ -445,7 +445,7 @@
           <div class="col-lg-3 col-sm-6 text-center mb-4">
             <img class="img-fluid d-block mx-auto mb-2" src="https://scontent-lga3-1.xx.fbcdn.net/v/t1.0-1/c150.14.630.630/s320x320/21272407_1609338289117127_4836876658271716262_n.jpg?_nc_cat=103&_nc_ht=scontent-lga3-1.xx&oh=5cc81e7367e169b0948ce9c6da8829da&oe=5C3F216D" alt="">
             <h4>Aliyah Taylor</h4>
-            <h5><small>BSE COS '20</small></h5>
+            <h5><small>BSE COS '19</small></h5>
           </div>
           <div class="col-lg-3 col-sm-6 text-center mb-4">
             <img class="img-fluid d-block mx-auto mb-2" src="static/img/janetheadshot.jpg" alt="">
