@@ -149,7 +149,9 @@
           {% endfor %}
         {% endif %}
         {% if not hasMeals %}
-        <span class="text-primary">This restaurant doesn't have any available catering packages yet. 😢</span>
+        <div class="col-12">
+          <span class="text-primary">This restaurant doesn't have any available catering packages yet. 😢</span>
+        </div>
         <br>
         <br>
         <br>

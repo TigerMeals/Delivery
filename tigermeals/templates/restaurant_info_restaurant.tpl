@@ -232,6 +232,14 @@
             {% include 'display_meal_restaurant.tpl' %}
           {% endwith %}
         {% endfor %}
+        {% if not meals[0] %}
+        <div class="col-12">
+          <span class="text-primary">This restaurant doesn't have any available catering packages yet. 😢</span>
+        </div>
+        <br>
+        <br>
+        <br>
+        {% endif %}
       </div>
 
 
