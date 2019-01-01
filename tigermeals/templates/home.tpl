@@ -37,7 +37,7 @@
       document.getElementById('nav-home').classList.add('active');
     </script>
 
-    <section class="jumbotron text-center bg-light">
+    <section class="jumbotron text-center">
       <div class="container">
         <h1 class="jumbotron-heading text-light">Welcome to TigerMeals Delivery!</h1>
         <p class="lead text-light">Our mission is to connect local restaurants to the various RCA's, club leaders, and student organizers across the Princeton community to make the catering process as easy as possible.</p>

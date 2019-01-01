@@ -160,7 +160,7 @@
       <div class="container-fluid container">
         <div class="row">
           <div class="col-12">
-            <h2 class="pt-1">Review Cart</h2>
+            <h2 class="pt-2">Review Cart</h2>
           </div>
         </div>
   			<table id="cart" class="table table-hover table-condensed">
