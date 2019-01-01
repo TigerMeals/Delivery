@@ -179,6 +179,11 @@
 
               <div class="tab-pane fade show" id="pending-orders" role="tabpanel" aria-labelledby="pending-orders-tab">
 
+                {% if not pending_order[0] %}
+                  <div class="row mt-3 mx-3">
+                    <p class="text-dark">You currently do not have any pending orders.</p>
+                  </div>
+                {% endif %}
                 {% for order in pending_order %}
 
               <div class="row mt-2">
@@ -256,6 +261,11 @@
 
                 <div class="tab-pane fade show" id="active-orders" role="tabpanel" aria-labelledby="active-orders-tab">
 
+                  {% if not inprogress_orders[0] %}
+                    <div class="row mt-3 mx-3">
+                      <p class="text-dark">You currently do not have any orders in progress.</p>
+                    </div>
+                  {% endif %}
                   {% for order in inprogress_orders %}
 
                   <div class="row mt-2">
@@ -333,6 +343,11 @@
 
                 <div class="tab-pane fade show" id="history-orders" role="tabpanel" aria-labelledby="history-orders-tab">
 
+                  {% if not history_orders[0] %}
+                    <div class="row mt-3 mx-3">
+                      <p class="text-dark">Your order history is empty.</p>
+                    </div>
+                  {% endif %}
                   {% for order in history_orders %}
 
                   <div class="row mt-2">
