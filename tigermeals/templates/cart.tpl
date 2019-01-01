@@ -159,108 +159,108 @@
     <div id="page-content-wrapper">
       <div class="container-fluid container">
 
-			<table id="cart" class="table table-hover table-condensed">
-		    				<thead>
-									<tr>
-									<th style="padding-top:1rem; padding-bottom:0rem; border-top:0rem;border-bottom:0rem;"> <h2> View Cart </h2> </th>
-								</tr>
-								<tr>
-									<th style="width:50%; color:black;">Product</th>
-									<th style="width:10%; color:black;">Price</th>
-									<th style="width:8%; color:black;">Quantity</th>
+  			<table id="cart" class="table table-hover table-condensed">
+  				<thead>
+  					<tr>
+  					<th style="padding-top:1rem; padding-bottom:0rem; border-top:0rem;border-bottom:0rem;"> <h2> View Cart </h2> </th>
+  				</tr>
+  				<tr>
+  					<th style="width:50%; color:black;">Product</th>
+  					<th style="width:10%; color:black;">Price</th>
+  					<th style="width:8%; color:black;">Quantity</th>
 
-									<th style="width:10%; color:black;" class="text-center">Subtotal</th>
-									<th style="width:16%; color:black;">Serving Size</th>
-									<th style="width:6%"></th>
-								</tr>
-							</thead>
-							<tbody>
-								{% for i in range(0, length_cart) %}
-								<tr>
-									<td data-th="Product">
-										<div class="row">
-											<div class="col-sm-5 hidden-xs"><img src="{{food_images[i]}}" alt="..." class="img-cart"/></div>
-											<div class="col-sm-7">
-												<h4 class="px-4">{{food_titles[i]}}</h4>
-												<p class="px-4">{{food_descriptions[i]}}</p>
-											</div>
-										</div>
-									</td>
-									<td data-th="Price">$<span id = "cart_table_price{{i}}"></span></td>
-                  <!-- Below needed so that price displays with 2 decimal points. -->
-                  <script>
-                    var val = parseFloat({{food_prices[i]}}).toFixed(2);
-                    document.getElementById('cart_table_price{{i}}').innerHTML = val;
-                  </script>
-									<td data-th="Quantity">
+  					<th style="width:10%; color:black;" class="text-center">Subtotal</th>
+  					<th style="width:16%; color:black;">Serving Size</th>
+  					<th style="width:6%"></th>
+  				</tr>
+  			</thead>
+  			<tbody>
+  				{% for i in range(0, length_cart) %}
+  				<tr>
+  					<td data-th="Product">
+  						<div class="row">
+  							<div class="col-sm-5 hidden-xs"><img src="{{food_images[i]}}" alt="..." class="img-cart"/></div>
+  							<div class="col-sm-7">
+  								<h4 class="px-4">{{food_titles[i]}}</h4>
+  								<p class="px-4">{{food_descriptions[i]}}</p>
+  							</div>
+  						</div>
+  					</td>
+  					<td data-th="Price">$<span id = "cart_table_price{{i}}"></span></td>
+            <!-- Below needed so that price displays with 2 decimal points. -->
+            <script>
+              var val = parseFloat({{food_prices[i]}}).toFixed(2);
+              document.getElementById('cart_table_price{{i}}').innerHTML = val;
+            </script>
+  					<td data-th="Quantity">
 
-                    <select id="quantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0" onchange="handleEdit(this.value, {{food_ids[i]}})">
-                        <option value="01">1</option>
-                        <option value="02">2</option>
-                        <option value="03">3</option>
-                        <option value="04">4</option>
-                        <option value="05">5</option>
-                        <option value="06">6</option>
-                        <option value="07">7</option>
-                        <option value="08">8</option>
-                        <option value="09">9</option>
-                        <option value="10">10</option>
-                    </select>
-                    <script>
-                      var food_quantity = {{food_multiplier[i]}};
-                      var mySelect = document.getElementById('quantity{{food_ids[i]}}');
+              <select id="quantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0" onchange="handleEdit(this.value, {{food_ids[i]}})">
+                  <option value="01">1</option>
+                  <option value="02">2</option>
+                  <option value="03">3</option>
+                  <option value="04">4</option>
+                  <option value="05">5</option>
+                  <option value="06">6</option>
+                  <option value="07">7</option>
+                  <option value="08">8</option>
+                  <option value="09">9</option>
+                  <option value="10">10</option>
+              </select>
+              <script>
+                var food_quantity = {{food_multiplier[i]}};
+                var mySelect = document.getElementById('quantity{{food_ids[i]}}');
 
-                      for(var k, j = 0; k = mySelect.options[j]; j++) {
-                          if(k.value == food_quantity) {
-                              mySelect.selectedIndex = j;
-                              break;
-                          }
-                      }
-                      function handleEdit(value, food_id) {
-                        console.log(value)
-                        console.log({{food_id}})
-                        window.location.href = "/cart/edit-quantity/" + value + "/" + food_id;
-                      }
-                    </script>
-									</td>
-									<td data-th="Subtotal" class="text-center">$<span id = "cart_table_subtotal{{i}}"></span></td>
+                for(var k, j = 0; k = mySelect.options[j]; j++) {
+                    if(k.value == food_quantity) {
+                        mySelect.selectedIndex = j;
+                        break;
+                    }
+                }
+                function handleEdit(value, food_id) {
+                  console.log(value)
+                  console.log({{food_id}})
+                  window.location.href = "/cart/edit-quantity/" + value + "/" + food_id;
+                }
+              </script>
+  					</td>
+  					<td data-th="Subtotal" class="text-center">$<span id = "cart_table_subtotal{{i}}"></span></td>
 
-                  <!-- Below needed so that price displays with 2 decimal points. -->
-                  <script>
-                    var val = parseFloat({{food_subtotals[i]}}).toFixed(2);
-                    document.getElementById('cart_table_subtotal{{i}}').innerHTML = val;
-                  </script>
-									<td data-th="Serving Size" class= "text-center">
-									{{food_quantity_feds[i]}}</td>
-									<td class="actions" data-th="">
-									<form method="post"action="/cart/delete/{{food_ids[i]}}">
-										<button type="submit"id="delete{{food_ids[i]}}"class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
-									</form>
-									</td>
-								</tr>
-								{% endfor %}
-							</tbody>
+            <!-- Below needed so that price displays with 2 decimal points. -->
+            <script>
+              var val = parseFloat({{food_subtotals[i]}}).toFixed(2);
+              document.getElementById('cart_table_subtotal{{i}}').innerHTML = val;
+            </script>
+  					<td data-th="Serving Size" class= "text-center">
+  					{{food_quantity_feds[i]}}</td>
+  					<td class="actions" data-th="">
+  					<form method="post"action="/cart/delete/{{food_ids[i]}}">
+  						<button type="submit"id="delete{{food_ids[i]}}"class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
+  					</form>
+  					</td>
+  				</tr>
+  				{% endfor %}
+  			</tbody>
 
 
-							<tfoot>
-								<tr class="visible-xs">
-									<td colspan="3" class="hidden-xs"></td>
-									<td class="hidden-xs text-center"><strong>$<span id = "total_table"></span></strong></td>
+  			<tfoot>
+  				<tr class="visible-xs">
+  					<td colspan="3" class="hidden-xs"></td>
+  					<td class="hidden-xs text-center"><strong>$<span id = "total_table"></span></strong></td>
 
-                  <!-- Below needed so that price displays with 2 decimal points. -->
-                  <script>
-                    var val = parseFloat({{total}}).toFixed(2);
-                    document.getElementById('total_table').innerHTML = val;
-                  </script>
-								</tr>
-								<tr>
-									<td><a href="/meals" class="btn btn-outline-primary"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
-									<td colspan="2" class="hidden-xs"></td>
-									<td class="hidden-xs text-center"></td>
-									<td><a href="/checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
-								</tr>
-							</tfoot>
-						</table>
+            <!-- Below needed so that price displays with 2 decimal points. -->
+            <script>
+              var val = parseFloat({{total}}).toFixed(2);
+              document.getElementById('total_table').innerHTML = val;
+            </script>
+  				</tr>
+  				<tr>
+  					<td><a href="/meals" class="btn btn-outline-primary"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+  					<td colspan="2" class="hidden-xs"></td>
+  					<td class="hidden-xs text-center"></td>
+  					<td><a href="/checkout" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+  				</tr>
+  			</tfoot>
+  		</table>
 		</div>
 
     <!-- Footer -->

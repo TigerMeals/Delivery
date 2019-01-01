@@ -390,14 +390,14 @@
               		</div>
 
                   <div class="panel panel-default">
-              		  <div class="panel-heading p-3 mb-3" role="tab" id="heading4">
+              		  <div class="panel-heading p-3 mb-3" role="tab" id="heading5">
               			<h5 class="panel-title mb-0">
-              			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="true" aria-controls="collapse4">
+              			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="true" aria-controls="collapse5">
               				Can I modify my order once I've submitted it?
               			  </a>
               			</h5>
               		  </div>
-              		  <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading4">
+              		  <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading5">
               			<div class="panel-body px-3 mb-4">
               			  <p>No, you unfortunately cannot modify your order. We recommend calling the restaurant directly to make the necessary modifications or to cancel the order and place a new one.</p>
               			</div>
@@ -405,14 +405,14 @@
               		</div>
 
                   <div class="panel panel-default">
-              		  <div class="panel-heading p-3 mb-3" role="tab" id="heading4">
+              		  <div class="panel-heading p-3 mb-3" role="tab" id="heading6">
               			<h5 class="panel-title mb-0">
-              			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="true" aria-controls="collapse4">
+              			  <a class="collapsed" role="button" title="" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="true" aria-controls="collapse6">
               				Can I cancel a pending order?
               			  </a>
               			</h5>
               		  </div>
-              		  <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading4">
+              		  <div id="collapse6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading6">
               			<div class="panel-body px-3 mb-4">
               			  <p>To cancel a pending order, please contact the restaurant directly.</p>
               			</div>
