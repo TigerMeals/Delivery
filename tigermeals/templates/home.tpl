@@ -43,12 +43,13 @@
         <p class="lead text-light">Our mission is to connect local restaurants to the various RCA's, club leaders, and student organizers across the Princeton community to make the catering process as easy as possible.</p>
         <p>
           <a href="/meals" class="btn btn-primary mt-2 mb-0">Browse meals</a>
-          <a href="#how_it_works" class="btn btn-secondary mt-2 mb-0">Learn more</a>
+          <button type="button" class="btn btn-secondary mt-2 mb-0">Learn more</button>
         </p>
       </div>
     </section>
 
-    <div class="container" id="how_it_works">
+
+    <div class="container how_it_works">
       <div class="py-5 px-5">
         <div class="col-lg-12">
           <h2 class="my-4 text-center">How It Works</h2>
@@ -505,6 +506,14 @@
 
     <!-- Custom scripts for this template -->
     <script src="js/creative.min.js"></script>
+
+    <script>
+        $("button").click(function() {
+        $('html,body').animate({
+            scrollTop: $(".how_it_works").offset().top - 50},
+            'slow');
+    });
+    </script>
 
   </body>
 
