@@ -39,7 +39,7 @@ stripe_keys = {
 
 stripe.api_key = stripe_keys['secret_key']
 
-# Returns a dictionary of the emails of the restaurants
+# Returns a dictionary of the emails numbers of the restaurants
 def _getRestaurantEmails():
     restaurant_url = DATABASE_URL + "/restaurant"
 
@@ -47,6 +47,17 @@ def _getRestaurantEmails():
     rests = {}
     for rest in restaurants:
         rests[rest['restaurant_id']] = rest['email']
+
+    return rests
+
+# Returns a dictionary of the phone numbers of the restaurants
+def _getRestaurantPhones():
+    restaurant_url = DATABASE_URL + "/restaurant"
+
+    restaurants = _getJSON(restaurant_url)
+    rests = {}
+    for rest in restaurants:
+        rests[rest['restaurant_id']] = rest['phone']
 
     return rests
 
@@ -310,6 +321,7 @@ def account():
 
         order['price'] = price
 
+
     print("DONE -------------------------------------------------------")
     print("PENDING ----------------------------------------------------")
     print(pending_order)
@@ -339,7 +351,9 @@ def account():
 
     rest_emails_dict = _getRestaurantEmails()
 
-    return render_template('account.tpl', name=name.split(), email=email,\
+    rest_phones_dict = _getRestaurantPhones()
+
+    return render_template('account.tpl', name=name.split(), email=email,rest_phones_dict=rest_phones_dict,\
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict, food_multiplier = food_multiplier,\
         rest_emails_dict=rest_emails_dict,food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
         history_orders=history_orders,food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders, empty_cart=empty_cart,\
