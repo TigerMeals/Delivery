@@ -56,19 +56,46 @@
           <div class="cart-content text-primary">
               {% for i in range(0, length_cart) %}
               <div class="row mr-0 ml-0">
-                <div class="col-1 pr-0">
-                  {{food_multiplier[i]}}
-                </div>
+                <div class="col-4">
+                <select id="cartquantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0" onchange="handleEdit(this.value, {{food_ids[i]}})">
+                  <option value="01">1</option>
+                  <option value="02">2</option>
+                  <option value="03">3</option>
+                  <option value="04">4</option>
+                  <option value="05">5</option>
+                  <option value="06">6</option>
+                  <option value="07">7</option>
+                  <option value="08">8</option>
+                  <option value="09">9</option>
+                  <option value="10">10</option>
+              </select>
+            </div>
+              <script>
+                var food_quantity = {{food_multiplier[i]}};
+                var mySelect = document.getElementById('cartquantity{{food_ids[i]}}');
+
+                for(var k, j = 0; k = mySelect.options[j]; j++) {
+                    if(k.value == food_quantity) {
+                        mySelect.selectedIndex = j;
+                        break;
+                    }
+                }
+                function handleEdit(value, food_id) {
+                  console.log(value)
+                  console.log({{food_id}})
+                  window.location.href = "/cart/edit-quantity/" + value + "/" + food_id;
+                }
+              </script>
                 <div class="col-6">
                   {{food_titles[i]}}
                 </div>
-                <div class="col-1 px-0">
+                <div class="col-2 px-0">
                   <form method="post" action="/cart/delete/{{food_ids[i]}}">
                     <button class="transparent-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
                   </form>
                   <!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
                 </div>
-                <div class="col-4 pl-0 pr-3 right-align-text">
+                <div class="col-12 pl-0 pr-3 right-align-text">
                   <span id="cart_subtotal{{i}}"></span>
                   <script>
                     var val = parseFloat({{food_subtotals[i]}}).toFixed(2);
