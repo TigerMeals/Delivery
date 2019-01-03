@@ -474,14 +474,14 @@
       </div>
     </div>
 
-    <div class="conatiner">
+    <div>
       <div class="row px-5 mt-1 mb-3 justify-content-center">
         <p>Questions? Contact us at <a href="mailto:tigermealsdelivery@gmail.com">tigermealsdelivery@gmail.com</a>.</p>
       </div>
     </div>
 
-
   </div>
+
   <!----------------------------------------------------------------------------------------------------------->
 
 
