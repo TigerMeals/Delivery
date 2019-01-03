@@ -413,6 +413,17 @@ def restaurant_filter():
 		restaurants = restaurants.filter(or_(Restaurant.cuisine.contains(c) for c in cuisines))
 	return restaurants_schema.jsonify(restaurants.all())
 
+@app.route("/restaurant/search/<query>",methods=["GET"])
+def restaurant_search(query):
+	if query.strip() == '':
+		return jsonify(query)
+
+	query_string = query + "%"
+
+	restaurants = Restaurant.query.filter(Restaurant.name.like(query_string.capitalize())).all()
+
+	return restaurants_schema.jsonify(restaurants)
+
 ################################################################################
 class Food(db.Model):
 	food_id = db.Column(db.Integer, primary_key = True)

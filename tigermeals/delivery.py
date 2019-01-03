@@ -39,7 +39,7 @@ stripe_keys = {
 
 stripe.api_key = stripe_keys['secret_key']
 
-# Returns a dictionary of the emails of the restaurants
+# Returns a dictionary of the emails numbers of the restaurants
 def _getRestaurantEmails():
     restaurant_url = DATABASE_URL + "/restaurant"
 
@@ -47,6 +47,17 @@ def _getRestaurantEmails():
     rests = {}
     for rest in restaurants:
         rests[rest['restaurant_id']] = rest['email']
+
+    return rests
+
+# Returns a dictionary of the phone numbers of the restaurants
+def _getRestaurantPhones():
+    restaurant_url = DATABASE_URL + "/restaurant"
+
+    restaurants = _getJSON(restaurant_url)
+    rests = {}
+    for rest in restaurants:
+        rests[rest['restaurant_id']] = rest['phone']
 
     return rests
 
@@ -310,6 +321,7 @@ def account():
 
         order['price'] = price
 
+
     print("DONE -------------------------------------------------------")
     print("PENDING ----------------------------------------------------")
     print(pending_order)
@@ -339,7 +351,9 @@ def account():
 
     rest_emails_dict = _getRestaurantEmails()
 
-    return render_template('account.tpl', name=name.split(), email=email,\
+    rest_phones_dict = _getRestaurantPhones()
+
+    return render_template('account.tpl', name=name.split(), email=email,rest_phones_dict=rest_phones_dict,\
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict, food_multiplier = food_multiplier,\
         rest_emails_dict=rest_emails_dict,food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
         history_orders=history_orders,food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders, empty_cart=empty_cart,\
@@ -701,13 +715,16 @@ def restaurant_view():
             res.raise_for_status()
         rest['num_orders'] = len(json.loads(res.content))
     restaurants_length = len(rests)
+
+    error = request.args.get('error')
+
     return render_template('restaurant_view.tpl', food_ids=food_ids,\
-        id=user_id, food_prices = food_prices, food_multiplier = food_multiplier, \
-        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, \
+        id=user_id, food_prices = food_prices, food_multiplier = food_multiplier,\
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, error=error,\
         length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length, cuisines=[])
 
 
-# Endpoint to display restaurant view
+# Endpoint to display restaurant view after filter
 @app.route("/meals/restaurant/filter", methods=["POST", "GET"])
 @login_required
 def restaurant_view_filter():
@@ -758,6 +775,46 @@ def restaurant_view_filter():
         food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,food_multiplier=food_multiplier,\
         length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length, cuisines=cuisineSplit)
 
+# Endpoint to search through the restaurants
+@app.route("/search_restaurants", methods=["POST"])
+@login_required
+def query_restaurant_search():
+    netid = cas.username
+    print(netid)
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
+
+    query = request.form['search_query']
+
+    if query.strip() == "":
+        return redirect(url_for('restaurant_view',error="Please enter a restaurant query"))
+
+    restaurants = _getJSON(DATABASE_URL + "/restaurant/search/" + query)
+
+    print(restaurants)
+
+    restaurants_length = len(restaurants)
+
+    for rest in restaurants:
+        restaurant_food = _getJSON(DATABASE_URL + "/food/restaurant/" + str(rest['restaurant_id']))
+        rest['num_orders'] = len(restaurant_food)
+
+    return render_template('restaurant_view.tpl', food_ids=food_ids,last_search=query,\
+        id=user_id, food_prices = food_prices, food_multiplier = food_multiplier,\
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,\
+        length_cart = length_cart, total=total, food_images= food_images, restaurants=restaurants, restaurants_length=restaurants_length, cuisines=[])
 
 # Endpoint to display restaurant info
 @app.route("/meals/restaurant/<restaurant_id>")

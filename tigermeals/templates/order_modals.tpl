@@ -40,6 +40,12 @@
                 <div class="col-8">
                   <p>{{email}}</p>
                 </div>
+                <div class="col-4">
+                  <h5>Restaurant Phone Number</h5>
+                </div>
+                <div class="col-8">
+                  <p>{{phone}}</p>
+                </div>
                 {% else %}
                 <div class="col-4">
                   <h5>Customer Name</h5>

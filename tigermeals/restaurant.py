@@ -270,6 +270,7 @@ def login():
 		else:
 			return render_template('login_restaurant.tpl', error="Invalid Login")
 
+
 # Endpoint to view homepage
 @app.route("/restaurant/home")
 def home_restaurant():

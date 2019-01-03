@@ -67,7 +67,7 @@
               <h6 class="mt-1 mb-0">Website</h6>
             </div>
             <div class="col-8">
-              <p><a href="kungfutea.com">{{restaurant.website}}</a></p>
+              <p><a href="http://{{restaurant.website}}">{{restaurant.website}}</a></p>
             </div>
           </div>
 

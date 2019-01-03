@@ -162,27 +162,29 @@
               {% else %}
               <span class="ml-0 mt-0">({{restaurants_length}} results)</span>
               {% endif %}
-              {% if error %}
-              <p class="text-danger mt-2">{{error}}</p>
-              {% endif %}
+              
               <!-- <h2>Restaurants</h2> -->
               <!-- <h4 class="ml-1">{{restaurants_length}} results</h4> -->
             </div>
 
             <div class="col-lg-6 mb-4 float-right">
-              <form class="card card-sm border-white ">
+              <form class="card card-sm border-white" action="/search_restaurants" method="post">
                   <div class="card-body border-white bg-transparent row no-gutters align-items-center px-0 py-0">
                       <div class="col-auto">
                           <!-- <i class="fas fa-search h4 text-body"></i> -->
                       </div>
                       <!--end of col-->
                       <div class="col">
-                          <input class="form-control form-control-sm form-control-borderless" type="search" placeholder="Search restaurants">
+                          <input class="form-control form-control-sm form-control-borderless" type="search" name="search_query"placeholder="Search restaurants"value={{last_search}}>
                       </div>
                       <!--end of col-->
                       <div class="col-auto">
                           <button class="btn-sm btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                          
                       </div>
+                      {% if error %}
+                      <div class="col-12 text-danger mt-2">{{error}}</div>
+                      {% endif %}
                       <!--end of col-->
                   </div>
               </form>
