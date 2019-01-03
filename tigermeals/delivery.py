@@ -715,9 +715,12 @@ def restaurant_view():
             res.raise_for_status()
         rest['num_orders'] = len(json.loads(res.content))
     restaurants_length = len(rests)
+
+    error = request.args.get('error')
+
     return render_template('restaurant_view.tpl', food_ids=food_ids,\
-        id=user_id, food_prices = food_prices, food_multiplier = food_multiplier, \
-        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, \
+        id=user_id, food_prices = food_prices, food_multiplier = food_multiplier,\
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, error=error,\
         length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length, cuisines=[])
 
 
@@ -790,9 +793,24 @@ def query_restaurant_search():
     user_id = fetch_req.json()['user_id']
     print(user_id)
 
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
+
     query = request.form['search_query']
 
-    return query
+    if query.strip() == "":
+        return redirect(url_for('restaurant_view',error="Please enter a restaurant query"))
+
+    restaurants = _getJSON(DATABASE_URL + "/restaurant/search/" + query)
+
+    print(restaurants)
+
+    restaurants_length = len(restaurants)
+
+    return render_template('restaurant_view.tpl', food_ids=food_ids,last_search=query,\
+        id=user_id, food_prices = food_prices, food_multiplier = food_multiplier,\
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,\
+        length_cart = length_cart, total=total, food_images= food_images, restaurants=restaurants, restaurants_length=restaurants_length, cuisines=[])
 
 # Endpoint to display restaurant info
 @app.route("/meals/restaurant/<restaurant_id>")
