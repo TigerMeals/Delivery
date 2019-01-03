@@ -493,7 +493,7 @@ def user_image_update():
             #updateImage = {"image": img_url}
 
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], gravity="face:auto", width=250, height=250, crop="thumb")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
 

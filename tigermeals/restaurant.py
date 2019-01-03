@@ -193,7 +193,7 @@ def register_upload():
 		img = request.files['image']
 		if img is not None:
 			response = cloudinary.uploader.upload(img)
-			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
+			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=250, height=250, format = response['format'],  gravity = "auto", background = "auto", crop = "fill_pad")
 
 	registration_info = {
 	"name": request.form['name'],
@@ -575,7 +575,7 @@ def image_update():
         img = request.files['image']
         if img is not None:
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=250, height=250, format = response['format'],  gravity = "auto", background = "auto", crop = "fill_pad")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             update_image_url = DATABASE_URL + "/restaurant/image/" + str(id)
@@ -796,9 +796,8 @@ def add_listing():
     if 'image' in request.files:
         img = request.files['image']
         if img is not None:
-
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 200, height = 200, gravity = "auto", crop = "fill")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
@@ -857,7 +856,7 @@ def update_listing():
         if img is not None:
             # Img url is unique name based on the food id
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 200, height = 200, gravity = "auto", crop = "fill")
             updateImage = {"image": imgurl}
             updatedEntry["image"] = imgurl
 
