@@ -360,6 +360,104 @@ def account():
         inprogress_orders=inprogress_orders,pending_order=pending_order, image=image, length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id)
 
 
+@app.route("/account/imageError")
+@login_required
+def account_imageError():
+    print("account template requested -----------------------------")
+    netid = cas.username
+    print(netid)
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    email, name, phone, address, netid, allergies = _getUser(user_id)
+
+    print("Alleriges: ----------------------------------------------")
+
+    ## Get the quickstats of the past orders
+    quick_url = DATABASE_URL + "/user/quickstats/" + str(user_id)
+    fetch_req = requests.get(quick_url).json()
+
+    length_past_orders = len(fetch_req)
+
+    past_restaurants = []
+    pending_order = []
+    inprogress_orders = []
+    history_orders = []
+
+    for order in fetch_req:
+        for package in order['food_items']:
+            food_id = package['food_id']
+            # look up food_id
+            lookup_food_url = DATABASE_URL + "/food/" + str(food_id)
+
+            food_image = _getJSON(lookup_food_url)['image']
+            package['image'] = food_image
+
+        if order['restaurant_id'] not in past_restaurants:
+            past_restaurants.append(order['restaurant_id'])
+
+        if not order['paid']:
+            pending_order.append(order)
+
+        elif order['paid'] and order['delivery_in_process']:
+            inprogress_orders.append(order)
+
+        elif order['paid'] and not order['delivery_in_process'] and order['delivered']:
+            history_orders.append(order)
+
+        price = 0
+        for food_item in order['food_items']:
+            price += food_item['subtotal']
+
+        order['price'] = price
+
+
+    print("DONE -------------------------------------------------------")
+    print("PENDING ----------------------------------------------------")
+    print(pending_order)
+
+    print("IN PROGRESS ----------------------------------------------------")
+    print(inprogress_orders)
+
+    print("HISTORY -----------------------------------------------------")
+    print(history_orders)
+
+    number_different_rest = len(past_restaurants)
+
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
+
+    restaurants_url = DATABASE_URL + "/restaurant"
+
+    userData = _getJSON(DATABASE_URL + '/user/' + str(user_id))
+
+    image = userData['image']
+
+    rests = requests.get(restaurants_url)
+    print("RESTAURANTS ---------------------------------------------------")
+    rests_dict = {}
+    for restaurant in rests.json():
+        rests_dict[restaurant['restaurant_id']] = restaurant['name']
+
+    rest_emails_dict = _getRestaurantEmails()
+
+    rest_phones_dict = _getRestaurantPhones()
+
+    return render_template('account.tpl', name=name.split(), email=email,rest_phones_dict=rest_phones_dict,\
+        phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict, food_multiplier = food_multiplier,\
+        rest_emails_dict=rest_emails_dict,food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
+        history_orders=history_orders,food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders, empty_cart=empty_cart,\
+        inprogress_orders=inprogress_orders,pending_order=pending_order, image=image, length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id, errorImage = "Image height and width must be at least 200 pixels!")
+
+
 
 @app.route("/account/update", methods=["POST"])
 @login_required
@@ -481,20 +579,93 @@ def cart_edit(quantity, food_id):
 
 @app.route("/user/image/update", methods=["POST"])
 def user_image_update():
+    print("account template requested -----------------------------")
     netid = cas.username
     print(netid)
-    print(type(netid))
 
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
         "netid": netid
     }
-
-
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
     user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    email, name, phone, address, netid, allergies = _getUser(user_id)
+
+    print("Alleriges: ----------------------------------------------")
+
+    ## Get the quickstats of the past orders
+    quick_url = DATABASE_URL + "/user/quickstats/" + str(user_id)
+    fetch_req = requests.get(quick_url).json()
+
+    length_past_orders = len(fetch_req)
+
+    past_restaurants = []
+    pending_order = []
+    inprogress_orders = []
+    history_orders = []
+
+    for order in fetch_req:
+        for package in order['food_items']:
+            food_id = package['food_id']
+            # look up food_id
+            lookup_food_url = DATABASE_URL + "/food/" + str(food_id)
+
+            food_image = _getJSON(lookup_food_url)['image']
+            package['image'] = food_image
+
+        if order['restaurant_id'] not in past_restaurants:
+            past_restaurants.append(order['restaurant_id'])
+
+        if not order['paid']:
+            pending_order.append(order)
+
+        elif order['paid'] and order['delivery_in_process']:
+            inprogress_orders.append(order)
+
+        elif order['paid'] and not order['delivery_in_process'] and order['delivered']:
+            history_orders.append(order)
+
+        price = 0
+        for food_item in order['food_items']:
+            price += food_item['subtotal']
+
+        order['price'] = price
+
+
+    print("DONE -------------------------------------------------------")
+    print("PENDING ----------------------------------------------------")
+    print(pending_order)
+
+    print("IN PROGRESS ----------------------------------------------------")
+    print(inprogress_orders)
+
+    print("HISTORY -----------------------------------------------------")
+    print(history_orders)
+
+    number_different_rest = len(past_restaurants)
+
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
+
+    restaurants_url = DATABASE_URL + "/restaurant"
+
+    userData = _getJSON(DATABASE_URL + '/user/' + str(user_id))
+
+    image = userData['image']
+
+    rests = requests.get(restaurants_url)
+    print("RESTAURANTS ---------------------------------------------------")
+    rests_dict = {}
+    for restaurant in rests.json():
+        rests_dict[restaurant['restaurant_id']] = restaurant['name']
+
+    rest_emails_dict = _getRestaurantEmails()
+
+    rest_phones_dict = _getRestaurantPhones()
 
     if 'image' in request.files:
         img = request.files['image']
@@ -507,7 +678,9 @@ def user_image_update():
             #updateImage = {"image": img_url}
 
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], gravity="face:auto", width=250, height=250, crop="thumb")
+            if int(response['width']) < 200 or int(response['height']) < 200:
+                return redirect(url_for('account_imageError'))
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], gravity="face:auto", width=200, height=200, crop="thumb")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
 

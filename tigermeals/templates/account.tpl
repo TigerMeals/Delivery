@@ -72,6 +72,7 @@
               <input type="file" name="image" class="text-center center-block file-upload">
               <div class="mt-3" align="left"><button type="submit">Save Photo</button></div>
             </form>
+            <p class="text-danger">{{errorImage}}</p>
           </div></hr><br>
 
             <div class="panel panel-default">

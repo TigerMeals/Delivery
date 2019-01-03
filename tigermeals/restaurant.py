@@ -193,7 +193,7 @@ def register_upload():
 		img = request.files['image']
 		if img is not None:
 			response = cloudinary.uploader.upload(img)
-			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=250, height=250, format = response['format'],  gravity = "auto", background = "auto", crop = "fill_pad")
+			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=250, height=250, format = response['format'],  gravity = "auto", crop = "fill")
 
 	registration_info = {
 	"name": request.form['name'],
@@ -557,31 +557,105 @@ def profil_update():
 
 @app.route("/restaurant/image/update", methods=["POST"])
 def image_update():
-    username = session['username']
 
-    restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
-    email = {
-        "email": str(username)
-    }
 
-    res = requests.post(restaurant_info_url, json = email)
-    if not res.ok:
-        res.raise_for_status()
+	username = session['username']
 
-    restaurant_info = json.loads(res.content)
-    id = restaurant_info['restaurant_id']
+	restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
-    if 'image' in request.files:
-        img = request.files['image']
-        if img is not None:
-            response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=250, height=250, format = response['format'],  gravity = "auto", background = "auto", crop = "fill_pad")
-            #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
-            updateImage = {"image": imgurl}
-            update_image_url = DATABASE_URL + "/restaurant/image/" + str(id)
-            requests.post(update_image_url, json=updateImage)
-    return redirect(url_for('account_restaurant'))
+	email = {
+		"email": str(username)
+	}
+
+	res = requests.post(restaurant_info_url, json = email)
+	if not res.ok:
+		res.raise_for_status()
+
+	restaurant_info = json.loads(res.content)
+	id = restaurant_info['restaurant_id']
+
+
+	restaurant_info_url = DATABASE_URL + "/restaurant/" + str(id)
+	res = requests.get(restaurant_info_url)
+
+	if not res.ok:
+		res.raise_for_status()
+	else:
+		restaurant_info = json.loads(res.content)
+		print ("Request Successful: ")
+		for piece in restaurant_info:
+			print(restaurant_info[piece])
+			print(piece)
+
+		name = restaurant_info['name']
+		description = restaurant_info['description']
+		phone = restaurant_info['phone']
+		address = restaurant_info['address']
+		image = restaurant_info['image']
+		email = restaurant_info['email']
+		website = restaurant_info['website']
+		primaryEmail = restaurant_info['primaryEmail']
+		primaryFirstName = restaurant_info['primaryFirstName']
+		primaryLastName = restaurant_info['primaryLastName']
+		primaryPhone = restaurant_info['primaryPhone']
+		secondaryEmail = restaurant_info['secondaryEmail']
+		secondaryFirstName = restaurant_info['secondaryFirstName']
+		secondaryLastName = restaurant_info['secondaryLastName']
+		secondaryPhone = restaurant_info['secondaryPhone']
+
+	orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
+	res = requests.get(orders_url)
+	if not res.ok:
+		res.raise_for_status()
+	else:
+		orders = json.loads(res.content)
+		length_orders = 0
+		length_pending_orders = 0
+		length_complete_orders = 0
+		for order in orders:
+			if order['paid'] and order['delivery_in_process']:
+				length_orders += 1
+
+			elif order['paid'] and not order['delivery_in_process'] and order['delivered']:
+				length_complete_orders += 1
+
+			elif not order['paid']:
+				length_pending_orders += 1
+
+	listings_url = DATABASE_URL + "/food/restaurant/" + str(id)
+	res = requests.get(listings_url)
+
+	if not res.ok:
+		res.raise_for_status()
+	else:
+		listings = json.loads(res.content)
+		length_listings = len(listings)
+
+	print("RETURNING TEMPLATE ---------------------------------------------")
+
+	error = request.args.get('error')
+	if error is None:
+		error = ""
+
+	if 'image' in request.files:
+		img = request.files['image']
+		if img is not None:
+			response = cloudinary.uploader.upload(img)
+			if int(response['width']) < 200 or int(response['height']) < 200:
+				return render_template('account_restaurant.tpl',length_complete_orders=length_complete_orders,\
+					secondaryFirstName=secondaryFirstName,primaryPhone=primaryPhone,primaryEmail=primaryEmail,\
+					name=name, description=description,phone=phone,length_pending_orders=length_pending_orders,\
+					secondaryPhone=secondaryPhone,primaryLastName=primaryLastName,address=address, image=image, \
+					id=id, length_orders=length_orders,error=error,\
+					secondaryLastName=secondaryLastName,secondaryEmail=secondaryEmail,primaryFirstName=primaryFirstName,\
+					length_listings=length_listings, email=email, website=website, errorImage="Image width and height must be at least 200 pixels!")
+			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=200, height=200, format = response['format'],  gravity = "auto", crop = "fill")
+			#updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
+			updateImage = {"image": imgurl}
+			update_image_url = DATABASE_URL + "/restaurant/image/" + str(id)
+			requests.post(update_image_url, json=updateImage)
+	return redirect(url_for('account_restaurant'))
 
 @app.route("/restaurant/image/registrationUpdate", methods=["POST"])
 def image_update_registration():
@@ -798,6 +872,7 @@ def add_listing():
         img = request.files['image']
         if img is not None:
             response = cloudinary.uploader.upload(img)
+
             imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 200, height = 200, gravity = "auto", crop = "fill")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
