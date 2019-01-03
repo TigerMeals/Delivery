@@ -199,6 +199,24 @@
     <script src="static/vendor/jquery/jquery.min.js"></script>
     <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     {% include 'handle_toggle.tpl' %}
+    <script>
+    function getMinDate() {
+      var today = new Date();
+      today.setDate(today.getDate() + 1);
+      var dd = today.getDate();
+      var mm = today.getMonth()+1;
+      var yyyy = today.getFullYear();
+      if (dd < 10) {
+        dd = '0' + dd
+      }
+      if (mm < 10) {
+        mm = '0' + mm
+      }
+      date = yyyy + '-' + mm + '-' + dd;
+      return date;
+    }
+    document.getElementById("dateCard").setAttribute("min", getMinDate());
+    </script>
 
   </body>
 

@@ -126,7 +126,7 @@
 
                 <div class="col-md-6 mb-3">
                   <label for="date">Delivery Date</label>
-                  <input type="date" class="form-control" id="dateCard" name="dateCard" required>
+                  <input type="date" class="form-control" id="date-stripe" name="dateCard" required>
                   <div class="invalid-feedback">
                     Please enter a valid date.
                   </div>
@@ -220,7 +220,7 @@
             <div class="row">
               <div class="col-md-6 mb-3">
                 <label for="date">Delivery Date</label>
-                <input type="date" class="form-control" id="date" name="date" required>
+                <input type="date" class="form-control" id="date-cash" name="date" required>
                 <div class="invalid-feedback">
                   Please enter a valid date.
                 </div>
@@ -279,6 +279,26 @@
     <script src="static/vendor/jquery/jquery.min.js"></script>
     <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     {% include 'handle_toggle.tpl' %}
+    <script>
+    function getMinDate() {
+      var today = new Date();
+      today.setDate(today.getDate() + 1);
+      var dd = today.getDate();
+      var mm = today.getMonth()+1;
+      var yyyy = today.getFullYear();
+      if (dd < 10) {
+        dd = '0' + dd
+      }
+      if (mm < 10) {
+        mm = '0' + mm
+      }
+      date = yyyy + '-' + mm + '-' + dd;
+      return date;
+    }
+    document.getElementById("date-cash").setAttribute("min", getMinDate());
+    document.getElementById("date-stripe").setAttribute("min", getMinDate());
+    </script>
+
     <script>
     // Disables form submissions if there are invalid fields
     // Adapted from https://getbootstrap.com/docs/4.0/components/forms/#validation
