@@ -721,7 +721,7 @@ def restaurant_view():
         length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length, cuisines=[])
 
 
-# Endpoint to display restaurant view
+# Endpoint to display restaurant view after filter
 @app.route("/meals/restaurant/filter", methods=["POST", "GET"])
 @login_required
 def restaurant_view_filter():
@@ -772,6 +772,27 @@ def restaurant_view_filter():
         food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,food_multiplier=food_multiplier,\
         length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, restaurants_length=restaurants_length, cuisines=cuisineSplit)
 
+# Endpoint to search through the restaurants
+@app.route("/search_restaurants", methods=["POST"])
+@login_required
+def query_restaurant_search():
+    netid = cas.username
+    print(netid)
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    query = request.form['search_query']
+
+    return query
 
 # Endpoint to display restaurant info
 @app.route("/meals/restaurant/<restaurant_id>")

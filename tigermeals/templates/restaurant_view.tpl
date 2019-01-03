@@ -170,14 +170,14 @@
             </div>
 
             <div class="col-lg-6 mb-4 float-right">
-              <form class="card card-sm border-white ">
+              <form class="card card-sm border-white" action="/search_restaurants" method="post">
                   <div class="card-body border-white bg-transparent row no-gutters align-items-center px-0 py-0">
                       <div class="col-auto">
                           <!-- <i class="fas fa-search h4 text-body"></i> -->
                       </div>
                       <!--end of col-->
                       <div class="col">
-                          <input class="form-control form-control-sm form-control-borderless" type="search" placeholder="Search restaurants">
+                          <input class="form-control form-control-sm form-control-borderless" type="search" name="search_query"placeholder="Search restaurants">
                       </div>
                       <!--end of col-->
                       <div class="col-auto">
