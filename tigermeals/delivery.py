@@ -807,6 +807,10 @@ def query_restaurant_search():
 
     restaurants_length = len(restaurants)
 
+    for rest in restaurants:
+        restaurant_food = _getJSON(DATABASE_URL + "/food/restaurant/" + str(rest['restaurant_id']))
+        rest['num_orders'] = len(restaurant_food)
+
     return render_template('restaurant_view.tpl', food_ids=food_ids,last_search=query,\
         id=user_id, food_prices = food_prices, food_multiplier = food_multiplier,\
         food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart,\
