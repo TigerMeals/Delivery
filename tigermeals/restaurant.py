@@ -558,8 +558,6 @@ def profil_update():
 @app.route("/restaurant/image/update", methods=["POST"])
 def image_update():
 
-
-
 	username = session['username']
 
 	restaurant_info_url = DATABASE_URL + "/restaurant/email"
