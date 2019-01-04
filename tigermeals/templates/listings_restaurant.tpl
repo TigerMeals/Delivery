@@ -51,6 +51,14 @@
               {% include 'display_listings.tpl' %}
             {% endwith %}
           {% endfor %}
+          {% if not active_listings[0] %}
+          <br>
+          <tr>
+            <td>
+              <p class="text-primary float-left">You do not have any active listings. </p>
+            </td>
+          </tr>
+          {% endif %}
 				</tbody>
 				<tfoot>
 				</tfoot>
@@ -60,6 +68,7 @@
           {% include 'listings_modals.tpl' %}
         {% endwith %}
       {% endfor %}
+
 
       <table id="inactiverestaurantlistings" class="table table-hover table-condensed">
         <thead>
@@ -73,6 +82,15 @@
               {% include 'display_listings.tpl' %}
             {% endwith %}
           {% endfor %}
+
+          {% if not inactive_listings[0] %}
+          <br>
+          <tr>
+            <td>
+              <p class="text-primary float-left">You do not have any inactive listings. </p>
+            </td>
+          </tr>
+          {% endif %}
         </tbody>
         <tfoot>
         </tfoot>
