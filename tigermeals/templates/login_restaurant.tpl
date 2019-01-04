@@ -50,7 +50,7 @@
                 <input type="password" class="form-control" id="inputPhone" placeholder="Password" name = "password">
 
             </div>
-            <p>{{error}}</p>
+            <p class="text-danger">{{error}}</p>
 
             <div class="forgot mb-2">
               <a href="/reset">Forgot password?</a>

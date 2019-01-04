@@ -95,9 +95,7 @@
                 <div class="col-6">
                   <h1>{{name}}</h1>
                 </div>
-                <div class="col-6 align-self-right justify-content-end">
-                  <a class="mt-1 btn btn-sm btn-warning float-right justify-content-end" href="/restaurant/logout">Logout</a>
-                </div>
+              
               </div>
               <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#profile" class="mr-2">Profile</a></li>

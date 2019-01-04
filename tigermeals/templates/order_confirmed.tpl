@@ -65,7 +65,7 @@
       <div class="row">
         <div class="col align-self-center">
           <div class="py-5 px-5 text-center">
-            <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
+            <img class="d-block mx-auto mt-3 mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
             <h2>Order Confirmed!</h2>
             <p class="lead mb-0">Check your email for an order confirmation. We will notify you when the restaurant approves your order. Thank you for choosing TigerMeals Delivery.</p>
           </div>
