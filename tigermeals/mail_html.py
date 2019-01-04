@@ -410,7 +410,7 @@ def user_denied_html():
                           <td>
                             <p>Hi there,</p>
                             <p>Your recently placed order has been denied by the restaurant. What this means is that your order will not be delivered and you will not be charged for this order.</p>
-                            <p>Some possible reasons for being denied by a restaurant are availability, unable to commit to delivering very large portions, and previous order commitments.</p>
+                            <p>Some possible reasons for being denied by a restaurant are availability, inability to commit to delivering very large portions, and previous order commitments.</p>
                             <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
                               <tbody>
                                 <tr>

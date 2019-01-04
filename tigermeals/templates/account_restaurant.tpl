@@ -47,50 +47,9 @@
 </head>
 
 <body>
-    <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
-      <div class="container">
-        <a class="navbar-brand" href="/">TigerMeals Delivery</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse justify-content-end" id="navbarResponsive">
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/restaurant/home">Home</a>
-            </li>
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/restaurant/about">About</a>
-            </li>
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/listings">My Meals</a>
-            </li>
-            <li class="nav-item-bar active">
-              <a class="nav-link" href="/restaurant/account">My Account</a>
-              <span class="sr-only">(current)</span>
-            </li>
-            <!-- <li class="nav-item-bar active">
-            <div class="dropdown">
-              <a class="nav-link btn-danger dropdown-toggle" href="/restaurant/account" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">
-                My Account
-              </a>
-              <span class="sr-only">(current)</span>
+    {% include 'nav_restaurant.tpl' %}
 
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                <a class="dropdown-item" href="/restaurant/account">My account</a>
-                <a class="dropdown-item" href="/restaurant/logout">Logout</a>
-              </div>
-            </div>
-            </li> -->
-            <li class="nav-item-bar">
-              <a class="nav-link" href="/orders">View Orders ({{length_orders}} Active)</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-
-   <br>
-
+    <br>
     <div class="container">
         <div class="row mt-2">
       		<div class="col-sm-3"><!--left col-->
@@ -136,9 +95,7 @@
                 <div class="col-6">
                   <h1>{{name}}</h1>
                 </div>
-                <div class="col-6 align-self-right justify-content-end">
-                  <a class="mt-1 btn btn-sm btn-warning float-right justify-content-end" href="/restaurant/logout">Logout</a>
-                </div>
+              
               </div>
               <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#profile" class="mr-2">Profile</a></li>
@@ -439,13 +396,15 @@
 
 
         </div><!--/row-->
-      </div> <!--container-->/
+      </div> <!--container-->
 
-        <footer class="py-4 red-bar">
-          <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>
-          </div>
-          <!-- /.container -->
-        </footer>
+    </div>
+
+    <footer class="py-4 red-bar">
+      <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>
+      </div>
+      <!-- /.container -->
+    </footer>
 </body>
 </html>

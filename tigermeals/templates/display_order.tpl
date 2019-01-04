@@ -21,7 +21,14 @@
                   </div>
                   <div class="row pl-2">
 
-                    <h5>Catering Package(s) Selected </h5>
+                    {% if order.food_items[1] %}
+                    <h5>Catering Packages Selected </h5>
+                    {% endif %}
+
+                    {% if not order.food_items[1] %}
+                    <h5>Catering Package Selected </h5>
+                    {% endif %}
+                    
                     <ul>
                       {% for p in order.food_items %}
                         {% with package=p %}
@@ -42,10 +49,7 @@
                     <p class="text-muted">{{order.email}}</p>
                   </div>
                   <div class="row pl-2">
-                    <h5>Customization </h5>
-                  </div>
-                  <div class="row pl-2">
-                    <p class="text-muted" href="#">None.</p>
+                  <p class="text-muted">PHONE NUMBER GOES HERE</p>
                   </div>
                 </div>
                 <div class = "col-md-2 order-md-3">

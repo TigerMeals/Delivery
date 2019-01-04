@@ -59,6 +59,12 @@
                 <div class="col-8">
                   <p>{{order.email}}</p>
                 </div>
+                <div class="col-4">
+                  <h5>Phone</h5>
+                </div>
+                <div class="col-8">
+                  <p>ADD TPL CODE HERE</p>
+                </div>
                 {% endif %}
 
               </div>
