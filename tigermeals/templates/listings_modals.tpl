@@ -18,7 +18,7 @@
                           <img src="{{listing.image}}" class="avatar img-circle img-thumbnail" alt="avatar">
                           <br><br>
                           <h6>Upload a different photo...</h6>
-                          <input type="file" class="text-center center-block file-upload" id="file" name="image">.        <div id = "imageError" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>
+                          <input type="file" class="text-center center-block file-upload" id="file" name="image">.        <div id = "imageError{{listing.food_id}}" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>
                         </div><hr><br>
                       </div>
                       <div class="col-lg-8 col-md-8">
@@ -155,7 +155,7 @@
                   </div>
                   <div class="col-2">
                     <div class="text-center item-right">
-                      <button class="btn btn-success" id="save" type="submit" form="update_entry{{listing.food_id}}">Save</button>
+                      <button class="btn btn-success" id="save{{listing.food_id}}" type="submit" form="update_entry{{listing.food_id}}">Save</button>
                     </div>
                   </div>
                 </div>
@@ -167,36 +167,36 @@
           var elements = document.getElementById('update_entry{{listing.food_id}}').elements;
           var _URL = window.URL || window.webkitURL;
 
-          
+
 
           for (var i = 0; i < elements.length; i++) {
             if({{listing.allergies}}.includes(elements[i].value)) {
               elements[i].checked = true;
             }
           }
-        </script> 
+        </script>
 
         <script>
-          
+
           $("#file").change(function(e) {
             console.log("hello there")
-              
+
               var image, file;
 
               if ((file = this.files[0])) {
-                 
+
                   image = new Image();
-                  
+
                   image.onload = function() {
-        
+
                     if (this.width < 200 || this.height < 200){
-                      document.getElementById("imageError").style.visibility = "visible";
-                      document.getElementById("save").disabled = true;
+                      document.getElementById("imageError{{listing.food_id}}").style.visibility = "visible";
+                      document.getElementById("save{{listing.food_id}}").disabled = true;
                     }
                     else
                     {
-                      document.getElementById("imageError").style.visibility = "hidden";
-                      document.getElementById("save").disabled = false;
+                      document.getElementById("imageError{{listing.food_id}}").style.visibility = "hidden";
+                      document.getElementById("save{{listing.food_id}}").disabled = false;
                     }
 
                       //alert("The image width is " +this.width + " and image height is " + this.height);
@@ -205,7 +205,6 @@
                   image.src = _URL.createObjectURL(file);
                 }
 
-              }); 
+              });
 
-        </script> 
-          
+        </script>

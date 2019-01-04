@@ -17,8 +17,8 @@
                     <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
                     <br><br>
                     <h6>Upload a different photo...</h6>
-                    <input type="file" class="text-center center-block file-upload" id="file" name="image" required>
-                    <div id = "imageError" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>
+                    <input type="file" class="text-center center-block file-upload" id="file_new_listing" name="image" required>
+                    <div id = "imageError_new_listing" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>
                   </div><hr><br>
                 </div>
                 <div class="col-lg-8 col-md-8">
@@ -137,7 +137,7 @@
             <div class="modal-footer">
                 <div class="col-2">
                   <div class="text-center item-right">
-                    <button class="btn btn-success" id="save" type="submit" form="add_listing" disabled>Save</button>
+                    <button class="btn btn-success" id="save_new_listing" type="submit" form="add_listing" disabled>Save</button>
                   </div>
                 </div>
               </div>
@@ -148,23 +148,22 @@
         <script>
           var _URL = window.URL || window.webkitURL;
 
-          $("#file").change(function(e) {
-              
+          $("#file_new_listing").change(function(e) {
               var image, file;
 
               if ((file = this.files[0])) {
-                 
+
                   image = new Image();
-                  
+
                   image.onload = function() {
                     if (this.width < 200 || this.height < 200){
-                      document.getElementById("imageError").style.visibility = "visible";
-                      document.getElementById("save").disabled = true;
+                      document.getElementById("imageError_new_listing").style.visibility = "visible";
+                      document.getElementById("save_new_listing").disabled = true;
                     }
                     else
                     {
-                      document.getElementById("imageError").style.visibility = "hidden";
-                      document.getElementById("save").disabled = false;
+                      document.getElementById("imageError_new_listing").style.visibility = "hidden";
+                      document.getElementById("save_new_listing").disabled = false;
                     }
 
                       //alert("The image width is " +this.width + " and image height is " + this.height);
@@ -172,7 +171,6 @@
                   //if (this.width >= 200 && this.height >= 200)
                   image.src = _URL.createObjectURL(file);
                 }
-
               });
 
         </script>
