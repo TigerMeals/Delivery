@@ -74,6 +74,7 @@
         <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
         <h2>My Catering Packages</h2>
         <p class="lead">Please view your listings below. We thank you for partnering with TigerMeals Delivery.</p>
+        <p class="text-danger">{{errorImage}}</p>
       </div>
 
       {% include 'add_new_listing.tpl' %}
