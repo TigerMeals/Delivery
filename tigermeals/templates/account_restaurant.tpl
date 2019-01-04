@@ -63,11 +63,11 @@
             {% endif %}
             <br><br>
             <h6>Upload a different photo...</h6>
-            <form method="post" action="/restaurant/image/update" enctype=multipart/form-data>
-              <input type="file" name="image" class="text-center center-block file-upload">
-              <div class="mt-3" align="left"><button type = "submit">Save Photo</button></div>
+            <form method="post" action="/user/image/update" enctype=multipart/form-data>
+              <input type="file" id = "file" name="image" class="text-center center-block file-upload">
+              <div class="mt-3" align="left"><button id = "save" type="submit" disabled>Save Photo</button></div>
             </form>
-            <p class="text-danger">{{errorImage}}</p>
+            <div id = "imageError" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>
           </div></hr><br>
 
             <div class="panel panel-default">
@@ -399,6 +399,38 @@
       </div> <!--container-->
 
     </div>
+
+    <script>
+          var _URL = window.URL || window.webkitURL;
+
+          $("#file").change(function(e) {
+              
+              var image, file;
+
+              if ((file = this.files[0])) {
+                 
+                  image = new Image();
+                  
+                  image.onload = function() {
+                    if (this.width < 200 || this.height < 200){
+                      document.getElementById("imageError").style.visibility = "visible";
+                      document.getElementById("save").disabled = true;
+                    }
+                    else
+                    {
+                      document.getElementById("imageError").style.visibility = "hidden";
+                      document.getElementById("save").disabled = false;
+                    }
+
+                      //alert("The image width is " +this.width + " and image height is " + this.height);
+                  };
+                  //if (this.width >= 200 && this.height >= 200)
+                  image.src = _URL.createObjectURL(file);
+                }
+
+              });
+
+        </script>
 
     <footer class="py-4 red-bar">
       <div class="container">
