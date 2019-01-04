@@ -152,12 +152,70 @@
                       <div class="row">
                           <div class="form-group col-12">
                               <div class="col-12">
-                                  <label for="s_first_name"><h6 class="mb-0 mt-1">List Allergies</h6></label>
-                                  <input type="text" class="form-control" name="p_allergies" id="s_first_name" value="{{allergies}}" title="enter your first name if any.">
+                                  <label for="s_first_name"><h6 class="mb-0 mt-1">Select Allergies and Dietary Restrictions</h6></label>
+                                  <!--<input type="text" class="form-control" name="p_allergies" id="s_first_name" value="{{allergies}}" title="enter your first name if any."> -->
+                                
+                                  <div class="row"> 
+                               <div class="col-6 col-lg-4">
+                                 <div class="checkbox">
+                                   <label>
+                                     <input type="checkbox"  name="allergens1" value="Kosher">
+                                     Kosher
+                                   </label>
+                                 </div>
+                               </div>
+                               <div class="col-6 col-lg-4">
+                                 <div class="checkbox">
+                                   <label>
+                                     <input type="checkbox"  name="allergens2" value="Vegan">
+                                     Vegan
+                                   </label>
+                                 </div>
+                               </div>
+                               <div class="col-6 col-lg-4">
+                                 <div class="checkbox">
+                                   <label>
+                                     <input type="checkbox"  name="allergens3" value="Vegetarian">
+                                     Vegetarian
+                                   </label>
+                                 </div>
+                               </div>
+                               <div class="col-6 col-lg-4">
+                                 <div class="checkbox">
+                                   <label>
+                                     <input type="checkbox"  name="allergens4" value="No dairy">
+                                     No dairy
+                                   </label>
+                                 </div>
+                               </div>
+                               <div class="col-6 col-lg-4">
+                                 <div class="checkbox">
+                                   <label>
+                                     <input type="checkbox"  name="allergens5" value="Nut allergies">
+                                     Nut allergies
+                                   </label>
+                                 </div>
+                               </div>
+                               <div class="col-6 col-lg-4">
+                                 <div class="checkbox">
+                                   <label>
+                                     <input type="checkbox"  name="allergens6" value="No eggs">
+                                     No eggs
+                                   </label>
+                                 </div>
+                               </div>
+                               <div class="col-6 col-lg-4">
+                                 <div class="checkbox">
+                                   <label>
+                                     <input type="checkbox"  name="allergens7" value="Gluten free">
+                                     Gluten free
+                                   </label>
+                                 </div>       
                               </div>
-                          </div>
+                        </div>
                       </div>
-
+                    </div>
+                      </div>
                       <div class="row">
                           <div class="form-group col-12">
                               <div class="col-12">
@@ -177,6 +235,16 @@
                       </div>
                  </form>
                 </div>
+                <script>
+                          var elements = document.getElementById('registrationForm').elements;
+                            var _URL = window.URL || window.webkitURL;
+
+                            for (var i = 0; i < elements.length; i++) {
+                              if({{allergies}}.includes(elements[i].value)) {
+                                elements[i].checked = true;
+                              }
+                            }
+                </script>
 
               <div class="tab-pane fade show" id="pending-orders" role="tabpanel" aria-labelledby="pending-orders-tab">
 
@@ -457,6 +525,7 @@
 <script>
           var _URL = window.URL || window.webkitURL;
 
+          console.log("hello there ")
           $("#file").change(function(e) {
               
               var image, file;

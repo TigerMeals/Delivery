@@ -167,13 +167,19 @@
           var elements = document.getElementById('update_entry{{listing.food_id}}').elements;
           var _URL = window.URL || window.webkitURL;
 
+          
+
           for (var i = 0; i < elements.length; i++) {
             if({{listing.allergies}}.includes(elements[i].value)) {
               elements[i].checked = true;
             }
           }
+        </script> 
+
+        <script>
           
-          /*$("#file").change(function(e) {
+          $("#file").change(function(e) {
+            console.log("hello there")
               
               var image, file;
 
@@ -199,7 +205,7 @@
                   image.src = _URL.createObjectURL(file);
                 }
 
-              }); */
+              }); 
 
         </script> 
           
