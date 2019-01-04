@@ -58,11 +58,12 @@
        </div>
          <p class="text-warning text-danger">{{error}}</p>
         <form id="register" class="createAccountForm needs-validation" action="/register/upload" method="post" enctype=multipart/form-data novalidate>
-          <div class="text-center">
+          <div class="text-center justify-content-center">
             <img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" class="avatar img-circle img-thumbnail" alt="avatar">
             <br><br>
-            <h6>Upload a profile picture (optional)</h6>
-            <input type="file" name="image" class="text-center center-block file-upload" enctype=multipart/form-data>
+            <h5>Upload a profile picture </h5>
+            <p class="text-primary">This is what the customers will see!</p>
+            <input type="file" name="image" class="text-center center-block file-upload text-danger justify-content-center" enctype=multipart/form-data>
           </div>
           <br>
           <div class="row">
@@ -225,7 +226,7 @@
             </div>
 
             <h4>Cuisine Types</h4>
-            <p>Check all of the boxes that correspond to your restaurant's cuisine tag.</p>
+            <p class="text-primary">Check all of the boxes that describe what your restaurant serves.</p>
             <div class="row" align="center">
               <div class="col-6 col-lg-4">
                 <div class="checkbox" align="left">

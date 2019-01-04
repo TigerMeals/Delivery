@@ -59,6 +59,14 @@
                     {% include 'display_order.tpl' %}
                   {% endwith %}
                 {% endfor %}
+
+                {% if not pending[0] %}
+                <tr>
+                  <td>
+                    <p class="text-primary float-left">You do not have any pending orders at this time. </p>
+                  </td>
+                </tr>
+                {% endif %}
       					</tbody>
       					<tfoot>
       					</tfoot>
@@ -83,6 +91,14 @@
                     {% include 'display_order.tpl' %}
                   {% endwith %}
                 {% endfor %}
+
+                {% if not active[0] %}
+                <tr>
+                  <td>
+                    <p class="text-primary float-left">You do not have any active orders at this time. </p>
+                  </td>
+                </tr>
+                {% endif %}
                 </tbody>
                 <tfoot>
                 </tfoot>
@@ -107,6 +123,14 @@
                       {% include 'display_order.tpl' %}
                     {% endwith %}
                   {% endfor %}
+
+                  {% if not delivered[0] %}
+                  <tr>
+                    <td>
+                      <p class="text-primary float-left">Your order history is empty. </p>
+                    </td>
+                  </tr>
+                  {% endif %}
                   </tbody>
                   <tfoot>
                   </tfoot>

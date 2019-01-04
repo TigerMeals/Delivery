@@ -930,6 +930,9 @@ def update_listing():
         if img is not None:
             # Img url is unique name based on the food id
             response = cloudinary.uploader.upload(img)
+            if int(response['width']) < 200 or int(response['height']) < 200:
+            	return redirect(url_for('listings'))
+
             imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 200, height = 200, gravity = "auto", crop = "fill")
             updateImage = {"image": imgurl}
             updatedEntry["image"] = imgurl

@@ -345,6 +345,7 @@ def account():
 
     rests = requests.get(restaurants_url)
     print("RESTAURANTS ---------------------------------------------------")
+    print(allergies)
     rests_dict = {}
     for restaurant in rests.json():
         rests_dict[restaurant['restaurant_id']] = restaurant['name']
@@ -352,7 +353,7 @@ def account():
     rest_emails_dict = _getRestaurantEmails()
 
     rest_phones_dict = _getRestaurantPhones()
-
+    allergies = allergies.split(',')
     return render_template('account.tpl', name=name.split(), email=email,rest_phones_dict=rest_phones_dict,\
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict, food_multiplier = food_multiplier,\
         rest_emails_dict=rest_emails_dict,food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
@@ -383,8 +384,15 @@ def account_update():
 
     phone = request.form['p_phone']
     address = request.form['p_address']
+    allergens = ""
+    for checkbox in range(1, 10):
+        value = request.form.get('allergens' + str(checkbox))
+        if value:
+            allergens += value + ","
 
-    allergies = request.form['p_allergies']
+    if (len(allergens) > 0):
+        # allergens ends with a comma if there is at least one value appended, remove it
+        allergens = allergens[:-1]
 
     update_url = DATABASE_URL + "/user/account/update/" + str(user_id)
 
@@ -393,7 +401,7 @@ def account_update():
         "last": lastName,
         "phone": phone,
         "address": address,
-        "allergies": allergies
+        "allergies": allergens
     }
 
     requests.put(update_url, json=json)
@@ -581,13 +589,6 @@ def user_image_update():
             #updateImage = {"image": img_url}
 
             response = cloudinary.uploader.upload(img)
-            if int(response['width']) < 200 or int(response['height']) < 200:
-                # return redirect(url_for('account_imageError'))
-                return render_template('account.tpl', name=name.split(), email=email,rest_phones_dict=rest_phones_dict,\
-                    phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict, food_multiplier = food_multiplier,\
-                    rest_emails_dict=rest_emails_dict,food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
-                    history_orders=history_orders,food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders, empty_cart=empty_cart,\
-                    inprogress_orders=inprogress_orders,pending_order=pending_order, image=image, length_cart=length_cart, food_subtotals=food_subtotals, total=total, id=user_id, errorImage = errorImage)
             imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], gravity="face:auto", width=200, height=200, crop="thumb")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}

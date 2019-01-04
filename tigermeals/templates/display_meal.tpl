@@ -53,10 +53,21 @@
                 {% include 'display_allergy.tpl' %}
               {% endwith %}
             {% endfor %}
+            <!-- <div class="form-group">
+              <p>
+                <a data-toggle="collapse" href="#collapseExample"aria-expanded="false" aria-controls="collapseExample">
+                  Add customizations <i class="fas fa-sm fa-plus text-primary sr-icon-1"></i>
+                </a>
+              </p>
+              <div class="collapse" id="collapseExample">
+                  <input type="text" class="form-control form-control-lg" id="customization" name="customization" rows="3">
+              </div>
+            </div> -->
             <div class="form-group">
-              <label for="customization">Comments:</label>
+              <label for="customization">Customizations:</label>
               <textarea class="form-control" id="customization" rows="1"></textarea>
             </div>
+            <script src="static/vendor/jquery/jquery.min.js"></script>
           </div>
 
           <div class="col-lg-6 col-md-6">

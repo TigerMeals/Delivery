@@ -35,6 +35,7 @@
         <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
         <h2>My Catering Packages</h2>
         <p class="lead">Please view your listings below. We thank you for partnering with TigerMeals Delivery.</p>
+        <p class="text-danger">{{errorImage}}</p>
       </div>
 
       {% include 'add_new_listing.tpl' %}
@@ -51,6 +52,14 @@
               {% include 'display_listings.tpl' %}
             {% endwith %}
           {% endfor %}
+          {% if not active_listings[0] %}
+          <br>
+          <tr>
+            <td>
+              <p class="text-primary float-left">You do not have any active listings. </p>
+            </td>
+          </tr>
+          {% endif %}
 				</tbody>
 				<tfoot>
 				</tfoot>
@@ -60,6 +69,7 @@
           {% include 'listings_modals.tpl' %}
         {% endwith %}
       {% endfor %}
+
 
       <table id="inactiverestaurantlistings" class="table table-hover table-condensed">
         <thead>
@@ -73,6 +83,15 @@
               {% include 'display_listings.tpl' %}
             {% endwith %}
           {% endfor %}
+
+          {% if not inactive_listings[0] %}
+          <br>
+          <tr>
+            <td>
+              <p class="text-primary float-left">You do not have any inactive listings. </p>
+            </td>
+          </tr>
+          {% endif %}
         </tbody>
         <tfoot>
         </tfoot>
