@@ -30,7 +30,7 @@
 
   $(function() {
     $("body").click(function(e) {
-       if($(window).width()<=768){
+       if($(window).width()<=992){
         if (!$(e.target).closest('#sidebar-wrapper').length) {
           if ($("#wrapper").hasClass("toggled")){
             e.stopPropagation();
