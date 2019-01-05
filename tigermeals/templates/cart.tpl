@@ -54,7 +54,7 @@
   				<tr>
   					<td data-th="Product">
   						<div class="row">
-  							<div class="col-sm-5 hidden-xs"><img src="{{food_images[i]}}" alt="..." class="img-cart"/></div>
+  							<div class="col-sm-5 hidden-xs"><img src="{{food_images[i]}}" alt="..." class="img-fluid"/></div>
   							<div class="col-sm-7">
   								<h4 class="px-4">{{food_titles[i]}}</h4>
   								<p class="px-4">{{food_descriptions[i]}}</p>
@@ -203,7 +203,7 @@
     <script>
     function getMinDate() {
       var today = new Date();
-      today.setDate(today.getDate() + 1);
+      today.setDate(today.getDate() + 2);
       var dd = today.getDate();
       var mm = today.getMonth()+1;
       var yyyy = today.getFullYear();
