@@ -742,3 +742,7 @@ body {
 .navbar-height {
   height:41px;
 }
+
+.sticky-top {
+  z-index:800
+}
