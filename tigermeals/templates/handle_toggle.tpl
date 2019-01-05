@@ -26,16 +26,16 @@
         }
     });
   });
-
-  $(function() {
-    $("body").click(function(e) {
-      if (!$(e.target).closest('#sidebar-wrapper').length) {
-        if ($("#wrapper").hasClass("toggled")){
-          $("#wrapper").toggleClass("toggled");
-          document.cookie="toggled=false";
-        }
-      }
-    });
-  });
+  //
+  // $(function() {
+  //   $("body").click(function(e) {
+  //     if (!$(e.target).closest('#sidebar-wrapper').length) {
+  //       if ($("#wrapper").hasClass("toggled")){
+  //         $("#wrapper").toggleClass("toggled");
+  //         document.cookie="toggled=false";
+  //       }
+  //     }
+  //   });
+  // });
 
 </script>

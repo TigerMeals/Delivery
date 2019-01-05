@@ -24,7 +24,7 @@
             <a class="nav-link" href="/account">My Account</a>
           </li>
           <li class="nav-item-bar">
-            <a class="nav-link" id="menu-toggle" data-toggle="collapse" data-target=".navbar-collapse.in">View Cart</i></a>
+            <a class="nav-link" id="menu-toggle">View Cart</i></a>
           </li>
           <li class="nav-item-bar mr-4">
             <a class="nav-link" href="/logout">Logout</i></a>
