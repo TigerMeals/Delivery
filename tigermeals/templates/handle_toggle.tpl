@@ -21,9 +21,9 @@
         $("#navbarResponsive").toggleClass("show");
         $("#wrapper").toggleClass("toggled");
         if ($("#wrapper").hasClass("toggled")){
-          document.cookie="toggled=true";
+          document.cookie="toggled=true;path=/;";
         } else {
-          document.cookie="toggled=false";
+          document.cookie="toggled=false;path=/;";
         }
     });
   });
@@ -34,7 +34,7 @@
         if (!$(e.target).closest('#sidebar-wrapper').length) {
           if ($("#wrapper").hasClass("toggled")){
             $("#wrapper").toggleClass("toggled");
-            document.cookie="toggled=false";
+            document.cookie="toggled=false;path=/;";
           }
         }
       }
