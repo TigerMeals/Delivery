@@ -33,7 +33,7 @@
         </ul>
       </div>
     </nav>
-  <!-- <div id="backgroundCart"></div> -->
+  <div id="backgroundCart"></div>
   <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
