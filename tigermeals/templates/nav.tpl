@@ -1,7 +1,7 @@
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
-      <a class="navbar-brand ml-2" href="/home">TigerMeals Delivery</a>
+    <nav class="navbar navbar-height navbar-expand-lg navbar-dark bg-danger fixed-top">
+      <a class="navbar-brand" href="/home">TigerMeals Delivery</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -9,6 +9,7 @@
         <ul class="nav navbar-nav ml-auto">
           <li class="nav-item-bar" id="nav-home">
             <a class="nav-link" href="/home">Home</a>
+          </li>
           <li class="nav-item-bar" id="nav-meals">
             <div class="dropdown" id="nav-meals-dropdown">
               <a class="nav-link btn-danger dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"  aria-expanded="false">

@@ -33,6 +33,7 @@
        if($(window).width()<=768){
         if (!$(e.target).closest('#sidebar-wrapper').length) {
           if ($("#wrapper").hasClass("toggled")){
+            e.stopPropagation();
             $("#wrapper").toggleClass("toggled");
             document.cookie="toggled=false;path=/;";
           }
