@@ -33,10 +33,8 @@
         </ul>
       </div>
     </nav>
-
-
-      <div id="wrapper">
-
+  <div id="backgroundCart"></div>
+  <div id="wrapper">
         <!-- Sidebar -->
         <div id="sidebar-wrapper">
           <div class="row justify-content-center">
@@ -152,3 +150,4 @@
             {% endif %}
 
         </div> <!-- /#sidebar-wrapper -->
+      <span id="overlay"></span>

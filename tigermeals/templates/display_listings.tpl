@@ -2,7 +2,7 @@
           <tr>
             <td class="col-9" data-th="Product">
               <div class="row">
-                <div class="col-sm-4 hidden-xs"><img src="{{listing.image}}" alt="..." class="img-listing"/></div>
+                <div class="col-sm-4 hidden-xs"><img src="{{listing.image}}" alt="..." class="img-fluid"/></div>
                 <div class="col-sm-8">
                   <div class="row">
                     <h4 class="nomargin float-left">{{listing.title}}</h4>
