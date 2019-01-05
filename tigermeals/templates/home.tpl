@@ -500,7 +500,7 @@
     {% include 'handle_toggle.tpl' %}
 
     <!-- Plugin JavaScript -->
-    <!-- <script src="static/vendor/bootstrap/js/collapse.js"></script> -->
+    <script src="static/vendor/bootstrap/js/collapse.js"></script>
     <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
     <script src="static/vendor/scrollreveal/scrollreveal.min.js"></script>
     <script src="static/vendor/magnific-popup/jquery.magnific-popup.min.js"></script>

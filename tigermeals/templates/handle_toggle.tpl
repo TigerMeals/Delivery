@@ -18,6 +18,7 @@
     $("#menu-toggle").click(function(e) {
         e.preventDefault();
         e.stopPropagation();
+        $("#navbarResponsive").toggleClass("show");
         $("#wrapper").toggleClass("toggled");
         if ($("#wrapper").hasClass("toggled")){
           document.cookie="toggled=true";
@@ -26,16 +27,18 @@
         }
     });
   });
-  //
-  // $(function() {
-  //   $("body").click(function(e) {
-  //     if (!$(e.target).closest('#sidebar-wrapper').length) {
-  //       if ($("#wrapper").hasClass("toggled")){
-  //         $("#wrapper").toggleClass("toggled");
-  //         document.cookie="toggled=false";
-  //       }
-  //     }
-  //   });
-  // });
+
+  $(function() {
+    $("body").click(function(e) {
+       if($(window).width()<=768){
+        if (!$(e.target).closest('#sidebar-wrapper').length) {
+          if ($("#wrapper").hasClass("toggled")){
+            $("#wrapper").toggleClass("toggled");
+            document.cookie="toggled=false";
+          }
+        }
+      }
+    });
+  });
 
 </script>
