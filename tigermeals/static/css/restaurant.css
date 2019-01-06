@@ -20,12 +20,6 @@ body {
 /* margin-bottom: $height-footer; */
 }
 
-@media (min-width: 992px) {
-  body {
-    padding-top: 56px;
-  }
-}
-
 .red-bar {
   background-color: #d9534f;
 }

@@ -53,8 +53,6 @@
     <div class="container">
         <div class="row mt-2 mb-4">
       		<div class="col-sm-3"><!--left col-->
-
-
           <div class="text-center">
             {% if image != "": %}
             <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
