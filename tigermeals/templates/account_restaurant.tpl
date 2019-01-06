@@ -51,7 +51,7 @@
 
     <br>
     <div class="container">
-        <div class="row mt-2">
+        <div class="row mt-2 mb-4">
       		<div class="col-sm-3"><!--left col-->
 
 
