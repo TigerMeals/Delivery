@@ -18,6 +18,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
 
+# The secure key that someone needs to use the POST methods.
+SECURE_DATABASE_KEY = "sdjfhs24324[][p][}}P`092`)*@))@31DSDA&ASD{}[][]w]%%332"
+
 
 ################################################################################
 class User(db.Model):
@@ -53,6 +56,8 @@ users_schema = UserSchema(many = True)
 # Endpoint to create new user
 @app.route("/user", methods = ["POST"])
 def user_add():
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	name = request.json['name']
 	netid = request.json['netid']
 	email = request.json['email']
@@ -75,6 +80,8 @@ def user_detail(user_id):
 
 @app.route("/user/image/<user_id>", methods=["POST"])
 def user_update_image(user_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	user = User.query.get(user_id)
 	user.image = request.json['image']
 	db.session.commit()
@@ -83,6 +90,8 @@ def user_update_image(user_id):
 # Endpoint to update user
 @app.route("/user/<user_id>", methods = ["PUT"])
 def user_update(user_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	user = User.query.get(user_id)
 	user.name = request.json['name']
 	user.netid = request.json['netid']
@@ -99,6 +108,8 @@ def user_update(user_id):
 # if it is a new user.
 @app.route("/user/login", methods = ["POST"])
 def user_login():
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	netid = request.json['netid']
 
 	user = User.query.filter_by(netid=netid).first()
@@ -117,6 +128,8 @@ def user_login():
 #Endpoint to update the user account stuff
 @app.route("/user/account/update/<user_id>", methods=['PUT'])
 def user_account_update(user_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	user = User.query.get(user_id)
 	firstName = request.json['first']
 	lastName = request.json['last']
@@ -142,6 +155,8 @@ def user_get_orderlength(user_id):
 # Endpoint to delete user
 @app.route("/user/<user_id>", methods = ["DELETE"])
 def user_delete(user_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	user = User.query.get(user_id)
 
 	db.session.delete(user)
@@ -227,6 +242,8 @@ def _restaurant_hash(password):
 # Endpoint to create new restaurant
 @app.route("/restaurant", methods = ["POST"])
 def restaurant_add():
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	name = request.json['name']
 	password = request.json['password']
 	#image = request.json['image']
@@ -274,6 +291,8 @@ def restaurant_add():
 
 @app.route("/restaurant/image/<restaurant_id>", methods=["POST"])
 def restaurant_update_image(restaurant_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	restaurant = Restaurant.query.get(restaurant_id)
 	restaurant.image = request.json['image']
 	db.session.commit()
@@ -288,6 +307,8 @@ def restaurant_detail(restaurant_id):
 # Endpoint to get restaurant detail by email
 @app.route("/restaurant/email", methods = ["POST"])
 def restaurant_email():
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	email = request.json['email']
 	restaurant = Restaurant.query.filter_by(email=email).first()
 	return restaurant_schema.jsonify(restaurant)
@@ -302,6 +323,8 @@ def restaurants_detail():
 # Endpoint to update restaurant
 @app.route("/restaurant/<restaurant_id>", methods = ["PUT"])
 def restaurant_update(restaurant_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	restaurant = Restaurant.query.get(restaurant_id)
 	restaurant.name = request.json['name']
 	restaurant.image = request.json['image']
@@ -322,6 +345,8 @@ def restaurant_update(restaurant_id):
 # Endpoint to update restaurant password
 @app.route("/restaurant/password/<restaurant_id>", methods = ["PUT"])
 def restaurant_update_pass(restaurant_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	restaurant = Restaurant.query.get(restaurant_id)
 
 	password = request.json['password']
@@ -337,6 +362,8 @@ def restaurant_update_pass(restaurant_id):
 # verification. We will add passwords later, much later
 @app.route("/restaurant/login", methods = ["POST"])
 def restaurant_login():
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	email = request.json['email']
 	password = request.json['password']
 
@@ -357,6 +384,8 @@ def restaurant_login():
 # Endpoint to delete restaurant
 @app.route("/restaurant/<restaurant_id>", methods = ["DELETE"])
 def restaurant_delete(restaurant_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	restaurant = Restaurant.query.get(restaurant_id)
 
 	db.session.delete(restaurant)
@@ -366,6 +395,8 @@ def restaurant_delete(restaurant_id):
 # Endpoint to update the profile page
 @app.route("/restaurant/profile/<restaurant_id>",methods=["PUT"])
 def restaurant_profile(restaurant_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	restaurant = Restaurant.query.get(restaurant_id)
 	restaurant.name = request.json['restaurant_name']
 	restaurant.description = request.json['description']
@@ -381,6 +412,8 @@ def restaurant_profile(restaurant_id):
 
 @app.route("/restaurant/account/<restaurant_id>", methods=["PUT"])
 def restaurant_account_upgrade(restaurant_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	restaurant = Restaurant.query.get(restaurant_id)
 	restaurant.primaryFirstName = request.json['firstPrim']
 	restaurant.primaryLastName = request.json['lastPrim']
@@ -406,6 +439,8 @@ def restaurant_account_upgrade(restaurant_id):
 
 @app.route("/restaurant/filter", methods=["POST"])
 def restaurant_filter():
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	restaurants = Restaurant.query
 	cuisines = request.json.get('cuisines')
 	cuisines = cuisines.split(",")
@@ -461,6 +496,8 @@ foods_schema = FoodSchema(many = True)
 # Endpoint to create new food
 @app.route("/food", methods = ["POST"])
 def food_add():
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	title = request.json['title']
 	description = request.json['description']
 	image = request.json['image']
@@ -491,6 +528,8 @@ def food_by_rest(restaurant_id):
 # Endpoint to update food
 @app.route("/food/<food_id>", methods = ["PUT"])
 def food_update(food_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	food = Food.query.get(food_id)
 	food.title = request.json['title']
 	food.description = request.json['description']
@@ -509,6 +548,8 @@ def food_update(food_id):
 # Expects following in json dict: restaurants: list of restaurant ids, allergies: list of dietary restrictions, servings: list of serving ranges, sort: type of sort desired (popular, servings, price_low_to_high, price_high_to_low, or recent).
 @app.route('/food/filter', methods = ['POST'])
 def food_filter():
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	restaurants = request.json['restaurants']
 	# Current allergies that are options are 'Contains dairy', 'Contains meat', 'Contains eggs', 'Kosher'
 	allergies = request.json['allergies']
@@ -557,6 +598,8 @@ def food_sort_price_low_to_high():
 # Endpoint to delete food
 @app.route("/food/<food_id>", methods = ["DELETE"])
 def food_delete(food_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	food = Food.query.get(food_id)
 
 	db.session.delete(food)
@@ -566,6 +609,8 @@ def food_delete(food_id):
 # Endpoint to make food active or inactive
 @app.route("/food/toggle_active/<food_id>", methods = ["POST"])
 def food_toggle_active(food_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	food = Food.query.get(food_id)
 	food.active = not food.active
 
@@ -574,6 +619,8 @@ def food_toggle_active(food_id):
 
 @app.route("/food/image/<food_id>", methods=["POST"])
 def food_update_image(food_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	food = Food.query.get(food_id)
 	food.image = request.json['image']
 	db.session.commit()
@@ -646,6 +693,8 @@ orders_schema = OrderSchema(many = True)
 # Endpoint of restaurant approval
 @app.route('/order/approval/<order_id>', methods = ["POST"])
 def order_approval(order_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	order = Order.query.get(order_id)
 
 	order.paid = True
@@ -657,6 +706,8 @@ def order_approval(order_id):
 # Endpoint that they delivered the order
 @app.route('/order/delivered/<order_id>', methods = ["POST"])
 def order_delivered(order_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	order = Order.query.get(order_id)
 
 	order.delivered = True
@@ -670,6 +721,8 @@ def order_delivered(order_id):
 # Endpoint to place an order
 @app.route('/order/ordered/<order_id>', methods = ["POST"])
 def order_ordered(order_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	order = Order.query.get(order_id)
 
 	order.ordered = True
@@ -694,6 +747,8 @@ def order_ordered(order_id):
 #
 @app.route("/order", methods = ["POST"])
 def order_add():
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	# TODO: if food_items differs from the expected format then alert the user
 	# and do not commit to the database.
 
@@ -745,6 +800,8 @@ def order_by_rest(restaurant_id):
 # Endpoint to update order
 @app.route("/order/<order_id>", methods = ["PUT"])
 def order_update(order_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	order = Order.query.get(order_id)
 	order.user_id = request.json['user_id']
 	order.food_items = request.json['food_items']
@@ -772,6 +829,8 @@ def order_current(user_id):
 
 @app.route("/order/deliveryInfo/<order_id>", methods = ["POST"])
 def order_deliveryInfo(order_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	order = Order.query.get(order_id)
 	order.location = request.json['location']
 	order.date = request.json['date']
@@ -781,6 +840,8 @@ def order_deliveryInfo(order_id):
 
 @app.route('/order/addToken/<order_id>/<stripeToken>/<amount>', methods = ["POST"])
 def order_orderedToken(order_id, stripeToken, amount):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	order = Order.query.get(order_id)
 
 	order.ordered = True
@@ -800,6 +861,8 @@ def order_orderedToken(order_id, stripeToken, amount):
 # Endpoint to delete a food item from a particular order
 @app.route("/order/delete/<order_id>", methods=["PUT"])
 def order_food_delete(order_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	order = Order.query.get(order_id)
 	food_items = request.json['food_items']
 	order.food_items = food_items
@@ -813,6 +876,8 @@ def order_food_delete(order_id):
 # Endpoint to delete order
 @app.route("/order/<order_id>", methods = ["DELETE"])
 def order_delete(order_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
 	order = Order.query.get(order_id)
 
 	db.session.delete(order)

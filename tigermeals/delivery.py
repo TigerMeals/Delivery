@@ -13,6 +13,7 @@ import cloudinary.uploader
 import cloudinary.api
 import cloudinary.utils
 
+
 cas = CAS(app, '/cas')
 cas.init_app(app)
 
@@ -38,6 +39,9 @@ stripe_keys = {
 }
 
 stripe.api_key = stripe_keys['secret_key']
+
+# The secure key that someone needs to use the POST methods.
+SECURE_DATABASE_KEY = "sdjfhs24324[][p][}}P`092`)*@))@31DSDA&ASD{}[][]w]%%332"
 
 # Returns a dictionary of the emails numbers of the restaurants
 def _getRestaurantEmails():
@@ -150,7 +154,8 @@ def home():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -181,7 +186,8 @@ def cart():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -209,7 +215,8 @@ def about():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -236,7 +243,8 @@ def checkout():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -271,7 +279,8 @@ def checkout():
     formData = {
     "location": location,
     "date": date,
-    "time": time
+    "time": time,
+    "key": SECURE_DATABASE_KEY
     }
 
     res = requests.post(order_info_url, json=formData)
@@ -302,7 +311,8 @@ def account():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
@@ -403,7 +413,8 @@ def account_update():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -433,7 +444,8 @@ def account_update():
         "last": lastName,
         "phone": phone,
         "address": address,
-        "allergies": allergens
+        "allergies": allergens,
+    "key": SECURE_DATABASE_KEY
     }
 
     requests.put(update_url, json=json)
@@ -480,7 +492,8 @@ def cart_edit(quantity, food_id):
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -508,7 +521,8 @@ def cart_edit(quantity, food_id):
     edit_url = DATABASE_URL + "/order/delete/" + str(order_id)
 
     json = {
-        "food_items": food_items
+        "food_items": food_items,
+    "key": SECURE_DATABASE_KEY
     }
 
     res = requests.put(edit_url, json = json)
@@ -527,7 +541,8 @@ def user_image_update():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
@@ -622,7 +637,8 @@ def user_image_update():
             response = cloudinary.uploader.upload(img)
             imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], gravity="face:auto", width=200, height=200, crop="thumb", quality=100, effect="sharpen")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
-            updateImage = {"image": imgurl}
+            updateImage = {"image": imgurl,
+    "key": SECURE_DATABASE_KEY}
             update_image_url = DATABASE_URL + "/user/image/" + str(user_id)
             requests.post(update_image_url, json=updateImage)
     return redirect(url_for('account'))
@@ -641,7 +657,8 @@ def cart_delete(food_id):
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -664,7 +681,8 @@ def cart_delete(food_id):
     delete_url = DATABASE_URL + "/order/delete/" + str(order_id)
 
     json = {
-        "food_items": food_items
+        "food_items": food_items,
+    "key": SECURE_DATABASE_KEY
     }
 
     res = requests.put(delete_url, json = json)
@@ -687,7 +705,8 @@ def cart_delete_restaurant(food_id):
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -710,7 +729,8 @@ def cart_delete_restaurant(food_id):
     delete_url = DATABASE_URL + "/order/delete/" + str(order_id)
 
     json = {
-        "food_items": food_items
+        "food_items": food_items,
+    "key": SECURE_DATABASE_KEY
     }
 
     res = requests.put(delete_url, json = json)
@@ -731,7 +751,8 @@ def meals():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -801,7 +822,8 @@ def restaurant_view():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -846,7 +868,8 @@ def restaurant_view_filter():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -867,7 +890,8 @@ def restaurant_view_filter():
             cuisine += checkbox
 
     restaurants_url = DATABASE_URL + "/restaurant/filter"
-    res = requests.post(restaurants_url, json={"cuisines": cuisine})
+    res = requests.post(restaurants_url, json={"cuisines": cuisine,
+    "key": SECURE_DATABASE_KEY})
     cuisineSplit = cuisine.split(",")
 
     if not res.ok:
@@ -897,7 +921,8 @@ def query_restaurant_search():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -938,7 +963,8 @@ def meals_restaurant(restaurant_id):
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -1011,7 +1037,8 @@ def upload_cart():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -1073,7 +1100,8 @@ def upload_cart():
                         "date": None,
                         "order_time": None,
                         "delivery_time": None,
-                        "location": None
+                        "location": None,
+    "key": SECURE_DATABASE_KEY
                     }
                     update_order_url = DATABASE_URL + "/order/" + str(order_id)
                     res = requests.put(update_order_url, json = updatedOrder)
@@ -1100,7 +1128,8 @@ def upload_cart():
                 "date": None,
                 "order_time": None,
                 "delivery_time": None,
-                "location": None
+                "location": None,
+    "key": SECURE_DATABASE_KEY
             }
             update_order_url = DATABASE_URL + "/order/" + str(order_id)
             res = requests.put(update_order_url, json = updatedOrder)
@@ -1115,7 +1144,8 @@ def charge():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
@@ -1163,6 +1193,7 @@ def charge():
     formData = {
     "name": name,
     "email": email,
+    "key": SECURE_DATABASE_KEY
     }
 
     res = requests.post(order_ordered_url, json=formData)
@@ -1205,7 +1236,8 @@ def ordered():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -1231,6 +1263,7 @@ def ordered():
     formData = {
     "name": name,
     "email": email,
+    "key": SECURE_DATABASE_KEY
     }
     res = requests.post(order_ordered_url, json=formData)
     if not res.ok:
@@ -1270,7 +1303,8 @@ def order_confirmed():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -1300,7 +1334,8 @@ def filter():
     LOGIN_URL = DATABASE_URL + '/user/login'
 
     data = {
-        "netid": netid
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
     }
 
     fetch_req = requests.post(url=LOGIN_URL, json=data)
@@ -1354,7 +1389,8 @@ def filter():
     "restaurants": restaurantsIds,
     "allergies": allergies,
     "servings": servings,
-    "sort": request.form.get('sort')
+    "sort": request.form.get('sort'),
+    "key": SECURE_DATABASE_KEY
     }
     res = requests.post(filter_url, json=filterParams)
     meals = json.loads(res.content)
