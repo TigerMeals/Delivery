@@ -1,6 +1,6 @@
 
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
+    <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
       <a class="navbar-brand navbar-height" href="/home">TigerMeals Delivery</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -25,10 +25,16 @@
             <a class="nav-link" href="/account">My Account</a>
           </li>
           <li class="nav-item-bar">
-            <a class="nav-link" id="menu-toggle">View Cart</i></a>
+            <a class="nav-link" id="menu-toggle">
+              <span class="d-sm-inline d-md-none d-lg-inline"> View Cart</span>
+              <span class="fas fa-shopping-cart" style="font-size: 13px"></span>
+            </a>
           </li>
-          <li class="nav-item-bar mr-4">
-            <a class="nav-link" href="/logout">Logout</i></a>
+          <li class="nav-item-bar mr-2">
+            <a class="nav-link" href="/logout">
+              <span class="d-sm-inline d-md-none d-lg-inline"> Logout</span>
+              <span class="fas fa-power-off" style="font-size: 11px"></span>
+            </a>
           </li>
         </ul>
       </div>

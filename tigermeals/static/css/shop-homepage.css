@@ -72,6 +72,7 @@ h6 {
 
 .nav-item-bar {
   margin-left: 1.75rem;
+  font-size: 0.75rem;
 }
 
 .checkout-text {
@@ -527,7 +528,7 @@ body {
 }
 
 #wrapper {
-  padding-top: 70px;
+  padding-top: 65.53px;
   padding-left: 0;
   -webkit-transition: all 0.5s ease;
   -moz-transition: all 0.5s ease;
@@ -739,10 +740,12 @@ body {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.navbar-height {
-  height:41px;
-}
-
 .sticky-top {
   z-index:800
 }
+
+a.nav-link {
+   line-height: 1.15
+}
+
+.fas { display:inline; }
