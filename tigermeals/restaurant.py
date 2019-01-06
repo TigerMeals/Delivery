@@ -199,7 +199,7 @@ def register_upload():
 		img = request.files['image']
 		if img is not None:
 			response = cloudinary.uploader.upload(img)
-			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=250, height=250, format = response['format'],  gravity = "auto", crop = "fill")
+			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=250, height=250, format = response['format'],  gravity = "auto", crop = "fill", quality=100, effect="sharpen")
 
 	registration_info = {
 	"name": request.form['name'],
@@ -654,7 +654,7 @@ def image_update():
 					id=id, length_orders=length_orders,error=error,\
 					secondaryLastName=secondaryLastName,secondaryEmail=secondaryEmail,primaryFirstName=primaryFirstName,\
 					length_listings=length_listings, email=email, website=website, errorImage="Image width and height must be at least 200 pixels!")
-			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=200, height=200, format = response['format'],  gravity = "auto", crop = "fill")
+			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=200, height=200, format = response['format'],  gravity = "auto", crop = "fill", quality = 100, effect="sharpen")
 			#updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
 			updateImage = {"image": imgurl}
 			update_image_url = DATABASE_URL + "/restaurant/image/" + str(id)
