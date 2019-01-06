@@ -6,7 +6,12 @@
   <h6>{{item.food_title}}</h6>
   <p>{{item.food_quantity_fed}} servings</p>
   <p><span class="text-black">Quantity: </span> {{item.quantity}} </p>
-  <p><span class="text-black">Customizations: </span> {{item.customization}}
+  <p><span class="text-black">Customizations: </span>
+    {% if item.customization != "" %}
+    {{item.customization}}
+    {% else %}
+    None.
+    {% endif %}
   </p>
 
 </div>
