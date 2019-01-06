@@ -17,7 +17,7 @@
         <li class="nav-item-bar">
           <a class="nav-link" href="/orders">View Orders ({{length_orders}} Active)</a>
         </li>
-        <li class="nav-item-bar">
+        <li class="nav-item-bar mr-4">
           <a class="nav-link" href="/restaurant/logout">Logout</a>
         </li>
       </ul>
