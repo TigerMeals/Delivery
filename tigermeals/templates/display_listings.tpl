@@ -2,8 +2,8 @@
           <tr>
             <td class="col-8" data-th="Product">
               <div class="row">
-                <div class="col-sm-4 hidden-xs"><img src="{{listing.image}}" alt="..." class="img-fluid"/></div>
-                <div class="col-sm-8">
+                <div class="col-4 d-none d-sm-inline"><img src="{{listing.image}}" alt="..." class="img-fluid"/></div>
+                <div class="col-8">
                   <div class="row">
                     <h4 class="nomargin float-left">{{listing.title}}</h4>
                     <p class="float-right ml-2">{{listing.quantity_fed}} servings</p>
