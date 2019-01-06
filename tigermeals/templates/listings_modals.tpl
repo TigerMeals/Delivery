@@ -148,7 +148,7 @@
                         {% if listing.active %}
                         <button class="btn btn-danger" type="submit" form="toggle_active{{listing.food_id}}">Inactivate</button>
                         {% else %}
-                        <button class="btn btn-danger" type="submit" form="toggle_active{{listing.food_id}}">Activate</button>
+                        <button class="btn btn-info" type="submit" form="toggle_active{{listing.food_id}}">Activate</button>
                         {% endif %}
                       </div>
                     </div>
