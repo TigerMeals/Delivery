@@ -820,6 +820,15 @@ def listings():
 	r.headers['Cache-Control'] = 'public, max-age=0'
 	return r
 
+# Endpoint to delete a restaurant listing.
+@app.route("/listings/delete/<food_id>", methods=["POST"])
+def delete_listing(food_id):
+	remove_listing_url = DATABASE_URL + "/food/" + food_id
+	res = requests.delete(remove_listing_url)
+	if not res.ok:
+		res.raise_for_status()
+	return redirect('/listings')
+
 # Endpoint to add a new restaurant listing.
 @app.route("/listings/add", methods=["POST"])
 def add_listing():

@@ -558,3 +558,8 @@ ul.dropdown-cart li .item-right button{
     outline: none;
     box-shadow: none;
 }
+
+.transparent-btn {
+  border: none;
+  background-color: inherit;
+}
