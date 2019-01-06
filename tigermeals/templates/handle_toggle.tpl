@@ -52,6 +52,7 @@
 
   $(function() {
     $("body").click(function(e) {
+      if($(window).width()<768){
         if (!$(e.target).closest('#sidebar-wrapper').length) {
            $("#backgroundCart").removeClass("smallDisplay");
           if ($("#wrapper").hasClass("toggled")){
@@ -60,6 +61,7 @@
             document.cookie="toggled=false;path=/;";
           }
         }
+      }
     });
   });
 
