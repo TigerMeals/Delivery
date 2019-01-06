@@ -56,7 +56,7 @@
     <div id="page-content-wrapper">
     <!-- Page Content -->
     <div class="container-fluid container">
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-sm-3"><!--left col-->
 
 
@@ -73,7 +73,7 @@
               <hr>
               <input type="file" id = "file" name="image" class="text-center center-block file-upload">
               <hr>
-              <button id = "save" class="btn btn-info btn-sm text-center center-block" type="submit" disabled>Save Photo</button>
+              <button id = "save" class="btn btn-outline-primary btn-sm text-center center-block" type="submit" disabled>Save Photo</button>
               <hr>
             </form>
             <div id = "imageError" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>

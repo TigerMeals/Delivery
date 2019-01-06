@@ -51,7 +51,7 @@
 
     <br>
     <div class="container">
-        <div class="row mt-2">
+        <div class="row mt-2 mb-4">
       		<div class="col-sm-3"><!--left col-->
 
 
@@ -67,7 +67,7 @@
               <hr>
               <input type="file" id = "file" name="image" class="text-center center-block file-upload">
               <hr>
-              <button id = "save" class="btn btn-info btn-sm text-center center-block" type="submit" disabled>Save Photo</button>
+              <button id = "save" class="btn btn-outline-primary btn-sm text-center center-block" type="submit" disabled>Save Photo</button>
               <hr>
             </form>
             <div id = "imageError" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>
@@ -181,7 +181,7 @@
                           <div class="form-group col-12">
 
                               <div class="col-12">
-                                <a class="btn btn-info" href="/view">View my profile as a consumer</a>
+                                <a class="btn btn-outline-primary" href="/view">View my profile as a customer</a>
                               </div>
                           </div>
                         </div>

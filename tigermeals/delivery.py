@@ -1338,3 +1338,8 @@ def filter():
         id=user_id, food_prices = food_prices, food_ids=food_ids,\
         food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, food_multiplier=food_multiplier,\
         length_cart = length_cart, total=total, food_images= food_images, length_meals=length_meals, restaurants=restaurants, current_filters=current_filters, sort_type=request.form.get('sort'))
+
+# Endpoint for a page that does not exist for a restaurant
+@app.errorhandler(404)
+def page_not_found(e):
+	return render_template('not_found.tpl'), 404
