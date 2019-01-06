@@ -179,7 +179,7 @@
         <script>
 
           $("#file").change(function(e) {
-            console.log("hello there")
+            //console.log("hello there")
 
               var image, file;
 
