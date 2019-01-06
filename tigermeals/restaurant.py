@@ -886,7 +886,7 @@ def add_listing():
         if img is not None:
             response = cloudinary.uploader.upload(img)
 
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 200, height = 200, gravity = "auto", crop = "fill")
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 200, height = 200, gravity = "auto", crop = "fill", transformation = [{"quality":100}, {"effect": "improve"}])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
@@ -948,7 +948,7 @@ def update_listing():
             if int(response['width']) < 200 or int(response['height']) < 200:
             	return redirect(url_for('listings'))
 
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 200, height = 200, gravity = "auto", crop = "fill")
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 200, height = 200, gravity = "auto", crop = "fill", transformation = [{"quality":100, "effect": "sharpen"}])
             updateImage = {"image": imgurl}
             updatedEntry["image"] = imgurl
 

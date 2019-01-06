@@ -1,5 +1,4 @@
 
-
           <!-- Modal -->
           <div class="modal fade" id="modal{{listing.food_id}}" tabindex="-1" role="dialog" aria-labelledby="{{listing.food_id}}title" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -166,9 +165,6 @@
           <script>
           var elements = document.getElementById('update_entry{{listing.food_id}}').elements;
           var _URL = window.URL || window.webkitURL;
-
-
-
           for (var i = 0; i < elements.length; i++) {
             if({{listing.allergies}}.includes(elements[i].value)) {
               elements[i].checked = true;
@@ -177,34 +173,25 @@
         </script>
 
         <script>
-
           $(document).ready(function() {
-
               var readURL = function(input) {
                   if (input.files && input.files[0]) {
                       var reader = new FileReader();
-
                       reader.onload = function (e) {
                           $('.avatar{{listing.food_id}}').attr('src', e.target.result);
                       }
-
                       reader.readAsDataURL(input.files[0]);
                   }
               }
-
               $(".file-upload{{listing.food_id}}").on('change', function(){
                   readURL(this);
               });
           });
-
           $("#file{{listing.food_id}}").change(function(e) {
-
               var image, file;
-
               if ((file = this.files[0])) {
                   image = new Image();
                   image.onload = function() {
-
                     if (this.width < 200 || this.height < 200){
                       document.getElementById("imageError{{listing.food_id}}").style.visibility = "visible";
                       document.getElementById("save{{listing.food_id}}").disabled = true;
@@ -214,12 +201,10 @@
                       document.getElementById("imageError{{listing.food_id}}").style.visibility = "hidden";
                       document.getElementById("save{{listing.food_id}}").disabled = false;
                     }
-
                       //alert("The image width is " +this.width + " and image height is " + this.height);
                   };
                   //if (this.width >= 200 && this.height >= 200)
                   image.src = _URL.createObjectURL(file);
                 }
-
               });
               </script>
