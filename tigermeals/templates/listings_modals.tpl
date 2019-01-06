@@ -15,10 +15,10 @@
                     <div class="row">
                       <div class="col-lg-4 col-md-4">
                         <div class="text-center">
-                          <img src="{{listing.image}}" class="avatar img-circle img-thumbnail" alt="avatar">
+                          <img src="{{listing.image}}" class="avatar{{listing.food_id}} img-circle img-thumbnail" alt="avatar">
                           <br><br>
                           <h6>Upload a different photo...</h6>
-                          <input type="file" class="text-center center-block file-upload" id="file" name="image">.        <div id = "imageError{{listing.food_id}}" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>
+                          <input type="file" class="text-center center-block file-upload{{listing.food_id}}" id="file{{listing.food_id}}" name="image">.        <div id = "imageError{{listing.food_id}}" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>
                         </div><hr><br>
                       </div>
                       <div class="col-lg-8 col-md-8">
@@ -178,15 +178,31 @@
 
         <script>
 
-          $("#file").change(function(e) {
-            console.log("hello there")
+          $(document).ready(function() {
+
+              var readURL = function(input) {
+                  if (input.files && input.files[0]) {
+                      var reader = new FileReader();
+
+                      reader.onload = function (e) {
+                          $('.avatar{{listing.food_id}}').attr('src', e.target.result);
+                      }
+
+                      reader.readAsDataURL(input.files[0]);
+                  }
+              }
+
+              $(".file-upload{{listing.food_id}}").on('change', function(){
+                  readURL(this);
+              });
+          });
+
+          $("#file{{listing.food_id}}").change(function(e) {
 
               var image, file;
 
               if ((file = this.files[0])) {
-
                   image = new Image();
-
                   image.onload = function() {
 
                     if (this.width < 200 || this.height < 200){
@@ -206,5 +222,4 @@
                 }
 
               });
-
-        </script>
+              </script>
