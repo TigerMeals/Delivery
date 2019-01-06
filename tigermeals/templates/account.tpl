@@ -56,11 +56,12 @@
     <div id="page-content-wrapper">
     <!-- Page Content -->
     <div class="container-fluid container">
-        <div class="row">
+        <div class="row mb-4">
           <div class="col-sm-3"><!--left col-->
 
 
           <div class="text-center">
+            <hr>
             {% if image != "": %}
             <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
             {% else %}
@@ -69,11 +70,14 @@
             <br><br>
             <h6>Upload a different photo...</h6>
             <form method="post" action="/user/image/update" enctype=multipart/form-data>
+              <hr>
               <input type="file" id = "file" name="image" class="text-center center-block file-upload">
-              <div class="mt-3" align="left"><button id = "save" type="submit" disabled>Save Photo</button></div>
+              <hr>
+              <button id = "save" class="btn btn-outline-primary btn-sm text-center center-block" type="submit" disabled>Save Photo</button>
+              <hr>
             </form>
             <div id = "imageError" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>
-          </div></hr><br>
+          </div>
 
             <div class="panel panel-default">
               <h6 class="mb-0 mt-1">Quick Stats </h6>
@@ -104,7 +108,6 @@
                   <li class="nav-item">
                       <a class="nav-link" id="history-orders-tab" data-toggle="tab" href="#history-orders" role="tab" aria-controls="history-orders" aria-selected="true">My Order History</a>
                   </li>
-
               </ul>
 
 
@@ -117,19 +120,19 @@
                     <form class="form mt-3" action="/account/update" method="post" id="registrationForm">
 
                       <div class="row">
-                          <div class="form-group col-6">
+                          <div class="form-group col-md-6">
                               <div class="col-12">
                                   <label for="p_first_name"><h6 class="mb-0 mt-1">First Name</h6></label>
                                   <input type="text" class="form-control" name="p_first_name" id="p_first_name" value="{{name[0]}}" title="enter your first name if any.">
                               </div>
                           </div>
-                          <div class="form-group col-6">
+                          <div class="form-group col-md-6">
                               <div class="col-12">
                                 <label for="p_last_name"><h6 class="mb-0 mt-1">Last Name</h6></label>
                                   <input type="text" class="form-control" name="p_last_name" id="p_last_name" value="{{name[1]}}" title="enter your last name if any.">
                               </div>
                           </div>
-                          <div class="form-group col-6">
+                          <div class="form-group col-md-6">
 
                               <div class="col-12">
                                   <label for="p_email"><h6 class="mb-0 mt-1">Email</h6></label>
@@ -140,7 +143,7 @@
                               </div>
 
                           </div>
-                          <div class="form-group col-6">
+                          <div class="form-group col-md-6">
 
                               <div class="col-12">
                                 <label for="p_phone"><h6 class="mb-0 mt-1">Phone Number</h6></label>
@@ -154,8 +157,8 @@
                               <div class="col-12">
                                   <label for="s_first_name"><h6 class="mb-0 mt-1">Select Allergies and Dietary Restrictions</h6></label>
                                   <!--<input type="text" class="form-control" name="p_allergies" id="s_first_name" value="{{allergies}}" title="enter your first name if any."> -->
-                                
-                                  <div class="row"> 
+
+                                  <div class="row">
                                <div class="col-6 col-lg-4">
                                  <div class="checkbox">
                                    <label>
@@ -210,7 +213,7 @@
                                      <input type="checkbox"  name="allergens7" value="Gluten free">
                                      Gluten free
                                    </label>
-                                 </div>       
+                                 </div>
                               </div>
                         </div>
                       </div>
@@ -524,16 +527,14 @@
 
 <script>
           var _URL = window.URL || window.webkitURL;
-
-          console.log("hello there ")
           $("#file").change(function(e) {
-              
+
               var image, file;
 
               if ((file = this.files[0])) {
-                 
+
                   image = new Image();
-                  
+
                   image.onload = function() {
                     if (this.width < 200 || this.height < 200){
                       document.getElementById("imageError").style.visibility = "visible";

@@ -32,6 +32,12 @@ cloudinary.config(
 # DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
 DATABASE_URL = "http://localhost:5000"
 
+
+# Endpoint for a page that does not exist for a restaurant
+@app.errorhandler(404)
+def page_not_found(e):
+	return render_template('not_found.tpl'), 404
+
 # Endpoint to logout a restaurant
 @app.route("/restaurant/logout")
 def logout():

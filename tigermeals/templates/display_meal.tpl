@@ -63,10 +63,13 @@
                   <input type="text" class="form-control form-control-lg" id="customization" name="customization" rows="3">
               </div>
             </div> -->
-            <div class="form-group">
-              <label for="customization">Customizations:</label>
-              <textarea class="form-control" id="customization" rows="1"></textarea>
-            </div>
+            <form action = "/cart/upload" id="add_to_cart{{meal.food_id}}" method="POST">
+              <div class="form-group">
+                <label for="customization">Customizations:</label>
+                <textarea class="form-control" id="customization" name="customization" rows="1"></textarea>
+                <input type="hidden" id="food_id" name="food_id" value="{{meal.food_id}}"></input>
+              </div>
+            </form>
             <script src="static/vendor/jquery/jquery.min.js"></script>
           </div>
 
@@ -78,9 +81,6 @@
       </div>
       <div class="modal-footer">
         <!-- <div class="row"> -->
-        <form action = "/cart/upload" id="add_to_cart{{meal.food_id}}" method="POST">
-          <input type="hidden" id="food_id" name="food_id" value="{{meal.food_id}}"></input>
-        </form>
         <div class="col-lg-3 col-md-3">
           <script>
           function update_quantity{{meal.food_id}}() {
