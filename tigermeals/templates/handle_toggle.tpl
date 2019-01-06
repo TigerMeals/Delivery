@@ -24,7 +24,9 @@
         if($(window).width()<768){
          $("#backgroundCart").addClass("smallDisplay");
        }
-        $("#navbarResponsive").toggleClass("show");
+        if ($("#navbarResponsive").hasClass("show")) {
+          $("#navbarResponsive").removeClass("show");
+        }
         $("#wrapper").toggleClass("toggled");
         if ($("#wrapper").hasClass("toggled")){
           document.cookie="toggled=true;path=/;";
