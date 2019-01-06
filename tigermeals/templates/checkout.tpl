@@ -37,7 +37,7 @@
               <h2 class='text-primary'>Checkout</h2>
               <p>Please review your order below and proceed with payment. We thank you for shopping with TigerMeals Delivery.</p>
             </div>
-            <form id="main_form">
+
               <div class="products">
                 <h3 class="title">Review Your Order</h3>
                 {% for i in range(0, length_cart) %}
@@ -45,16 +45,18 @@
                   <span class="price"><span id ="money{{food_ids[i]}}"onload="editPrices()"class="text-muted"></span></span>
                   <p class="item-name">{{food_titles[i]}} x {{food_multiplier[i]}}</p>
                   <p class="item-description">{{food_descriptions[i]}}</p>
-                  <p class="item-description">INSERT CUSTOMIZATION HERE ONLY IF IT EXISTS</p>
+                  {% if customizations[i] != 'N/A' %}
+                  <p class="item-description">{{customizations[i]}}</span>
+                  {% endif %}
                 </div>
                 <script>
                   var val = parseFloat({{food_prices[i]}}).toFixed(2);
                   document.getElementById('money{{food_ids[i]}}').innerHTML = "$" + val
                 </script>
                 {% endfor %}
-                <div class="subtotal">Subtotal<span class="price">$320</span></div>
-                <div class="delivery_fee">Delivery Fee<span class="price">$5.00</span></div>
-                <div class="total">Total<span class="price">$<span id="CheckoutSumTotal"></span></span></div>
+                <!-- <div class="subtotal">Subtotal<span class="price">{{food_subtotals[i]}}</span></div> -->
+
+                <div class="total">Total<span class="price">${{total}}0<span id="CheckoutSumTotal"></span></span></div>
               </div>
 
 
@@ -87,31 +89,23 @@
                 </ul>
                 <div class="tab-content profile-tab" id="myTabContent">
                   <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                    <form action="/charge" id = "stripe_payment_button" method="post" class="needs-validation" novalidate>
                       <br>
                       <h5 class="mb-3">Card Payment</h5>
                       <p class="text-danger">{{error}}</p>
-                      <article>
-                        <label>
-                          <span id="SumTotal">Total is ${{total}}.</span>
-                        </label>
-                      </article>
-                      <script>
-                        var val = parseFloat({{total}}).toFixed(2);
-                        document.getElementById('SumTotal').innerHTML = "Total: $" + val;
-                        document.getElementById('CheckoutSumTotal').innerHTML =  val;
-                      </script>
-                       <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                data-key={{key}}
-                                data-amount=String({{total}} * 100)
-                                data-description="Catering Payment"
-                                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                                data-shipping-address = "true"
-                                data-zip-code="true"
-                                data-name="TigerMeals Checkout"
-                                data-locale="auto">
-                        </script>
-                      </form>
+                      <p> Total: ${{total}}0</p>
+                      <form id = "stripe_payment_button" action="/charge" method="post" class="needs-validation" novalidate>
+                          <script
+                            src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                            data-key={{key}}
+                            data-amount= String({{total}} * 100)
+                            data-name="TigerMeals Checkout"
+                            data-description="Catering Payment"
+                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                            data-shipping-address = "true"
+                            data-locale="auto"
+                            data-zip-code="true">
+                          </script>
+                        </form>
                       <br>
                       <br>
                       <br>
@@ -164,9 +158,10 @@
                             <input type="checkbox" class="custom-control-input" id="save-info">
                             <label class="custom-control-label" for="save-info">Save this information for next time</label>
                           </div>
+                          <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" form="checkout_form">Place your order</button></p>
 
                       </div>
-                      <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" form="checkout_form">Place your order</button></p>
+
                       <br>
                       <br>
                     </form>
@@ -174,7 +169,7 @@
                </div>
               </div>
               </div>
-            </form>
+
           </div>
         </section>
       </main>

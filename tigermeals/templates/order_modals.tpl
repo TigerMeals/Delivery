@@ -63,7 +63,7 @@
                   <h5>Phone</h5>
                 </div>
                 <div class="col-8">
-                  <p>ADD TPL CODE HERE</p>
+                  <p>{{order.phone}}</p>
                 </div>
                 {% endif %}
 

@@ -32,6 +32,20 @@ cloudinary.config(
 # DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
 DATABASE_URL = "http://localhost:5000"
 
+## PRIVATE METHODS. GET METHOD
+def _getJSON(url):
+    r = requests.get(url=url)
+    data = r.json()
+
+    return (data)
+
+## POST METHOD
+def _postJSON(url, data):
+    r = requests.post(url=url, data=data)
+
+    response = r.json()
+    return response
+
 
 # Endpoint for a page that does not exist for a restaurant
 @app.errorhandler(404)
@@ -199,7 +213,7 @@ def register_upload():
 		img = request.files['image']
 		if img is not None:
 			response = cloudinary.uploader.upload(img)
-			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=250, height=250, format = response['format'],  gravity = "auto", crop = "fill")
+			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=250, height=250, format = response['format'],  gravity = "auto", crop = "fill", quality=100, effect="sharpen")
 
 	registration_info = {
 	"name": request.form['name'],
@@ -397,6 +411,9 @@ def orders():
 
 		order['price'] = price
 		order['packages'] = packages
+
+		order['phone'] = _getJSON(DATABASE_URL + "/user/" + str(order['user_id']))['phone']
+
 		if order['delivered']:
 			delivered.append(order)
 		elif order['paid']:
@@ -654,7 +671,7 @@ def image_update():
 					id=id, length_orders=length_orders,error=error,\
 					secondaryLastName=secondaryLastName,secondaryEmail=secondaryEmail,primaryFirstName=primaryFirstName,\
 					length_listings=length_listings, email=email, website=website, errorImage="Image width and height must be at least 200 pixels!")
-			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=200, height=200, format = response['format'],  gravity = "auto", crop = "fill")
+			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=200, height=200, format = response['format'],  gravity = "auto", crop = "fill", quality = 100, effect="sharpen")
 			#updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
 			updateImage = {"image": imgurl}
 			update_image_url = DATABASE_URL + "/restaurant/image/" + str(id)

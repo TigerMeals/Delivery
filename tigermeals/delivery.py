@@ -225,7 +225,7 @@ def about():
         food_quantity_feds=food_quantity_feds, food_images=food_images, food_multiplier=food_multiplier, empty_cart = empty_cart,\
         length_cart=length_cart, customizations = customizations, food_subtotals=food_subtotals, total=total, id=user_id)
 
-@app.route("/checkout")
+@app.route("/checkout", methods=["POST"])
 @login_required
 def checkout():
     print("checkout template requested -----------------------------")
@@ -250,6 +250,12 @@ def checkout():
     email, name, phone, address, netid, allergies = _getUser(user_id)
 
     name = name.split()
+    #print("------------------asdfasdfasdfasdfasdfasdfasdfasdf---------------")
+    #print(request.form)
+    date = str(request.form['dateCard'])
+    time = str(request.form['timeCard'])
+    location = str(request.form['locationCard'])
+
 
     current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
     res = requests.get(current_order_url)
@@ -257,6 +263,28 @@ def checkout():
         res.raise_for_status()
     else:
         order_id = json.loads(res.content)['order_id']
+
+
+    order_info_url = DATABASE_URL + "/order/deliveryInfo/" + str(order_id)
+    # Amount in cents
+
+    formData = {
+    "location": location,
+    "date": date,
+    "time": time
+    }
+
+    res = requests.post(order_info_url, json=formData)
+
+    current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
+    res = requests.get(current_order_url)
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        order_date = json.loads(res.content)['date']
+
+    print("date")
+    print(order_date)
 
     return render_template('checkout.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
@@ -310,6 +338,8 @@ def account():
 
         if not order['paid']:
             pending_order.append(order)
+            #print("hello there how are you")
+            #print(order['date'])
 
         elif order['paid'] and order['delivery_in_process']:
             inprogress_orders.append(order)
@@ -356,7 +386,7 @@ def account():
 
     rest_phones_dict = _getRestaurantPhones()
     allergies = allergies.split(',')
-    return render_template('account.tpl', name=name.split(), email=email,rest_phones_dict=rest_phones_dict,\
+    return render_template('account.tpl', name=name.split(), email=email, rest_phones_dict=rest_phones_dict,\
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict, food_multiplier = food_multiplier,\
         rest_emails_dict=rest_emails_dict,food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
         history_orders=history_orders,food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders, empty_cart=empty_cart,\
@@ -559,8 +589,7 @@ def user_image_update():
 
     number_different_rest = len(past_restaurants)
 
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
+    food_prices, food_descriptions, food_titles, food_quantity_feds, food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
 
     restaurants_url = DATABASE_URL + "/restaurant"
 
@@ -591,7 +620,7 @@ def user_image_update():
             #updateImage = {"image": img_url}
 
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], gravity="face:auto", width=200, height=200, crop="thumb")
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], gravity="face:auto", width=200, height=200, crop="thumb", quality=100, effect="sharpen")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl}
             update_image_url = DATABASE_URL + "/user/image/" + str(user_id)
@@ -1090,15 +1119,15 @@ def charge():
     }
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
-    print(request.form)
+    #print("charge has been placed!!!")
 
     user_id = fetch_req.json()['user_id']
 
     name = str(request.form['stripeBillingName'])
     email = str(request.form['stripeEmail'])
     address = str(request.form['stripeShippingAddressLine1'])
-    date = str(request.form['dateCard'])
-    time = str(request.form['timeCard'])
+    #date = str(request.form['dateCard'])
+    #time = str(request.form['timeCard'])
 
     current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
     res = requests.get(current_order_url)
@@ -1114,7 +1143,7 @@ def charge():
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
     food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
 
-    if date is None or date == "" or time is None or time == "":
+    """if date is None or date == "" or time is None or time == "":
         print("NONE -------------------------------------------------")
         return render_template('checkout.tpl', user_id=user_id, food_prices=food_prices,\
                 food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
@@ -1122,7 +1151,7 @@ def charge():
                 length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
                 customizations=customizations,
                 email=email_user, name=name_user, phone=phone,address=address_user, netid=netid, id=user_id, order_id=order_id, key = stripe_keys['publishable_key'], error = "Please enter date and time info!!")
-
+    """
 
     amount = int(total * 100)
 
@@ -1134,9 +1163,6 @@ def charge():
     formData = {
     "name": name,
     "email": email,
-    "location": address,
-    "date": date,
-    "time": time
     }
 
     res = requests.post(order_ordered_url, json=formData)
@@ -1189,9 +1215,9 @@ def ordered():
 
     name = request.form.get('firstName') + " " + request.form.get('lastName')
     email = request.form.get('email')
-    address = request.form.get('address')
-    date = request.form.get('date')
-    time = request.form.get('time')
+    #address = request.form.get('address')
+    #date = request.form.get('date')
+    #time = request.form.get('time')
 
     current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
     res = requests.get(current_order_url)
@@ -1205,9 +1231,6 @@ def ordered():
     formData = {
     "name": name,
     "email": email,
-    "location": address,
-    "date": date,
-    "time": time
     }
     res = requests.post(order_ordered_url, json=formData)
     if not res.ok:
@@ -1253,7 +1276,18 @@ def order_confirmed():
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
     user_id = fetch_req.json()['user_id']
-    print(user_id)
+    #print(user_id)
+    current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
+    res = requests.get(current_order_url)
+    if not res.ok:
+        res.raise_for_status()
+    else:
+        order_date = json.loads(res.content)['date']
+
+    print("date")
+    print(order_date)
+
+
 
     return render_template('order_confirmed.tpl')
 

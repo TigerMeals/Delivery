@@ -675,9 +675,6 @@ def order_ordered(order_id):
 	order.ordered = True
 	order.name = request.json['name']
 	order.email = request.json['email']
-	order.location = request.json['location']
-	order.date = request.json['date']
-	order.delivery_time = request.json['time']
 
 	# increment timesOrdered field of all food items being ordered
 	for item in order.food_items:
@@ -773,6 +770,15 @@ def order_current(user_id):
 		db.session.commit()
 	return order_schema.jsonify(order)
 
+@app.route("/order/deliveryInfo/<order_id>", methods = ["POST"])
+def order_deliveryInfo(order_id):
+	order = Order.query.get(order_id)
+	order.location = request.json['location']
+	order.date = request.json['date']
+	order.delivery_time = request.json['time']
+	db.session.commit()
+	return order_schema.jsonify(order)
+
 @app.route('/order/addToken/<order_id>/<stripeToken>/<amount>', methods = ["POST"])
 def order_orderedToken(order_id, stripeToken, amount):
 	order = Order.query.get(order_id)
@@ -780,9 +786,6 @@ def order_orderedToken(order_id, stripeToken, amount):
 	order.ordered = True
 	order.name = request.json['name']
 	order.email = request.json['email']
-	order.location = request.json['location']
-	order.date = request.json['date']
-	order.delivery_time = request.json['time']
 	order.stripeToken = stripeToken
 	order.amount = amount
 	# increment timesOrdered field of all food items being ordered
@@ -816,8 +819,8 @@ def order_delete(order_id):
 	db.session.commit()
 	return order_schema.jsonify(order)
 
-# db.create_all()
-# db.session.commit()
+db.create_all()
+db.session.commit()
 
 if __name__ == '__main__':
 	app.run(debug=True, host='0.0.0.0', port=os.environ.get("PORT", 5000))

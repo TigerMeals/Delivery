@@ -72,14 +72,14 @@
                 <div class="service-box mt-5 mx-auto">
                   <i class="fas fa-4x fa-truck text-danger mb-3 sr-icon-4"></i>
                   <h4 class="mb-3 text-primary">Deliver</h4>
-                  <p class="text-primary mb-0">Deliver directly to Princeton campus!</p>
+                  <p class="text-primary mb-0">Deliver directly to the Princeton campus!</p>
                 </div>
               </div>
               <div class="col-lg-3 col-md-6 text-center">
                 <div class="service-box mt-5 mx-auto">
                   <i class="fas fa-4x fa-dollar-sign text-danger mb-3 sr-icon-3"></i>
                   <h4 class="mb-3 text-primary">Profit</h4>
-                  <p class="text-primary mb-0">Gain an increased presence on the Princeton community!</p>
+                  <p class="text-primary mb-0">Gain an increased presence (and increased profits) on the Princeton community!</p>
                 </div>
               </div>
 
@@ -141,7 +141,7 @@
               		  </div>
               		  <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading4">
               			<div class="panel-body px-3 mb-4">
-              			  <p>We process payment through Stripe as well as through cash. Please create a Stripe account to receive your payment.</p>
+              			  <p>We process payment through <a href="https://stripe.com/" class="text-danger">Stripe</a> as well as through cash. Please create a <a href="https://stripe.com/" class="text-danger">Stripe</a> account to receive your payment.</p>
               			</div>
               		  </div>
               		</div>

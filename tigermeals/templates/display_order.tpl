@@ -49,7 +49,7 @@
                     <p class="text-muted">{{order.email}}</p>
                   </div>
                   <div class="row pl-2">
-                  <p class="text-muted">PHONE NUMBER GOES HERE</p>
+                  <p class="text-muted">{{order.phone}}</p>
                   </div>
                 </div>
                 <div class = "col-md-2 order-md-3">
