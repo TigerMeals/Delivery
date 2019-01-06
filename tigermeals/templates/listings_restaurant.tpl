@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TigerMeals Delivery - My Meals</title>
+    <title>TigerMeals Delivery - My Listings</title>
     <link rel='icon' href='/static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
