@@ -64,8 +64,11 @@
             <br><br>
             <h6>Upload a different photo...</h6>
             <form method="post" action="/user/image/update" enctype=multipart/form-data>
+              <hr>
               <input type="file" id = "file" name="image" class="text-center center-block file-upload">
-              <div class="mt-3" align="left"><button id = "save" type="submit" disabled>Save Photo</button></div>
+              <hr>
+              <button id = "save" class="btn btn-info btn-sm text-center center-block" type="submit" disabled>Save Photo</button>
+              <hr>
             </form>
             <div id = "imageError" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>
           </div></hr><br>
@@ -95,7 +98,7 @@
                 <div class="col-6">
                   <h1>{{name}}</h1>
                 </div>
-              
+
               </div>
               <ul class="nav nav-tabs">
                 <li class="active"><a data-toggle="tab" href="#profile" class="mr-2">Profile</a></li>
@@ -404,13 +407,13 @@
           var _URL = window.URL || window.webkitURL;
 
           $("#file").change(function(e) {
-              
+
               var image, file;
 
               if ((file = this.files[0])) {
-                 
+
                   image = new Image();
-                  
+
                   image.onload = function() {
                     if (this.width < 200 || this.height < 200){
                       document.getElementById("imageError").style.visibility = "visible";
