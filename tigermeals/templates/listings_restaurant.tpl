@@ -42,11 +42,17 @@
       <table id="activerestaurantlistings" class="table table-hover table-condensed">
         <thead>
           <tr style="color:black;">
-            <h2 class="float-left">My Active Listings</h2>
-            <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#newListing" aria-label="Close">Create a new listing</button>
-          </tr>
-        </thead>
-        <tbody>
+            <div class="row py-1">
+              <div class="col-md-8 col-sm-12">
+                <h2 class="float-left">My Active Listings</h2>
+              </div>
+              <div class="col-md-4 col-sm-12">
+                <button type="button" class="btn btn-success float-right" data-toggle="modal" data-target="#newListing" aria-label="Close">Create a new listing</button>
+              </div>
+            </div>
+            </tr>
+          </thead>
+          <tbody>
           {% for l in active_listings %}
             {% with listing=l %}
               {% include 'display_listings.tpl' %}

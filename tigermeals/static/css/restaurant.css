@@ -369,6 +369,7 @@ ul.dropdown-cart li .item-right button{
   position: relative;
   display: block;
   padding: 10px 15px;
+}
 /* }
 .nav > li > a:hover,
 .nav > li > a:focus {
@@ -564,4 +565,12 @@ ul.dropdown-cart li .item-right button{
 .transparent-btn {
   border: none;
   background-color: inherit;
+}
+
+a.nav-link {
+   line-height: 1.15
+}
+
+#wrapper {
+  padding-top: 65.53px;
 }
