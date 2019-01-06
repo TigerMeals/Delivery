@@ -32,6 +32,20 @@ cloudinary.config(
 # DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
 DATABASE_URL = "http://localhost:5000"
 
+## PRIVATE METHODS. GET METHOD
+def _getJSON(url):
+    r = requests.get(url=url)
+    data = r.json()
+
+    return (data)
+
+## POST METHOD
+def _postJSON(url, data):
+    r = requests.post(url=url, data=data)
+
+    response = r.json()
+    return response
+
 
 # Endpoint for a page that does not exist for a restaurant
 @app.errorhandler(404)
@@ -397,6 +411,9 @@ def orders():
 
 		order['price'] = price
 		order['packages'] = packages
+
+		order['phone'] = _getJSON(DATABASE_URL + "/user/" + str(order['user_id']))['phone']
+
 		if order['delivered']:
 			delivered.append(order)
 		elif order['paid']:
