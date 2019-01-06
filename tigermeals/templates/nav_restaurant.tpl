@@ -9,7 +9,7 @@
           <a class="nav-link" href="/restaurant/home">Home</a>
         </li>
         <li class="nav-item-bar">
-          <a class="nav-link" href="/listings">My Meals</a>
+          <a class="nav-link" href="/listings">My Listings</a>
         </li>
         <li class="nav-item-bar">
           <a class="nav-link" href="/restaurant/account">My Account</a>
@@ -18,7 +18,10 @@
           <a class="nav-link" href="/orders">View Orders ({{length_orders}} Active)</a>
         </li>
         <li class="nav-item-bar mr-4">
-          <a class="nav-link" href="/restaurant/logout">Logout</a>
+          <a class="nav-link" href="/restaurant/logout">
+            <span class="d-sm-inline d-md-none d-lg-inline"> Logout</span>
+            <span class="fas fa-power-off" style="font-size: 11px"></span>
+          </a>
         </li>
       </ul>
     </div>
