@@ -166,11 +166,10 @@
                           </div>
 
                       </div>
+                      <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" form="checkout_form">Place your order</button></p>
+                      <br>
+                      <br>
                     </form>
-                    <br>
-                    <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" form="checkout_form">Continue to checkout</button></p>
-                    <br>
-                    <br>
                     </div>
                </div>
               </div>
