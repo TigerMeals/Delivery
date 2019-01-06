@@ -1,4 +1,4 @@
-<div class="col-lg-4 col-md-6 mb-4">
+<div class="meal-listing col-lg-4 col-md-6 mb-4">
   <div class="card border-light h-100">
     <a href="#" data-toggle="modal" data-target="#{{meal.food_id}}"><img class="card-img-top" src="{{meal.image}}" alt=""></a>
     <div class="card-body">
