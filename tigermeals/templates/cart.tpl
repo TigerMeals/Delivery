@@ -132,6 +132,7 @@
   		</table>
 		</div>
 
+<form id="deliveryInfo" action="/checkout" method="post" class="form mt-3">
     <div class="container-fluid container">
       <div class="row">
         <div class="col-12">
@@ -178,10 +179,11 @@
           <a href="/meals" class="btn btn-outline-primary"><i class="fa fa-angle-left"></i> Continue Shopping</a>
         </div>
         <div class="col-6 justify-content-right text-right">
-          <a href="/checkout" class="text-right btn btn-success">Go to payment <i class="fa fa-angle-right"></i></a>
+          <button type="submit" class="text-right btn btn-success">Go to payment <i class="fa fa-angle-right"></i></button>
         </div>
       </div>
     </div>
+  </form>
 
     <!-- Footer -->
     <footer class="py-4 red-bar">
