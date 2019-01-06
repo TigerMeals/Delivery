@@ -9,7 +9,7 @@
           <a class="nav-link" href="/restaurant/home">Home</a>
         </li>
         <li class="nav-item-bar">
-          <a class="nav-link" href="/listings">My Meals</a>
+          <a class="nav-link" href="/listings">My Listings</a>
         </li>
         <li class="nav-item-bar">
           <a class="nav-link" href="/restaurant/account">My Account</a>
