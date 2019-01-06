@@ -182,8 +182,8 @@
               <div class="col-8">
                 <p class="mt-0 mb-0">{{hours[12]}} - {{hours[13]}}</p>
               </div>
-              <div class="col-12">
-                <a class="btn btn-info" href="/restaurant/account">Back to my account details</a>
+              <div class="col-12 mt-4">
+                <a class="btn btn-outline-primary" href="/restaurant/account">Back to my account details</a>
               </div>
           </div>
         </div>
