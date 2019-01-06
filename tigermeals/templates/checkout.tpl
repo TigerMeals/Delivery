@@ -37,7 +37,7 @@
               <h2 class='text-primary'>Checkout</h2>
               <p>Please review your order below and proceed with payment. We thank you for shopping with TigerMeals Delivery.</p>
             </div>
-            
+
               <div class="products">
                 <h3 class="title">Review Your Order</h3>
                 {% for i in range(0, length_cart) %}
@@ -45,15 +45,17 @@
                   <span class="price"><span id ="money{{food_ids[i]}}"onload="editPrices()"class="text-muted"></span></span>
                   <p class="item-name">{{food_titles[i]}} x {{food_multiplier[i]}}</p>
                   <p class="item-description">{{food_descriptions[i]}}</p>
-                  <p class="item-description">INSERT CUSTOMIZATION HERE ONLY IF IT EXISTS</p>
+                  {% if customizations[i] != 'N/A' %}
+                  <p class="item-description">{{customizations[i]}}</span>
+                  {% endif %}
                 </div>
                 <script>
                   var val = parseFloat({{food_prices[i]}}).toFixed(2);
                   document.getElementById('money{{food_ids[i]}}').innerHTML = "$" + val
                 </script>
                 {% endfor %}
-                <div class="subtotal">Subtotal<span class="price">{{food_subtotals[i]}}</span></div>
-                <div class="delivery_fee">Delivery Fee<span class="price">$5.00</span></div>
+                <!-- <div class="subtotal">Subtotal<span class="price">{{food_subtotals[i]}}</span></div> -->
+
                 <div class="total">Total<span class="price">${{total}}0<span id="CheckoutSumTotal"></span></span></div>
               </div>
 
@@ -159,7 +161,7 @@
                           <p><button class="btn btn-primary btn-lg btn-block" type="submit" id = "checkout_button" form="checkout_form">Place your order</button></p>
 
                       </div>
-                      
+
                       <br>
                       <br>
                     </form>
@@ -167,7 +169,7 @@
                </div>
               </div>
               </div>
-           
+
           </div>
         </section>
       </main>

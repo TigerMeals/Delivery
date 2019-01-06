@@ -102,8 +102,8 @@
                   <!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
                 </div>
                 <div class="col-12 pl-3 pr-3">
-                  {% if customizations[i] %}
-                  Customizations: <span class="text-muted">{{customizations[i]}}</span>
+                  {% if customizations[i] != 'N/A' %}
+                  <span class="text-muted">{{customizations[i]}}</span>
                   {% endif %}
                 </div>
                 <div class="col-12 pl-0 pr-3 right-align-text">
@@ -119,7 +119,7 @@
               <hr>
               <div class="row mr-0 ml-0">
                 <div class="col-7 pr-0">
-                  Item Subtotal:
+                  Order Total:
                 </div>
                 <div class="col-5 pl-0 pr-3 right-align-text">
                   <span id="total"></span>
@@ -131,16 +131,16 @@
                 </div>
               </div>
 
-              <div class="row mr-0 ml-0">
+              <!-- <div class="row mr-0 ml-0">
                 <div class="col-7 pr-0">
                   Delivery Fee:
                 </div>
                 <div class="col-5 pr-3 right-align-text">
                   $5.00
                 </div>
-              </div>
+              </div> -->
 
-              <div class="row mr-0 ml-0">
+              <!-- <div class="row mr-0 ml-0">
                 <div class="col-7 pr-0">
                   Order Total:
                 </div>
@@ -153,7 +153,7 @@
                     document.getElementById('orderTotal').innerHTML = "$" + valTotal;
                   </script>
                 </div>
-              </div>
+              </div> -->
             </div>
 
             <div class="row justify-content-center">

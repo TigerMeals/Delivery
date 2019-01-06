@@ -58,6 +58,9 @@
   							<div class="col-sm-7">
   								<h4 class="px-4">{{food_titles[i]}}</h4>
   								<p class="px-4">{{food_descriptions[i]}}</p>
+                  {% if customizations[i] != 'N/A' %}
+                  <span class="px-4 text-muted">{{customizations[i]}}</span>
+                  {% endif %}
   							</div>
   						</div>
   					</td>
