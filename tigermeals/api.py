@@ -663,11 +663,12 @@ class Order(db.Model):
 	location = db.Column(db.Unicode, unique = False)
 	stripeToken = db.Column(db.Unicode, unique = True)
 	amount = db.Column(db.Unicode, unique = False)
+	rating = db.Column(db.Integer, unique = False)
 
 	def __init__(self, user_id, food_items, restaurant_id, \
 		date, order_time, location , delivery_time = None, \
 		ordered = False, paid = False, delivery_in_process = False, \
-		delivered = False, name = None, email = None, address = None, stripeToken=None,amount=None):
+		delivered = False, name = None, email = None, address = None, stripeToken=None,amount=None, rating=None):
 		self.user_id = user_id
 		self.food_items = food_items
 		self.restaurant_id = restaurant_id
@@ -685,7 +686,7 @@ class Order(db.Model):
 
 class OrderSchema(ma.Schema):
 	class Meta:
-		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address','stripeToken','amount')
+		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address','stripeToken','amount', 'rating')
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many = True)
