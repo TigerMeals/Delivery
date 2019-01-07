@@ -7,6 +7,8 @@ import hashlib
 import json
 from tigermeals import app
 from threading import Timer
+from tigermeals.mail_html import user_denied_html, rest_denied_html
+from flask_mail import Mail,  Message
 
 # Which database to fetch from:
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -16,8 +18,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'tigermealsdelivery@gmail.com'
+app.config['MAIL_PASSWORD'] = 'aksnpqtutouldhna'
+mail = Mail(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+
 
 # The secure key that someone needs to use the POST methods.
 SECURE_DATABASE_KEY = "sdjfhs24324[][p][}}P`092`)*@))@31DSDA&ASD{}[][]w]%%332"
@@ -722,9 +731,30 @@ def order_delivered(order_id):
 def cancel48(order_id):
 	order = Order.query.get(order_id)
 
+	user_email = order.email
+
+	restaurant_email = Restaurant.query.get(order.restaurant_id).email
+
 	if not order.delivery_in_process:
 		db.session.delete(order)
 		db.session.commit()
+
+		# Send an email to the user
+		msg = mail.send_message(
+		'Your TigerMeals Delivery order was denied.',
+		sender='tigermealsdelivery@gmail.com',
+		recipients=[user_email],
+		html=user_denied_html())
+
+
+
+		# Send email to restaurant
+		msg = mail.send_message(
+		'Denied TigerMeals Delivery order request!',
+		sender='tigermealsdelivery@gmail.com',
+		recipients=[restaurant_email],
+		html=rest_denied_html())
+
 		return order_schema.jsonify(order)
 
 # Endpoint to place an order
@@ -746,6 +776,7 @@ def order_ordered(order_id):
 	db.session.commit()
 
 	#Delete after 48 hours if it doesn't get approved
+	# 172800 seconds in 48 hours
 	t = Timer(172800, cancel48, [order_id])
 	t.start()
 
