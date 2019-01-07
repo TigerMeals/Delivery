@@ -213,7 +213,7 @@ class Restaurant(db.Model):
 class RestaurantSchema(ma.Schema):
 	class Meta:
 		fields = ('restaurant_id', 'name', 'image', 'description', 'address', 'phone', 'cuisine', 'servingSize', 'hours',\
-			'website', 'email', 'password', 'primaryFirstName', 'primaryLastName', 'primaryEmail', 'primaryPhone', \
+			'website', 'email', 'primaryFirstName', 'primaryLastName', 'primaryEmail', 'primaryPhone', \
 			'secondaryFirstName', 'secondaryLastName', 'secondaryEmail', 'secondaryPhone')
 restaurant_schema = RestaurantSchema()
 restaurants_schema = RestaurantSchema(many = True)
