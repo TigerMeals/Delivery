@@ -299,7 +299,7 @@ def checkout():
     print(order_date)
 
     return render_template('checkout.tpl', user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
+        food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,location=location,delivery_date=date,\
         food_quantity_feds=food_quantity_feds, food_images=food_images, empty_cart=empty_cart,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
         email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, customizations=customizations, key = stripe_keys['publishable_key'], order_id=order_id)
