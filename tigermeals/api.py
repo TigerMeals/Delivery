@@ -664,11 +664,12 @@ class Order(db.Model):
 	location = db.Column(db.Unicode, unique = False)
 	stripeToken = db.Column(db.Unicode, unique = True)
 	amount = db.Column(db.Unicode, unique = False)
+	denied = db.Column(db.Boolean, unique = False)
 
 	def __init__(self, user_id, food_items, restaurant_id, \
 		date, order_time, location , delivery_time = None, \
 		ordered = False, paid = False, delivery_in_process = False, \
-		delivered = False, name = None, email = None, address = None, stripeToken=None,amount=None):
+		delivered = False, name = None, email = None, address = None, stripeToken=None,amount=None, denied = False):
 		self.user_id = user_id
 		self.food_items = food_items
 		self.restaurant_id = restaurant_id
@@ -686,7 +687,7 @@ class Order(db.Model):
 
 class OrderSchema(ma.Schema):
 	class Meta:
-		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address','stripeToken','amount')
+		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address','stripeToken','amount', 'denied')
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many = True)
@@ -757,6 +758,19 @@ def order_ordered(order_id):
 # IMPORTANT: No extra steps are needed! No need to serialize before passing to
 # this function as long as request type is JSON.
 #
+
+@app.route("/order/deny/<order_id>", methods = ["PUT"])
+def order_denied(order_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
+	order = Order.query.get(order_id)
+
+	order.denied = True
+
+	db.session.commit()
+
+	return order_schema.jsonify(order)
+
 @app.route("/order", methods = ["POST"])
 def order_add():
 	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:

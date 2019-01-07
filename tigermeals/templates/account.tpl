@@ -479,9 +479,15 @@
                             document.getElementById("price{{order['order_id']}}").innerHTML = val;
                           </script>
 
+                        {% if not order['denied'] %}
                         <div class="row pr-2">
                           <h6 class="mt-1 mb-0 float-right">Status: <br> Completed</h6>
                         </div>
+                        {% else %}
+                        <div class="row pr-2">
+                          <h6 class="mt-1 mb-0 float-right">Status: <br> Denied</h6>
+                        </div>
+                        {% endif %}
 
                       </div>
                     </div>

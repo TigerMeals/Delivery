@@ -349,15 +349,18 @@ def account():
         if order['restaurant_id'] not in past_restaurants:
             past_restaurants.append(order['restaurant_id'])
 
-        if not order['paid']:
+        if not order['paid'] and not order['denied']:
             pending_order.append(order)
             #print("hello there how are you")
             #print(order['date'])
 
-        elif order['paid'] and order['delivery_in_process']:
+        elif order['paid'] and order['delivery_in_process'] and not order['denied']:
             inprogress_orders.append(order)
 
-        elif order['paid'] and not order['delivery_in_process'] and order['delivered']:
+        elif order['paid'] and not order['delivery_in_process'] and order['delivered'] and not order['denied']:
+            history_orders.append(order)
+
+        elif order['denied']:
             history_orders.append(order)
 
         price = 0
@@ -376,6 +379,7 @@ def account():
 
     print("HISTORY -----------------------------------------------------")
     print(history_orders)
+
 
     number_different_rest = len(past_restaurants)
 

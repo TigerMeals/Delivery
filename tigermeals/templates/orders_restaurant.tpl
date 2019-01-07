@@ -46,6 +46,7 @@
         <li class="active nav-item"><a data-toggle="tab" href="#pending">Pending</a></li>
         <li class="nav-item"><a data-toggle="tab" href="#active">Active</a></li>
         <li class="nav-item"><a data-toggle="tab" href="#delivered" >Delivered</a></li>
+        <li class="nav-item"><a data-toggle="tab" href="#denied" >Denied</a></li>
       </ul>
       <div class="tab-content">
         <div id="pending" class="tab-pane fade show active">
@@ -144,6 +145,38 @@
                     {% include 'order_modals.tpl' %}
                   {% endwith %}
                 {% endfor %}
+          </div>
+          <div id="denied" class="tab-pane fade">
+          <br>
+          <table id="deniedorders" class="table table-hover table-condensed">
+              <thead>
+                <tr style="color:black;">
+                    <h2>Denied Orders</h2>
+                </tr>
+              </thead>
+              <tbody>
+                {% for o in denied %}
+                  {% with order=o %}
+                    {% include 'display_order.tpl' %}
+                  {% endwith %}
+                {% endfor %}
+
+                {% if not denied[0] %}
+                <tr>
+                  <td>
+                    <p class="text-primary float-left">You do not have any rejected orders at this time. </p>
+                  </td>
+                </tr>
+                {% endif %}
+                </tbody>
+                <tfoot>
+                </tfoot>
+              </table>
+              {% for o in denied %}
+                {% with order=o %}
+                  {% include 'order_modals.tpl' %}
+                {% endwith %}
+              {% endfor %}
           </div>
         </div>
 		  </div>

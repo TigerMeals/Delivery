@@ -109,7 +109,7 @@
                     <button class="btn btn-success type=" type="submit" form="delivered{{order.order_id}}">Delivered</button>
                   </div>
                 </div>
-                {% elif not order.paid and not order.delivered %}
+                {% elif not order.paid and not order.delivered and not order.denied %}
                 <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
                   <input type="hidden" name="order_id" value="{{order.order_id}}">
                 </form>
@@ -134,7 +134,11 @@
                   </div>
                 </div>
                 {% else %}
-
+                <div class="col-12">
+                  <div class="text-center item-right">
+                    <a href="mailto:{{email}}"><button class="btn btn-info" >Contact Restaurant</button></a>
+                  </div>
+                </div>
                 {% endif %}
                 {% else %}
                 <div class="col-12">
