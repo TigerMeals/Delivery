@@ -14,8 +14,8 @@ from flask_mail import Mail,  Message
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
@@ -31,13 +31,13 @@ ma = Marshmallow(app)
 # The secure key that someone needs to use the POST methods.
 SECURE_DATABASE_KEY = "sdjfhs24324[][p][}}P`092`)*@))@31DSDA&ASD{}[][]w]%%332"
 
-def asyncFunction(f):
+def async(f):
 	def wrapper(*args, **kwargs):
 		thr = Thread(target = f, args = args, kwargs = kwargs)
 		thr.start()
 	return wrapper
 
-@asyncFunction
+@async
 def send_async_email(msg):
 	with app.app_context():
 		mail.send(msg)
@@ -690,7 +690,7 @@ class Order(db.Model):
 	def __init__(self, user_id, food_items, restaurant_id, \
 		date, order_time, location , delivery_time = None, \
 		ordered = False, paid = False, delivery_in_process = False, \
-		delivered = False, name = None, email = None, address = None, stripeToken=None,amount=None, rating=None, delivery_instructions=None, denied = False):
+		delivered = False, name = None, email = None, address = None, stripeToken=None,amount=None, rating=None, delivery_instructions=None, denied=False):
 		self.user_id = user_id
 		self.food_items = food_items
 		self.restaurant_id = restaurant_id
@@ -706,7 +706,7 @@ class Order(db.Model):
 		self.location = location
 		self.delivery_time = delivery_time
 		self.rating = rating
-		self.delivery_instructions = delivery_instructions
+		self.delivery_instructions = delivery_instructionss
 
 class OrderSchema(ma.Schema):
 	class Meta:
@@ -727,7 +727,6 @@ def order_approval(order_id):
 
 	db.session.commit()
 	return order_schema.jsonify(order)
-
 
 # Endpoint that they delivered the order
 @app.route('/order/delivered/<order_id>', methods = ["POST"])
@@ -864,7 +863,6 @@ def order_detail(order_id):
 	order = Order.query.get(order_id)
 	return order_schema.jsonify(order)
 
-
 # Endpoint to return orders from a restuarant
 #
 # To retrieve food_items in JSON format as a dictionary, get the dictionary by
@@ -942,6 +940,15 @@ def order_orderedToken(order_id, stripeToken, amount):
 
 	return order_schema.jsonify(order)
 
+@app.route('/order/rateExperience/<order_id>', methods = ["POST"])
+def order_rateExperience(order_id):
+	order = Order.query.get(order_id)
+	order.rating = request.json['rating']
+
+	db.session.commit()
+	return order_schema.jsonify(order)
+
+
 # Endpoint to delete a food item from a particular order
 @app.route("/order/delete/<order_id>", methods=["PUT"])
 def order_food_delete(order_id):
@@ -953,16 +960,6 @@ def order_food_delete(order_id):
 
 	if food_items == []:
 		order.restaurant_id = -1
-
-	db.session.commit()
-	return order_schema.jsonify(order)
-
-@app.route('/order/rateExperience/<order_id>', methods = ["POST"])
-def order_rateExperience(order_id):
-	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
-		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
-	order = Order.query.get(order_id)
-	order.rating = request.json['rating']
 
 	db.session.commit()
 	return order_schema.jsonify(order)

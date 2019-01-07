@@ -62,7 +62,6 @@
             </div>
           </div>
 
-         {%if avgRating%}
           <div class="row">
             <div class="col-4">
               <h6 class="mt-1 mb-0">Average User Rating</h6>
@@ -71,7 +70,6 @@
               <p>{{avgRating}}</p>
             </div>
           </div>
-        {% endif %}
 
           <div class="row">
             <div class="col-4">
