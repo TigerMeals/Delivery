@@ -135,7 +135,7 @@
                           </div>
                         </div>
                         <div class="row">
-                          <div class="form-group col-6">
+                          <div class="form-group col-sm-12 col-md-6">
 
                               <div class="col-12">
                                   <label for="phone"><h5>Phone</h5></label>
@@ -143,7 +143,7 @@
                               </div>
                           </div>
 
-                          <div class="form-group col-6">
+                          <div class="form-group col-sm-12 col-md-6">
                               <div class="col-12">
                                  <label for="website"><h5>Website</h5></label>
                                   <input type="text" class="form-control" name="website" id="website" value="{{website}}" title="enter your website if any.">
@@ -152,14 +152,14 @@
                         </div>
 
                         <div class="row">
-                          <div class="form-group col-6">
+                          <div class="form-group col-sm-12 col-md-6">
 
                               <div class="col-12">
                                   <label for="email"><h5>Email</h5></label>
                                   <input type="email" class="form-control" name="email" id="email" value="{{email}}" title="enter your email.">
                               </div>
                           </div>
-                          <div class="form-group col-6">
+                          <div class="form-group col-sm-12 col-md-6">
 
                               <div class="col-12">
                                   <label for="address"><h5>Address</h5></label>
