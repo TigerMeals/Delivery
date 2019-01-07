@@ -68,10 +68,14 @@
               <h6 class="mt-1 mb-0">Average User Rating</h6>
             </div>
             <div class="col-8">
-              <p>{{avgRating}}</p>
+              <p><span id="rating"></span></p>
             </div>
           </div>
+          <script>
+          document.getElementById("rating").innerHTML = parseFloat({{avgRating}}).toFixed(1)
+          </script>
         {% endif %}
+
 
           <div class="row">
             <div class="col-4">

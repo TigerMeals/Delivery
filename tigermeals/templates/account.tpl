@@ -485,11 +485,11 @@
                                 <label for="rating4">4</label>
                                 <input type="radio" class="radio" name="rating" value="5" id="{{order['order_id']}}rating5" onclick="enableSave()"/>
                                 <label for="rating5">5 (Excellent)</label>
-                                <button id ="saveRating{{order['order_id']}}" type="submit" disabled> Save Rating </button>
+                                <button class="btn btn-outline-primary btn-sm text-center center-block my-2" id ="saveRating{{order['order_id']}}" type="submit" disabled> Save Rating </button>
                               </form>
                         </div>
                       </div>
-                      
+
                     </div>
                     <script>
 
@@ -497,18 +497,18 @@
                         document.getElementById("{{order['order_id']}}rating1").checked = true;
                       }
                       else if ({{order['rating']}} == 2){
-                        document.getElementById("{{order['order_id']}}rating2").checked = true;                        
+                        document.getElementById("{{order['order_id']}}rating2").checked = true;
                       }
                       else if ({{order['rating']}} == 3){
-                        document.getElementById("{{order['order_id']}}rating3").checked = true;                         
+                        document.getElementById("{{order['order_id']}}rating3").checked = true;
                       }
                       else if ({{order['rating']}} == 4){
-                        document.getElementById("{{order['order_id']}}rating4").checked = true;  
-                        
+                        document.getElementById("{{order['order_id']}}rating4").checked = true;
+
                       }
                       else if ({{order['rating']}} == 5){
-                        document.getElementById("{{order['order_id']}}rating5").checked = true;  
-                        
+                        document.getElementById("{{order['order_id']}}rating5").checked = true;
+
                       }
                       function enableSave(){
                         document.getElementById("saveRating{{order['order_id']}}").disabled = false;
