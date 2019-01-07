@@ -562,7 +562,6 @@ def profil_update():
     description = request.form['description']
     phone = request.form['phone']
     website = request.form['website']
-    email = request.form['email']
     address = request.form['location']
 
     """if 'image' in request.files:
@@ -582,7 +581,6 @@ def profil_update():
     	"description": description,
     	"phone": phone,
     	"website": website,
-    	"email": email,
     	"location": address,
     "key": SECURE_DATABASE_KEY
         #"image": imgurl

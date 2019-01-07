@@ -423,7 +423,6 @@ def restaurant_profile(restaurant_id):
 	restaurant.description = request.json['description']
 	restaurant.phone = request.json['phone']
 	restaurant.website = request.json['website']
-	restaurant.email = request.json['email']
 	restaurant.address = request.json['location']
 	#restaurant.image = request.json['image']
 
