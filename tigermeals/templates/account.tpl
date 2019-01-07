@@ -57,7 +57,7 @@
     <!-- Page Content -->
     <div class="container-fluid container">
         <div class="row mb-4">
-          <div class="col-sm-3"><!--left col-->
+          <div class="col-sm-12 col-lg-3"><!--left col-->
 
 
           <div class="text-center">

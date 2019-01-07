@@ -32,6 +32,9 @@ cloudinary.config(
 # DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
 DATABASE_URL = "http://localhost:5000"
 
+# The secure key that someone needs to use the POST methods.
+SECURE_DATABASE_KEY = "sdjfhs24324[][p][}}P`092`)*@))@31DSDA&ASD{}[][]w]%%332"
+
 ## PRIVATE METHODS. GET METHOD
 def _getJSON(url):
     r = requests.get(url=url)
@@ -76,7 +79,8 @@ def view():
 	restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
 	email = {
-		"email": str(username)
+		"email": str(username),
+		"key": SECURE_DATABASE_KEY
 	}
 
 	res = requests.post(restaurant_info_url, json = email)
@@ -160,7 +164,7 @@ def reset_upload():
     new_password = randompassword()
     # lookup by email
     lookup_email_url = DATABASE_URL + "/restaurant/email"
-    res = requests.post(lookup_email_url, json={"email": email})
+    res = requests.post(lookup_email_url, json={"email": email, "key": SECURE_DATABASE_KEY})
     if not res.ok:
         res.raise_for_status()
 
@@ -169,7 +173,8 @@ def reset_upload():
 
     rest_id = json.loads(res.content)['restaurant_id']
     update_pass_url = DATABASE_URL + "/restaurant/password/" + str(rest_id)
-    requests.put(update_pass_url, json={"password": new_password})
+    requests.put(update_pass_url, json={"password": new_password,
+    "key": SECURE_DATABASE_KEY})
     if not res.ok:
         res.raise_for_status()
 
@@ -226,7 +231,8 @@ def register_upload():
 	"cuisine": cuisine,
 	"servingSize": "100",
 	"address": request.form['address'],
-	"hours": hours
+	"hours": hours,
+	"key": SECURE_DATABASE_KEY
 	}
 
 	if request.form['primaryFirstName'] is not None:
@@ -266,7 +272,8 @@ def login():
 
 	login_query = {
 		"email": request.form['email'],
-		"password": request.form['password']
+		"password": request.form['password'],
+	"key": SECURE_DATABASE_KEY
 	}
 
 	login_url = DATABASE_URL + '/restaurant/login'
@@ -303,7 +310,8 @@ def home_restaurant():
 		restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
 		email = {
-			"email": str(username)
+			"email": str(username),
+	"key": SECURE_DATABASE_KEY
 		}
 
 		res = requests.post(restaurant_info_url, json = email)
@@ -339,7 +347,8 @@ def about_restaurant():
 	restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
 	email = {
-		"email": str(username)
+		"email": str(username),
+	"key": SECURE_DATABASE_KEY
 	}
 
 	res = requests.post(restaurant_info_url, json = email)
@@ -374,7 +383,8 @@ def orders():
 	restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
 	email = {
-		"email": str(username)
+		"email": str(username),
+	"key": SECURE_DATABASE_KEY
 	}
 
 	res = requests.post(restaurant_info_url, json = email)
@@ -437,7 +447,8 @@ def account_restaurant():
 	restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
 	email = {
-		"email": str(username)
+		"email": str(username),
+	"key": SECURE_DATABASE_KEY
 	}
 
 	res = requests.post(restaurant_info_url, json = email)
@@ -531,7 +542,8 @@ def profil_update():
     restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
     email = {
-    	"email": str(username)
+    	"email": str(username),
+	"key": SECURE_DATABASE_KEY
     }
 
     res = requests.post(restaurant_info_url, json = email)
@@ -569,6 +581,7 @@ def profil_update():
     	"website": website,
     	"email": email,
     	"location": address,
+    "key": SECURE_DATABASE_KEY
         #"image": imgurl
     }
 
@@ -586,7 +599,8 @@ def image_update():
 	restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
 	email = {
-		"email": str(username)
+		"email": str(username),
+	"key": SECURE_DATABASE_KEY
 	}
 
 	res = requests.post(restaurant_info_url, json = email)
@@ -673,20 +687,22 @@ def image_update():
 					length_listings=length_listings, email=email, website=website, errorImage="Image width and height must be at least 200 pixels!")
 			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=200, height=200, format = response['format'],  gravity = "auto", crop = "fill", quality = 100, effect="sharpen")
 			#updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
-			updateImage = {"image": imgurl}
+			updateImage = {"image": imgurl,
+	"key": SECURE_DATABASE_KEY}
 			update_image_url = DATABASE_URL + "/restaurant/image/" + str(id)
 			requests.post(update_image_url, json=updateImage)
 	return redirect(url_for('account_restaurant'))
 
 @app.route("/restaurant/image/registrationUpdate", methods=["POST"])
 def image_update_registration():
-    #username = session['username']
+    username = session['username']
 
-    #restaurant_info_url = DATABASE_URL + "/restaurant/email"
+    restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
-    #email = {
-    #    "email": str(username)
-    #}
+    email = {
+       "email": str(username),
+	"key": SECURE_DATABASE_KEY
+    }
 
     res = requests.post(restaurant_info_url, json = email)
     if not res.ok:
@@ -700,7 +716,8 @@ def image_update_registration():
             response = cloudinary.uploader.upload(img)
             imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
-            updateImage = {"image": imgurl}
+            updateImage = {"image": imgurl,
+	"key": SECURE_DATABASE_KEY}
             update_image_url = DATABASE_URL + "/restaurant/image/" + str(id)
             requests.post(update_image_url, json=updateImage)
     return render_template('create_account_restaurant.tpl', image=imgurl)
@@ -717,7 +734,8 @@ def restaurant_account_update():
 	restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
 	email = {
-		"email": str(username)
+		"email": str(username),
+	"key": SECURE_DATABASE_KEY
 	}
 
 	res = requests.post(restaurant_info_url, json = email)
@@ -753,7 +771,8 @@ def restaurant_account_update():
 			"lastSec": lastSec,
 			"emailSec": emailSec,
 			"phoneSec": phoneSec,
-			"password": password
+			"password": password,
+    "key": SECURE_DATABASE_KEY
 		}
 	else:
 		info = {
@@ -764,7 +783,8 @@ def restaurant_account_update():
 			"firstSec": firstSec,
 			"lastSec": lastSec,
 			"emailSec": emailSec,
-			"phoneSec": phoneSec
+			"phoneSec": phoneSec,
+    "key": SECURE_DATABASE_KEY
 		}
 
 	update_url = DATABASE_URL + "/restaurant/account/" + str(id)
@@ -788,7 +808,8 @@ def listings():
 	restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
 	email = {
-		"email": str(username)
+		"email": str(username),
+	"key": SECURE_DATABASE_KEY
 	}
 
 	res = requests.post(restaurant_info_url, json = email)
@@ -858,7 +879,8 @@ def add_listing():
     restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
     email = {
-        "email": str(username)
+        "email": str(username),
+	"key": SECURE_DATABASE_KEY
     }
 
     res = requests.post(restaurant_info_url, json = email)
@@ -889,6 +911,7 @@ def add_listing():
         "restaurant_id": id,
         "cuisine": "IMPLEMENT_LATER",
         "timesOrdered": 0,
+	"key": SECURE_DATABASE_KEY
     }
     # Replace default image with uploaded image if it exists
     # TODO: Replace with image upload to remote server
@@ -905,7 +928,8 @@ def add_listing():
 
             imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 200, height = 200, gravity = "auto", crop = "fill", transformation = [{"quality":100}, {"effect": "improve"}])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
-            updateImage = {"image": imgurl}
+            updateImage = {"image": imgurl,
+	"key": SECURE_DATABASE_KEY}
             update_image_url = DATABASE_URL + "/food/image/" + str(json.loads(res.content)['food_id'])
             requests.post(update_image_url, json=updateImage)
 
@@ -924,7 +948,8 @@ def update_listing():
     restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
     email = {
-        "email": str(username)
+        "email": str(username),
+	"key": SECURE_DATABASE_KEY
     }
 
     res = requests.post(restaurant_info_url, json = email)
@@ -953,6 +978,7 @@ def update_listing():
         "quantity_fed": request.form.get('quantity'),
         "price": request.form.get('price'),
         "allergies": allergens,
+    "key": SECURE_DATABASE_KEY
         }
 
     # Replace default image with uploaded image if it exists
@@ -987,7 +1013,8 @@ def toggle_active():
 	restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
 	email = {
-		"email": str(username)
+		"email": str(username),
+	"key": SECURE_DATABASE_KEY
 	}
 
 	res = requests.post(restaurant_info_url, json = email)
@@ -999,7 +1026,8 @@ def toggle_active():
 
 	food_id = request.form.get('food_id')
 	toggle_food_url = DATABASE_URL + "/food/toggle_active/" + food_id
-	res = requests.post(toggle_food_url)
+	res = requests.post(toggle_food_url, json={
+	"key": SECURE_DATABASE_KEY})
 	if not res.ok:
 		res.raise_for_status()
 	return redirect('/listings')
@@ -1017,7 +1045,8 @@ def order_deny_rest():
 	restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
 	email = {
-		"email": str(username)
+		"email": str(username),
+	"key": SECURE_DATABASE_KEY
 	}
 
 	res = requests.post(restaurant_info_url, json = email)
@@ -1063,7 +1092,8 @@ def order_approve_rest():
     restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
     email = {
-        "email": str(username)
+        "email": str(username),
+	"key": SECURE_DATABASE_KEY
     }
 
     res = requests.post(restaurant_info_url, json = email)
@@ -1076,7 +1106,8 @@ def order_approve_rest():
     order_id = request.form.get('order_id')
     approve_order_url = DATABASE_URL + "/order/approval/" + order_id
 
-    res = requests.post(approve_order_url)
+    res = requests.post(approve_order_url, json = {
+	"key": SECURE_DATABASE_KEY})
     if not res.ok:
         res.raise_for_status()
         return None
@@ -1141,7 +1172,8 @@ def order_delivered_rest():
 	restaurant_info_url = DATABASE_URL + "/restaurant/email"
 
 	email = {
-		"email": str(username)
+		"email": str(username),
+	"key": SECURE_DATABASE_KEY
 	}
 
 	res = requests.post(restaurant_info_url, json = email)
@@ -1153,7 +1185,8 @@ def order_delivered_rest():
 
 	order_id = request.form.get('order_id')
 	delivered_order_url = DATABASE_URL + "/order/delivered/" + order_id
-	res = requests.post(delivered_order_url)
+	res = requests.post(delivered_order_url, json={
+	"key": SECURE_DATABASE_KEY})
 	if not res.ok:
 		res.raise_for_status()
 
