@@ -835,7 +835,7 @@ def restaurant_view():
     print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, customizations, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
 
 
     restaurants_url = DATABASE_URL + "/restaurant"
@@ -976,7 +976,7 @@ def meals_restaurant(restaurant_id):
     print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
 
     restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
     res = requests.get(restaurant_url)
