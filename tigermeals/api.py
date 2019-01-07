@@ -745,7 +745,7 @@ def order_ordered(order_id):
 	db.session.commit()
 
 	#Delete after 48 hours if it doesn't get approved
-	t = Timer(3, cancel48, [order_id])
+	t = Timer(172800, cancel48, [order_id])
 	t.start()
 
 	return order_schema.jsonify(order)
