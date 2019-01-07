@@ -401,6 +401,13 @@
 
     </div>
 
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="/static/dist/bootstrap-clockpicker.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
     <script>
           var _URL = window.URL || window.webkitURL;
 
