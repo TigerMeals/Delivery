@@ -40,7 +40,7 @@
         <div class="col-lg-3">
           <div class="sticky-top">
 
-          <h2 class="mt-0 mb-3">Restaurants</h2>
+          <h2 class="mt-0 mb-3 meals-title-rest">Restaurants</h2>
           <h4>Filter by</h4>
 
           <div class="accordion" id="accordionExample">
@@ -114,7 +114,7 @@
 
             <div class="card border-white bg-transparent">
               <div class="card-header border-white bg-transparent">
-                 <a href="/meals" class="btn btn-outline-primary btn-block my-2 my-sm-0 text-center">View by Meals</a>
+                 <a href="/meals" class="btn btn-outline-primary btn-block my-2 my-sm-0 text-center btn-view">View by Meals</a>
               </div>
             </div>
 
@@ -162,7 +162,7 @@
               {% else %}
               <span class="ml-0 mt-0">({{restaurants_length}} results)</span>
               {% endif %}
-              
+
               <!-- <h2>Restaurants</h2> -->
               <!-- <h4 class="ml-1">{{restaurants_length}} results</h4> -->
             </div>
@@ -180,7 +180,7 @@
                       <!--end of col-->
                       <div class="col-auto">
                           <button class="btn-sm btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                          
+
                       </div>
                       {% if error %}
                       <div class="col-12 text-danger mt-2">{{error}}</div>
