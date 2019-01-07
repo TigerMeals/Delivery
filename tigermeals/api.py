@@ -664,11 +664,12 @@ class Order(db.Model):
 	stripeToken = db.Column(db.Unicode, unique = True)
 	amount = db.Column(db.Unicode, unique = False)
 	rating = db.Column(db.Integer, unique = False)
+	delivery_instructions = db.Column(db.Unicode, unique=False)
 
 	def __init__(self, user_id, food_items, restaurant_id, \
 		date, order_time, location , delivery_time = None, \
 		ordered = False, paid = False, delivery_in_process = False, \
-		delivered = False, name = None, email = None, address = None, stripeToken=None,amount=None, rating=None):
+		delivered = False, name = None, email = None, address = None, stripeToken=None,amount=None, rating=None, delivery_instructions=None):
 		self.user_id = user_id
 		self.food_items = food_items
 		self.restaurant_id = restaurant_id
@@ -683,10 +684,12 @@ class Order(db.Model):
 		self.order_time = order_time
 		self.location = location
 		self.delivery_time = delivery_time
+		self.rating = rating
+		self.delivery_instructions = delivery_instructions
 
 class OrderSchema(ma.Schema):
 	class Meta:
-		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address','stripeToken','amount', 'rating')
+		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address','stripeToken','amount', 'rating', 'delivery_instructions')
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many = True)
@@ -836,6 +839,7 @@ def order_deliveryInfo(order_id):
 	order.location = request.json['location']
 	order.date = request.json['date']
 	order.delivery_time = request.json['time']
+	order.delivery_instructions = request.json['instructions']
 	db.session.commit()
 	return order_schema.jsonify(order)
 
@@ -858,6 +862,15 @@ def order_orderedToken(order_id, stripeToken, amount):
 	db.session.commit()
 
 	return order_schema.jsonify(order)
+
+@app.route('/order/rateExperience/<order_id>', methods = ["POST"])
+def order_rateExperience(order_id):
+	order = Order.query.get(order_id)
+	order.rating = request.json['rating']
+
+	db.session.commit()
+	return order_schema.jsonify(order)
+
 
 # Endpoint to delete a food item from a particular order
 @app.route("/order/delete/<order_id>", methods=["PUT"])

@@ -63,13 +63,13 @@
               <div class="delivery-details">
                 <h3 class="title">Delivery Information</h3>
                 <div class="item">
-                  <p class="item-name">ADD DAY AND TIME HERE</p>
+                  <p class="item-name">Date and Time: {{order_date}} {{order_time}}</p>
                 </div>
                 <div class="item">
-                  <p class="item-name">ADD LOCATION HERE</p>
+                  <p class="item-name">Location: {{order_location}}</p>
                 </div>
                 <div class="item">
-                  <p class="item-name">ADD DELIVERY INSTRUCTIONS HERE IF THEY EXIST</p>
+                  <p class="item-name">Instructions: {{order_instructions}}</p>
                 </div>
               </div>
 

@@ -66,6 +66,12 @@
                   <p>{{order.phone}}</p>
                 </div>
                 {% endif %}
+                <div class="col-4">
+                  <h5>Delivery Instructions</h5>
+                </div>
+                <div class="col-8">
+                  <p>{{order.delivery_instructions}}</p>
+                </div>
 
               </div>
 

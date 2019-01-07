@@ -263,6 +263,7 @@ def checkout():
     date = str(request.form['dateCard'])
     time = str(request.form['timeCard'])
     location = str(request.form['locationCard'])
+    instructions = str(request.form['instructionsCard'])
 
 
     current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
@@ -280,26 +281,30 @@ def checkout():
     "location": location,
     "date": date,
     "time": time,
+    "instructions": instructions,
     "key": SECURE_DATABASE_KEY
     }
 
     res = requests.post(order_info_url, json=formData)
 
-    current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
-    res = requests.get(current_order_url)
-    if not res.ok:
-        res.raise_for_status()
-    else:
-        order_date = json.loads(res.content)['date']
+    #current_order_url = DATABASE_URL + "/order/current/" + str(user_id)
+    #res = requests.get(current_order_url)
+    #if not res.ok:
+    #    res.raise_for_status()
+    #else:
+    #order_date = json.loads(res.content)['date']
+    #order_time = json.loads(res.content)['time']
+    #order_delivery_instructions = json.loads(res.content)['delivery_instructions']
 
-    print("date")
-    print(order_date)
+    #print("date")
+    #print(order_date)
 
     return render_template('checkout.tpl', user_id=user_id, food_prices=food_prices,\
         food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,\
         food_quantity_feds=food_quantity_feds, food_images=food_images, empty_cart=empty_cart,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier=food_multiplier,\
-        email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, customizations=customizations, key = stripe_keys['publishable_key'], order_id=order_id)
+        email=email, name=name, phone=phone,address=address, netid=netid, id=user_id, customizations=customizations,\
+        key = stripe_keys['publishable_key'], order_id=order_id, order_date=date, order_location=location, order_time=time, order_instructions=instructions)
 
 @app.route("/account")
 @login_required
@@ -333,8 +338,10 @@ def account():
     pending_order = []
     inprogress_orders = []
     history_orders = []
+    order_ratings = []
 
     for order in fetch_req:
+        order_ratings.append(order['rating'])
         for package in order['food_items']:
             food_id = package['food_id']
             # look up food_id
@@ -400,7 +407,7 @@ def account():
         phone=phone, address=address, allergies=allergies, netid=netid, user_id=user_id, food_prices=food_prices,rests_dict=rests_dict, food_multiplier = food_multiplier,\
         rest_emails_dict=rest_emails_dict,food_descriptions=food_descriptions, food_titles=food_titles,food_ids=food_ids,number_different_rest=number_different_rest,\
         history_orders=history_orders,food_quantity_feds=food_quantity_feds, food_images=food_images,length_past_orders=length_past_orders, empty_cart=empty_cart,\
-        inprogress_orders=inprogress_orders,pending_order=pending_order, image=image, length_cart=length_cart, food_subtotals=food_subtotals, total=total, customizations=customizations, id=user_id)
+        inprogress_orders=inprogress_orders, order_ratings=order_ratings,pending_order=pending_order, image=image, length_cart=length_cart, food_subtotals=food_subtotals, total=total, customizations=customizations, id=user_id)
 
 
 @app.route("/account/update", methods=["POST"])
@@ -530,6 +537,42 @@ def cart_edit(quantity, food_id):
         res.raise_for_status()
 
     return redirect(url_for('cart'))
+
+@app.route("/updateRating", methods=["POST"])
+def user_updateRating():
+    netid = cas.username
+    print(netid)
+
+    print(cas.attributes)
+
+    LOGIN_URL = DATABASE_URL + '/user/login'
+
+    data = {
+        "netid": netid,
+    "key": SECURE_DATABASE_KEY
+    }
+
+    fetch_req = requests.post(url=LOGIN_URL, json=data)
+
+    user_id = fetch_req.json()['user_id']
+    print(user_id)
+
+    order = _getJSON(DATABASE_URL + "/order/current/" + str(user_id))
+
+    order_id = int(request.form.get('order_id'))
+
+    rating_URL = DATABASE_URL + "/order/rateExperience/" + str(order_id)
+    rating = int(request.form['rating'])
+    json = {
+        "rating": rating,
+        "key": SECURE_DATABASE_KEY
+    }
+
+    res = requests.post(rating_URL, json=json)
+    if not res.ok:
+        res.raise_for_status()
+
+    return redirect(url_for('account'))
 
 
 @app.route("/user/image/update", methods=["POST"])
@@ -972,8 +1015,7 @@ def meals_restaurant(restaurant_id):
     user_id = fetch_req.json()['user_id']
     print(user_id)
 
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
+    food_prices, food_descriptions, food_titles, food_quantity_feds, food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
 
     restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
     res = requests.get(restaurant_url)
@@ -1017,10 +1059,29 @@ def meals_restaurant(restaurant_id):
 
     error = request.args.get('error')
 
+    orders_url = DATABASE_URL + "/order/restaurant/" + str(restaurant_id)
+    res = requests.get(orders_url)
+    if not res.ok:
+        res.raise_for_status()
+    orders = json.loads(res.content)
+    
+    sumRatings = 0
+    lengthRatings = 0
+    for order in orders:
+        if order['rating'] is not None:
+            sumRatings = sumRatings + int(order['rating'])
+            lengthRatings = lengthRatings + 1
+
+    if lengthRatings > 0:
+        avgRating = str(round(sumRatings / lengthRatings, 2))
+    else:
+        avgRating = None
+
+
     r = make_response(render_template('restaurant_info.tpl', meals=meals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error, food_multiplier = food_multiplier, \
         food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, hasMeals = hasMeals,\
-        length_cart = length_cart, total=total, food_images= food_images, restaurant=rest, hours=hours))
+        length_cart = length_cart, total=total, food_images= food_images, restaurant=rest, avgRating = avgRating, hours=hours))
 
     r.headers["Pragma"] = "no-cache"
     r.headers["Expires"] = "0"

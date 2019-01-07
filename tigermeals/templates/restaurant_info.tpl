@@ -64,6 +64,15 @@
 
           <div class="row">
             <div class="col-4">
+              <h6 class="mt-1 mb-0">Average User Rating</h6>
+            </div>
+            <div class="col-8">
+              <p>{{avgRating}}</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4">
               <h6 class="mt-1 mb-0">Website</h6>
             </div>
             <div class="col-8">
