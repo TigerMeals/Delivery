@@ -130,6 +130,10 @@
                   </script>
                 </div>
               </div>
+              <br><br>
+              <div class="row justify-content-center">
+              <a href="/cart"><button class="btn btn-success">Checkout</button></a>
+            </div>
 
               <!-- <div class="row mr-0 ml-0">
                 <div class="col-7 pr-0">
@@ -156,9 +160,7 @@
               </div> -->
             </div>
 
-            <div class="row justify-content-center">
-              <a href="/cart"><button class="btn btn-success">Checkout</button></a>
-            </div>
+            
             {% endif %}
 
         </div> <!-- /#sidebar-wrapper -->
