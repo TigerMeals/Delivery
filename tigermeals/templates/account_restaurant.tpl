@@ -49,10 +49,13 @@
 <body>
     {% include 'nav_restaurant.tpl' %}
 
+    <script>
+      document.getElementById('nav-account').classList.add('active');
+    </script>
     <br>
     <div class="container">
         <div class="row mt-2 mb-4">
-      		<div class="col-sm-3"><!--left col-->
+      		<div class="col-sm-12 col-lg-3 mb-4"><!--left col-->
           <div class="text-center">
             {% if image != "": %}
             <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
@@ -91,9 +94,9 @@
               </div> -->
 
           </div><!--/col-3-->
-        	<div class="col-sm-9">
+        	<div class="col-sm-12 col-lg-9">
               <div class="row">
-                <div class="col-6">
+                <div class="col-12">
                   <h1>{{name}}</h1>
                 </div>
 
@@ -132,7 +135,7 @@
                           </div>
                         </div>
                         <div class="row">
-                          <div class="form-group col-6">
+                          <div class="form-group col-sm-12 col-md-6">
 
                               <div class="col-12">
                                   <label for="phone"><h5>Phone</h5></label>
@@ -140,7 +143,7 @@
                               </div>
                           </div>
 
-                          <div class="form-group col-6">
+                          <div class="form-group col-sm-12 col-md-6">
                               <div class="col-12">
                                  <label for="website"><h5>Website</h5></label>
                                   <input type="text" class="form-control" name="website" id="website" value="{{website}}" title="enter your website if any.">
@@ -149,14 +152,14 @@
                         </div>
 
                         <div class="row">
-                          <div class="form-group col-6">
+                          <div class="form-group col-sm-12 col-md-6">
 
                               <div class="col-12">
                                   <label for="email"><h5>Email</h5></label>
                                   <input type="email" class="form-control" name="email" id="email" value="{{email}}" title="enter your email.">
                               </div>
                           </div>
-                          <div class="form-group col-6">
+                          <div class="form-group col-sm-12 col-md-6">
 
                               <div class="col-12">
                                   <label for="address"><h5>Address</h5></label>
@@ -400,6 +403,13 @@
       </div> <!--container-->
 
     </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="/static/dist/bootstrap-clockpicker.min.js"></script>
+    <!-- Bootstrap core JavaScript -->
+    <script src="/static/vendor/jquery/jquery.min.js"></script>
+    <script src="/static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 
     <script>
           var _URL = window.URL || window.webkitURL;

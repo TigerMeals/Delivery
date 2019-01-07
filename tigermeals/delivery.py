@@ -17,7 +17,7 @@ import cloudinary.utils
 cas = CAS(app, '/cas')
 cas.init_app(app)
 
-# DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+# DATABASE_URL = "http://tigermeals-delivery.herokuapp.com"
 DATABASE_URL="http://localhost:5000"
 
 app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
@@ -193,6 +193,7 @@ def cart():
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
     user_id = fetch_req.json()['user_id']
+    location = fetch_req.json()['address']
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
@@ -200,8 +201,10 @@ def cart():
     print("FOOD ITEMS -------------------------------------------------")
     print(food_ids)
 
+
+
     return render_template('cart.tpl', user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,\
+        food_descriptions=food_descriptions, food_titles=food_titles,location=location,\
         food_quantity_feds=food_quantity_feds, food_images=food_images, empty_cart=empty_cart,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier = food_multiplier, customizations=customizations, food_ids = food_ids, id=user_id)
 
@@ -353,15 +356,18 @@ def account():
         if order['restaurant_id'] not in past_restaurants:
             past_restaurants.append(order['restaurant_id'])
 
-        if not order['paid']:
+        if not order['paid'] and not order['denied']:
             pending_order.append(order)
             #print("hello there how are you")
             #print(order['date'])
 
-        elif order['paid'] and order['delivery_in_process']:
+        elif order['paid'] and order['delivery_in_process'] and not order['denied']:
             inprogress_orders.append(order)
 
-        elif order['paid'] and not order['delivery_in_process'] and order['delivered']:
+        elif order['paid'] and not order['delivery_in_process'] and order['delivered'] and not order['denied']:
+            history_orders.append(order)
+
+        elif order['denied']:
             history_orders.append(order)
 
         price = 0
@@ -380,6 +386,7 @@ def account():
 
     print("HISTORY -----------------------------------------------------")
     print(history_orders)
+
 
     number_different_rest = len(past_restaurants)
 
@@ -805,8 +812,7 @@ def meals():
 
     # cart_visible = requests.get("cart_visible")
 
-    food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
+    food_prices, food_descriptions, food_titles, food_quantity_feds, food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
 
     restaurants_url = DATABASE_URL + "/restaurant"
     res = requests.get(restaurants_url)
@@ -875,7 +881,7 @@ def restaurant_view():
     print(user_id)
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
-    food_images, customizations, length_cart, food_subtotals, total, food_multiplier, food_ids, empty_cart = _getCart(user_id)
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
 
 
     restaurants_url = DATABASE_URL + "/restaurant"
@@ -1015,7 +1021,9 @@ def meals_restaurant(restaurant_id):
     user_id = fetch_req.json()['user_id']
     print(user_id)
 
-    food_prices, food_descriptions, food_titles, food_quantity_feds, food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
+    food_prices, food_descriptions, food_titles, food_quantity_feds,\
+        food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
+
 
     restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
     res = requests.get(restaurant_url)

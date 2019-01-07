@@ -29,7 +29,7 @@ cloudinary.config(
 	api_secret = "gQUTMItrljBmcZ2Po8cbVvEFJvU"
 )
 
-# DATABASE_URL = "http://hidden-springs-97786.herokuapp.com"
+# DATABASE_URL = "http://tigermeals-delivery.herokuapp.com"
 DATABASE_URL = "http://localhost:5000"
 
 # The secure key that someone needs to use the POST methods.
@@ -403,6 +403,7 @@ def orders():
 	active = []
 	pending = []
 	delivered = []
+	denied = []
 	# For logging purposes
 	length_orders = 0
 	for order in orders:
@@ -424,16 +425,18 @@ def orders():
 
 		order['phone'] = _getJSON(DATABASE_URL + "/user/" + str(order['user_id']))['phone']
 
-		if order['delivered']:
+		if order['delivered'] and not order['denied']:
 			delivered.append(order)
-		elif order['paid']:
+		elif order['paid'] and not order['denied']:
 			active.append(order)
-		else:
+		elif not order['paid'] and not order['delivered'] and not order['denied']:
 			pending.append(order)
+		elif order['denied']:
+			denied.append(order)
 
 	length_orders = len(active)
 	return render_template('orders_restaurant.tpl', pending=pending, \
-		active=active, delivered=delivered, id=id, length_orders = length_orders)
+		active=active, delivered=delivered, id=id, length_orders = length_orders, denied = denied)
 
 # Endpoint to view the restaurant account page
 @app.route("/restaurant/account")
@@ -862,7 +865,8 @@ def listings():
 @app.route("/listings/delete/<food_id>", methods=["POST"])
 def delete_listing(food_id):
 	remove_listing_url = DATABASE_URL + "/food/" + food_id
-	res = requests.delete(remove_listing_url)
+	res = requests.delete(remove_listing_url, json={
+    "key": SECURE_DATABASE_KEY})
 	if not res.ok:
 		res.raise_for_status()
 	return redirect('/listings')
@@ -1058,8 +1062,9 @@ def order_deny_rest():
 
 
 	order_id = request.form.get('order_id')
-	delete_order_url = DATABASE_URL + "/order/" + order_id
-	res = requests.delete(delete_order_url)
+	delete_order_url = DATABASE_URL + "/order/deny/" + order_id
+	res = requests.put(delete_order_url, json={
+    "key": SECURE_DATABASE_KEY})
 	if not res.ok:
 		res.raise_for_status()
 

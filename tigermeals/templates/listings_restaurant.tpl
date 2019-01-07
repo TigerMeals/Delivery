@@ -28,6 +28,9 @@
 
     {% include 'nav_restaurant.tpl' %}
 
+    <script>
+      document.getElementById('nav-listings').classList.add('active');
+    </script>
     <!-- Page Content -->
     <div class="container">
 
@@ -120,7 +123,7 @@
     </footer>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="static/js/clockpicker.js"></script>
+
     <script type="text/javascript" src="static/dist/bootstrap-clockpicker.min.js"></script>
     <!-- Bootstrap core JavaScript -->
     <script src="static/vendor/jquery/jquery.min.js"></script>

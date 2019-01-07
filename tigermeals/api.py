@@ -6,6 +6,9 @@ import os
 import hashlib
 import json
 from tigermeals import app
+from threading import Timer
+from tigermeals.mail_html import user_denied_html, rest_denied_html
+from flask_mail import Mail,  Message
 
 # Which database to fetch from:
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -15,8 +18,15 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USERNAME'] = 'tigermealsdelivery@gmail.com'
+app.config['MAIL_PASSWORD'] = 'aksnpqtutouldhna'
+mail = Mail(app)
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+
 
 # The secure key that someone needs to use the POST methods.
 SECURE_DATABASE_KEY = "sdjfhs24324[][p][}}P`092`)*@))@31DSDA&ASD{}[][]w]%%332"
@@ -665,11 +675,12 @@ class Order(db.Model):
 	amount = db.Column(db.Unicode, unique = False)
 	rating = db.Column(db.Integer, unique = False)
 	delivery_instructions = db.Column(db.Unicode, unique=False)
+	denied = db.Column(db.Boolean, unique = False)
 
 	def __init__(self, user_id, food_items, restaurant_id, \
 		date, order_time, location , delivery_time = None, \
 		ordered = False, paid = False, delivery_in_process = False, \
-		delivered = False, name = None, email = None, address = None, stripeToken=None,amount=None, rating=None, delivery_instructions=None):
+		delivered = False, name = None, email = None, address = None, stripeToken=None,amount=None, rating=None, delivery_instructions=None, denied=False):
 		self.user_id = user_id
 		self.food_items = food_items
 		self.restaurant_id = restaurant_id
@@ -685,11 +696,11 @@ class Order(db.Model):
 		self.location = location
 		self.delivery_time = delivery_time
 		self.rating = rating
-		self.delivery_instructions = delivery_instructions
+		self.delivery_instructions = delivery_instructionss
 
 class OrderSchema(ma.Schema):
 	class Meta:
-		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address','stripeToken','amount', 'rating', 'delivery_instructions')
+		fields = ('order_id', 'user_id', 'food_items', 'restaurant_id', 'ordered', 'paid',  'delivery_in_process',  'delivered', 'date', 'order_time', 'delivery_time','location', 'name', 'email', 'address','stripeToken','amount', 'rating', 'delivery_instructions', 'denied')
 
 order_schema = OrderSchema()
 orders_schema = OrderSchema(many = True)
@@ -721,6 +732,34 @@ def order_delivered(order_id):
 
 	return order_schema.jsonify(order)
 
+def cancel48(order_id):
+	order = Order.query.get(order_id)
+
+	user_email = order.email
+
+	restaurant_email = Restaurant.query.get(order.restaurant_id).email
+
+	if not order.delivery_in_process:
+		db.session.delete(order)
+		db.session.commit()
+
+		# Send an email to the user
+		msg = mail.send_message(
+		'Your TigerMeals Delivery order was denied.',
+		sender='tigermealsdelivery@gmail.com',
+		recipients=[user_email],
+		html=user_denied_html())
+
+
+
+		# Send email to restaurant
+		msg = mail.send_message(
+		'Denied TigerMeals Delivery order request!',
+		sender='tigermealsdelivery@gmail.com',
+		recipients=[restaurant_email],
+		html=rest_denied_html())
+
+		return order_schema.jsonify(order)
 
 # Endpoint to place an order
 @app.route('/order/ordered/<order_id>', methods = ["POST"])
@@ -740,6 +779,11 @@ def order_ordered(order_id):
 
 	db.session.commit()
 
+	#Delete after 48 hours if it doesn't get approved
+	# 172800 seconds in 48 hours
+	t = Timer(172800, cancel48, [order_id])
+	t.start()
+
 	return order_schema.jsonify(order)
 
 # Endpoint to create new order
@@ -749,6 +793,19 @@ def order_ordered(order_id):
 # IMPORTANT: No extra steps are needed! No need to serialize before passing to
 # this function as long as request type is JSON.
 #
+
+@app.route("/order/deny/<order_id>", methods = ["PUT"])
+def order_denied(order_id):
+	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:
+		return jsonify({"error": "You don't have admin priveleges to this endpoint."})
+	order = Order.query.get(order_id)
+
+	order.denied = True
+
+	db.session.commit()
+
+	return order_schema.jsonify(order)
+
 @app.route("/order", methods = ["POST"])
 def order_add():
 	if 'key' not in request.json or request.json['key'] != SECURE_DATABASE_KEY:

@@ -31,20 +31,21 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-      <div class="container-fluid container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="pt-2">Review Cart</h2>
+      <div class="row">
+          <div class="col-12 text-center">
+            <h2 >Review Cart</h2>
           </div>
         </div>
-  			<table id="cart" class="table table-hover table-condensed">
+      <div class="container-fluid container table-responsive-lg">
+        
+  			<table id="cart" class="table table-hover table-condensed text-center">
   				<thead>
     				<tr>
     					<th style="width:50%; color:black;">Product</th>
     					<th style="width:10%; color:black;">Price</th>
     					<th style="width:8%; color:black;">Quantity</th>
 
-    					<th style="width:10%; color:black;" class="text-center">Subtotal</th>
+    					<th style="width:10%; color:black;">Subtotal</th>
     					<th style="width:16%; color:black;">Serving Size</th>
     					<th style="width:6%"></th>
     				</tr>
@@ -54,12 +55,12 @@
   				<tr>
   					<td data-th="Product">
   						<div class="row">
-  							<div class="col-sm-5 hidden-xs"><img src="{{food_images[i]}}" alt="..." class="img-fluid"/></div>
+  							<div class="col-sm-5"><img src="{{food_images[i]}}" alt="..." class="img-fluid"/></div>
   							<div class="col-sm-7">
   								<h4 class="px-4">{{food_titles[i]}}</h4>
   								<p class="px-4">{{food_descriptions[i]}}</p>
                   {% if customizations[i] != 'N/A' %}
-                  <span class="px-4 text-muted">{{customizations[i]}}</span>
+                  <p>Customizations:<span class="px-2 text-muted">{{customizations[i]}}</span></p>
                   {% endif %}
   							</div>
   						</div>
@@ -158,7 +159,7 @@
         </div>
         <div class="col-lg-6 col-md-6 mb-3">
           <label for="text" class="text-primary">Delivery Location</label>
-          <input type="text" class="form-control" id="locationCard" name="locationCard" required>
+          <input type="text" value="{{location}}" class="form-control" id="locationCard" name="locationCard" required >
           <div class="invalid-feedback">
             Please enter a valid location.
           </div>

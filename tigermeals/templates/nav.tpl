@@ -102,8 +102,10 @@
                   <!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
                 </div>
                 <div class="col-12 pl-3 pr-3">
+                  {% if customizations %}
                   {% if customizations[i] != 'N/A' %}
                   <span class="text-muted">{{customizations[i]}}</span>
+                  {% endif %}
                   {% endif %}
                 </div>
                 <div class="col-12 pl-0 pr-3 right-align-text">
@@ -130,6 +132,12 @@
                   </script>
                 </div>
               </div>
+              {% for i in range(3) %}
+              <br>
+              {% endfor %}
+              <div class="row justify-content-center">
+              <a href="/cart"><button class="btn btn-success">Checkout</button></a>
+            </div>
 
               <!-- <div class="row mr-0 ml-0">
                 <div class="col-7 pr-0">
@@ -156,9 +164,7 @@
               </div> -->
             </div>
 
-            <div class="row justify-content-center">
-              <a href="/cart"><button class="btn btn-success">Checkout</button></a>
-            </div>
+            
             {% endif %}
 
         </div> <!-- /#sidebar-wrapper -->

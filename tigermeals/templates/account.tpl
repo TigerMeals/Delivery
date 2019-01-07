@@ -57,7 +57,7 @@
     <!-- Page Content -->
     <div class="container-fluid container">
         <div class="row mb-4">
-          <div class="col-sm-3"><!--left col-->
+          <div class="col-sm-12 col-lg-3 mb-4"><!--left col-->
 
 
           <div class="text-center">
@@ -88,7 +88,7 @@
           </div>
 
           </div><!--/col-3-->
-          <div class="col-sm-9">
+          <div class="col-sm-12 col-lg-9">
               <div class="row mb-2">
                 <h1 class="ml-3">My Account</h1>
               </div>
@@ -115,7 +115,7 @@
 
 
 
-            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane fade show active col-md-12" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                     <form class="form mt-3" action="/account/update" method="post" id="registrationForm">
 
@@ -524,9 +524,15 @@
                             document.getElementById("price{{order['order_id']}}").innerHTML = val;
                           </script>
 
+                        {% if not order['denied'] %}
                         <div class="row pr-2">
                           <h6 class="mt-1 mb-0 float-right">Status: <br> Completed</h6>
                         </div>
+                        {% else %}
+                        <div class="row pr-2">
+                          <h6 class="mt-1 mb-0 float-right">Status: <br> Denied</h6>
+                        </div>
+                        {% endif %}
 
                       </div>
                     </div>

@@ -25,7 +25,8 @@
 <body id="LoginForm">
 
 <div class="container text-center">
-<img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
+  <br>
+<img class="d-block mx-auto mt-5 mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
 <h1 class="form-heading text-center">Reset Password</h1>
 <div class="login-form">
 <div class="main-div">

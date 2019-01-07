@@ -6,16 +6,16 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item-bar">
+        <li class="nav-item-bar" id="nav-home">
           <a class="nav-link" href="/restaurant/home"><span class=" d-sm-inline d-md-none d-lg-inline">Home </span><span class="fas fa-home" style="font-size: 11px"></span></a>
         </li>
-        <li class="nav-item-bar">
+        <li class="nav-item-bar" id="nav-listings">
           <a class="nav-link" href="/listings"><span class="d-sm-inline d-md-none d-lg-inline">My </span>Listings</a>
         </li>
-        <li class="nav-item-bar">
+        <li class="nav-item-bar" id="nav-account">
           <a class="nav-link" href="/restaurant/account"><span class="d-sm-inline d-md-none d-lg-inline">My </span>Account</a>
         </li>
-        <li class="nav-item-bar">
+        <li class="nav-item-bar" id="nav-orders">
           <a class="nav-link" href="/orders">Orders<span class="d-sm-inline d-md-none d-lg-inline"> ({{length_orders}} Active)</span></a>
         </li>
         <li class="nav-item-bar mr-4">
