@@ -48,7 +48,8 @@
 <body>
 
   <div class="container text-center mb-5">
-    <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
+    <br>
+    <img class="d-block mx-auto mt-5 mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
     <h1 class="form-heading">Create Restaurant Account</h1>
     <div class="login-form">
       <div class="main-div">
