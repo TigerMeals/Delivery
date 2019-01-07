@@ -102,8 +102,10 @@
                   <!-- <i class="fa fa-trash" aria-hidden="true"></i> -->
                 </div>
                 <div class="col-12 pl-3 pr-3">
+                  {% if customizations %}
                   {% if customizations[i] != 'N/A' %}
                   <span class="text-muted">{{customizations[i]}}</span>
+                  {% endif %}
                   {% endif %}
                 </div>
                 <div class="col-12 pl-0 pr-3 right-align-text">
