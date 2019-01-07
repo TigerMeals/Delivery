@@ -32,7 +32,7 @@ def reset_password_html(password):
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/">Click here to sign in.</a> </td>
+                                          <td> <a href="http://tigermeals-delivery.herokuapp.com/">Click here to sign in.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -108,7 +108,7 @@ def user_order_html():
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/">Click here to sign in and view your order status.</a> </td>
+                                          <td> <a href="http://tigermeals-delivery.herokuapp.com/">Click here to sign in and view your order status.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -185,7 +185,7 @@ def rest_order_html():
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/" target="_blank">Click here to view the order.</a> </td>
+                                          <td> <a href="http://tigermeals-delivery.herokuapp.com/" target="_blank">Click here to view the order.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -262,7 +262,7 @@ def user_approved_html():
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
+                                          <td> <a href="http://tigermeals-delivery.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -340,7 +340,7 @@ def rest_approved_html():
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
+                                          <td> <a href="http://tigermeals-delivery.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -418,7 +418,7 @@ def user_denied_html():
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
+                                          <td> <a href="http://tigermeals-delivery.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -494,7 +494,7 @@ def user_48hours_html():
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
+                                          <td> <a href="http://tigermeals-delivery.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -571,7 +571,7 @@ def restaurant_48hours_html():
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
+                                          <td> <a href="http://tigermeals-delivery.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -647,7 +647,7 @@ def rest_denied_html():
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
+                                          <td> <a href="http://tigermeals-delivery.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -724,7 +724,7 @@ def order_delivered_html():
                                     <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                                       <tbody>
                                         <tr>
-                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/" target="_blank">Click here to sign in.</a> </td>
+                                          <td> <a href="http://tigermeals-delivery.herokuapp.com/" target="_blank">Click here to sign in.</a> </td>
                                         </tr>
                                       </tbody>
                                     </table>
