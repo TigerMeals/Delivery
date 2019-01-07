@@ -36,7 +36,7 @@
             <h2 >Review Cart</h2>
           </div>
         </div>
-      <div class="container-fluid container table-responsive-md">
+      <div class="container-fluid container table-responsive-lg">
         
   			<table id="cart" class="table table-hover table-condensed text-center">
   				<thead>
@@ -60,7 +60,7 @@
   								<h4 class="px-4">{{food_titles[i]}}</h4>
   								<p class="px-4">{{food_descriptions[i]}}</p>
                   {% if customizations[i] != 'N/A' %}
-                  <span class="px-4 text-muted">{{customizations[i]}}</span>
+                  <p>Customizations:<span class="px-2 text-muted">{{customizations[i]}}</span></p>
                   {% endif %}
   							</div>
   						</div>
