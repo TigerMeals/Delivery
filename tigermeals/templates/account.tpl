@@ -62,6 +62,7 @@
 
           <div class="text-center">
             <hr>
+            <h1 class="ml-3 d-xs-inline d-lg-none">My Account</h1>
             {% if image != "": %}
             <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
             {% else %}
@@ -90,7 +91,7 @@
           </div><!--/col-3-->
           <div class="col-sm-12 col-lg-9">
               <div class="row mb-2">
-                <h1 class="ml-3">My Account</h1>
+                <h1 class="ml-3 d-none d-lg-inline">My Account</h1>
               </div>
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                   <li class="nav-item">

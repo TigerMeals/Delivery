@@ -57,6 +57,7 @@
         <div class="row mt-2 mb-4">
       		<div class="col-sm-12 col-lg-3 mb-4"><!--left col-->
           <div class="text-center">
+            <h1 class="d-xs-inline d-lg-none">{{name}}</h1>
             {% if image != "": %}
             <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
             {% else %}
@@ -97,7 +98,7 @@
         	<div class="col-sm-12 col-lg-9">
               <div class="row">
                 <div class="col-12">
-                  <h1>{{name}}</h1>
+                  <h1 class="d-none d-lg-inline">{{name}}</h1>
                 </div>
 
               </div>
