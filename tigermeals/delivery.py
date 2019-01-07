@@ -193,6 +193,7 @@ def cart():
     fetch_req = requests.post(url=LOGIN_URL, json=data)
 
     user_id = fetch_req.json()['user_id']
+    location = fetch_req.json()['address']
 
     food_prices, food_descriptions, food_titles, food_quantity_feds,\
         food_images, length_cart, food_subtotals, total, food_multiplier, food_ids, customizations, empty_cart = _getCart(user_id)
@@ -200,8 +201,10 @@ def cart():
     print("FOOD ITEMS -------------------------------------------------")
     print(food_ids)
 
+
+
     return render_template('cart.tpl', user_id=user_id, food_prices=food_prices,\
-        food_descriptions=food_descriptions, food_titles=food_titles,\
+        food_descriptions=food_descriptions, food_titles=food_titles,location=location,\
         food_quantity_feds=food_quantity_feds, food_images=food_images, empty_cart=empty_cart,\
         length_cart=length_cart, food_subtotals=food_subtotals, total=total, food_multiplier = food_multiplier, customizations=customizations, food_ids = food_ids, id=user_id)
 

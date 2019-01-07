@@ -159,7 +159,7 @@
         </div>
         <div class="col-lg-6 col-md-6 mb-3">
           <label for="text" class="text-primary">Delivery Location</label>
-          <input type="text" class="form-control" id="locationCard" name="locationCard" required>
+          <input type="text" value="{{location}}" class="form-control" id="locationCard" name="locationCard" required >
           <div class="invalid-feedback">
             Please enter a valid location.
           </div>
