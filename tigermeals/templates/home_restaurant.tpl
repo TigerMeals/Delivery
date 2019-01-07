@@ -240,7 +240,7 @@
             <h5><small>BSE COS '19</small></h5>
           </div>
           <div class="col-lg-3 col-sm-6 text-center mb-4">
-            <img class="img-fluid d-block mx-auto mb-2" src="static/img/janetheadshot.jpg" alt="">
+            <img class="img-fluid d-block mx-auto mb-2" src="/static/img/janetheadshot.jpg" alt="">
             <h4>Janet Lee</h4>
             <h5><small>AB COS '20</small></h5>
           </div>
