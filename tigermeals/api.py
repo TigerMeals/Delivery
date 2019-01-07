@@ -797,7 +797,7 @@ def order_ordered(order_id):
 
 	#Delete after 48 hours if it doesn't get approved
 	# 172800 seconds in 48 hours
-	t = Timer(10, cancel48, [order_id])
+	t = Timer(172800, cancel48, [order_id])
 	t.start()
 
 	return order_schema.jsonify(order)
