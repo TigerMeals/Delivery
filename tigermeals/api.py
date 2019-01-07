@@ -6,8 +6,8 @@ import os
 import hashlib
 import json
 from tigermeals import app
-from threading import Timer
-from tigermeals.mail_html import user_denied_html, rest_denied_html
+from threading import Timer, Thread
+from tigermeals.mail_html import user_48hours_html, restaurant_48hours_html
 from flask_mail import Mail,  Message
 
 # Which database to fetch from:
@@ -30,6 +30,17 @@ ma = Marshmallow(app)
 
 # The secure key that someone needs to use the POST methods.
 SECURE_DATABASE_KEY = "sdjfhs24324[][p][}}P`092`)*@))@31DSDA&ASD{}[][]w]%%332"
+
+def async(f):
+	def wrapper(*args, **kwargs):
+		thr = Thread(target = f, args = args, kwargs = kwargs)
+		thr.start()
+	return wrapper
+
+@async
+def send_async_email(msg):
+	with app.app_context():
+		mail.send(msg)
 
 
 ################################################################################
@@ -739,21 +750,31 @@ def cancel48(order_id):
 		db.session.delete(order)
 		db.session.commit()
 
-		# Send an email to the user
-		msg = mail.send_message(
-		'Your TigerMeals Delivery order was denied.',
-		sender='tigermealsdelivery@gmail.com',
-		recipients=[user_email],
-		html=user_denied_html())
+
+		print("PRINTING EMAILS ----------------------")
+		print("User: %s" % (user_email))
+		print("Restaurant: %s" % (restaurant_email))
+
+		try:
+			# Send an email to the user
+			msg = Message('Your TigerMeals Delivery order was removed.',
+			sender='tigermealsdelivery@gmail.com',
+			recipients=[user_email],
+			html=user_48hours_html())
+			send_async_email(msg)
+		except:
+			print("Cannot send email")
 
 
-
-		# Send email to restaurant
-		msg = mail.send_message(
-		'Denied TigerMeals Delivery order request!',
-		sender='tigermealsdelivery@gmail.com',
-		recipients=[restaurant_email],
-		html=rest_denied_html())
+		try:
+			# Send email to restaurant
+			msg = Message('Denied TigerMeals Delivery order request!',
+			sender='tigermealsdelivery@gmail.com',
+			recipients=[restaurant_email],
+			html=restaurant_48hours_html())
+			send_async_email(msg)
+		except:
+			print("Cannot send email")
 
 		return order_schema.jsonify(order)
 
@@ -777,7 +798,7 @@ def order_ordered(order_id):
 
 	#Delete after 48 hours if it doesn't get approved
 	# 172800 seconds in 48 hours
-	t = Timer(172800, cancel48, [order_id])
+	t = Timer(10, cancel48, [order_id])
 	t.start()
 
 	return order_schema.jsonify(order)
