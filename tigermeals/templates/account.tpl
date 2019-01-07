@@ -88,7 +88,7 @@
           </div>
 
           </div><!--/col-3-->
-          <div class="col-sm-9">
+          <div class="col-sm-12 col-lg-9">
               <div class="row mb-2">
                 <h1 class="ml-3">My Account</h1>
               </div>
@@ -115,7 +115,7 @@
 
 
 
-            <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="tab-pane fade show active col-md-12" id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                     <form class="form mt-3" action="/account/update" method="post" id="registrationForm">
 
