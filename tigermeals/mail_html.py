@@ -460,7 +460,158 @@ def user_denied_html():
     </html>
     """
 
+def user_48hours_html():
+    return """<!doctype html>
+    <html>
+      <head>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Your TigerMeals Delivery Order</title>""" + css() + """</head>
+      <body class="">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
+          <tr>
+            <td>&nbsp;</td>
+            <td class="container">
+              <div class="content">
 
+                <!-- START CENTERED WHITE CONTAINER -->
+                <span class="preheader">Your recent TigerMeals Delivery order has been removed.</span>
+                <table role="presentation" class="main">
+
+                  <!-- START MAIN CONTENT AREA -->
+                  <tr>
+                    <td class="wrapper">
+                      <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td>
+                            <p>Hi there,</p>
+                            <p>Your recently placed order has taken the restaurant more than 48 hours to respond to. What this means is that your order will not be delivered and you will not be charged for this order.</p>
+                            <p>Some possible reasons for being denied by a restaurant are availability, inability to commit to delivering very large portions, and previous order commitments.</p>
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                              <tbody>
+                                <tr>
+                                  <td align="left">
+                                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                                      <tbody>
+                                        <tr>
+                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <p>If there are any questions, please reach out to the restaurant directly.</p>
+                            <p>Thank you for using TigerMeals Delivery!</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                <!-- END MAIN CONTENT AREA -->
+                </table>
+
+                <!-- START FOOTER -->
+                <div class="footer">
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td class="content-block">
+                        <br> Don't like these emails? <a href="#">Unsubscribe</a>.
+                      </td>
+                    </tr>
+
+                  </table>
+                </div>
+                <!-- END FOOTER -->
+
+              <!-- END CENTERED WHITE CONTAINER -->
+              </div>
+            </td>
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      </body>
+    </html>
+    """
+
+
+def restaurant_48hours_html():
+    return """<!doctype html>
+    <html>
+      <head>
+        <meta name="viewport" content="width=device-width" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Your TigerMeals Delivery Order</title>""" + css() + """</head>
+      <body class="">
+        <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
+          <tr>
+            <td>&nbsp;</td>
+            <td class="container">
+              <div class="content">
+
+                <!-- START CENTERED WHITE CONTAINER -->
+                <span class="preheader">We have removed your TigerMeals Delivery order.</span>
+                <table role="presentation" class="main">
+
+                  <!-- START MAIN CONTENT AREA -->
+                  <tr>
+                    <td class="wrapper">
+                      <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                          <td>
+                            <p>Hi there,</p>
+                            <p>You recently took more than 48 hours to approve an order made by a customer. What this means is that the order will not be available for you to fulfill, and will be removed from our systems.</p>
+                            <p>You will not see this order in your "Pending Orders" list anymore.</p>
+                            <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary">
+                              <tbody>
+                                <tr>
+                                  <td align="left">
+                                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                                      <tbody>
+                                        <tr>
+                                          <td> <a href="http://hidden-springs-97786.herokuapp.com/" target="_blank">Click here to sign in and view your orders.</a> </td>
+                                        </tr>
+                                      </tbody>
+                                    </table>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+                            <p>If there are any questions, please reach out to the restaurant directly.</p>
+                            <p>Thank you for using TigerMeals Delivery!</p>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                <!-- END MAIN CONTENT AREA -->
+                </table>
+
+                <!-- START FOOTER -->
+                <div class="footer">
+                  <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td class="content-block">
+                        <br> Don't like these emails? <a href="#">Unsubscribe</a>.
+                      </td>
+                    </tr>
+
+                  </table>
+                </div>
+                <!-- END FOOTER -->
+
+              <!-- END CENTERED WHITE CONTAINER -->
+              </div>
+            </td>
+            <td>&nbsp;</td>
+          </tr>
+        </table>
+      </body>
+    </html>
+    """
 
 # HTML and CSS for email to restaurant after they deny an order.
 def rest_denied_html():

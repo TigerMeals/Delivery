@@ -63,6 +63,7 @@
               <div class="delivery-details">
                 <h3 class="title">Delivery Information</h3>
                 <div class="item">
+
                   <p class="item-name">Date and Time: {{order_date}} {{order_time}}</p>
                 </div>
                 <div class="item">

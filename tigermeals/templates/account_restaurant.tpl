@@ -156,7 +156,7 @@
 
                               <div class="col-12">
                                   <label for="email"><h5>Email</h5></label>
-                                  <input type="email" class="form-control" name="email" id="email" value="{{email}}" title="enter your email.">
+                                  <input type="email" class="form-control" id="email" value="{{email}}" title="enter your email.">
                               </div>
                           </div>
                           <div class="form-group col-sm-12 col-md-6">
