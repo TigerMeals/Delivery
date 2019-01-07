@@ -29,6 +29,10 @@
 
     {% include 'nav_restaurant.tpl' %}
 
+    <script>
+      document.getElementById('nav-orders').classList.add('active');
+    </script>
+
     <!-- Page Content -->
     <div class="container">
 

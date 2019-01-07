@@ -35,6 +35,10 @@
 
     {% include 'nav_restaurant.tpl' %}
 
+    <script>
+      document.getElementById('nav-home').classList.add('active');
+    </script>
+
     <section class="jumbotron text-center">
       <div class="container">
         <h1 class="jumbotron-heading text-light">Welcome to TigerMeals Delivery!</h1>

@@ -49,6 +49,9 @@
 <body>
     {% include 'nav_restaurant.tpl' %}
 
+    <script>
+      document.getElementById('nav-account').classList.add('active');
+    </script>
     <br>
     <div class="container">
         <div class="row mt-2 mb-4">
