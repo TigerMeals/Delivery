@@ -130,7 +130,9 @@
                   </script>
                 </div>
               </div>
-              <br><br>
+              {% for i in range(3) %}
+              <br>
+              {% endfor %}
               <div class="row justify-content-center">
               <a href="/cart"><button class="btn btn-success">Checkout</button></a>
             </div>
