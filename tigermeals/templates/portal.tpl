@@ -47,9 +47,9 @@
         </nav>
 
 
-    <body class="text-center">
+    <body class="text-center justify-content-center">
       <div class="form-signin white_background">
-        <div class="row justify-content-md-center">
+        <div class="row justify-content-center">
           <img class="mb-4 display-block center-block align-self-center" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
         </div>
         <h3 class="font-weight-light text-center">Welcome to </h3>
