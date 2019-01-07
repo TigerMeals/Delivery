@@ -862,7 +862,8 @@ def listings():
 @app.route("/listings/delete/<food_id>", methods=["POST"])
 def delete_listing(food_id):
 	remove_listing_url = DATABASE_URL + "/food/" + food_id
-	res = requests.delete(remove_listing_url)
+	res = requests.delete(remove_listing_url, json={
+    "key": SECURE_DATABASE_KEY})
 	if not res.ok:
 		res.raise_for_status()
 	return redirect('/listings')
@@ -1059,7 +1060,8 @@ def order_deny_rest():
 
 	order_id = request.form.get('order_id')
 	delete_order_url = DATABASE_URL + "/order/" + order_id
-	res = requests.delete(delete_order_url)
+	res = requests.delete(delete_order_url, json={
+    "key": SECURE_DATABASE_KEY})
 	if not res.ok:
 		res.raise_for_status()
 

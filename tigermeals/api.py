@@ -6,6 +6,7 @@ import os
 import hashlib
 import json
 from tigermeals import app
+from threading import Timer
 
 # Which database to fetch from:
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -717,6 +718,13 @@ def order_delivered(order_id):
 
 	return order_schema.jsonify(order)
 
+def cancel48(order_id):
+	order = Order.query.get(order_id)
+
+	if not order.delivery_in_process:
+		db.session.delete(order)
+		db.session.commit()
+		return order_schema.jsonify(order)
 
 # Endpoint to place an order
 @app.route('/order/ordered/<order_id>', methods = ["POST"])
@@ -735,6 +743,10 @@ def order_ordered(order_id):
 		food.timesOrdered += 1
 
 	db.session.commit()
+
+	#Delete after 48 hours if it doesn't get approved
+	t = Timer(3, cancel48, [order_id])
+	t.start()
 
 	return order_schema.jsonify(order)
 
