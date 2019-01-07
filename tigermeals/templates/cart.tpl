@@ -31,20 +31,21 @@
 
     <!-- Page Content -->
     <div id="page-content-wrapper">
-      <div class="container-fluid container">
-        <div class="row">
-          <div class="col-12">
-            <h2 class="pt-2">Review Cart</h2>
+      <div class="row">
+          <div class="col-12 text-center">
+            <h2 >Review Cart</h2>
           </div>
         </div>
-  			<table id="cart" class="table table-hover table-condensed">
+      <div class="container-fluid container table-responsive-md">
+        
+  			<table id="cart" class="table table-hover table-condensed text-center">
   				<thead>
     				<tr>
     					<th style="width:50%; color:black;">Product</th>
     					<th style="width:10%; color:black;">Price</th>
     					<th style="width:8%; color:black;">Quantity</th>
 
-    					<th style="width:10%; color:black;" class="text-center">Subtotal</th>
+    					<th style="width:10%; color:black;">Subtotal</th>
     					<th style="width:16%; color:black;">Serving Size</th>
     					<th style="width:6%"></th>
     				</tr>
@@ -54,7 +55,7 @@
   				<tr>
   					<td data-th="Product">
   						<div class="row">
-  							<div class="col-sm-5 hidden-xs"><img src="{{food_images[i]}}" alt="..." class="img-fluid"/></div>
+  							<div class="col-sm-5"><img src="{{food_images[i]}}" alt="..." class="img-fluid"/></div>
   							<div class="col-sm-7">
   								<h4 class="px-4">{{food_titles[i]}}</h4>
   								<p class="px-4">{{food_descriptions[i]}}</p>
