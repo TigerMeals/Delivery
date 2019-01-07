@@ -94,7 +94,7 @@
               </div> -->
 
           </div><!--/col-3-->
-        	<div class="col-sm-9">
+        	<div class="col-sm-12 col-lg-9">
               <div class="row">
                 <div class="col-6">
                   <h1>{{name}}</h1>
