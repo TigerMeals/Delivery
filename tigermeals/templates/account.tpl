@@ -61,8 +61,8 @@
 
 
           <div class="text-center">
-            <hr>
-            <h1 class="ml-3 d-xs-inline d-lg-none">My Account</h1>
+
+            <h1 class="ml-3 mt-4 mb-3 d-xs-inline d-lg-none">My Account</h1>
             {% if image != "": %}
             <img src="{{image}}" class="avatar img-circle img-thumbnail" alt="avatar">
             {% else %}
