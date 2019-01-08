@@ -36,7 +36,7 @@
       <div class="row justify-content-end">
 
         <div class="col-md-6 col-lg-4 col-sm-12">
-          <img class="img-fluid align-self-right" src="{{restaurant.image}}" width="600" height="600" alt="">
+          <img class="img-fluid align-self-right" src="{{restaurant.image}}" width="1000" height="500" alt="">
         </div>
 
         <div class="col-md-4">

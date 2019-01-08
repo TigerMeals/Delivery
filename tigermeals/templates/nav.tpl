@@ -1,8 +1,8 @@
 
     <!-- Navigation -->
     <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
-      <a class="navbar-brand navbar-height ml-4 d-md-none d-lg-block" href="/home">TigerMeals Delivery</a>
-      <a class="navbar-brand navbar-height ml-1 d-none d-md-block d-lg-none" href="/home">TigerMeals Delivery</a>
+      <a class="navbar-brand navbar-height ml-4 d-none d-lg-block" href="/home">TigerMeals Delivery</a>
+      <a class="navbar-brand navbar-height ml-1 d-sm-block d-lg-none" href="/home">TigerMeals Delivery</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -164,7 +164,7 @@
               </div> -->
             </div>
 
-            
+
             {% endif %}
 
         </div> <!-- /#sidebar-wrapper -->
