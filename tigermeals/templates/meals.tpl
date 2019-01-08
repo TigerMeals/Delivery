@@ -231,7 +231,7 @@
             <div class="mt-0 light-background sticky-top">
             <div class="row">
               <div class="col-lg-8 col-md-12 mb-8">
-                <div class="sticky-top">
+                <div> <!-- used to be sticky top -->
                   <h2 class="mb-0 meals-subheader">Catering Packages</h2>
                   {% if length_meals == 1 %}
                   <span class="ml-0 mt-0">({{length_meals}} result)</span>
@@ -245,7 +245,7 @@
               </div>
 
               <div class="col-lg-4 col-md-12 mb-4 float-right">
-                <div class="sticky-top">
+                <div> <!-- used to be sticky top -->
                   <div class="dropdown float-right">
                     <a class="btn btn-primary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       Sort by...
