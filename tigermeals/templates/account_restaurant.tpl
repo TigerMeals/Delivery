@@ -65,7 +65,7 @@
             {% endif %}
             <br><br>
             <h6>Upload a different photo...</h6>
-            <form method="post" action="/user/image/update" enctype=multipart/form-data>
+            <form method="post" action="/restaurant/image/update" enctype=multipart/form-data>
               <hr>
               <input type="file" id = "file" name="image" class="text-center center-block file-upload">
               <hr>
