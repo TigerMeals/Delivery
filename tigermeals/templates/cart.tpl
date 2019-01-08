@@ -37,7 +37,7 @@
           </div>
         </div>
       <div class="container-fluid container table-responsive-lg">
-        
+
   			<table id="cart" class="table table-hover table-condensed text-center">
   				<thead>
     				<tr>
