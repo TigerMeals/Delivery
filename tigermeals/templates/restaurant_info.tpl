@@ -33,10 +33,10 @@
     <div id="page-content-wrapper">
       <div class="container-fluid container">
       <!-- Portfolio Item Row -->
-      <div class="row">
+      <div class="row justify-content-end">
 
-        <div class="col-md-8">
-          <img class="img-fluid" src="{{restaurant.image}}" alt="">
+        <div class="col-md-6 col-lg-4 col-sm-12">
+          <img class="img-fluid align-self-right" src="{{restaurant.image}}" width="600" height="600" alt="">
         </div>
 
         <div class="col-md-4">
@@ -151,6 +151,8 @@
             </div>
           </div>
         </div>
+
+
       </div>
       <!-- /.row -->
       <!-- Related Projects Row -->
