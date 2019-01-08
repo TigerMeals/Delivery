@@ -694,34 +694,6 @@ def image_update():
 			requests.post(update_image_url, json=updateImage)
 	return redirect(url_for('account_restaurant'))
 
-@app.route("/restaurant/image/registrationUpdate", methods=["POST"])
-def image_update_registration():
-    username = session['username']
-
-    restaurant_info_url = DATABASE_URL + "/restaurant/email"
-
-    email = {
-       "email": str(username),
-	"key": SECURE_DATABASE_KEY
-    }
-
-    res = requests.post(restaurant_info_url, json = email)
-    if not res.ok:
-        res.raise_for_status()
-
-    restaurant_info = json.loads(res.content)
-    id = restaurant_info['restaurant_id']
-    if 'image' in request.files:
-        img = request.files['image']
-        if img is not None:
-            response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'])
-            #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
-            updateImage = {"image": imgurl,
-	"key": SECURE_DATABASE_KEY}
-            update_image_url = DATABASE_URL + "/restaurant/image/" + str(id)
-            requests.post(update_image_url, json=updateImage)
-    return render_template('create_account_restaurant.tpl', image=imgurl)
 
 # Endpoint to update the account pane of the restaurant
 @app.route("/restaurant/account/update", methods=["POST"])
@@ -928,7 +900,7 @@ def add_listing():
         if img is not None:
             response = cloudinary.uploader.upload(img)
 
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 200, height = 200, gravity = "auto", crop = "fill", transformation = [{"quality":100}, {"effect": "improve"}])
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 500, height = 500, gravity = "auto", crop = "fill", transformation = [{"quality":100}, {"effect": "improve"}])
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl,
 	"key": SECURE_DATABASE_KEY}
