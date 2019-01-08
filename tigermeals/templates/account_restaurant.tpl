@@ -65,14 +65,14 @@
             {% endif %}
             <br><br>
             <h6>Upload a different photo...</h6>
-            <form method="post" action="/user/image/update" enctype=multipart/form-data>
+            <form method="post" action="/restaurant/image/update" enctype=multipart/form-data>
               <hr>
               <input type="file" id = "file" name="image" class="text-center center-block file-upload">
               <hr>
               <button id = "save" class="btn btn-outline-primary btn-sm text-center center-block" type="submit" disabled>Save Photo</button>
               <hr>
             </form>
-            <div id = "imageError" class="text-danger" style="visibility:hidden"> Image width and height must be at least 200 pixels!</div>
+            <div id = "imageError" class="text-danger" style="visibility:hidden"> Image width must be at least 600 pixels and height at least 300 pixels!</div>
           </div></hr><br>
 
             <div class="panel panel-default">
@@ -424,7 +424,7 @@
                   image = new Image();
 
                   image.onload = function() {
-                    if (this.width < 200 || this.height < 200){
+                    if (this.width < 600 || this.height < 300){
                       document.getElementById("imageError").style.visibility = "visible";
                       document.getElementById("save").disabled = true;
                     }

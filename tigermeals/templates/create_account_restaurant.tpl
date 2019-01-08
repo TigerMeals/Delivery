@@ -64,7 +64,8 @@
             <br><br>
             <h5>Upload a profile picture </h5>
             <p class="text-primary">This is what the customers will see!</p>
-            <input type="file" name="image" class="text-center center-block file-upload text-danger justify-content-center" enctype=multipart/form-data>
+            <input id="file" type="file" name="image" class="text-center center-block file-upload text-danger justify-content-center" enctype=multipart/form-data>
+            <div id="imageError_registration" class="text-danger" style="visibility:hidden"> Image width must be at least 600 pixels and height at least 300 pixels!</div>
           </div>
           <br>
           <div class="row">
@@ -384,7 +385,7 @@
               <a href="mailto:tigermealsdelivery@gmail.com">Questions? Email us at tigermealsdelivery@gmail.com.</a>
               <br>
             </div>
-            <button type="submit" class="btn btn-primary">Register!</button>
+            <button type="submit" id="registerButton" class="btn btn-primary" disabled>Register!</button>
 
           </form>
         </div>
@@ -417,6 +418,32 @@
           });
         }, false);
       })();
+
+      var _URL = window.URL || window.webkitURL;
+
+          $("#file").change(function(e) {
+              var image, file;
+
+              if ((file = this.files[0])) {
+
+                  image = new Image();
+
+                  image.onload = function() {
+                    if (this.width < 600 || this.height < 300){
+                      document.getElementById("imageError_registration").style.visibility = "visible";
+                      document.getElementById("registerButton").disabled = true;
+                    }
+                    else
+                    {
+                      document.getElementById("imageError_registration").style.visibility = "hidden";
+                      document.getElementById("registerButton").disabled = false;
+                    }
+                      //alert("The image width is " +this.width + " and image height is " + this.height);
+                  };
+                  //if (this.width >= 200 && this.height >= 200)
+                  image.src = _URL.createObjectURL(file);
+                }
+              });
 
       </script>
 
