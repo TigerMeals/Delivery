@@ -218,7 +218,7 @@ def register_upload():
 		img = request.files['image']
 		if img is not None:
 			response = cloudinary.uploader.upload(img)
-			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=250, height=250, format = response['format'],  gravity = "auto", crop = "fill", quality=100, effect="sharpen")
+			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=1000, height=500, format = response['format'],  gravity = "auto", crop = "fill", quality=100, effect="sharpen")
 
 	registration_info = {
 	"name": request.form['name'],
@@ -678,15 +678,15 @@ def image_update():
 		img = request.files['image']
 		if img is not None:
 			response = cloudinary.uploader.upload(img)
-			if int(response['width']) < 200 or int(response['height']) < 200:
+			if int(response['width']) < 600 or int(response['height']) < 300:
 				return render_template('account_restaurant.tpl',length_complete_orders=length_complete_orders,\
 					secondaryFirstName=secondaryFirstName,primaryPhone=primaryPhone,primaryEmail=primaryEmail,\
 					name=name, description=description,phone=phone,length_pending_orders=length_pending_orders,\
 					secondaryPhone=secondaryPhone,primaryLastName=primaryLastName,address=address, image=image, \
 					id=id, length_orders=length_orders,error=error,\
 					secondaryLastName=secondaryLastName,secondaryEmail=secondaryEmail,primaryFirstName=primaryFirstName,\
-					length_listings=length_listings, email=email, website=website, errorImage="Image width and height must be at least 200 pixels!")
-			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=200, height=200, format = response['format'],  gravity = "auto", crop = "fill", quality = 100, effect="sharpen")
+					length_listings=length_listings, email=email, website=website, errorImage="Image height must be at least 600 pixels, and width at least 300 pixels!")
+			imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], width=1000, height=500, format = response['format'],  gravity = "auto", crop = "fill", quality = 100, effect="sharpen")
 			#updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
 			updateImage = {"image": imgurl,
 	"key": SECURE_DATABASE_KEY}
