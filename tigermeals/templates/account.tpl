@@ -476,15 +476,15 @@
                           <form id="orderRating{{order['order_id']}}" action="/updateRating" method="post">
                               <p>Current rating: {{order['rating']}}</p>
                               <input type="hidden" name="order_id" value="{{order['order_id']}}">
-                                <input type="radio" class="radio" name="rating" value="1" id="{{order['order_id']}}rating1" onclick="enableSave()"/>
+                                <input type="radio" class="radio" name="rating" value="1" id="{{order['order_id']}}rating1" onclick="enableSave{{order['order_id']}}()"/>
                                 <label for="rating1">1 (Poor)</label>
-                                <input type="radio" class="radio" name="rating" value="2" id="{{order['order_id']}}rating2" onclick="enableSave()"/>
+                                <input type="radio" class="radio" name="rating" value="2" id="{{order['order_id']}}rating2" onclick="enableSave{{order['order_id']}}()"/>
                                 <label for="rating2">2</label>
-                                <input type="radio" class="radio" name="rating" value="3" id="{{order['order_id']}}rating3" onclick="enableSave()"/>
+                                <input type="radio" class="radio" name="rating" value="3" id="{{order['order_id']}}rating3" onclick="enableSave{{order['order_id']}}()"/>
                                 <label for="rating3">3</label>
-                                <input type="radio" class="radio" name="rating" value="4" id="{{order['order_id']}}rating4" onclick="enableSave()"/>
+                                <input type="radio" class="radio" name="rating" value="4" id="{{order['order_id']}}rating4" onclick="enableSave{{order['order_id']}}()"/>
                                 <label for="rating4">4</label>
-                                <input type="radio" class="radio" name="rating" value="5" id="{{order['order_id']}}rating5" onclick="enableSave()"/>
+                                <input type="radio" class="radio" name="rating" value="5" id="{{order['order_id']}}rating5" onclick="enableSave{{order['order_id']}}()"/>
                                 <label for="rating5">5 (Excellent)</label>
                                 <button class="btn btn-outline-primary btn-sm text-center center-block my-2" id ="saveRating{{order['order_id']}}" type="submit" disabled> Save Rating </button>
                               </form>
@@ -511,7 +511,7 @@
                         document.getElementById("{{order['order_id']}}rating5").checked = true;
 
                       }
-                      function enableSave(){
+                      function enableSave{{order['order_id']}}(){
                         document.getElementById("saveRating{{order['order_id']}}").disabled = false;
                       }
                     </script>
