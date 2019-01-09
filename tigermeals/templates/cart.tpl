@@ -73,7 +73,7 @@
             </script>
   					<td data-th="Quantity">
 
-              <select id="quantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0" onchange="handleEdit(this.value, {{food_ids[i]}})">
+              <select id="quantity{{food_ids[i]}}" name="cc_exp_mo" size="0" onchange="handleEdit(this.value, {{food_ids[i]}})">
                   <option value="01">1</option>
                   <option value="02">2</option>
                   <option value="03">3</option>
@@ -177,12 +177,23 @@
       </div>
     </div>
 
-    <div class="container-fluid container mb-5 mt-4">
+    <div class="container-fluid container d-none d-md-block mb-5 mt-4">
       <div class="row">
-        <div class="col-6 justify-content-left">
+        <div class="col-md-6 col-xs-12 px-2 py-2 justify-content-left">
           <a href="/meals" class="btn btn-outline-primary"><i class="fa fa-angle-left"></i> Continue Shopping</a>
         </div>
-        <div class="col-6 justify-content-right text-right">
+        <div class="col-md-6 col-xs-12 px-2 py-2 justify-content-right text-right">
+          <button type="submit" class="text-right btn btn-success">Go to payment <i class="fa fa-angle-right"></i></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid container mb-5 mt-4 d-xs-block d-md-none">
+      <div class="row">
+        <div class="col-md-6 col-xs-12 px-2 py-2">
+          <a href="/meals" class="btn btn-outline-primary"><i class="fa fa-angle-left"></i> Continue Shopping</a>
+        </div>
+        <div class="col-md-6 col-xs-12 px-2 py-2">
           <button type="submit" class="text-right btn btn-success">Go to payment <i class="fa fa-angle-right"></i></button>
         </div>
       </div>

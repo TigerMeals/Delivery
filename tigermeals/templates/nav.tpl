@@ -25,7 +25,7 @@
           <li class="nav-item-bar" id="nav-account">
             <a class="nav-link" href="/account">My Account</a>
           </li>
-          <li class="nav-item-bar">
+          <li class="nav-item-bar" id="nav-cart">
             <a class="nav-link" id="menu-toggle">
               <span class="d-sm-inline d-md-none d-lg-inline"> View Cart</span>
               <span class="fas fa-shopping-cart" style="font-size: 13px"></span>
@@ -63,7 +63,7 @@
               {% for i in range(0, length_cart) %}
               <div class="row mr-0 ml-0">
                 <div class="col-4">
-                <select id="cartquantity{{food_ids[i]}}" class="form-control" name="cc_exp_mo" size="0" onchange="handleEdit(this.value, {{food_ids[i]}})">
+                <select id="cartquantity{{food_ids[i]}}" name="cc_exp_mo" size="0" onchange="handleEdit(this.value, {{food_ids[i]}})">
                   <option value="01">1</option>
                   <option value="02">2</option>
                   <option value="03">3</option>
