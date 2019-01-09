@@ -17,8 +17,8 @@ import cloudinary.utils
 cas = CAS(app, '/cas')
 cas.init_app(app)
 
-# DATABASE_URL = "http://tigermeals-delivery.herokuapp.com"
-DATABASE_URL="http://localhost:5000"
+DATABASE_URL = "http://tigermeals-delivery.herokuapp.com"
+# DATABASE_URL="http://localhost:5000"
 
 app.secret_key = 'dfasdkfjadkjfasdkjfhasdkjfh'
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
@@ -543,7 +543,7 @@ def cart_edit(quantity, food_id):
     if not res.ok:
         res.raise_for_status()
 
-    return redirect(url_for('cart'))
+    return redirect(url_for('meals'))
 
 @app.route("/updateRating", methods=["POST"])
 def user_updateRating():
@@ -739,7 +739,7 @@ def cart_delete(food_id):
     if not res.ok:
         res.raise_for_status()
 
-    return redirect("/cart")
+    return redirect("meals")
 
 # Endpoint to delete an item from the current cart
 @app.route("/meals/restaurant/delete/<food_id>", methods=["POST"])
