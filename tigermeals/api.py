@@ -13,9 +13,9 @@ from flask_mail import Mail,  Message
 # Which database to fetch from:
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -588,7 +588,7 @@ def food_filter():
 	if restaurants is not []:
 		food = food.filter(or_(Food.restaurant_id == v for v in restaurants))
 	if allergies is not []:
-		food = food.filter(or_(Food.allergies.contains(a) for a in allergies))
+		food = food.filter(and_(Food.allergies.contains(a) for a in allergies))
 	if ranges is not []:
 		food = food.filter(or_(Food.quantity_fed >= int(r[0]) for r in ranges))
 		food = food.filter(or_(Food.quantity_fed <= int(r[1]) for r in ranges))
