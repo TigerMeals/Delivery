@@ -965,7 +965,7 @@ def update_listing():
             if int(response['width']) < 200 or int(response['height']) < 200:
             	return redirect(url_for('listings'))
 
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 200, height = 200, gravity = "auto", crop = "fill", transformation = [{"quality":100, "effect": "sharpen"}])
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], width = 500, height = 500, gravity = "auto", crop = "fill", transformation = [{"quality":100, "effect": "sharpen"}])
             updateImage = {"image": imgurl}
             updatedEntry["image"] = imgurl
 
