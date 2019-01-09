@@ -10,7 +10,7 @@ from threading import Timer, Thread
 from tigermeals.mail_html import user_48hours_html, restaurant_48hours_html
 from flask_mail import Mail,  Message
 
-# Which database to fetch from:
+# Which database to fetch from: 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
