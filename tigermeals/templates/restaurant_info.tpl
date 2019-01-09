@@ -34,7 +34,6 @@
       <div class="container-fluid container">
       <!-- Portfolio Item Row -->
       <div class="row justify-content-end">
-
         <div class="col-md-8 col-sm-12">
           <img class="img-fluid" src="{{restaurant.image}}">
         </div>
