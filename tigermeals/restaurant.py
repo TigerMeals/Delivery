@@ -29,7 +29,7 @@ cloudinary.config(
 	api_secret = "gQUTMItrljBmcZ2Po8cbVvEFJvU"
 )
 
-DATABASE_URL = "http://tigermeals-delivery.herokuapp.com"
+DATABASE_URL = "https://tigermeals-delivery.herokuapp.com"
 # DATABASE_URL = "http://localhost:5000"
 
 # The secure key that someone needs to use the POST methods.
