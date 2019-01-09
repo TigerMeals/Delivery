@@ -81,13 +81,13 @@
     <!-- Page Content -->
     <div class="container">
       <!-- Portfolio Item Row -->
-      <div class="row">
+      <div class="row justify-content-end">
 
-        <div class="col-md-8">
-          <img class="img-fluid" src="{{restaurant.image}}" alt="">
+        <div class="col-md-8 col-sm-12">
+          <img class="img-fluid" src="{{restaurant.image}}">
         </div>
 
-        <div class="col-md-4">
+        <div class="col-lg-4 col-md-12 col-sm-12">
           <h1 class="mb-2">{{restaurant.name}}</h1>
           <p>{{restaurant.description}}</p>
 
