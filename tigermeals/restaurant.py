@@ -1,7 +1,6 @@
 from flask import Flask, request, make_response, jsonify, render_template, redirect
 from flask import session, url_for
 from flask_mail import Mail,  Message
-from flask_session import Session
 from tigermeals.mail_html import user_approved_html, rest_approved_html, user_denied_html, rest_denied_html, order_delivered_html, reset_password_html
 import requests
 import json
@@ -22,11 +21,8 @@ app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'tigermealsdelivery@gmail.com'
 app.config['MAIL_PASSWORD'] = 'aksnpqtutouldhna'
-app.config['SECRET_KEY'] = "JKFEUYGF13934ETFFEWFHU"
-app.config['SESSION_TYPE'] = 'filesystem'
 
 mail = Mail(app)
-Session(app)
 
 cloudinary.config(
 	cloud_name = "djclzxoun",
