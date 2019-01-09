@@ -685,7 +685,7 @@ def user_image_update():
             #updateImage = {"image": img_url}
 
             response = cloudinary.uploader.upload(img)
-            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], gravity="face:auto", width=200, height=200, crop="thumb", quality=100, effect="sharpen")
+            imgurl, options = cloudinary.utils.cloudinary_url(response['public_id'], format = response['format'], gravity="face:auto", width=500, height=500, crop="thumb", quality=100, effect="sharpen")
             #updateImage = {"image": cloudinary.CloudinaryImage(img.filename).image()}
             updateImage = {"image": imgurl,
     "key": SECURE_DATABASE_KEY}

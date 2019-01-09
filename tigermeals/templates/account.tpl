@@ -469,9 +469,12 @@
                           <p>{{rests_dict[order['restaurant_id']]}}</p>
                         </div>
 
+                        {% if not order['denied'] %}
+
                         <div class="col-4">
                           <h6 class="mb-0 mt-1">Rate your experience!</h6>
                         </div>
+                        
                         <div class="col-8">
                           <form id="orderRating{{order['order_id']}}" action="/updateRating" method="post">
                               <p>Current rating: {{order['rating']}}</p>
@@ -489,10 +492,13 @@
                                 <button class="btn btn-outline-primary btn-sm text-center center-block my-2" id ="saveRating{{order['order_id']}}" type="submit" disabled> Save Rating </button>
                               </form>
                         </div>
+                        {% endif %}
                       </div>
 
                     </div>
                     <script>
+
+                      
 
                       if ({{order['rating']}} == 1){
                         document.getElementById("{{order['order_id']}}rating1").checked = true;
@@ -514,6 +520,7 @@
                       function enableSave{{order['order_id']}}(){
                         document.getElementById("saveRating{{order['order_id']}}").disabled = false;
                       }
+                    
                     </script>
 
                       <div class="col-2">
