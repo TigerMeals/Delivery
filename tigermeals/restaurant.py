@@ -1,8 +1,10 @@
 from flask import Flask, request, make_response, jsonify, render_template, redirect
 from flask import session, url_for
 from flask_mail import Mail,  Message
+from flask_session import Session
 from tigermeals.mail_html import user_approved_html, rest_approved_html, user_denied_html, rest_denied_html, order_delivered_html, reset_password_html
 import requests
+import redis
 import json
 import string
 import random
@@ -20,7 +22,11 @@ app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'tigermealsdelivery@gmail.com'
-app.config['MAIL_PASSWORD'] = 'aksnpqtutouldhna'
+app.config['MAIL_PASSWORD'] = 'aksnpqtutfeawouldhna'
+app.config['SESSION_TYPE'] = 'redis'
+app.config['SESSION_REDIS'] = redis.from_url(os.getenv('REDISTOGO_URL', 'redis://localhost:6379'))
+sess = Session()
+sess.init_app(app)
 
 mail = Mail(app)
 
@@ -30,8 +36,8 @@ cloudinary.config(
 	api_secret = "gQUTMItrljBmcZ2Po8cbVvEFJvU"
 )
 
-DATABASE_URL = "https://tigermeals-delivery.herokuapp.com"
-# DATABASE_URL = "http://localhost:5000"
+# DATABASE_URL = "https://tigermeals-delivery.herokuapp.com"
+DATABASE_URL = "http://localhost:5000"
 
 # The secure key that someone needs to use the POST methods.
 SECURE_DATABASE_KEY = "sdjfhs24324[][p][}}P`092`)*@))@31DSDA&ASD{}[][]w]%%332"
