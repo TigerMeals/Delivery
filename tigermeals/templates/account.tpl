@@ -474,7 +474,7 @@
                         <div class="col-4">
                           <h6 class="mb-0 mt-1">Rate your experience!</h6>
                         </div>
-                        
+
                         <div class="col-8">
                           <form id="orderRating{{order['order_id']}}" action="/updateRating" method="post">
                               <p>Current rating: {{order['rating']}}</p>
@@ -498,7 +498,7 @@
                     </div>
                     <script>
 
-                      
+
 
                       if ({{order['rating']}} == 1){
                         document.getElementById("{{order['order_id']}}rating1").checked = true;
@@ -520,7 +520,7 @@
                       function enableSave{{order['order_id']}}(){
                         document.getElementById("saveRating{{order['order_id']}}").disabled = false;
                       }
-                    
+
                     </script>
 
                       <div class="col-2">
@@ -565,7 +565,7 @@
 
       <footer class="py-4 red-bar mb-0">
         <div class="container">
-          <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>
+          <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
         </div>
         <!-- /.container -->
       </footer>

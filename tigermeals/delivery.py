@@ -13,7 +13,6 @@ import cloudinary.uploader
 import cloudinary.api
 import cloudinary.utils
 
-
 cas = CAS(app, '/cas')
 cas.init_app(app)
 

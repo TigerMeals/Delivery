@@ -16,6 +16,9 @@ html, body {
 $height-footer: 60px;
 
 body {
+  min-height: 100%;
+  flex-direction: column;
+  display: flex;
   padding-top: 54px;
 /* margin-bottom: $height-footer; */
 }
