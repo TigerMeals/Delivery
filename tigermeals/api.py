@@ -14,7 +14,7 @@ from flask_mail import Mail,  Message
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
- app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False

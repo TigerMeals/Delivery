@@ -16,7 +16,7 @@ import cloudinary.utils
 cas = CAS(app, '/cas')
 cas.init_app(app)
 
- DATABASE_URL = "https://tigermeals-delivery.herokuapp.com"
+DATABASE_URL = "https://tigermeals-delivery.herokuapp.com"
 # DATABASE_URL="http://localhost:5000"
 
 app.config['SECRET_KEY'] = 'dfasdkfjadf3kj78fasdkjfhasdkjfh'
