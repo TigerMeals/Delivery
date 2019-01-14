@@ -157,7 +157,7 @@
       <!-- Related Projects Row -->
       <h3 class="my-4">Available Catering Packages</h3>
       <div class="row">
-        {% if hasMeals %}
+        {% if hasActiveMeals %}
           {% for m in meals %}
             {% with meal=m %}
               {% if m.active %}
@@ -166,7 +166,7 @@
             {% endwith %}
           {% endfor %}
         {% endif %}
-        {% if not hasMeals %}
+        {% if not hasActiveMeals %}
         <div class="col-12">
           <span class="text-primary">This restaurant doesn't have any available catering packages yet. 😢</span>
         </div>
