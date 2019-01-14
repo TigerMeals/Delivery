@@ -116,9 +116,9 @@
                         <button class="btn btn-success type=" type="submit" form="delivered{{order.order_id}}">Delivered</button>
                       </div>
                     </div>
-                  <!-- {% endif %} -->
+                  {% endif %}
                   <!-- pending orders on restaurant side -->
-                  {% elif not order.paid and not order.delivered and not order.denied %}
+                  {% if not order.paid and not order.delivered and not order.denied %}
                     <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
                       <input type="hidden" name="order_id" value="{{order.order_id}}">
                     </form>
@@ -142,23 +142,23 @@
                         <button class="btn btn-success type=" type="submit" form="approve{{order.order_id}}">Approve</button>
                       </div>
                     </div>
-                    <!-- {% endif %} -->
+                    {% endif %}
                     <!-- delivered and denied orders -->
-                    {% elif order.paid and order.delivered and not order.denied %}
+                    {% if order.paid and order.delivered and not order.denied %}
                       <div class="col-12">
                         <div class="text-center item-right">
                           <a href="mailto:{{order.email}}"><button class="btn btn-info" >Contact</button></a>
                         </div>
                       </div>
-                    <!-- {% endif %} -->
-                  <!-- delivered orders  -->
-                  {% elif order.paid and not order.delivered and order.denied %}
-                  <div class="col-12">
-                    <div class="text-center item-right">
-                      <a href="mailto:{{order.email}}"><button class="btn btn-info" >Contact</button></a>
+                    {% endif %}
+                    <!-- delivered orders  -->
+                    {% if order.paid and not order.delivered and order.denied %}
+                    <div class="col-12">
+                      <div class="text-center item-right">
+                        <a href="mailto:{{order.email}}"><button class="btn btn-info" >Contact</button></a>
+                      </div>
                     </div>
-                  </div>
-                  {% endif %}
+                    {% endif %}
                 {% endif %}
               </div>
             </div>
