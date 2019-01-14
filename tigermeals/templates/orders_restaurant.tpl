@@ -185,6 +185,7 @@
     </div>
     <!-- /.container -->
 
+  </div>
     <!-- Footer -->
     <footer class="py-4 red-bar">
       <div class="container">

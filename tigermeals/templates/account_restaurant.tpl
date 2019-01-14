@@ -54,7 +54,7 @@
     </script>
     <br>
 
-  <div class="restaurant-container">
+<div class="restaurant-container">
     <div class="container">
         <div class="row mt-2 mb-4">
       		<div class="col-sm-12 col-lg-3 mb-4"><!--left col-->
@@ -406,6 +406,7 @@
       </div> <!--container-->
 
     </div>
+  </div>
 
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="/static/dist/bootstrap-clockpicker.min.js"></script>
