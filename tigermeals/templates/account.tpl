@@ -275,7 +275,7 @@
                   <div class="col-10">
                     <div class="row">
                     <div class="col-4">
-                      <h6 class="mb-0 mt-1">Order Placed on</h6>
+                      <h6 class="mb-0 mt-1">Delivery Date</h6>
                     </div>
                     <div class="col-8">
                       <p>{{order['date']}}</p>
@@ -357,7 +357,7 @@
                       <div class="col-10">
                         <div class="row">
                         <div class="col-4">
-                          <h6 class="mb-0 mt-1">Order Placed on</h6>
+                          <h6 class="mb-0 mt-1">Delivery Date</h6>
                         </div>
                         <div class="col-8">
                           <p>{{order['date']}}</p>
@@ -439,7 +439,7 @@
                       <div class="col-10">
                         <div class="row">
                         <div class="col-4">
-                          <h6 class="mb-0 mt-1">Order Placed on</h6>
+                          <h6 class="mb-0 mt-1">Delivery Date</h6>
                         </div>
                         <div class="col-8">
                           <p>{{order['date']}}</p>
