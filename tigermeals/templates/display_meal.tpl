@@ -53,16 +53,7 @@
                 {% include 'display_allergy.tpl' %}
               {% endwith %}
             {% endfor %}
-            <!-- <div class="form-group">
-              <p>
-                <a data-toggle="collapse" href="#collapseExample"aria-expanded="false" aria-controls="collapseExample">
-                  Add customizations <i class="fas fa-sm fa-plus text-primary sr-icon-1"></i>
-                </a>
-              </p>
-              <div class="collapse" id="collapseExample">
-                  <input type="text" class="form-control form-control-lg" id="customization" name="customization" rows="3">
-              </div>
-            </div> -->
+
             <form action = "/cart/upload" id="add_to_cart{{meal.food_id}}" method="POST">
               <div class="form-group">
                 <label for="customization">Customizations:</label>
@@ -113,20 +104,7 @@
             var val = parseFloat({{meal.price}}).toFixed(2);
             document.getElementById('subtotal{{meal.food_id}}').innerHTML = val;
           </script>
-          <!-- <h6>Subtotal: <small>$<span id="modal_subtotal{{meal.food_id}}"></small></h6> -->
-          <!-- <script>
-            var food_quantity;
-            var val = parseFloat({{meal.price}}).toFixed(2);
-            var mySelect = document.getElementById("formQuantity");
 
-            for(var i, j = 0; i = mySelect.options[j]; j++) {
-                if(i.value == food_quantity) {
-                    mySelect.selectedIndex = j;
-                    break;
-                }
-            }
-            document.getElementById('modal_subtotal{{meal.food_id}}').innerHTML = food_quantity;
-          </script> -->
 
           <div class="modal-add-to-cart">
             <div class="text-center item-right">

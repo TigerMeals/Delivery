@@ -160,7 +160,9 @@
         {% if hasMeals %}
           {% for m in meals %}
             {% with meal=m %}
-              {% include 'display_meal.tpl' %}
+              {% if m.active %}
+                {% include 'display_meal.tpl' %}
+              {% endif %}
             {% endwith %}
           {% endfor %}
         {% endif %}
