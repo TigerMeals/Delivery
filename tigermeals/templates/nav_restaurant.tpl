@@ -28,5 +28,3 @@
     </div>
 
 </nav>
-
-<div id="wrapper">

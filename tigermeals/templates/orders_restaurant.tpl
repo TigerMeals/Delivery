@@ -33,6 +33,7 @@
       document.getElementById('nav-orders').classList.add('active');
     </script>
 
+    <div class="restaurant-container">
     <!-- Page Content -->
     <div class="container">
 
@@ -184,7 +185,6 @@
     </div>
     <!-- /.container -->
 
-  </div>
     <!-- Footer -->
     <footer class="py-4 red-bar">
       <div class="container">
