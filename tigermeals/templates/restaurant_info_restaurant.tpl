@@ -78,8 +78,9 @@
     <body>
         {% include 'nav_restaurant.tpl' %}
 
+  <div class="restaurant-info-restaurant">
     <!-- Page Content -->
-    <div class="container">
+    <div class="container-fluid container">
       <!-- Portfolio Item Row -->
       <div class="row justify-content-end">
 
@@ -210,6 +211,8 @@
 
     </div>
     <!-- /.container -->
+
+  </div>
 
   </div>
     <!-- Footer -->
