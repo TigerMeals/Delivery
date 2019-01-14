@@ -618,6 +618,11 @@ body {
 .restaurant-info-restaurant {
   width: 100%;
   padding-top: 12px;
+  min-width: 87%;
+}
+
+.restaurant-container {
+  min-width: 87%;
 }
 
 /* Sidebar Styles */
