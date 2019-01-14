@@ -122,7 +122,10 @@ def view():
 			time = "pm"
 		hours.append(hr + ":" + min + " " + time)
 
+	hasActiveMeals = False
 	for meal in meals:
+		if meal['active'] is True:
+			hasActiveMeals = True
 		# Splice allergies into a list
 		if meal['allergies'] is "":
 			meal['allergies'] = []
@@ -145,7 +148,7 @@ def view():
 
 	error = request.args.get('error')
 
-	r = make_response(render_template('restaurant_info_restaurant.tpl', meals=meals, restaurant=rest, length_orders=length_orders, hours=hours))
+	r = make_response(render_template('restaurant_info_restaurant.tpl', meals=meals, restaurant=rest, length_orders=length_orders, hours=hours, hasActiveMeals = hasActiveMeals))
 
 	r.headers["Pragma"] = "no-cache"
 	r.headers["Expires"] = "0"

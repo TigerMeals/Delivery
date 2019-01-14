@@ -198,7 +198,7 @@
                 <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" required>
                 <label class="custom-control-label" for="credit">Card Payment (Credit and Debit)</label>
               </div>
-              
+
               <div class="custom-control custom-radio">
                 <input id="cash" name="paymentMethod" type="radio" class="custom-control-input" onclick="javascript:yesCash();" checked required>
                 <label class="custom-control-label" for="cash">Cash</label>
@@ -321,7 +321,7 @@
 
     <footer class="py-4 red-bar">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
       </div>
       <!-- /.container -->
     </footer>

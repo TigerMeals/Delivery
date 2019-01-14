@@ -53,6 +53,8 @@
       document.getElementById('nav-account').classList.add('active');
     </script>
     <br>
+
+<div class="restaurant-container">
     <div class="container">
         <div class="row mt-2 mb-4">
       		<div class="col-sm-12 col-lg-3 mb-4"><!--left col-->
@@ -404,6 +406,7 @@
       </div> <!--container-->
 
     </div>
+  </div>
 
     <!-- Bootstrap core JavaScript -->
     <script type="text/javascript" src="/static/dist/bootstrap-clockpicker.min.js"></script>
@@ -446,7 +449,7 @@
 
     <footer class="py-4 red-bar">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
       </div>
       <!-- /.container -->
     </footer>

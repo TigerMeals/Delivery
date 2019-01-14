@@ -98,60 +98,67 @@
               <div class="row">
                 {% if not user %}
 
-                {% if order.paid and not order.delivered %}
-                <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
-                  <input type="hidden" name="order_id" value="{{order.order_id}}">
-                </form>
-                <div class="col-6">
-                  <div class="text-center item-right">
-                    <a href="mailto:{{order.email}}"><button class="btn btn-info">Contact</button></a>
-                  </div>
-                </div>
-                <form id="delivered{{order.order_id}}" action="/order/delivered" method="POST">
-                  <input type="hidden" name="order_id" value="{{order.order_id}}">
-                </form>
-                <div class="col-6">
-                  <div class="text-center item-right">
-                    <button class="btn btn-success type=" type="submit" form="delivered{{order.order_id}}">Delivered</button>
-                  </div>
-                </div>
-                {% elif not order.paid and not order.delivered and not order.denied %}
-                <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
-                  <input type="hidden" name="order_id" value="{{order.order_id}}">
-                </form>
-                <div class="col-4">
-                  <div class="text-center item-right">
-                    <button class="btn btn-danger" type="submit" form="reject{{order.order_id}}">Reject</button>
-                  </div>
-                </div>
+                  <!-- active orders on restaurant side -->
+                  {% if order.paid and not order.delivered %}
+                    <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
+                      <input type="hidden" name="order_id" value="{{order.order_id}}">
+                    </form>
+                    <div class="col-6">
+                      <div class="text-center item-right">
+                        <a href="mailto:{{order.email}}"><button class="btn btn-info">Contact</button></a>
+                      </div>
+                    </div>
+                    <form id="delivered{{order.order_id}}" action="/order/delivered" method="POST">
+                      <input type="hidden" name="order_id" value="{{order.order_id}}">
+                    </form>
+                    <div class="col-6">
+                      <div class="text-center item-right">
+                        <button class="btn btn-success type=" type="submit" form="delivered{{order.order_id}}">Delivered</button>
+                      </div>
+                    </div>
+                  {% endif %}
+                  <!-- pending orders on restaurant side -->
+                  {% if not order.paid and not order.delivered and not order.denied %}
+                    <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
+                      <input type="hidden" name="order_id" value="{{order.order_id}}">
+                    </form>
+                    <div class="col-4">
+                      <div class="text-center item-right">
+                        <button class="btn btn-danger" type="submit" form="reject{{order.order_id}}">Reject</button>
+                      </div>
+                    </div>
 
-                <div class="col-4">
-                  <div class="text-center item-right">
-                    <a href="mailto:{{order.email}}"><button class="btn btn-info" >Contact</button></a>
-                  </div>
-                </div>
+                    <div class="col-4">
+                      <div class="text-center item-right">
+                        <a href="mailto:{{order.email}}"><button class="btn btn-info" >Contact</button></a>
+                      </div>
+                    </div>
 
-                <form id="approve{{order.order_id}}" action="/order/approve" method="POST">
-                  <input type="hidden" name="order_id" value="{{order.order_id}}">
-                </form>
-                <div class="col-4">
-                  <div class="text-center item-right">
-                    <button class="btn btn-success type=" type="submit" form="approve{{order.order_id}}">Approve</button>
-                  </div>
-                </div>
-                {% else %}
-                <div class="col-12">
-                  <div class="text-center item-right">
-                    <a href="mailto:{{email}}"><button class="btn btn-info" >Contact Restaurant</button></a>
-                  </div>
-                </div>
-                {% endif %}
-                {% else %}
-                <div class="col-12">
-                  <div class="text-center item-right">
-                    <a href="mailto:{{email}}"><button class="btn btn-info" >Contact Restaurant</button></a>
-                  </div>
-                </div>
+                    <form id="approve{{order.order_id}}" action="/order/approve" method="POST">
+                      <input type="hidden" name="order_id" value="{{order.order_id}}">
+                    </form>
+                    <div class="col-4">
+                      <div class="text-center item-right">
+                        <button class="btn btn-success type=" type="submit" form="approve{{order.order_id}}">Approve</button>
+                      </div>
+                    </div>
+                    {% endif %}
+                    <!-- delivered and denied orders -->
+                    {% if order.paid and order.delivered and not order.denied %}
+                      <div class="col-12">
+                        <div class="text-center item-right">
+                          <a href="mailto:{{order.email}}"><button class="btn btn-info" >Contact</button></a>
+                        </div>
+                      </div>
+                    {% endif %}
+                    <!-- delivered orders  -->
+                    {% if order.paid and not order.delivered and order.denied %}
+                    <div class="col-12">
+                      <div class="text-center item-right">
+                        <a href="mailto:{{order.email}}"><button class="btn btn-info" >Contact</button></a>
+                      </div>
+                    </div>
+                    {% endif %}
                 {% endif %}
               </div>
             </div>

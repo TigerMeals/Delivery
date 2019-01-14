@@ -14,7 +14,6 @@ import cloudinary.api
 import cloudinary.utils
 import urllib
 
-
 cas = CAS(app, '/cas')
 cas.init_app(app)
 
@@ -1055,7 +1054,10 @@ def meals_restaurant(restaurant_id):
         	time = "pm"
         hours.append(hr + ":" + min + " " + time)
 
+    hasActiveMeals = False
     for meal in meals:
+        if meal['active'] is True:
+            hasActiveMeals = True
         # Splice allergies into a list
         if meal['allergies'] is "":
             meal['allergies'] = []
@@ -1091,7 +1093,7 @@ def meals_restaurant(restaurant_id):
 
     r = make_response(render_template('restaurant_info.tpl', meals=meals, food_ids=food_ids,\
         id=user_id, food_prices = food_prices, error=error, food_multiplier = food_multiplier, \
-        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, hasMeals = hasMeals,\
+        food_subtotals = food_subtotals, food_titles = food_titles, empty_cart=empty_cart, hasMeals = hasMeals, hasActiveMeals = hasActiveMeals, \
         length_cart = length_cart, total=total, food_images= food_images, restaurant=rest, avgRating = avgRating, hours=hours))
 
     r.headers["Pragma"] = "no-cache"

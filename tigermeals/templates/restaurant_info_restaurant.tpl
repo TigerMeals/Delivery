@@ -78,8 +78,9 @@
     <body>
         {% include 'nav_restaurant.tpl' %}
 
+  <div class="restaurant-info-restaurant">
     <!-- Page Content -->
-    <div class="container">
+    <div class="container-fluid container">
       <!-- Portfolio Item Row -->
       <div class="row justify-content-end">
 
@@ -192,12 +193,16 @@
       <!-- Related Projects Row -->
       <h3 class="my-4">Available Catering Packages</h3>
       <div class="row">
-        {% for m in meals %}
-          {% with meal=m %}
-            {% include 'display_meal_restaurant.tpl' %}
-          {% endwith %}
-        {% endfor %}
-        {% if not meals[0] %}
+        {% if hasActiveMeals %}
+          {% for m in meals %}
+            {% with meal=m %}
+              {% if m.active %}
+                {% include 'display_meal_restaurant.tpl' %}
+              {% endif %}
+            {% endwith %}
+          {% endfor %}
+        {% endif %}
+        {% if not hasActiveMeals %}
         <div class="col-12">
           <span class="text-primary">This restaurant doesn't have any available catering packages yet. 😢</span>
         </div>
@@ -212,10 +217,12 @@
     <!-- /.container -->
 
   </div>
+
+  </div>
     <!-- Footer -->
     <footer class="py-4 red-bar">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
       </div>
       <!-- /.container -->
     </footer>

@@ -96,7 +96,7 @@
 
         <footer class="py-4 red-bar">
           <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>
+            <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
           </div>
           <!-- /.container -->
         </footer>

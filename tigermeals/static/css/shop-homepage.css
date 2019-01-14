@@ -16,6 +16,9 @@ html, body {
 $height-footer: 60px;
 
 body {
+  min-height: 100%;
+  flex-direction: column;
+  display: flex;
   padding-top: 54px;
 /* margin-bottom: $height-footer; */
 }
@@ -612,6 +615,15 @@ body {
   margin-right: 0px;
 }
 
+.restaurant-info-restaurant {
+  width: 100%;
+  padding-top: 12px;
+  min-width: 87%;
+}
+
+.restaurant-container {
+  min-width: 87%;
+}
 
 /* Sidebar Styles */
 

@@ -171,11 +171,11 @@
             </div>
           </form>
         </div>
-       
-          
-        
+
+
+
       <div class="col-md-8 order-md-1" id = "payment_button" style="visibility:visible" >
-            <form action="/charge?id={{user_id}}" id = "stripe_payment_button" method="post" class="needs-validation" novalidate>       
+            <form action="/charge?id={{user_id}}" id = "stripe_payment_button" method="post" class="needs-validation" novalidate>
                 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
                         data-key={{key}}
                         data-amount=String({{total}} * 100)
@@ -184,8 +184,8 @@
                         data-shipping-address = "true"
                         data-zip-code="true"
                         data-name="TigerMeals Checkout"
-                        data-locale="auto">      
-                </script> 
+                        data-locale="auto">
+                </script>
 
                 <!--<script src="https://checkout.stripe.com/checkout.js"></script>
 
@@ -220,15 +220,15 @@
                     });
                     </script> -->
                 </form>
-                
 
-          
+
+
         </div>
         <br>
         <br>
         <br>
         <div class="col-md-8 order-md-1" id = "billing_info" style="visibility:hidden" >
-          
+
           <form id="checkout_form" action="/ordered?id={{user_id}}" method="POST" class="needs-validation" novalidate>
             <h4 class="mb-3">Cash Payment: Please complete this form</h4>
             <h5 class="mb-3">Shipping Address</h5>
@@ -317,12 +317,12 @@
         </div>
       </div>
     </div>
-    
+
     <!-- Footer -->
 
     <footer class="py-4 red-bar">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
       </div>
       <!-- /.container -->
     </footer>

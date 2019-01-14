@@ -157,14 +157,16 @@
       <!-- Related Projects Row -->
       <h3 class="my-4">Available Catering Packages</h3>
       <div class="row">
-        {% if hasMeals %}
+        {% if hasActiveMeals %}
           {% for m in meals %}
             {% with meal=m %}
-              {% include 'display_meal.tpl' %}
+              {% if m.active %}
+                {% include 'display_meal.tpl' %}
+              {% endif %}
             {% endwith %}
           {% endfor %}
         {% endif %}
-        {% if not hasMeals %}
+        {% if not hasActiveMeals %}
         <div class="col-12">
           <span class="text-primary">This restaurant doesn't have any available catering packages yet. 😢</span>
         </div>
@@ -181,7 +183,7 @@
     <!-- Footer -->
     <footer class="py-4 red-bar">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2018</p>
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
       </div>
       <!-- /.container -->
     </footer>
