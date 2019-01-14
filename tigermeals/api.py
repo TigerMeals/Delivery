@@ -9,12 +9,13 @@ from tigermeals import app
 from threading import Timer, Thread
 from tigermeals.mail_html import user_48hours_html, restaurant_48hours_html
 from flask_mail import Mail,  Message
+import urllib
 
 # Which database to fetch from:
 basedir = os.path.abspath(os.path.dirname(__file__))
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://localhost/delivery"
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -470,12 +471,12 @@ def restaurant_filter():
 
 @app.route("/restaurant/search/<query>",methods=["GET"])
 def restaurant_search(query):
+	query = urllib.parse.unquote_plus(query)
 	if query.strip() == '':
 		return jsonify(query)
+	query_string = "%" + query + "%"
 
-	query_string = query + "%"
-
-	restaurants = Restaurant.query.filter(Restaurant.name.like(query_string.capitalize())).all()
+	restaurants = Restaurant.query.filter(Restaurant.name.ilike(query_string)).all()
 
 	return restaurants_schema.jsonify(restaurants)
 

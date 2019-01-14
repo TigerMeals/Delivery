@@ -12,13 +12,14 @@ import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 import cloudinary.utils
+import urllib
 
 
 cas = CAS(app, '/cas')
 cas.init_app(app)
 
-DATABASE_URL = "https://tigermeals-delivery.herokuapp.com"
-# DATABASE_URL="http://localhost:5000"
+# DATABASE_URL = "https://tigermeals-delivery.herokuapp.com"
+DATABASE_URL="http://localhost:5000"
 
 app.config['SECRET_KEY'] = 'dfasdkfjadf3kj78fasdkjfhasdkjfh'
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
@@ -961,9 +962,11 @@ def restaurant_view_filter():
         length_cart = length_cart, total=total, food_images= food_images, restaurants=rests, customizations=customizations, restaurants_length=restaurants_length, cuisines=cuisineSplit)
 
 # Endpoint to search through the restaurants
-@app.route("/search_restaurants", methods=["POST"])
+@app.route("/search_restaurants", methods=["POST", "GET"])
 @login_required
 def query_restaurant_search():
+    if request.method=="GET":
+        return redirect('/meals/restaurant')
     netid = cas.username
     print(netid)
 
@@ -987,7 +990,7 @@ def query_restaurant_search():
     if query.strip() == "":
         return redirect(url_for('restaurant_view',error="Please enter a restaurant query"))
 
-    restaurants = _getJSON(DATABASE_URL + "/restaurant/search/" + query)
+    restaurants = _getJSON(DATABASE_URL + "/restaurant/search/" + urllib.parse.quote_plus(query))
 
     print(restaurants)
 

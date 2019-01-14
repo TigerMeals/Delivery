@@ -175,7 +175,7 @@
                       </div>
                       <!--end of col-->
                       <div class="col">
-                          <input class="form-control form-control-sm form-control-borderless" type="search" name="search_query"placeholder="Search restaurants"value={{last_search}}>
+                          <input class="form-control form-control-sm form-control-borderless" type="search" name="search_query"placeholder="Search restaurants" value="{{last_search}}">
                       </div>
                       <!--end of col-->
                       <div class="col-auto">
