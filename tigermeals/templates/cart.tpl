@@ -113,8 +113,8 @@
   					{{food_quantity_feds[i]}}</td>
   					<td class="actions" data-th="">
   					<form method="post"action="/cart/delete/{{food_ids[i]}}">
-  						<button type="submit"id="delete{{food_ids[i]}}"class="btn btn-danger btn-sm"><i class="fa fa-trash-alt"></i></button>
-  					</form>
+  						<button type="submit"id="delete{{food_ids[i]}}"class="transparent-btn"><i class="fa fa-trash" aria-hidden="true"></i></button>
+            </form>
   					</td>
   				</tr>
   				{% endfor %}
