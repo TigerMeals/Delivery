@@ -98,6 +98,7 @@
               <div class="row">
                 {% if not user %}
 
+                <!-- active orders on restaurant side -->
                 {% if order.paid and not order.delivered %}
                 <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
                   <input type="hidden" name="order_id" value="{{order.order_id}}">
@@ -115,6 +116,7 @@
                     <button class="btn btn-success type=" type="submit" form="delivered{{order.order_id}}">Delivered</button>
                   </div>
                 </div>
+                <!-- pending orders on restaurant side -->
                 {% elif not order.paid and not order.delivered and not order.denied %}
                 <form id="reject{{order.order_id}}" action="/order/deny" method="POST">
                   <input type="hidden" name="order_id" value="{{order.order_id}}">
@@ -139,20 +141,21 @@
                     <button class="btn btn-success type=" type="submit" form="approve{{order.order_id}}">Approve</button>
                   </div>
                 </div>
+                <!-- delivered and denied orders -->
                 {% else %}
                 <div class="col-12">
                   <div class="text-center item-right">
-                    <a href="mailto:{{email}}"><button class="btn btn-info" >Contact Restaurant</button></a>
+                    <a href="mailto:{{order.email}}"><button class="btn btn-info" >Contact</button></a>
                   </div>
                 </div>
                 {% endif %}
-                {% else %}
+                <!-- {% else %}
                 <div class="col-12">
                   <div class="text-center item-right">
-                    <a href="mailto:{{email}}"><button class="btn btn-info" >Contact Restaurant</button></a>
+                    <a href="mailto:{{order.email}}"><button class="btn btn-info" >Contact</button></a>
                   </div>
                 </div>
-                {% endif %}
+                {% endif %} -->
               </div>
             </div>
           </div>

@@ -193,12 +193,16 @@
       <!-- Related Projects Row -->
       <h3 class="my-4">Available Catering Packages</h3>
       <div class="row">
-        {% for m in meals %}
-          {% with meal=m %}
-            {% include 'display_meal_restaurant.tpl' %}
-          {% endwith %}
-        {% endfor %}
-        {% if not meals[0] %}
+        {% if hasActiveMeals %}
+          {% for m in meals %}
+            {% with meal=m %}
+              {% if m.active %}
+                {% include 'display_meal_restaurant.tpl' %}
+              {% endif %}
+            {% endwith %}
+          {% endfor %}
+        {% endif %}
+        {% if not hasActiveMeals %}
         <div class="col-12">
           <span class="text-primary">This restaurant doesn't have any available catering packages yet. 😢</span>
         </div>
