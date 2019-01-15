@@ -171,7 +171,7 @@
                             <label class="form-check-label" for="75-100">
                               75-100
                             </label> <br>
-                            <input class="form-check-input" type="checkbox" value="" name="100+" id="100+">
+                            <input class="form-check-input" type="checkbox" value="" name="100-1000" id="100+">
                             <label class="form-check-label" for="100+">
                               100+
                             </label> <br>

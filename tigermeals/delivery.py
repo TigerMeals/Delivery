@@ -1439,7 +1439,7 @@ def filter():
             current_filters.append({"filter": allergy, "checkbox": allergy})
 
     servings = []
-    for serving in ["0-25", "25-50", "50-75", "75-100", "100+"]:
+    for serving in ["0-25", "25-50", "50-75", "75-100", "100-1000"]:
         if request.form.get(serving) is not None:
             servings.append(serving)
             current_filters.append({"filter": serving, "checkbox": serving})
