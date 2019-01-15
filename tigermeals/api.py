@@ -584,8 +584,8 @@ def food_filter():
 		if s is "100+":
 			ranges.append("100", "5000")
 		else:
-		vals = s.split("-")
-		ranges.append([vals[0], vals[1]])
+			vals = s.split("-")
+			ranges.append([vals[0], vals[1]])
 
 	food = Food.query
 	if restaurants is not []:
