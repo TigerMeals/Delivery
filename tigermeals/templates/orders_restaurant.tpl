@@ -34,106 +34,74 @@
     </script>
 
     <div class="restaurant-container">
-    <!-- Page Content -->
-    <div class="container">
+      <!-- Page Content -->
+      <div class="container">
 
-      <div class="py-5 text-center">
-        <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
-        <h2>My orders</h2>
-        <p class="lead">Please view your orders below. We thank you for partnering with TigerMeals Delivery.</p>
-      </div>
-
-      <ul class="nav nav-tabs">
-        <li class="active nav-item"><a data-toggle="tab" href="#pending">Pending</a></li>
-        <li class="nav-item"><a data-toggle="tab" href="#active">Active</a></li>
-        <li class="nav-item"><a data-toggle="tab" href="#delivered" >Delivered</a></li>
-        <li class="nav-item"><a data-toggle="tab" href="#denied" >Denied</a></li>
-      </ul>
-      <div class="tab-content">
-        <div id="pending" class="tab-pane fade show active">
-          <br>
-          <table id="pendingorders" class="table table-hover table-condensed">
-            <thead>
-              <tr style="color:black;">
-                  <h2 class="mb-1">Orders Pending Approval</h2>
-                  <h4><small>Please approve or deny these orders as soon as possible!</small></h4>
-              </tr>
-            </thead>
-    					<tbody>
-                {% for o in pending %}
-                  {% with order=o %}
-                    {% include 'display_order.tpl' %}
-                  {% endwith %}
-                {% endfor %}
-
-                {% if not pending[0] %}
-                <tr>
-                  <td>
-                    <p class="text-primary float-left">You do not have any pending orders at this time. </p>
-                  </td>
-                </tr>
-                {% endif %}
-      					</tbody>
-      					<tfoot>
-      					</tfoot>
-      				</table>
-              {% for o in pending %}
-                {% with order=o %}
-                  {% include 'order_modals.tpl' %}
-                {% endwith %}
-              {% endfor %}
+        <div class="py-5 text-center">
+          <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
+          <h2>My orders</h2>
+          <p class="lead">Please view your orders below. We thank you for partnering with TigerMeals Delivery.</p>
         </div>
-        <div id="active" class="tab-pane fade">
-          <br>
-          <table id="activeorders" class="table table-hover table-condensed">
+
+        <ul class="nav nav-tabs">
+          <li class="active nav-item"><a data-toggle="tab" href="#pending">Pending</a></li>
+          <li class="nav-item"><a data-toggle="tab" href="#active">Active</a></li>
+          <li class="nav-item"><a data-toggle="tab" href="#delivered" >Delivered</a></li>
+          <li class="nav-item"><a data-toggle="tab" href="#denied" >Denied</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="pending" class="tab-pane fade show active">
+            <br>
+            <table id="pendingorders" class="table table-hover table-condensed">
               <thead>
                 <tr style="color:black;">
-                    <h2>Orders To Be Delivered</h2>
+                    <h2 class="mb-1">Orders Pending Approval</h2>
+                    <h4><small>Please approve or deny these orders as soon as possible!</small></h4>
                 </tr>
               </thead>
-              <tbody>
-                {% for o in active %}
-                  {% with order=o %}
-                    {% include 'display_order.tpl' %}
-                  {% endwith %}
-                {% endfor %}
-
-                {% if not active[0] %}
-                <tr>
-                  <td>
-                    <p class="text-primary float-left">You do not have any active orders at this time. </p>
-                  </td>
-                </tr>
-                {% endif %}
-                </tbody>
-                <tfoot>
-                </tfoot>
-              </table>
-              {% for o in active %}
-                {% with order=o %}
-                  {% include 'order_modals.tpl' %}
-                {% endwith %}
-              {% endfor %}
-          </div>
-          <div id="delivered" class="tab-pane fade">
-            <br>
-            <table id="deliveredorders" class="table table-hover table-condensed">
-                <thead>
-                  <tr style="color:black;">
-                      <h2>Delivered Orders</h2>
-                  </tr>
-                </thead>
-                <tbody>
-                  {% for o in delivered %}
+      					<tbody>
+                  {% for o in pending %}
                     {% with order=o %}
                       {% include 'display_order.tpl' %}
                     {% endwith %}
                   {% endfor %}
 
-                  {% if not delivered[0] %}
+                  {% if not pending[0] %}
                   <tr>
                     <td>
-                      <p class="text-primary float-left">Your order history is empty. </p>
+                      <p class="text-primary float-left">You do not have any pending orders at this time. </p>
+                    </td>
+                  </tr>
+                  {% endif %}
+        					</tbody>
+        					<tfoot>
+        					</tfoot>
+        				</table>
+                {% for o in pending %}
+                  {% with order=o %}
+                    {% include 'order_modals.tpl' %}
+                  {% endwith %}
+                {% endfor %}
+          </div>
+          <div id="active" class="tab-pane fade">
+            <br>
+            <table id="activeorders" class="table table-hover table-condensed">
+                <thead>
+                  <tr style="color:black;">
+                      <h2>Orders To Be Delivered</h2>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for o in active %}
+                    {% with order=o %}
+                      {% include 'display_order.tpl' %}
+                    {% endwith %}
+                  {% endfor %}
+
+                  {% if not active[0] %}
+                  <tr>
+                    <td>
+                      <p class="text-primary float-left">You do not have any active orders at this time. </p>
                     </td>
                   </tr>
                   {% endif %}
@@ -141,51 +109,83 @@
                   <tfoot>
                   </tfoot>
                 </table>
-                {% for o in delivered %}
+                {% for o in active %}
                   {% with order=o %}
                     {% include 'order_modals.tpl' %}
                   {% endwith %}
                 {% endfor %}
-          </div>
-          <div id="denied" class="tab-pane fade">
-          <br>
-          <table id="deniedorders" class="table table-hover table-condensed">
-              <thead>
-                <tr style="color:black;">
-                    <h2>Denied Orders</h2>
-                </tr>
-              </thead>
-              <tbody>
+            </div>
+            <div id="delivered" class="tab-pane fade">
+              <br>
+              <table id="deliveredorders" class="table table-hover table-condensed">
+                  <thead>
+                    <tr style="color:black;">
+                        <h2>Delivered Orders</h2>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for o in delivered %}
+                      {% with order=o %}
+                        {% include 'display_order.tpl' %}
+                      {% endwith %}
+                    {% endfor %}
+
+                    {% if not delivered[0] %}
+                    <tr>
+                      <td>
+                        <p class="text-primary float-left">Your order history is empty. </p>
+                      </td>
+                    </tr>
+                    {% endif %}
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                  </table>
+                  {% for o in delivered %}
+                    {% with order=o %}
+                      {% include 'order_modals.tpl' %}
+                    {% endwith %}
+                  {% endfor %}
+            </div>
+            <div id="denied" class="tab-pane fade">
+            <br>
+            <table id="deniedorders" class="table table-hover table-condensed">
+                <thead>
+                  <tr style="color:black;">
+                      <h2>Denied Orders</h2>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for o in denied %}
+                    {% with order=o %}
+                      {% include 'display_order.tpl' %}
+                    {% endwith %}
+                  {% endfor %}
+
+                  {% if not denied[0] %}
+                  <tr>
+                    <td>
+                      <p class="text-primary float-left">You do not have any rejected orders at this time. </p>
+                    </td>
+                  </tr>
+                  {% endif %}
+                  </tbody>
+                  <tfoot>
+                  </tfoot>
+                </table>
                 {% for o in denied %}
                   {% with order=o %}
-                    {% include 'display_order.tpl' %}
+                    {% include 'order_modals.tpl' %}
                   {% endwith %}
                 {% endfor %}
-
-                {% if not denied[0] %}
-                <tr>
-                  <td>
-                    <p class="text-primary float-left">You do not have any rejected orders at this time. </p>
-                  </td>
-                </tr>
-                {% endif %}
-                </tbody>
-                <tfoot>
-                </tfoot>
-              </table>
-              {% for o in denied %}
-                {% with order=o %}
-                  {% include 'order_modals.tpl' %}
-                {% endwith %}
-              {% endfor %}
+            </div>
           </div>
-        </div>
-		  </div>
+  		  </div>
 
-    </div>
-    <!-- /.container -->
+      </div>
+      <!-- /.container -->
 
-  </div>
+
     <!-- Footer -->
     <footer class="py-4 red-bar">
       <div class="container">
