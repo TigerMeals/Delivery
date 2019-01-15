@@ -13,6 +13,10 @@ html, body {
   min-height: 87%;
 }
 
+.restaurant-container {
+  min-width: 87%;
+}
+
 $height-footer: 60px;
 
 body {
