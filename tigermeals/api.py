@@ -581,7 +581,7 @@ def food_filter():
 	ranges = []
 
 	for s in servings:
-		if s is "100+":
+		if s == "100+":
 			ranges.append("100", "5000")
 		else:
 			vals = s.split("-")
