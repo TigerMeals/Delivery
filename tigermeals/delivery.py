@@ -1,5 +1,5 @@
 from flask import Flask, make_response, \
-request, jsonify, render_template, redirect, url_for
+request, jsonify, render_template, redirect, url_for, abort
 from flask_mail import Mail,  Message
 from tigermeals.mail_html import user_order_html, rest_order_html
 import requests
@@ -17,8 +17,8 @@ import urllib
 cas = CAS(app, '/cas')
 cas.init_app(app)
 
-DATABASE_URL = "https://tigermeals-delivery.herokuapp.com"
-# DATABASE_URL="http://localhost:5000"
+# DATABASE_URL = "https://tigermeals-delivery.herokuapp.com"
+DATABASE_URL="http://localhost:5000"
 
 app.config['SECRET_KEY'] = 'dfasdkfjadf3kj78fasdkjfhasdkjfh'
 app.config['CAS_SERVER'] = 'https://fed.princeton.edu'
@@ -273,6 +273,7 @@ def checkout():
     res = requests.get(current_order_url)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
     else:
         order_id = json.loads(res.content)['order_id']
 
@@ -542,6 +543,7 @@ def cart_edit(quantity, food_id):
     res = requests.put(edit_url, json = json)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
 
     return redirect(url_for('meals'))
 
@@ -578,6 +580,7 @@ def user_updateRating():
     res = requests.post(rating_URL, json=json)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
 
     return redirect(url_for('account'))
 
@@ -738,6 +741,7 @@ def cart_delete(food_id):
     res = requests.put(delete_url, json = json)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
 
     return redirect("meals")
 
@@ -786,7 +790,7 @@ def cart_delete_restaurant(food_id):
     res = requests.put(delete_url, json = json)
     if not res.ok:
         res.raise_for_status()
-
+        return abort(500)
     return redirect("/meals/restaurant")
 
 # Endpoint to display all meals
@@ -818,6 +822,7 @@ def meals():
     res = requests.get(restaurants_url)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
     rests = json.loads(res.content)
     restaurants = []
     # Get updated list of restaurants from database for form options
@@ -829,6 +834,7 @@ def meals():
 
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
     else:
         meals = json.loads(res.content)
         length_meals = len(meals)
@@ -845,7 +851,7 @@ def meals():
                 meal['allergies'] = meal['allergies'].split(",")
             if not res.ok:
                 res.raise_for_status()
-                return None
+                return abort(500)
             meal['restaurant'] = json.loads(res.content)['name']
 
 
@@ -888,6 +894,7 @@ def restaurant_view():
     res = requests.get(restaurants_url)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
     rests = json.loads(res.content)
     restaurants = []
     # Update the number of packages available
@@ -896,6 +903,7 @@ def restaurant_view():
         res = requests.get(food_by_rest_url)
         if not res.ok:
             res.raise_for_status()
+            return abort(500)
         rest['num_orders'] = len(json.loads(res.content))
     restaurants_length = len(rests)
 
@@ -945,6 +953,7 @@ def restaurant_view_filter():
 
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
     rests = json.loads(res.content)
     restaurants = []
     # Update the number of packages available
@@ -953,6 +962,7 @@ def restaurant_view_filter():
         res = requests.get(food_by_rest_url)
         if not res.ok:
             res.raise_for_status()
+            return abort(500)
         rest['num_orders'] = len(json.loads(res.content))
     restaurants_length = len(rests)
     return render_template('restaurant_view.tpl', food_ids=food_ids,\
@@ -1031,12 +1041,18 @@ def meals_restaurant(restaurant_id):
     res = requests.get(restaurant_url)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
     rest = json.loads(res.content)
 
     meals_url = DATABASE_URL + "/food/restaurant/" + str(restaurant_id)
     res = requests.get(meals_url)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
+    if not rest:
+        res.raise_for_status()
+        return abort(500)
+
     meals = json.loads(res.content)
 
     rest['hours'] = rest['hours'].split(",")
@@ -1076,6 +1092,7 @@ def meals_restaurant(restaurant_id):
     res = requests.get(orders_url)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
     orders = json.loads(res.content)
 
     sumRatings = 0
@@ -1124,6 +1141,7 @@ def upload_cart():
     res = requests.get(current_order_url)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
     else:
         order_id = json.loads(res.content)['order_id']
         old_food_items = json.loads(res.content)['food_items']
@@ -1138,6 +1156,7 @@ def upload_cart():
         res = requests.get(get_food_url)
         if not res.ok:
             res.raise_for_status()
+            return abort(500)
         else:
             food_details = json.loads(res.content)
 
@@ -1238,7 +1257,7 @@ def charge():
 
     if not res.ok:
         res.raise_for_status()
-        return None
+        return abort(500)
 
 
     order_id = json.loads(res.content)['order_id']
@@ -1273,7 +1292,7 @@ def charge():
     res = requests.post(order_ordered_url, json=formData)
     if not res.ok:
         res.raise_for_status()
-        return None
+        return abort(500)
 
     msg = mail.send_message(
     'Your recent TigerMeals Delivery order!',
@@ -1287,7 +1306,7 @@ def charge():
 
     if not res.ok:
         res.raise_for_status()
-        return None
+        return abort(500)
 
     rest = json.loads(res.content)
     restEmail = rest['email']
@@ -1329,7 +1348,7 @@ def ordered():
     res = requests.get(current_order_url)
     if not res.ok:
         res.raise_for_status()
-        return None
+        return abort(500)
 
     order_id = json.loads(res.content)['order_id']
     order_ordered_url = DATABASE_URL + "/order/ordered/" + str(order_id)
@@ -1342,7 +1361,7 @@ def ordered():
     res = requests.post(order_ordered_url, json=formData)
     if not res.ok:
         res.raise_for_status()
-        return None
+        return abort(500)
 
     msg = mail.send_message(
     'Your recent TigerMeals Delivery order!',
@@ -1356,7 +1375,7 @@ def ordered():
 
     if not res.ok:
         res.raise_for_status()
-        return None
+        return abort(500)
 
     rest = json.loads(res.content)
     restEmail = rest['email']
@@ -1389,6 +1408,7 @@ def order_confirmed():
     res = requests.get(current_order_url)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
     else:
         order_date = json.loads(res.content)['date']
 
@@ -1451,6 +1471,7 @@ def filter():
     res = requests.get(restaurants_url)
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
     rests = json.loads(res.content)
     restaurants = []
     # Get updated list of restaurants from database for form options
@@ -1483,7 +1504,7 @@ def filter():
             meal['allergies'] = meal['allergies'].split(",")
         if not res.ok:
             res.raise_for_status()
-            return None
+            return abort(500)
         meal['restaurant'] = json.loads(res.content)['name']
 
     return render_template('meals.tpl', meals=meals, \
@@ -1495,3 +1516,8 @@ def filter():
 @app.errorhandler(404)
 def page_not_found(e):
 	return render_template('not_found.tpl'), 404
+
+# Endpoint for internal server error
+@app.errorhandler(500)
+def internal_error(e):
+	return render_template('server_error.tpl'), 500

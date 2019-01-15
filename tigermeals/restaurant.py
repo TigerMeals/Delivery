@@ -36,8 +36,8 @@ cloudinary.config(
 	api_secret = "gQUTMItrljBmcZ2Po8cbVvEFJvU"
 )
 
-DATABASE_URL = "https://tigermeals-delivery.herokuapp.com"
-# DATABASE_URL = "http://localhost:5000"
+# DATABASE_URL = "https://tigermeals-delivery.herokuapp.com"
+DATABASE_URL = "http://localhost:5000"
 
 # The secure key that someone needs to use the POST methods.
 SECURE_DATABASE_KEY = "sdjfhs24324[][p][}}P`092`)*@))@31DSDA&ASD{}[][]w]%%332"
@@ -61,6 +61,11 @@ def _postJSON(url, data):
 @app.errorhandler(404)
 def page_not_found(e):
 	return render_template('not_found.tpl'), 404
+
+# Endpoint for internal server error
+@app.errorhandler(500)
+def internal_error(e):
+	return render_template('server_error.tpl'), 500
 
 # Endpoint to logout a restaurant
 @app.route("/restaurant/logout")
@@ -93,18 +98,20 @@ def view():
 	res = requests.post(restaurant_info_url, json = email)
 	if not res.ok:
 		res.raise_for_status()
-
+		return abort(500)
 	restaurant_id = json.loads(res.content)['restaurant_id']
 	restaurant_url = DATABASE_URL + "/restaurant/" + str(restaurant_id)
 	res = requests.get(restaurant_url)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	rest = json.loads(res.content)
 
 	meals_url = DATABASE_URL + "/food/restaurant/" + str(restaurant_id)
 	res = requests.get(meals_url)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	meals = json.loads(res.content)
 
 	rest['hours'] = rest['hours'].split(",")
@@ -136,7 +143,8 @@ def view():
 	orders_url = DATABASE_URL + "/order/restaurant/" + str(restaurant_id)
 	res = requests.get(orders_url)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	orders = json.loads(res.content)
 
@@ -177,6 +185,7 @@ def reset_upload():
     res = requests.post(lookup_email_url, json={"email": email, "key": SECURE_DATABASE_KEY})
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
 
     if res.json() == {}:
     	return render_template('reset_restaurant.tpl', error="Email is not owned by a registered restaurant")
@@ -187,6 +196,7 @@ def reset_upload():
     "key": SECURE_DATABASE_KEY})
     if not res.ok:
         res.raise_for_status()
+        return abort(500)
 
     # Now mail temp password to restaurant
     msg = mail.send_message(
@@ -270,6 +280,7 @@ def register_upload():
 	res = requests.post(create_rest_url, json=registration_info)
 	if not res.ok:
 	    res.raise_for_status()
+	    return abort(500)
 
 	return redirect('/restaurant/home')
 
@@ -290,7 +301,8 @@ def login():
 
 	res = requests.post(login_url, json = login_query)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	else:
 		login_feedback = json.loads(res.content)
 		print(login_feedback)
@@ -300,7 +312,8 @@ def login():
 			orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
 			res = requests.get(orders_url)
 			if not res.ok:
-				res.raise_for_status()
+			    res.raise_for_status()
+			    return abort(500)
 			else:
 				session['username'] = request.form['email']
 				return redirect('/restaurant/home')
@@ -326,7 +339,8 @@ def home_restaurant():
 
 		res = requests.post(restaurant_info_url, json = email)
 		if not res.ok:
-			res.raise_for_status()
+		    res.raise_for_status()
+		    return abort(500)
 
 		restaurant_info = json.loads(res.content)
 		id = restaurant_info['restaurant_id']
@@ -334,7 +348,8 @@ def home_restaurant():
 		orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
 		res = requests.get(orders_url)
 		if not res.ok:
-			res.raise_for_status()
+		    res.raise_for_status()
+		    return abort(500)
 		else:
 			orders = json.loads(res.content)
 			length_orders = 0
@@ -363,14 +378,16 @@ def about_restaurant():
 
 	res = requests.post(restaurant_info_url, json = email)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	restaurant_info = json.loads(res.content)
 	id = restaurant_info['restaurant_id']
 	orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
 	res = requests.get(orders_url)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	else:
 		orders = json.loads(res.content)
 		length_orders = 0
@@ -399,7 +416,8 @@ def orders():
 
 	res = requests.post(restaurant_info_url, json = email)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	restaurant_info = json.loads(res.content)
 	id = restaurant_info['restaurant_id']
@@ -407,7 +425,8 @@ def orders():
 	orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
 	res = requests.get(orders_url)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	orders = json.loads(res.content)
 	active = []
@@ -425,7 +444,8 @@ def orders():
 			lookup_food_url = DATABASE_URL + "/food/" + str(food_id)
 			res = requests.get(lookup_food_url)
 			if not res.ok:
-				res.raise_for_status()
+			    res.raise_for_status()
+			    return abort(500)
 			package['image'] = json.loads(res.content)['image']
 			price += package['subtotal']
 			packages.append(package['food_title'])
@@ -466,7 +486,8 @@ def account_restaurant():
 
 	res = requests.post(restaurant_info_url, json = email)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	restaurant_info = json.loads(res.content)
 	id = restaurant_info['restaurant_id']
@@ -476,7 +497,8 @@ def account_restaurant():
 	res = requests.get(restaurant_info_url)
 
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	else:
 		restaurant_info = json.loads(res.content)
 		print ("Request Successful: ")
@@ -503,7 +525,8 @@ def account_restaurant():
 	orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
 	res = requests.get(orders_url)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	else:
 		orders = json.loads(res.content)
 		length_orders = 0
@@ -523,7 +546,8 @@ def account_restaurant():
 	res = requests.get(listings_url)
 
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	else:
 		listings = json.loads(res.content)
 		length_listings = len(listings)
@@ -561,7 +585,8 @@ def profil_update():
 
     res = requests.post(restaurant_info_url, json = email)
     if not res.ok:
-    	res.raise_for_status()
+        res.raise_for_status()
+        return abort(500)
 
     restaurant_info = json.loads(res.content)
     id = restaurant_info['restaurant_id']
@@ -598,7 +623,8 @@ def profil_update():
 
     res = requests.put(update_url, json=info)
     if not res.ok:
-    	res.raise_for_status()
+        res.raise_for_status()
+        return abort(500)
 
     return redirect(url_for('account_restaurant'))
 
@@ -616,7 +642,8 @@ def image_update():
 
 	res = requests.post(restaurant_info_url, json = email)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	restaurant_info = json.loads(res.content)
 	id = restaurant_info['restaurant_id']
@@ -626,7 +653,8 @@ def image_update():
 	res = requests.get(restaurant_info_url)
 
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	else:
 		restaurant_info = json.loads(res.content)
 		print ("Request Successful: ")
@@ -653,7 +681,8 @@ def image_update():
 	orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
 	res = requests.get(orders_url)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	else:
 		orders = json.loads(res.content)
 		length_orders = 0
@@ -673,7 +702,8 @@ def image_update():
 	res = requests.get(listings_url)
 
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	else:
 		listings = json.loads(res.content)
 		length_listings = len(listings)
@@ -723,7 +753,8 @@ def restaurant_account_update():
 
 	res = requests.post(restaurant_info_url, json = email)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	restaurant_info = json.loads(res.content)
 	id = restaurant_info['restaurant_id']
@@ -774,7 +805,8 @@ def restaurant_account_update():
 
 	res = requests.put(update_url, json=info)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	return redirect(url_for('account_restaurant'))
 
@@ -797,7 +829,8 @@ def listings():
 
 	res = requests.post(restaurant_info_url, json = email)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	restaurant_info = json.loads(res.content)
 	id = restaurant_info['restaurant_id']
@@ -806,7 +839,8 @@ def listings():
 	res = requests.get(listings_url)
 
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	else:
 		listings = json.loads(res.content)
 		active_listings = []
@@ -824,7 +858,8 @@ def listings():
 	orders_url = DATABASE_URL + "/order/restaurant/" + str(id)
 	res = requests.get(orders_url)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	else:
 		orders = json.loads(res.content)
 		length_orders = 0
@@ -848,7 +883,8 @@ def delete_listing(food_id):
 	res = requests.delete(remove_listing_url, json={
     "key": SECURE_DATABASE_KEY})
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	return redirect('/listings')
 
 # Endpoint to add a new restaurant listing.
@@ -869,7 +905,8 @@ def add_listing():
 
     res = requests.post(restaurant_info_url, json = email)
     if not res.ok:
-        res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
     restaurant_info = json.loads(res.content)
     id = restaurant_info['restaurant_id']
@@ -903,7 +940,8 @@ def add_listing():
 
     res = requests.post(add_food_url, json = entry)
     if not res.ok:
-        res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
     if 'image' in request.files:
         img = request.files['image']
@@ -938,7 +976,8 @@ def update_listing():
 
     res = requests.post(restaurant_info_url, json = email)
     if not res.ok:
-        res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
     restaurant_info = json.loads(res.content)
     id = restaurant_info['restaurant_id']
@@ -981,7 +1020,8 @@ def update_listing():
 
     res = requests.put(add_food_url, json = updatedEntry)
     if not res.ok:
-        res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
     return redirect('/listings')
 
@@ -1004,6 +1044,7 @@ def toggle_active():
 	res = requests.post(restaurant_info_url, json = email)
 	if not res.ok:
 		res.raise_for_status()
+		return abort(500)
 
 	restaurant_info = json.loads(res.content)
 	id = restaurant_info['restaurant_id']
@@ -1013,7 +1054,8 @@ def toggle_active():
 	res = requests.post(toggle_food_url, json={
 	"key": SECURE_DATABASE_KEY})
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 	return redirect('/listings')
 
 
@@ -1035,7 +1077,8 @@ def order_deny_rest():
 
 	res = requests.post(restaurant_info_url, json = email)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	restaurant_info = json.loads(res.content)
 	id = restaurant_info['restaurant_id']
@@ -1046,7 +1089,8 @@ def order_deny_rest():
 	res = requests.put(delete_order_url, json={
     "key": SECURE_DATABASE_KEY})
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	# Send email to restaurant
 	msg = mail.send_message(
@@ -1083,7 +1127,8 @@ def order_approve_rest():
 
     res = requests.post(restaurant_info_url, json = email)
     if not res.ok:
-        res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
     restaurant_info = json.loads(res.content)
     id = restaurant_info['restaurant_id']
@@ -1094,8 +1139,8 @@ def order_approve_rest():
     res = requests.post(approve_order_url, json = {
 	"key": SECURE_DATABASE_KEY})
     if not res.ok:
-        res.raise_for_status()
-        return None
+	    res.raise_for_status()
+	    return abort(500)
 
     # Send email to restaurant
     msg = mail.send_message(
@@ -1113,8 +1158,8 @@ def order_approve_rest():
 
     res = requests.get(DATABASE_URL + "/order/" + str(order_id))
     if not res.ok:
-        res.raise_for_status()
-        return None
+	    res.raise_for_status()
+	    return abort(500)
 
     tokenInfo = json.loads(res.content)
 
@@ -1163,7 +1208,8 @@ def order_delivered_rest():
 
 	res = requests.post(restaurant_info_url, json = email)
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	restaurant_info = json.loads(res.content)
 	id = restaurant_info['restaurant_id']
@@ -1173,7 +1219,8 @@ def order_delivered_rest():
 	res = requests.post(delivered_order_url, json={
 	"key": SECURE_DATABASE_KEY})
 	if not res.ok:
-		res.raise_for_status()
+	    res.raise_for_status()
+	    return abort(500)
 
 	# Send email to user
 	msg = mail.send_message(
