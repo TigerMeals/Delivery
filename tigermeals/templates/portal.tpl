@@ -48,13 +48,13 @@
 
 
     <body class="text-center justify-content-center">
-      <div class="form-signin white_background">
+      <div class="form-signin bg-danger">
         <div class="row justify-content-center">
           <img class="mb-4 display-block center-block align-self-center" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
         </div>
-        <h3 class="font-weight-light text-center">Welcome to </h3>
-        <h1 class="mb-3 font-weight-strong text-center">TigerMeals Delivery</h1>
-        <h5 class="font-weight-light text-center">I am a... </h5>
+        <h3 class="font-weight-light text-center text-white">Welcome to </h3>
+        <h1 class="mb-3 font-weight-strong text-center text-white">TigerMeals Delivery</h1>
+        <h5 class="font-weight-light text-center text-white">I am a... </h5>
         <button class="btn btn-primary btn-block" onclick="window.location.href='/meals';"><strong>Student</strong></button>
         <button class="btn btn-primary btn-block" onclick="window.location.href='/orders';"><strong>Restaurant</strong></button>
       </div>
