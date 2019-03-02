@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TigerMeals Delivery - Checkout</title>
+    <title>TigerMeals - Checkout</title>
 
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap-lux.css" rel="stylesheet">
@@ -32,7 +32,7 @@
     <!-- Navigation -->
     <nav class="navbar red-bar navbar-expand-lg navbar-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">TigerMeals Delivery</a>
+        <a class="navbar-brand" href="#">TigerMeals</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -322,7 +322,7 @@
 
     <footer class="py-4 red-bar">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals 2019</p>
       </div>
       <!-- /.container -->
     </footer>

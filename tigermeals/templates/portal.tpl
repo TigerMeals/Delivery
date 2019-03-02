@@ -50,10 +50,12 @@
     <body class="text-center justify-content-center">
       <div class="form-signin bg-danger">
         <div class="row justify-content-center">
-          <img class="mb-4 display-block center-block align-self-center" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
+          <img class="mb-4 display-block center-block align-self-center" src="/static/img/takeout.png" alt="" width="150" height="150">
+          <!-- <img class="mb-4 display-block center-block align-self-center" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72"> -->
+          <!-- <link rel="icon" href="/static/img/takeout.png" type="image/gif" sizes="32x32"> -->
         </div>
         <h3 class="font-weight-light text-center text-white">Welcome to </h3>
-        <h1 class="mb-3 font-weight-strong text-center text-white">TigerMeals Delivery</h1>
+        <h1 class="mb-3 font-weight-strong text-center text-white">TigerMeals</h1>
         <h5 class="font-weight-light text-center text-white">I am a... </h5>
         <button class="btn btn-primary btn-block" onclick="window.location.href='/meals';"><strong>Student</strong></button>
         <button class="btn btn-primary btn-block" onclick="window.location.href='/orders';"><strong>Restaurant</strong></button>
@@ -62,7 +64,7 @@
 
     <footer class="py-4 red-bar sticky-footer">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals 2019</p>
       </div>
     </footer>
 

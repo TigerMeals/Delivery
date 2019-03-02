@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TigerMeals Delivery - Home</title>
+    <title>TigerMeals - Home</title>
     <link rel='icon' href='/static/img/takeout.ico'></link>
     <!-- Bootstrap core CSS -->
     <link href="/static/css/bootstrap-lux.css" rel="stylesheet">
@@ -41,7 +41,7 @@
 
     <section class="jumbotron text-center">
       <div class="container">
-        <h1 class="jumbotron-heading text-light">Welcome to TigerMeals Delivery!</h1>
+        <h1 class="jumbotron-heading text-light">Welcome to TigerMeals!</h1>
         <p class="lead text-light">Our mission is to connect local restaurants to the various RCA's, club leaders, and student organizers across the Princeton community to make the catering process as easy as possible.</p>
         <p>
           <a href="/listings" class="btn btn-primary mt-2 mb-0">Manage my listings</a>
@@ -275,7 +275,7 @@
 
     <footer class="py-4 red-bar">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals 2019</p>
       </div>
       <!-- /.container -->
     </footer>

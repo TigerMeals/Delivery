@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TigerMeals Delivery - Shop Meals</title>
+    <title>TigerMeals - Shop Meals</title>
     <link rel='icon' href='/static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
@@ -288,7 +288,7 @@
       <!-- Footer -->
       <footer class="py-4 red-bar">
         <div class="container">
-          <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
+          <p class="m-0 text-center text-white">Copyright &copy; TigerMeals 2019</p>
         </div>
         <!-- /.container -->
       </footer>

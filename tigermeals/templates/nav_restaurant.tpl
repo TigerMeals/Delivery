@@ -1,6 +1,6 @@
 <nav class="navbar bg-danger navbar-expand-md navbar-dark fixed-top">
-    <a class="navbar-brand navbar-height ml-4 d-none d-lg-block" href="/restaurant/home">TigerMeals Delivery</a>
-    <a class="navbar-brand navbar-height ml-0 d-xs-block d-lg-none" href="/restaurant/home">TigerMeals Delivery</a>
+    <a class="navbar-brand navbar-height ml-4 d-none d-lg-block" href="/restaurant/home">TigerMeals</a>
+    <a class="navbar-brand navbar-height ml-0 d-xs-block d-lg-none" href="/restaurant/home">TigerMeals</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

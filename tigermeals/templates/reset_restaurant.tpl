@@ -7,7 +7,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>TigerMeals Delivery - Reset Restaurant Account Password</title>
+  <title>TigerMeals - Reset Restaurant Account Password</title>
   <link rel='icon' href='/static/img/takeout.ico'></link>
 
   <!-- Bootstrap core CSS -->
@@ -54,7 +54,7 @@
       </div>
       <footer class="py-4 red-bar sticky-footer">
         <div class="container">
-          <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
+          <p class="m-0 text-center text-white">Copyright &copy; TigerMeals 2019</p>
         </div>
         <!-- /.container -->
       </footer>

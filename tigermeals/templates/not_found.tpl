@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TigerMeals Delivery - Page Not Found</title>
+    <title>TigerMeals - Page Not Found</title>
     <link rel='icon' href='/static/img/takeout.ico'></link>
 
 
@@ -27,7 +27,7 @@
 
         <!-- Navigation -->
         <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
-          <a class="navbar-brand ml-2" href="/home">TigerMeals Delivery</a>
+          <a class="navbar-brand ml-2" href="/home">TigerMeals</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -63,7 +63,7 @@
   </div>
   <footer class="py-4 red-bar sticky-footer">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
+      <p class="m-0 text-center text-white">Copyright &copy; TigerMeals 2019</p>
     </div>
     <!-- /.container -->
   </footer>

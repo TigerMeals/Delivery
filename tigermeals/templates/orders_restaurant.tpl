@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TigerMeals Delivery - My Orders</title>
+    <title>TigerMeals - My Orders</title>
     <link rel='icon' href='/static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
@@ -40,7 +40,7 @@
       <div class="py-5 text-center">
         <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
         <h2>My orders</h2>
-        <p class="lead">Please view your orders below. We thank you for partnering with TigerMeals Delivery.</p>
+        <p class="lead">Please view your orders below. We thank you for partnering with TigerMeals.</p>
       </div>
 
       <ul class="nav nav-tabs">
@@ -189,7 +189,7 @@
     <!-- Footer -->
     <footer class="py-4 red-bar">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals 2019</p>
       </div>
       <!-- /.container -->
     </footer>

@@ -7,7 +7,7 @@
     <meta name="description" content="This is the page in which users will checkout after they have filled up their cart">
     <meta name="author" content="TigerMeals Delivery Team">
 
-    <title>TigerMeals Delivery - Restaurant Account</title>
+    <title>TigerMeals - Restaurant Account</title>
     <link rel='icon' href='/static/img/takeout.ico'></link>
 
     <!-- Bootstrap core CSS -->
@@ -449,7 +449,7 @@
 
     <footer class="py-4 red-bar">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals 2019</p>
       </div>
       <!-- /.container -->
     </footer>

@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TigerMeals Delivery - Home</title>
+    <title>TigerMeals - Home</title>
     <link rel='icon' href='static/img/takeout.ico'></link>
     <!-- Bootstrap core CSS -->
     <link href="static/css/bootstrap-lux.css" rel="stylesheet">
@@ -39,7 +39,7 @@
 
     <section class="jumbotron text-center">
       <div class="container">
-        <h1 class="jumbotron-heading text-light">Welcome to TigerMeals Delivery!</h1>
+        <h1 class="jumbotron-heading text-light">Welcome to TigerMeals!</h1>
         <p class="lead text-light">Our mission is to connect local restaurants to the various RCA's, club leaders, and student organizers across the Princeton community to make the catering process as easy as possible.</p>
         <p>
           <a href="/meals" class="btn btn-primary mt-2 mb-0">Browse meals</a>
@@ -101,7 +101,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <br>
                 <div class="modal-body">
@@ -119,7 +119,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <br>
                 <div class="modal-body">
@@ -138,7 +138,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <div class = "modal-body">
                     Once you are on the meals page, add filters if you have any dietary restrictions or allergies to narrow down your meal options. Click the "Apply Filters" button to apply the filters you checked off.
@@ -156,7 +156,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <div class = "modal-body">
                     You can also apply different sorts with the "Sort By" drop down on the right side of a page.
@@ -174,7 +174,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <div class = "modal-body">
                     If you are interested in a particular package, click on an image of a catering package to view the information. Select a quantity and click "Add to Cart" to add this item to your cart.
@@ -193,7 +193,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <div class = "modal-body">
                     You can always view the catering packages you've added to your cart by clicking the "View Cart" tab in the navbar. If you want to update your order quantities and edit your orders, click the "View Cart" option in the dropdown to take you to the full view cart page.
@@ -211,7 +211,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <div class = "modal-body">
                     Once you are on the view cart page, you can update your quantities by clicking the quantities bar, or remove an item from your cart by pressing the red delete button.
@@ -229,7 +229,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <div class = "modal-body">
                     Once you have added all the meal packages you would like to order in your cart, you can navigate to the checkout page by clicking the green checkout button. You can also click the view cart drop down and click on "checkout".
@@ -245,7 +245,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <div class = "modal-body">
                     One the checkout page, you can either choose to pay with card or cash by clicking the approriate tab. Remember to fill out a date and time before proceed with your payment. Note that you will only be charged when the restaurant approves your order.
@@ -263,7 +263,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <div class = "modal-body">
                     If you want to view your pending orders or update your profile, click the "Account" tab on the navbar. You can also use this to logout of your session whenever you wish.
@@ -281,7 +281,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <div class = "modal-body">
                     From here, you can edit your profile information, and update a new profile picture for your account. If you have specific dietary restrictions, list these here. Alternate between tabs to view your pending order, orders to be delivered, and your order history.
@@ -299,7 +299,7 @@
             <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <center>Welcome to Tigermeals Delivery! Here are some tips on navigating our site.</center>
+                  <center>Welcome to Tigermeals! Here are some tips on navigating our site.</center>
                 </div>
                 <div class = "modal-body">
                     You've reached the end of our tutorial! We hope you found this helpful. You are ready to start ordering!
@@ -488,7 +488,7 @@
   <!----------------------------------------------------------------------------------------------------------->
     <footer class="py-4 red-bar">
       <div class="container">
-        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
+        <p class="m-0 text-center text-white">Copyright &copy; TigerMeals 2019</p>
       </div>
       <!-- /.container -->
     </footer>

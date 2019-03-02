@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TigerMeals Delivery - Order Confirmed</title>
+    <title>TigerMeals - Order Confirmed</title>
     <link rel='icon' href='/static/img/takeout.ico'></link>
 
 
@@ -27,7 +27,7 @@
 
         <!-- Navigation -->
         <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
-          <a class="navbar-brand ml-2" href="/home">TigerMeals Delivery</a>
+          <a class="navbar-brand ml-2" href="/home">TigerMeals</a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -90,7 +90,7 @@
             <div class="py-5 px-5 text-center">
               <img class="d-block mx-auto mb-4" src="https://www.princeton.edu/~oktour/virtualtour/korean/Images/Small/Shield.gif" alt="" width="72" height="72">
               <h2>Order Confirmed!</h2>
-              <p class="lead mb-0">Check your email for an order confirmation. We will notify you when the restaurant approves your order. Thank you for choosing TigerMeals Delivery.</p>
+              <p class="lead mb-0">Check your email for an order confirmation. We will notify you when the restaurant approves your order. Thank you for choosing TigerMeals.</p>
             </div>
             <div class="row px-5 justify-content-center">
                 <button class="btn btn-primary" onclick="window.location.href='/meals';"><strong>Browse more meals</strong></button>
@@ -108,7 +108,7 @@
   </div>
   <footer class="py-4 red-bar sticky-footer">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; TigerMeals Delivery 2019</p>
+      <p class="m-0 text-center text-white">Copyright &copy; TigerMeals 2019</p>
     </div>
     <!-- /.container -->
   </footer>
