@@ -12,7 +12,7 @@ gunicorn
 Flask-Mail==0.9.1
 flask-marshmallow==0.9.0
 Flask-SQLAlchemy==2.3.2
-Jinja2==2.10
+Jinja2==2.11.3
 marshmallow==2.16.3
 marshmallow-sqlalchemy==0.15.0
 psycopg2==2.7.6.1
